@@ -92,8 +92,21 @@ jobs:
           cd build-retro
           ./DuneLegacyTornie-1.0.538-Linux-Mint-22.3-Retro-x86_64.AppImage --appimage-extract >/dev/null
           test -x squashfs-root/AppRun
+          test -x squashfs-root/usr/bin/dunelegacy
           grep -q DUNELEGACY_RETRO_SOFTWARE squashfs-root/AppRun
+          grep -q '/usr/lib/dunelegacy' squashfs-root/AppRun
           bash -n squashfs-root/AppRun
+
+          # An earlier AppImage rejected SDL2_mixer/SDL2_ttf .so files even
+          # when those vcpkg dependencies were statically linked. Also check
+          # that any *actual* ELF dynamic dependencies are resolvable within
+          # the package/Ubuntu 22.04 environment.
+          export LD_LIBRARY_PATH="$PWD/squashfs-root/usr/lib/dunelegacy:$PWD/squashfs-root/usr/lib/x86_64-linux-gnu/dunelegacy:$PWD/squashfs-root/usr/lib64/dunelegacy:$PWD/squashfs-root/usr/lib:$PWD/squashfs-root/usr/lib/x86_64-linux-gnu:$PWD/squashfs-root/usr/lib64"
+          ldd squashfs-root/usr/bin/dunelegacy | tee retro-dynamic-dependencies.txt
+          if grep -q '=> not found' retro-dynamic-dependencies.txt; then
+            echo '::error::Missing ELF library in AppImage; fix bundling before delivery'
+            exit 1
+          fi
           sha256sum DuneLegacyTornie-1.0.538-Linux-Mint-22.3-Retro-x86_64.AppImage > DuneLegacyTornie-1.0.538-Linux-Mint-22.3-Retro-x86_64.AppImage.sha256
 
       - name: Upload candidate for testing (not a public release)
