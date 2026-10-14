@@ -52,7 +52,8 @@ jobs:
 
       - name: Configure and compile Linux x86_64
         run: |
-          echo "VCPKG_BINARY_SOURCES=clear;files,$HOME/.cache/vcpkg/archives,readwrite" >> "$GITHUB_ENV"
+          export VCPKG_BINARY_SOURCES="clear;files,$HOME/.cache/vcpkg/archives,readwrite"
+          echo "VCPKG_BINARY_SOURCES=$VCPKG_BINARY_SOURCES" >> "$GITHUB_ENV"
           cmake -S . -B build-retro -G Ninja \
             -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" \
             -DCMAKE_C_COMPILER_LAUNCHER=ccache \
