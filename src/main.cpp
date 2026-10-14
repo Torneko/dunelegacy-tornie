@@ -179,12 +179,19 @@ void setVideoMode(int displayIndex)
         if(settings.video.height < 480) settings.video.height = 480;
     }
 
-    // Prefer Direct3D on Windows, let SDL choose best renderer on other platforms
+    // Keep the normal accelerated path unchanged; the retro AppImage opts in
+    // to SDL2's software renderer for GPUs/drivers with unreliable acceleration.
+    // A software renderer still needs target textures for screenTexture.
 #ifdef _WIN32
     SDL_SetHint(SDL_HINT_RENDER_DRIVER, "direct3d11");
 #else
-    // On non-Windows platforms, let SDL choose the best renderer
-    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "");
+    const char* retroMode = SDL_getenv("DUNELEGACY_RETRO_SOFTWARE");
+    const bool useRetroSoftwareRenderer = retroMode != nullptr && retroMode[0] == '1';
+    if(useRetroSoftwareRenderer) {
+        SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "software", SDL_HINT_OVERRIDE);
+    } else if(SDL_getenv("SDL_RENDER_DRIVER") == nullptr) {
+        SDL_SetHint(SDL_HINT_RENDER_DRIVER, "");
+    }
 #endif
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");  // Use nearest-neighbor scaling for pixel-perfect look
     SDL_SetHint(SDL_HINT_RENDER_BATCHING, "1");       // Enable render batching for performance
@@ -197,13 +204,31 @@ void setVideoMode(int displayIndex)
         fprintf(stderr, "SDL_CreateWindow failed: %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
     }
-    // Create renderer (VSync set separately for macOS compatibility)
+    // The default remains hardware-accelerated; the Linux retro launcher
+    // deliberately requests the software renderer with texture targets.
     Uint32 rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE;
+#if defined(__linux__)
+    if(useRetroSoftwareRenderer) {
+        rendererFlags = SDL_RENDERER_SOFTWARE | SDL_RENDERER_TARGETTEXTURE;
+        SDL_Log("Retro compatibility mode: requesting SDL software renderer");
+    }
+#endif
 
     renderer = SDL_CreateRenderer(window, -1, rendererFlags);
+#if defined(__linux__)
+    if(!renderer && !useRetroSoftwareRenderer) {
+        SDL_Log("Accelerated SDL renderer failed (%s); trying software fallback", SDL_GetError());
+        SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "software", SDL_HINT_OVERRIDE);
+        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_TARGETTEXTURE);
+    }
+#endif
     if (!renderer) {
         fprintf(stderr, "SDL_CreateRenderer failed: %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
+    }
+    SDL_RendererInfo rendererInfo;
+    if(SDL_GetRendererInfo(renderer, &rendererInfo) == 0) {
+        SDL_Log("Active SDL renderer: %s (flags: 0x%x)", rendererInfo.name, rendererInfo.flags);
     }
 
     // Set VSync after renderer creation (works better on macOS Metal)
