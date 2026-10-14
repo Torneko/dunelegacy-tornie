@@ -6,7 +6,10 @@ set -uo pipefail
 appdir="${APPDIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
 export APPDIR="${appdir}"
 export PATH="${APPDIR}/usr/bin:${PATH}"
-export LD_LIBRARY_PATH="${APPDIR}/usr/lib:${APPDIR}/usr/lib/x86_64-linux-gnu:${APPDIR}/usr/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+# Include the game's private vcpkg library folder (used by the CMake
+# INSTALL_RPATH) as well as linuxdeploy's standard AppDir locations.
+# This also covers libraries loaded with dlopen() by other components.
+export LD_LIBRARY_PATH="${APPDIR}/usr/lib/dunelegacy:${APPDIR}/usr/lib/x86_64-linux-gnu/dunelegacy:${APPDIR}/usr/lib64/dunelegacy:${APPDIR}/usr/lib:${APPDIR}/usr/lib/x86_64-linux-gnu:${APPDIR}/usr/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 export XDG_DATA_DIRS="${APPDIR}/usr/share${XDG_DATA_DIRS:+:${XDG_DATA_DIRS}}"
 
 # The C++ engine must accept software rendering, not merely SDL's hint.
