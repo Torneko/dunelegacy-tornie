@@ -7,6 +7,29 @@ Cette construction **n'est pas une preuve de compatibilité** : le pilote Nouvea
 la carte graphique hybride, l'audio et les bibliothèques système peuvent
 encore empêcher le démarrage.
 
+## Correctif du 14 octobre 2026 : bibliothèques SDL2 faussement manquantes
+
+Le journal de test du PC indiquait :
+`Required library missing or incompatible: libSDL2_mixer-2.0.so.0`
+et `libSDL2_ttf-2.0.so.0`.
+Le contrôle du moteur appelait `dlopen()` sur des bibliothèques partagées,
+alors que vcpkg peut fournir SDL2_mixer/SDL2_ttf liés **statiquement**.
+Cela peut produire un faux diagnostic de bibliothèques manquantes.
+
+Cette branche retire ce précontrôle redondant (les dépendances dynamiques
+réellement indispensables sont déjà chargées par l'éditeur de liens Linux),
+ajoute `usr/lib/dunelegacy` au chemin du lanceur, et demande à la CI de
+contrôler les dépendances ELF de l'exécutable effectivement extrait de
+l'AppImage (`ldd`). La révision candidate antérieure doit être remplacée
+par **l'artefact du nouveau workflow**. Le jeu reste à retester sur le PC.
+
+Pour essayer uniquement l'ancienne AppImage en attendant le correctif,
+sur Mint 22.3 il est possible d'installer les versions partagées avec :
+`sudo apt install libsdl2-mixer-2.0-0 libsdl2-ttf-2.0-0`.
+Cela contourne le diagnostic, mais ne confirme pas que le reste du jeu
+fonctionne. Cette installation ne doit plus être nécessaire si les
+bibliothèques utilisées par l'AppImage sont correctement liées/embarquées.
+
 ## Pourquoi un binaire distinct ?
 
 La version 1.0.538 d'origine demandait systématiquement à SDL2 un
