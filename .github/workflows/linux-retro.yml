@@ -1,0 +1,130 @@
+name: Linux Mint 22 retro AppImage
+
+on:
+  push:
+    branches:
+      - 'compat/linux-mint-*'
+  workflow_dispatch:
+    inputs:
+      publish_release:
+        description: 'After on-device validation, attach as an additional asset to v1.0.538'
+        type: boolean
+        default: false
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  retro-appimage:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Confirm the source version
+        run: |
+          grep -q '^project(DuneLegacyTornie VERSION 1.0.538 ' CMakeLists.txt
+          test -f packaging/linux/retro-apprun.sh
+          bash -n packaging/linux/retro-apprun.sh
+
+      - name: Install Linux build requirements
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            autoconf autoconf-archive automake libtool libltdl-dev \
+            build-essential pkg-config bison flex ninja-build \
+            libsystemd-dev ccache wget squashfs-tools
+
+      - uses: hendrikmuhs/ccache-action@v1
+        with:
+          key: retro-mint-${{ hashFiles('vcpkg.json') }}
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/vcpkg/archives
+          key: retro-mint-vcpkg-${{ hashFiles('vcpkg.json') }}
+          restore-keys: |
+            retro-mint-vcpkg-
+
+      - uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgJsonGlob: 'vcpkg.json'
+
+      - name: Configure and compile Linux x86_64
+        run: |
+          export VCPKG_BINARY_SOURCES="clear;files,$HOME/.cache/vcpkg/archives,readwrite"
+          echo "VCPKG_BINARY_SOURCES=$VCPKG_BINARY_SOURCES" >> "$GITHUB_ENV"
+          cmake -S . -B build-retro -G Ninja \
+            -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" \
+            -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+            -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DDUNELEGACY_BUILD_TESTS=OFF
+          cmake --build build-retro --parallel 2
+
+      - name: Package AppImage with custom software-rendering AppRun
+        run: |
+          cmake --install build-retro --prefix build-retro/AppDir/usr --config Release
+          test -s build-retro/AppDir/usr/share/DuneLegacyTornie/locale/French.fr.po
+          test -s build-retro/AppDir/usr/share/DuneLegacyTornie/ANEU.VOC
+          test -s build-retro/AppDir/usr/share/DuneLegacyTornie/EliteSiegeTank.png
+          mkdir -p build-retro/AppDir/usr/share/applications
+          mkdir -p build-retro/AppDir/usr/share/icons/hicolor/128x128/apps
+          cp dunelegacy-tornie.desktop build-retro/AppDir/usr/share/applications/
+          cp dunelegacy-tornie-128x128.png build-retro/AppDir/usr/share/icons/hicolor/128x128/apps/dunelegacy-tornie.png
+          cp packaging/linux/retro-apprun.sh build-retro/retro-AppRun
+          chmod +x build-retro/retro-AppRun
+          wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage -O build-retro/linuxdeploy-x86_64.AppImage
+          chmod +x build-retro/linuxdeploy-x86_64.AppImage
+          (
+            cd build-retro
+            ARCH=x86_64 FUSE_APPIMAGE_EXTRACT_AND_RUN=1 ./linuxdeploy-x86_64.AppImage \
+              --appdir AppDir \
+              --executable AppDir/usr/bin/dunelegacy \
+              --desktop-file AppDir/usr/share/applications/dunelegacy-tornie.desktop \
+              --icon-file AppDir/usr/share/icons/hicolor/128x128/apps/dunelegacy-tornie.png \
+              --custom-apprun retro-AppRun \
+              --output appimage
+          )
+          generated="$(find build-retro -maxdepth 1 -name '*.AppImage' ! -name 'linuxdeploy*' -type f -print -quit)"
+          test -n "$generated"
+          mv "$generated" "build-retro/DuneLegacyTornie-1.0.538-Linux-Mint-22.3-Retro-x86_64.AppImage"
+          cd build-retro
+          ./DuneLegacyTornie-1.0.538-Linux-Mint-22.3-Retro-x86_64.AppImage --appimage-extract >/dev/null
+          test -x squashfs-root/AppRun
+          test -x squashfs-root/usr/bin/dunelegacy
+          grep -q DUNELEGACY_RETRO_SOFTWARE squashfs-root/AppRun
+          grep -q '/usr/lib/dunelegacy' squashfs-root/AppRun
+          bash -n squashfs-root/AppRun
+
+          # An earlier AppImage rejected SDL2_mixer/SDL2_ttf .so files even
+          # when those vcpkg dependencies were statically linked. Also check
+          # that any *actual* ELF dynamic dependencies are resolvable within
+          # the package/Ubuntu 22.04 environment.
+          export LD_LIBRARY_PATH="$PWD/squashfs-root/usr/lib/dunelegacy:$PWD/squashfs-root/usr/lib/x86_64-linux-gnu/dunelegacy:$PWD/squashfs-root/usr/lib64/dunelegacy:$PWD/squashfs-root/usr/lib:$PWD/squashfs-root/usr/lib/x86_64-linux-gnu:$PWD/squashfs-root/usr/lib64"
+          ldd squashfs-root/usr/bin/dunelegacy | tee retro-dynamic-dependencies.txt
+          if grep -q '=> not found' retro-dynamic-dependencies.txt; then
+            echo '::error::Missing ELF library in AppImage; fix bundling before delivery'
+            exit 1
+          fi
+          sha256sum DuneLegacyTornie-1.0.538-Linux-Mint-22.3-Retro-x86_64.AppImage > DuneLegacyTornie-1.0.538-Linux-Mint-22.3-Retro-x86_64.AppImage.sha256
+
+      - name: Upload candidate for testing (not a public release)
+        uses: actions/upload-artifact@v4
+        with:
+          name: DuneLegacyTornie-1.0.538-Linux-Mint-Retro-candidate
+          path: |
+            build-retro/DuneLegacyTornie-1.0.538-Linux-Mint-22.3-Retro-x86_64.AppImage
+            build-retro/DuneLegacyTornie-1.0.538-Linux-Mint-22.3-Retro-x86_64.AppImage.sha256
+          retention-days: 30
+
+      - name: Publish separate optional asset, only if explicitly requested
+        if: github.event_name == 'workflow_dispatch' && inputs.publish_release == true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release view v1.0.538 --repo "$GITHUB_REPOSITORY" >/dev/null
+          gh release upload v1.0.538 \
+            build-retro/DuneLegacyTornie-1.0.538-Linux-Mint-22.3-Retro-x86_64.AppImage \
+            build-retro/DuneLegacyTornie-1.0.538-Linux-Mint-22.3-Retro-x86_64.AppImage.sha256 \
+            --repo "$GITHUB_REPOSITORY"

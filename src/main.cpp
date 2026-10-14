@@ -92,10 +92,6 @@
 #include <misc/MacFunctions.h>
 #endif
 
-#if defined(__linux__)
-#include <dlfcn.h>
-#endif
-
 #if !defined(__GNUG__) || (defined(_GLIBCXX_HAS_GTHREADS) && defined(_GLIBCXX_USE_C99_STDINT_TR1) && (ATOMIC_INT_LOCK_FREE > 1) && !defined(_GLIBCXX_HAS_GTHREADS))
 // g++ does not provide std::async on all platforms
 #define HAS_ASYNC
@@ -179,12 +175,19 @@ void setVideoMode(int displayIndex)
         if(settings.video.height < 480) settings.video.height = 480;
     }
 
-    // Prefer Direct3D on Windows, let SDL choose best renderer on other platforms
+    // Keep the normal accelerated path unchanged; the retro AppImage opts in
+    // to SDL2's software renderer for GPUs/drivers with unreliable acceleration.
+    // A software renderer still needs target textures for screenTexture.
 #ifdef _WIN32
     SDL_SetHint(SDL_HINT_RENDER_DRIVER, "direct3d11");
 #else
-    // On non-Windows platforms, let SDL choose the best renderer
-    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "");
+    const char* retroMode = SDL_getenv("DUNELEGACY_RETRO_SOFTWARE");
+    const bool useRetroSoftwareRenderer = retroMode != nullptr && retroMode[0] == '1';
+    if(useRetroSoftwareRenderer) {
+        SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "software", SDL_HINT_OVERRIDE);
+    } else if(SDL_getenv("SDL_RENDER_DRIVER") == nullptr) {
+        SDL_SetHint(SDL_HINT_RENDER_DRIVER, "");
+    }
 #endif
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");  // Use nearest-neighbor scaling for pixel-perfect look
     SDL_SetHint(SDL_HINT_RENDER_BATCHING, "1");       // Enable render batching for performance
@@ -197,13 +200,31 @@ void setVideoMode(int displayIndex)
         fprintf(stderr, "SDL_CreateWindow failed: %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
     }
-    // Create renderer (VSync set separately for macOS compatibility)
+    // The default remains hardware-accelerated; the Linux retro launcher
+    // deliberately requests the software renderer with texture targets.
     Uint32 rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE;
+#if defined(__linux__)
+    if(useRetroSoftwareRenderer) {
+        rendererFlags = SDL_RENDERER_SOFTWARE | SDL_RENDERER_TARGETTEXTURE;
+        SDL_Log("Retro compatibility mode: requesting SDL software renderer");
+    }
+#endif
 
     renderer = SDL_CreateRenderer(window, -1, rendererFlags);
+#if defined(__linux__)
+    if(!renderer && !useRetroSoftwareRenderer) {
+        SDL_Log("Accelerated SDL renderer failed (%s); trying software fallback", SDL_GetError());
+        SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "software", SDL_HINT_OVERRIDE);
+        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_TARGETTEXTURE);
+    }
+#endif
     if (!renderer) {
         fprintf(stderr, "SDL_CreateRenderer failed: %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
+    }
+    SDL_RendererInfo rendererInfo;
+    if(SDL_GetRendererInfo(renderer, &rendererInfo) == 0) {
+        SDL_Log("Active SDL renderer: %s (flags: 0x%x)", rendererInfo.name, rendererInfo.flags);
     }
 
     // Set VSync after renderer creation (works better on macOS Metal)
@@ -892,39 +913,10 @@ int main(int argc, char *argv[]) {
         SDL_Log("Starting Dune Legacy Tornie %s on %s", VERSION, SDL_GetPlatform());
 
 #if defined(__linux__) && !defined(__ANDROID__)
-        // Verify that required shared libraries are loadable before proceeding.
-        // If the binary was installed without bundled .so files and the system
-        // libraries are the wrong version or absent, dlopen catches this and
-        // logs a human-readable error instead of crashing silently on SDL_Init.
-        {
-            const char* const requiredLibs[] = {
-                "libSDL2-2.0.so.0",
-                "libSDL2_mixer-2.0.so.0",
-                "libSDL2_ttf-2.0.so.0",
-            };
-            bool allLibsFound = true;
-            for (const char* lib : requiredLibs) {
-                // RTLD_NOLOAD checks if already loaded (it is, since we're running);
-                // if it returns null anyway, fall back to a full load attempt.
-                void* handle = dlopen(lib, RTLD_LAZY | RTLD_NOLOAD);
-                if (!handle) {
-                    handle = dlopen(lib, RTLD_LAZY);
-                }
-                if (!handle) {
-                    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
-                        "Required library missing or incompatible: %s â€” %s", lib, dlerror());
-                    allLibsFound = false;
-                } else {
-                    dlclose(handle);
-                }
-            }
-            if (!allLibsFound) {
-                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
-                    "Cannot start: one or more required shared libraries could not be loaded. "
-                    "See log at: %s", getLogFilepath().c_str());
-                return EXIT_FAILURE;
-            }
-        }
+        // Do not dlopen SDL2_mixer/SDL2_ttf merely to test startup: Linux
+        // vcpkg builds may link these libraries statically, in which case
+        // their .so files are correctly absent. Dynamically linked libraries
+        // are checked by the ELF loader before main() runs.
 #endif
 
         // First check for missing files
