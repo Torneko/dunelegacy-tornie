@@ -1,11 +1,12 @@
-# Dune Legacy Tornie 1.0.538 — essai rétro Linux Mint 22.3
+# Dune Legacy Tornie 1.0.538 — Retro Linux Mint 22.3
 
-**Statut : candidat expérimental, non validé sur le portable ciblé.**
-Ordinateur visé : Intel Core i5 (vers 2013), NVIDIA GeForce GT 540M,
-8 Go de RAM, Linux Mint 22.3, noyau 6.17.x.
-Cette construction **n'est pas une preuve de compatibilité** : le pilote Nouveau,
-la carte graphique hybride, l'audio et les bibliothèques système peuvent
-encore empêcher le démarrage.
+**Statut : testé avec succès sur un portable ciblé le 14 octobre 2026.**
+Configuration communiquée : Intel Core i5 (vers 2013), GeForce GT 540M,
+8 Go de RAM, Linux Mint 22.3, noyau série 6.17.
+Le propriétaire du PC a confirmé le démarrage du jeu, une campagne jouable
+et un son fonctionnel avec la nouvelle AppImage corrigée.
+Cette validation couvre cette configuration signalée, **pas toutes les
+machines Linux Mint ou tous les pilotes NVIDIA/Nouveau**.
 
 ## Correctif du 14 octobre 2026 : bibliothèques SDL2 faussement manquantes
 
@@ -20,8 +21,8 @@ Cette branche retire ce précontrôle redondant (les dépendances dynamiques
 réellement indispensables sont déjà chargées par l'éditeur de liens Linux),
 ajoute `usr/lib/dunelegacy` au chemin du lanceur, et demande à la CI de
 contrôler les dépendances ELF de l'exécutable effectivement extrait de
-l'AppImage (`ldd`). La révision candidate antérieure doit être remplacée
-par **l'artefact du nouveau workflow**. Le jeu reste à retester sur le PC.
+l'AppImage (`ldd`). L'ancien candidat doit être remplacé par la version corrigée, celle dont
+le test sur le portable cible a été confirmé le 14 octobre 2026.
 
 Pour essayer uniquement l'ancienne AppImage en attendant le correctif,
 sur Mint 22.3 il est possible d'installer les versions partagées avec :
