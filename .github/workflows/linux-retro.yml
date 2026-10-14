@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'compat/linux-mint-*'
+      - 'publish/linux-mint-22-retro-1538'
   workflow_dispatch:
     inputs:
       publish_release:
@@ -118,8 +119,8 @@ jobs:
             build-retro/DuneLegacyTornie-1.0.538-Linux-Mint-22.3-Retro-x86_64.AppImage.sha256
           retention-days: 30
 
-      - name: Publish separate optional asset, only if explicitly requested
-        if: github.event_name == 'workflow_dispatch' && inputs.publish_release == true
+      - name: Publish additional Retro Linux asset after on-device validation
+        if: (github.event_name == 'workflow_dispatch' && inputs.publish_release == true) || github.ref == 'refs/heads/publish/linux-mint-22-retro-1538'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
