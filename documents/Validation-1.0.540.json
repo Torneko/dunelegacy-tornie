@@ -18,5 +18,31 @@
     "tested": false
   },
   "scope": "restore Mint launch profile and allow software renderer; no gameplay change",
-  "reproduction": "published static 1.0.539 AppImage exits 1 without host SDL2_mixer/SDL2_ttf libraries"
+  "reproduction": "published static 1.0.539 AppImage exits 1 without host SDL2_mixer/SDL2_ttf libraries",
+  "linuxCI": {
+    "version": "1.0.540",
+    "source": "17c7d375bfdfe0204acd110bea57409e9bbe4896",
+    "workflowSource": "b056b3ca6c4c7deda9934c6854a409dfa94ae542",
+    "run": 38695978990,
+    "graphicalStartup": {
+      "passed": true,
+      "languages": [
+        "en",
+        "fr"
+      ],
+      "images": [
+        "standard",
+        "Mint-compatible"
+      ],
+      "audio": "PulseAudio"
+    },
+    "softwareFallback": true,
+    "engineAndNetworkTests": true
+  },
+  "mintAppImage": {
+    "sha256": "f2d09ea4d22366e37d13dca7052bd30ddd5245e68f44a6c2ecd63192bf543347",
+    "cleanEnvironmentStartup": "passed without development library paths",
+    "networkRegression": "passed",
+    "exactModFiles": 3177
+  }
 }
