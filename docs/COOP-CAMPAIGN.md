@@ -1,6 +1,6 @@
 # Campagne coop commune — 1.0.538
 
-La version Linux 1.0.540 utilise le protocole 10 ; les deux joueurs doivent avoir la même version. Le relais par l’hôte permet désormais les invités isolés en multijoueur Internet personnalisé ; voir les [notes 1.0.539](../release_notes/1.0.539-FR.md). Le compte rendu à deux PC ci-dessous concerne 1.0.538.
+Les versions Windows et Linux 1.0.540 utilisent le protocole 10 ; les deux joueurs doivent avoir la même version. Le relais par l’hôte permet désormais les invités isolés en multijoueur Internet personnalisé ; voir les [notes 1.0.539](../release_notes/1.0.539-FR.md). Le compte rendu à deux PC ci-dessous concerne 1.0.538.
 
 Tornie a confirmé le bon fonctionnement de la coop 1.0.538 sur deux PC (2026-10-09).
 

@@ -1,6 +1,6 @@
 # Common co-op campaign — 1.0.538
 
-Linux 1.0.540 uses protocol 10; both players need the same build. Host relay fallback now supports guest isolation in custom Internet multiplayer; see [1.0.539 notes](../release_notes/1.0.539-EN.md). The two-PC report below concerns 1.0.538.
+Windows and Linux 1.0.540 use protocol 10; both players need the same build. Host relay fallback now supports guest isolation in custom Internet multiplayer; see [1.0.539 notes](../release_notes/1.0.539-EN.md). The two-PC report below concerns 1.0.538.
 
 Tornie confirmed co-op 1.0.538 works on two PCs (2026-10-09).
 

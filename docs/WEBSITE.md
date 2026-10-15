@@ -1,4 +1,16 @@
-# Published 1.0.540 — 2026-10-15
+# Windows 1.0.540 published — 2026-10-15
+
+The Windows 64-bit ZIP is now attached to the same 1.0.540 release as Linux. It uses the immutable game source `17c7d375bfdfe0204acd110bea57409e9bbe4896`, protocol 10 and save format 9831, including the host relay for isolated guests. Extract the entire ZIP into a new folder and launch `dunelegacy.exe`. All players need the same version and mod.
+
+- Windows build, engine/network tests, installed FR/EN mod/achievement checks and actual menu startup: https://github.com/Torneko/dunelegacy-tornie/actions/runs/38789679153 — success.
+- Public Windows ZIP SHA-256: `807e6aaae7f6632ebd2a46675618cf71b16c58324cf3122e377cbb62984307e1`. All 3,177 mod files match the tagged source exactly; the download returns HTTP 200.
+- FR/EN site recovered from `afb742b` and published at `fabd49f`: https://github.com/Torneko/dunelegacy-tornie/actions/runs/38792866861 — success.
+- Matching offline package with Windows 1.0.540, notes, reports and checksums: https://github.com/Torneko/dunelegacy-tornie/actions/runs/38792988463 — success; 72 offline/live FR/EN desktop/mobile browser checks passed, including the current Windows links.
+- All 15 checksum entries match GitHub's public asset digests. Sixteen release assets are public. The five Linux package digests are unchanged.
+
+Windows 1.0.538 remains historical and cannot join protocol 10 sessions. Three independent human Internet connections and native Mint 22.3/kernel 6.17 still await user confirmation. Recover this published site or the refreshed 1.0.540 offline ZIP for the next update.
+
+# Initial Linux publication 1.0.540 — 2026-10-15
 
 Mint AppImage startup is corrected: the static executable no longer demands shared SDL mixer/TTF copies on the host. The Mint launcher, previous Mint profile, X11/software/PulseAudio and an automatic software fallback are included. The actual published Mint image passed a full menu startup without development-library paths, the UDP regression and an exact comparison of all 3,177 mod files.
 
