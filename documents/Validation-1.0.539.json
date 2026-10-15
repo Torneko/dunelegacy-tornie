@@ -44,5 +44,16 @@
     "passed": true,
     "scenarios": 1210,
     "rebuiltMaps": 528
+  },
+  "source": "12d67c60b889102b419c762694bad6995e953fcb",
+  "linuxCI": {
+    "run": 38685210586,
+    "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/38685210586",
+    "result": "success"
+  },
+  "packagedAppImage": {
+    "sha256": "94fe6050214babbdb3527a4e86408cca8d07bbeaf4c5253174773f27f253ebb3",
+    "networkRegression": "passed on extracted release AppImage",
+    "exactModFiles": 3177
   }
 }
