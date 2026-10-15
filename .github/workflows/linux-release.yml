@@ -8,6 +8,14 @@ on:
         required: true
         default: v1.0.539
         type: string
+      documentation_only:
+        description: Attach the matching bilingual offline site and supporting files after a successful Linux run
+        type: boolean
+        default: false
+      verified_linux_run:
+        description: Successful Linux package run ID (required for documentation_only)
+        type: string
+        default: ''
 
 permissions:
   contents: write
@@ -18,6 +26,7 @@ concurrency:
 
 jobs:
   build-linux:
+    if: ${{ !inputs.documentation_only }}
     # Ubuntu 22.04 keeps glibc compatibility with Linux Mint 21 and remains compatible with Mint 22.
     runs-on: ubuntu-22.04
     steps:
@@ -162,3 +171,76 @@ jobs:
             echo "Formats: DEB, RPM, TAR.GZ and AppImage."
             echo "Engine tests and the real UDP direct/host-relay regression passed before packaging."
           } >> "$GITHUB_STEP_SUMMARY"
+
+  release-documents:
+    if: ${{ inputs.documentation_only }}
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.release_tag }}
+
+      - name: Verify the packaged source and matching website
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          VERIFIED_LINUX_RUN: ${{ inputs.verified_linux_run }}
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          [[ "$VERIFIED_LINUX_RUN" =~ ^[0-9]+$ ]]
+          bash scripts/bump-version.sh --check
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$VERIFIED_LINUX_RUN" > linux-run.json
+          python3 - <<'PYTHON'
+          import json, subprocess
+          run = json.load(open('linux-run.json'))
+          assert run['conclusion'] == 'success', 'Linux package run has not succeeded'
+          assert run['head_sha'] == subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(), 'Linux packages use another source'
+          assert run['path'] == '.github/workflows/linux-release.yml', 'Unexpected package workflow'
+          PYTHON
+          git fetch --depth=1 origin gh-pages
+          mkdir -p offline/DuneLegacyTornie-Site-Local/dist supporting
+          git archive FETCH_HEAD | tar -x -C offline/DuneLegacyTornie-Site-Local/dist
+          RELEASE_VERSION="${RELEASE_TAG#v}" node - <<'JAVASCRIPT'
+          const fs=require('fs'),vm=require('vm'),c={window:{}};vm.createContext(c);
+          vm.runInContext(fs.readFileSync('offline/DuneLegacyTornie-Site-Local/dist/assets/site-data.js','utf8'),c);
+          if(c.window.SITE_DATA.version!==process.env.RELEASE_VERSION)throw Error('Website version differs from the release');
+          JAVASCRIPT
+
+      - name: Assemble and attach release documents
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          VERIFIED_LINUX_RUN: ${{ inputs.verified_linux_run }}
+        run: |
+          set -euo pipefail
+          VERSION="${RELEASE_TAG#v}"
+          git archive --format=zip --prefix="DuneLegacyTornie-$VERSION/" -o "supporting/DuneLegacyTornie-$VERSION-Sources.zip" HEAD
+          cp "release_notes/$VERSION-FR.md" "supporting/Release-Notes-$VERSION-FR.md"
+          cp "release_notes/$VERSION-EN.md" "supporting/Release-Notes-$VERSION-EN.md"
+          cp "release_notes/Validation-$VERSION.json" supporting/
+          gh release download "$RELEASE_TAG" --pattern '*Linux*' --dir supporting
+          test "$(find supporting -maxdepth 1 -name '*.AppImage' | wc -l)" -eq 1
+          test "$(find supporting -maxdepth 1 -name '*.deb' | wc -l)" -eq 1
+          test "$(find supporting -maxdepth 1 -name '*.rpm' | wc -l)" -eq 1
+          test "$(find supporting -maxdepth 1 -name '*.tar.gz' | wc -l)" -eq 1
+          cp supporting/* offline/DuneLegacyTornie-Site-Local/dist/documents/
+          # The current Linux release explicitly retains the previous Windows
+          # download for offline documentation; it is not network-compatible.
+          gh release download v1.0.538 --pattern DuneLegacyTornie-1.0.538-Windows-x64.zip --dir offline/DuneLegacyTornie-Site-Local/dist/documents --clobber
+          python3 - <<'PYTHON'
+          import hashlib, json, os, pathlib, subprocess, zipfile
+          root = pathlib.Path('supporting')
+          report = {'version': os.environ['RELEASE_TAG'][1:], 'source': subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(), 'website': subprocess.check_output(['git','rev-parse','FETCH_HEAD'],text=True).strip(), 'linuxRun': int(os.environ['VERIFIED_LINUX_RUN']), 'assets': []}
+          for path in sorted(root.iterdir()):
+              report['assets'].append({'name':path.name,'size':path.stat().st_size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest()})
+          (root / ('Publication-Validation-'+report['version']+'.json')).write_text(json.dumps(report,indent=2)+'\n')
+          site = pathlib.Path('offline/DuneLegacyTornie-Site-Local/dist')
+          (site/'documents'/('Publication-Validation-'+report['version']+'.json')).write_text(json.dumps(report,indent=2)+'\n')
+          with zipfile.ZipFile(root / ('DuneLegacyTornie-Site-Local-'+report['version']+'.zip'),'w',zipfile.ZIP_DEFLATED) as archive:
+              for path in sorted(pathlib.Path('offline').rglob('*')):
+                  if path.is_file(): archive.write(path,path.relative_to('offline'))
+          PYTHON
+          (cd supporting && sha256sum * > "SHA256SUMS-$VERSION.txt")
+          gh release upload "$RELEASE_TAG" supporting/* --clobber
+          echo "Bilingual offline site, tagged sources, notes and SHA-256 checksums attached to $RELEASE_TAG." >> "$GITHUB_STEP_SUMMARY"
