@@ -7,6 +7,15 @@ on:
   pull_request:
     branches: [ main, dunelegacy-tornie ]
   workflow_dispatch:
+    inputs:
+      windows_only:
+        description: Build and attach only Windows to an existing release
+        type: boolean
+        default: false
+      release_tag:
+        description: Existing version tag (required for windows_only)
+        type: string
+        default: ''
 
 concurrency:
   group: build-${{ github.ref }}
@@ -17,17 +26,22 @@ jobs:
   # (CMakeLists.txt, include/config.h, vcpkg.json) already matches the tag.
   # This catches missing bump commits BEFORE any build/release/upload runs.
   verify-version:
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/v') || inputs.windows_only
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.windows_only && inputs.release_tag || github.ref }}
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
       - name: Verify source version matches tag
+        env:
+          RELEASE_TAG: ${{ inputs.windows_only && inputs.release_tag || github.ref_name }}
         run: |
-          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          TAG_VERSION="${RELEASE_TAG#v}"
           echo "Tag version: $TAG_VERSION"
           bash scripts/bump-version.sh --check
           SOURCE_VERSION=$(sed -n 's/^project(DuneLegacyTornie VERSION \([0-9]*\.[0-9]*\.[0-9]*\).*/\1/p' CMakeLists.txt)
@@ -41,7 +55,7 @@ jobs:
   test-linux:
     runs-on: ubuntu-latest
     needs: [verify-version]
-    if: always() && (needs.verify-version.result == 'success' || needs.verify-version.result == 'skipped')
+    if: always() && !inputs.windows_only && (needs.verify-version.result == 'success' || needs.verify-version.result == 'skipped')
     steps:
       - uses: actions/checkout@v4
 
@@ -94,6 +108,8 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.windows_only && inputs.release_tag || github.ref }}
 
       - name: Install gettext tools
         run: |
@@ -113,6 +129,8 @@ jobs:
     if: always() && (needs.verify-version.result == 'success' || needs.verify-version.result == 'skipped')
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.windows_only && inputs.release_tag || github.ref }}
 
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@v11
@@ -169,14 +187,60 @@ jobs:
             Get-Content -LiteralPath $log | Select-String "MOD SMOKE|ACHIEVEMENT SMOKE|unhandled exception|runtime check:"
             if ($process.ExitCode -ne 0 -or -not (Select-String -LiteralPath $log -Pattern "MOD SMOKE COMPLETE:")) { throw "Installed $language mod runtime checks failed." }
             if (-not (Select-String -LiteralPath $log -Pattern "ACHIEVEMENT SMOKE COMPLETE:")) { throw "Installed $language achievement checks failed." }
+            if (Select-String -LiteralPath "../src/main.cpp" -Pattern 'parameter == "--verify-startup"') {
+              $startupLog = Join-Path $env:RUNNER_TEMP "dunelegacy-startup-$language.log"
+              $process = Start-Process -FilePath "install/dunelegacy.exe" -ArgumentList "--verify-startup", "--showlog", "--window" -WindowStyle Hidden -Wait -PassThru -RedirectStandardError $startupLog
+              Get-Content -LiteralPath $startupLog | Select-String "STARTUP CHECK|unhandled exception"
+              if ($process.ExitCode -ne 0 -or -not (Select-String -LiteralPath $startupLog -Pattern "STARTUP CHECK PASSED:.*language=$language")) { throw "Installed $language menu startup failed." }
+            }
           }
           cpack -G ZIP -C Release
+
+      - name: Record Windows package provenance
+        if: inputs.windows_only
+        run: |
+          $version = "${{ inputs.release_tag }}".Substring(1)
+          $package = Get-Item "build/DuneLegacyTornie-$version-Windows-x64.zip"
+          $report = @{
+            version = $version
+            source = (git rev-parse HEAD)
+            workflowSource = "${{ github.sha }}"
+            run = [long]"${{ github.run_id }}"
+            engineAndNetworkTests = $true
+            installedRuntimeChecks = @("fr", "en")
+            menuStartupChecks = @("fr", "en")
+            package = $package.Name
+            sha256 = (Get-FileHash $package.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+          }
+          $report | ConvertTo-Json -Depth 5 | Set-Content "build/Windows-Build-$version.json" -Encoding utf8
 
       - name: Upload Installer
         uses: actions/upload-artifact@v4
         with:
           name: DuneLegacyTornie-Windows-Installer
-          path: build/*.zip
+          path: |
+            build/*.zip
+            build/Windows-Build-*.json
+
+  release-windows:
+    needs: [verify-version, validate-french-locale, build-windows]
+    if: always() && inputs.windows_only && needs.verify-version.result == 'success' && needs.validate-french-locale.result == 'success' && needs.build-windows.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: DuneLegacyTornie-Windows-Installer
+          path: dist/windows
+      - name: Attach verified Windows package to the existing release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          set -euo pipefail
+          gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
+          gh release upload "$RELEASE_TAG" "dist/windows/DuneLegacyTornie-${RELEASE_TAG#v}-Windows-x64.zip" "dist/windows/Windows-Build-${RELEASE_TAG#v}.json" --repo "$GITHUB_REPOSITORY" --clobber
 
   build-macos:
     # Optional: set the repository variable ENABLE_MACOS_BUILD=true when a
@@ -187,7 +251,7 @@ jobs:
     # builds in ~10 min. The DMG is ad-hoc signed, so no signing certs needed.
     runs-on: [self-hosted, macOS, ARM64]
     needs: [verify-version]
-    if: always() && vars.ENABLE_MACOS_BUILD == 'true' && (needs.verify-version.result == 'success' || needs.verify-version.result == 'skipped')
+    if: always() && !inputs.windows_only && vars.ENABLE_MACOS_BUILD == 'true' && (needs.verify-version.result == 'success' || needs.verify-version.result == 'skipped')
     timeout-minutes: 60
     env:
       CMAKE_BUILD_PARALLEL_LEVEL: "8"
@@ -208,7 +272,7 @@ jobs:
     # Ubuntu 22.04 keeps glibc compatibility with Linux Mint 21 and remains compatible with Mint 22.
     runs-on: ubuntu-22.04
     needs: [verify-version]
-    if: always() && (needs.verify-version.result == 'success' || needs.verify-version.result == 'skipped')
+    if: always() && !inputs.windows_only && (needs.verify-version.result == 'success' || needs.verify-version.result == 'skipped')
     steps:
       - uses: actions/checkout@v4
 
@@ -319,6 +383,7 @@ jobs:
     needs: [build-windows, build-linux, build-macos]
     if: |
       always() &&
+      !inputs.windows_only &&
       github.ref == 'refs/heads/main' &&
       (needs.build-windows.result == 'success' || needs.build-linux.result == 'success' || needs.build-macos.result == 'success')
     runs-on: ubuntu-latest
@@ -377,6 +442,7 @@ jobs:
     needs: [build-windows, build-linux, build-macos]
     if: |
       always() &&
+      !inputs.windows_only &&
       github.ref == 'refs/heads/tornie-beta' &&
       (needs.build-windows.result == 'success' || needs.build-linux.result == 'success' || needs.build-macos.result == 'success')
     runs-on: ubuntu-latest
@@ -436,7 +502,7 @@ jobs:
   release:
     needs: [verify-version, test-linux, validate-french-locale, build-windows, build-linux, build-macos]
     # Windows is required. Linux and macOS are attached when available.
-    if: always() && startsWith(github.ref, 'refs/tags/v') && needs.verify-version.result == 'success' && needs.test-linux.result == 'success' && needs.validate-french-locale.result == 'success' && needs.build-windows.result == 'success'
+    if: always() && !inputs.windows_only && startsWith(github.ref, 'refs/tags/v') && needs.verify-version.result == 'success' && needs.test-linux.result == 'success' && needs.validate-french-locale.result == 'success' && needs.build-windows.result == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: write
