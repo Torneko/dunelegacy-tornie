@@ -1,3 +1,15 @@
+# Release 1.0.539 — Internet host relay (Linux)
+
+The 1.0.539 site is based on freshly recovered `origin/gh-pages` commit
+`973ba9c5fdad2cf880e802e431ddbb0f2723aaaa`. Both languages document direct
+connections followed by host relay when guests cannot communicate, protocol 10,
+unchanged save format 9831, the requirement for a reachable host, and the scope
+of the UDP regression. Historical two-PC confirmation remains attached to
+1.0.538. Windows 1.0.538 downloads remain explicitly versioned and cannot join
+1.0.539; Linux downloads use the new CI packages. Unit/building routes, factions,
+achievements and the 121 original PNGs are retained. Release notes and the
+matching offline website accompany the release.
+
 ## Published revision r8 — 2026-10-10
 
 The existing 1.0.538 release now includes the accepted r6 painted-unit portrait

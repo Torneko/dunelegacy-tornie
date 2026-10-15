@@ -1,0 +1,43 @@
+{
+  "version": "1.0.539",
+  "networkProtocol": 10,
+  "saveVersion": 9831,
+  "date": "2026-10-15",
+  "engine": {
+    "ctest": "passed",
+    "cases": 122,
+    "assertions": 7412
+  },
+  "network": {
+    "runner": "dunelegacy --verify-network",
+    "transport": "real ENet UDP sockets on loopback",
+    "guestLinkFilter": "drops all UDP datagrams between Guest1 and Guest2",
+    "direct": "passed",
+    "relay": "passed",
+    "filteredDatagrams": 4,
+    "coverage": [
+      "third-player admission",
+      "logical rosters",
+      "lobby team changes",
+      "start",
+      "chat without sender echo",
+      "20 command cycles including CMD_TEST_SYNC parameters and player IDs",
+      "selections",
+      "stale epoch rejection",
+      "forged relay and start rejection",
+      "fourth guest",
+      "disconnect and rejoin",
+      "host loss",
+      "two-player coop readiness, transitions and protocol mismatch"
+    ]
+  },
+  "payloads": "check-bundled-mods.py passed",
+  "spiceMaps": "add-spice-variants.py --check passed",
+  "campaigns": "check-campaign-regions.py passed",
+  "limitations": [
+    "No live human match across three independent Internet connections",
+    "Native Linux Mint 22.3/kernel 7.0 not tested",
+    "Every guest still needs a reachable host"
+  ],
+  "websiteBaseline": "973ba9c5fdad2cf880e802e431ddbb0f2723aaaa"
+}

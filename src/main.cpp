@@ -812,6 +812,13 @@ int main(int argc, char *argv[]) {
             std::string parameter(argv[i]);
 
             #ifdef DUNELEGACY_RUNTIME_TESTS
+            if(parameter == "--verify-network") {
+                if(SDL_Init(SDL_INIT_TIMER) != 0) throw std::runtime_error(SDL_GetError());
+                NetworkManager::verifyCoopTransport();
+                NetworkManager::verifyInternetRelayTransport();
+                SDL_Quit();
+                return EXIT_SUCCESS;
+            }
             if(parameter == "--verify-mods") { bVerifyMods = true; continue; }
             if(parameter == "--verify-achievements") { bVerifyMods = true; bVerifyAchievements = true; continue; }
             if(parameter == "--verify-release-538") { bVerifyMods = true; bVerifyRelease538 = true; continue; }

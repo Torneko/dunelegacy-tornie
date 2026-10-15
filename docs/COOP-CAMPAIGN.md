@@ -1,5 +1,7 @@
 # Campagne coop commune — 1.0.538
 
+La version Linux 1.0.539 utilise le protocole 10 ; les deux joueurs doivent avoir la même version. Le relais par l’hôte permet désormais les invités isolés en multijoueur Internet personnalisé ; voir les [notes 1.0.539](../release_notes/1.0.539-FR.md). Le compte rendu à deux PC ci-dessous concerne 1.0.538.
+
 Tornie a confirmé le bon fonctionnement de la coop 1.0.538 sur deux PC (2026-10-09).
 
 [English guide](COOP-CAMPAIGN-EN.md)
@@ -87,7 +89,7 @@ campagne commune, avec un humain ou une IA. Le mode facile autorise le saut de l
 Le déblocage reste local et une session terminée ne compte qu’une fois dans le cumul.
 Les succès des campagnes solo gardent leurs conditions.
 
-Les deux PC doivent utiliser **1.0.538**, protocole **9**. Les nouvelles sauvegardes
+Les deux PC doivent utiliser **1.0.538**, protocole **10**. Les nouvelles sauvegardes
 portent la version **9831** ; les anciennes restent lisibles avec leurs forces et
 renforts enregistrés. Commencer une nouvelle campagne ou passer à la mission suivante
 pour profiter des nouveaux renforts. La version publique est 1.0.538. La coop sur deux PC est confirmée par Tornie. Mint 22.3 / noyau 7.0 reste à essayer.

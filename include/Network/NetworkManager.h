@@ -65,6 +65,8 @@
 #define NETWORKPACKET_KEEPALIVE             19  // Periodic ping to keep NAT mappings alive
 #define NETWORKPACKET_COOP_READY            20  // Client -> host: mission result and readiness
 #define NETWORKPACKET_COOP_ADVANCE          21  // Host -> client: authoritative next mission
+#define NETWORKPACKET_RELAY_MODE            22  // Host -> client: authoritative relay roster
+#define NETWORKPACKET_RELAY                 23  // Host -> client: authenticated guest payload
 
 // Network protocol version - increment when packet formats change
 // Version 2: Added simMsAvg to NETWORKPACKET_CLIENTSTATS (5 fields instead of 4)
@@ -72,7 +74,8 @@
 // Version 4: Fixed nine-house deterministic state and versioned visibility storage
 // Version 5: Cooperative campaign result/readiness and stage transitions
 // Version 9: Doublefinery's deterministic footprint is five by two.
-#define NETWORK_PROTOCOL_VERSION            9
+// Version 10: Host relay fallback and authenticated logical peer identities.
+#define NETWORK_PROTOCOL_VERSION            10
 
 /**
  * Reject an incompatible config-hash handshake and dispatch its disconnect cause.
@@ -102,6 +105,8 @@ public:
     // Runtime regression check using two loopback sockets, without discovery,
     // router port mapping, external servers or profile writes. Throws on failure.
     static void verifyCoopTransport();
+    static void verifyInternetRelayTransport();
+    bool isHostRelayEnabled() const { return hostRelayEnabled; }
 
     bool isServer() const { return bIsServer; };
     bool isLANServer() const { return bLANServer; };
@@ -154,6 +159,7 @@ public:
     Uint32 getGameEpoch() const { return gameEpoch; }
 
     std::list<std::string> getConnectedPeers() const {
+        if(hostRelayEnabled && !bIsServer) return relayPeerNames;
         std::list<std::string> peerNameList;
 
         for(const ENetPeer* pPeer : peerList) {
@@ -362,7 +368,11 @@ private:
 
     void sendPacketToAllConnectedPeers(ENetPacketOStream& packetStream, int channel = 0);
 
-    void handlePacket(ENetPeer* peer, ENetPacketIStream& packetStream);
+    void handlePacket(ENetPeer* peer, ENetPacketIStream& packetStream,
+        const std::string& relayedSender = "");
+    void admitPeer(ENetPeer* peer);
+    void sendRelayRoster(int disconnectCause = NETWORKDISCONNECT_QUIT);
+    void relayPacket(ENetPeer* sender, ENetPacketOStream& payload, int channel);
 
     class PeerData {
     public:
@@ -394,6 +404,9 @@ private:
 
     ENetHost* host = nullptr;
     bool bIsServer = false;
+    bool hostRelayEnabled = false; // Sticky until the session ends; no mixed routes.
+    std::list<std::string> relayPeerNames;
+    int relayRoundTripTime = 0;
     bool diagnosticsOnly = false;
     bool bLANServer = false;
     bool bGameInProgress = false;  // Set true when game starts - disables lobby-only features

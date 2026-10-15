@@ -19,10 +19,10 @@
 #define TEST_NETWORKPACKET_SENDGAMEINFO         1
 #define TEST_NETWORKPACKET_CLIENTSTATS          13
 #define TEST_NETWORKPACKET_KEEPALIVE            19
-#define TEST_NETWORK_PROTOCOL_VERSION           9
+#define TEST_NETWORK_PROTOCOL_VERSION           10
 
-TEST_CASE("NetworkManager: Doublefinery commands require protocol 8", "[network][protocol]") {
-    REQUIRE(NETWORK_PROTOCOL_VERSION == 9);
+TEST_CASE("NetworkManager: host relay requires protocol 10", "[network][protocol]") {
+    REQUIRE(NETWORK_PROTOCOL_VERSION == 10);
     REQUIRE(TEST_NETWORK_PROTOCOL_VERSION != 4);
     REQUIRE(NETWORKPACKET_COOP_READY == 20);
     REQUIRE(NETWORKPACKET_COOP_ADVANCE == 21);

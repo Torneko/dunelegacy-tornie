@@ -92,11 +92,17 @@ NetworkManager::~NetworkManager() {
     pUPnPManager.reset();
     pMetaServerClient.reset();
     pLANGameFinderAndAnnouncer.reset();
+    for(size_t i = 0; i < host->peerCount; ++i) {
+        delete static_cast<PeerData*>(host->peers[i].data);
+        host->peers[i].data = nullptr;
+    }
     enet_host_destroy(host);
     enet_deinitialize();
 }
 
 void NetworkManager::startServer(bool bLANServer, const std::string& serverName, const std::string& playerName, GameInitSettings* pGameInitSettings, int numPlayers, int maxPlayers) {
+    hostRelayEnabled = false;
+    relayPeerNames.clear();
     // Reset game-in-progress flag for new game
     bGameInProgress = false;
 
@@ -319,6 +325,9 @@ void NetworkManager::connect(const std::string& hostname, int port, const std::s
 }
 
 void NetworkManager::connect(ENetAddress address, const std::string& playerName) {
+    hostRelayEnabled = false;
+    relayPeerNames.clear();
+    relayRoundTripTime = 0;
     debugNetwork("Connecting to %s:%d\n", Address2String(address).c_str(), address.port);
 
     connectPeer = enet_host_connect(host, &address, 2, 0);
@@ -461,6 +470,7 @@ void NetworkManager::update()
 
             if (bIsServer) {
                 sendPacketToAllConnectedPeers(packetStream);
+                if(hostRelayEnabled) sendRelayRoster();
             } else if (connectPeer != nullptr) {
                 sendPacketToHost(packetStream);
             }
@@ -482,36 +492,8 @@ void NetworkManager::update()
                     peerData->timeout = SDL_GetTicks() + AWAITING_CONNECTION_TIMEOUT;
                     peerData->notYetConnectedPeers = peerList;
 
-                    if(peerData->notYetConnectedPeers.empty()) {
-                        // first client on this server
-                        // => change immediately to connected
-
-                        // get change event list first
-                        ChangeEventList changeEventList = pGetChangeEventListForNewPlayerCallback(peerData->name);
-
-                        debugNetwork("Moving '%s' from awaiting connection list to peer list\n", peerData->name.c_str());
-                        peerList.push_back(pCurrentPeer);
-                        peerData->peerState = PeerData::PeerState::Connected;
-                        peerData->timeout = 0;
-                        awaitingConnectionList.remove(pCurrentPeer);
-
-                        // send peer game settings
-                        ENetPacketOStream packetOStream2(ENET_PACKET_FLAG_RELIABLE);
-                        packetOStream2.writeUint32(NETWORKPACKET_SENDGAMEINFO);
-                        pGameInitSettings->save(packetOStream2);
-
-                        changeEventList.save(packetOStream2);
-
-                        sendPacketToPeer(pCurrentPeer, packetOStream2);
-
-                        // Send mod info to newly connected peer for mod sync
-                        if(!diagnosticsOnly && ModManager::instance().isInitialized()) {
-                            std::string modName = ModManager::instance().getActiveModName();
-                            std::string modChecksum = ModManager::instance().getEffectiveChecksums().combined;
-                            SDL_Log("NetworkManager: Sending mod info to new peer - mod='%s', checksum=%s",
-                                    modName.c_str(), modChecksum.c_str());
-                            sendModInfoToPeer(pCurrentPeer, modName, modChecksum);
-                        }
+                    if(hostRelayEnabled || peerData->notYetConnectedPeers.empty()) {
+                        admitPeer(pCurrentPeer);
                     } else {
                         // instruct all connected peers to connect
 
@@ -526,25 +508,20 @@ void NetworkManager::update()
                 }
             }
 
-            if(peerData->timeout > 0 && SDL_GetTicks() > peerData->timeout) {
+            if(peerData->timeout > 0 && SDL_TICKS_PASSED(SDL_GetTicks(), peerData->timeout)) {
                 // timeout
                 switch(peerData->peerState) {
                     case PeerData::PeerState::WaitingForName: {
-                        // nothing to do
+                        enet_peer_disconnect(pCurrentPeer, NETWORKDISCONNECT_TIMEOUT);
+                        awaitingConnectionList.pop_front();
                     } break;
 
                     case PeerData::PeerState::WaitingForOtherPeersToConnect: {
-                        // the client awaiting connection has timed out => send everyone a disconnect message
-                        ENetPacketOStream packetStream(ENET_PACKET_FLAG_RELIABLE);
-                        packetStream.writeUint32(NETWORKPACKET_DISCONNECT);
-                        packetStream.writeUint32(SDL_SwapBE32(pCurrentPeer->address.host));
-                        packetStream.writeUint16(pCurrentPeer->address.port);
-
-                        sendPacketToAllConnectedPeers(packetStream);
-
-                        enet_peer_disconnect(pCurrentPeer, NETWORKDISCONNECT_TIMEOUT);
-
-                        awaitingConnectionList.pop_front();
+                        // A reachable host is sufficient. Switch the whole session once,
+                        // before admitting this guest, so a packet has only one route.
+                        hostRelayEnabled = true;
+                        SDL_Log("NetworkManager: guest mesh unavailable; using host relay");
+                        admitPeer(pCurrentPeer);
                     } break;
 
                     case PeerData::PeerState::Connected:
@@ -581,6 +558,12 @@ void NetworkManager::update()
 
                     sendPacketToPeer(peer, packetStream);
                 } else if(connectPeer != nullptr) {
+                    if(hostRelayEnabled && peer != connectPeer) {
+                        delete static_cast<PeerData*>(peer->data);
+                        peer->data = nullptr;
+                        enet_peer_reset(peer);
+                        break;
+                    }
                     // Client
                     PeerData* peerData = static_cast<PeerData*>(peer->data);
 
@@ -644,7 +627,7 @@ void NetworkManager::update()
 
                 if(peerData != nullptr) {
                     if(std::find(awaitingConnectionList.begin(), awaitingConnectionList.end(), peer) != awaitingConnectionList.end()) {
-                        if(peerData->peerState == PeerData::PeerState::WaitingForOtherPeersToConnect) {
+                        if(bIsServer && !hostRelayEnabled && peerData->peerState == PeerData::PeerState::WaitingForOtherPeersToConnect) {
                             ENetPacketOStream packetStream(ENET_PACKET_FLAG_RELIABLE);
                             packetStream.writeUint32(NETWORKPACKET_DISCONNECT);
                             packetStream.writeUint32(SDL_SwapBE32(peer->address.host));
@@ -667,7 +650,8 @@ void NetworkManager::update()
                         packetStream.writeUint32(SDL_SwapBE32(peer->address.host));
                         packetStream.writeUint16(peer->address.port);
 
-                        sendPacketToAllConnectedPeers(packetStream);
+                        if(bIsServer && hostRelayEnabled) sendRelayRoster(disconnectCause);
+                        else sendPacketToAllConnectedPeers(packetStream);
 
                         if(pOnPeerDisconnected) {
                             pOnPeerDisconnected(peerData->name, (peer == connectPeer), disconnectCause);
@@ -688,6 +672,8 @@ void NetworkManager::update()
 
                 if(peer == connectPeer) {
                     connectPeer = nullptr;
+                    relayPeerNames.clear();
+                    hostRelayEnabled = false;
                 }
 
             } break;
@@ -699,15 +685,65 @@ void NetworkManager::update()
     }
 }
 
-void NetworkManager::handlePacket(ENetPeer* peer, ENetPacketIStream& packetStream)
+void NetworkManager::handlePacket(ENetPeer* peer, ENetPacketIStream& packetStream, const std::string& relayedSender)
 {
     try {
         Uint32 packetType = packetStream.readUint32();
+        const auto* source = static_cast<PeerData*>(peer->data);
+        const bool peerPayload = packetType == NETWORKPACKET_CHATMESSAGE
+            || packetType == NETWORKPACKET_COMMANDLIST || packetType == NETWORKPACKET_SELECTIONLIST;
+        if(!relayedSender.empty() && !peerPayload) return;
+        if(hostRelayEnabled && !bIsServer && peer != connectPeer) return;
+        if(peerPayload && (!source || source->peerState != PeerData::PeerState::Connected)) return;
+        const std::string senderName = relayedSender.empty() && source ? source->name : relayedSender;
 
         switch(packetType) {
+            case NETWORKPACKET_RELAY_MODE: {
+                if(bIsServer || peer != connectPeer || !source) break;
+                const Uint32 count = packetStream.readUint32();
+                if(count > 32) break;
+                std::list<std::string> names;
+                for(Uint32 i = 0; i < count; ++i) {
+                    auto name = packetStream.readString();
+                    if(name.empty() || name == playerName || std::find(names.begin(), names.end(), name) != names.end()) return;
+                    names.push_back(std::move(name));
+                }
+                const int rtt = packetStream.readUint32();
+                const int cause = packetStream.readUint32();
+                if(std::find(names.begin(), names.end(), source->name) == names.end()) break;
+                const auto previousNames = hostRelayEnabled ? relayPeerNames : std::list<std::string>{};
+                hostRelayEnabled = true;
+                relayPeerNames = std::move(names);
+                relayRoundTripTime = rtt;
+                // Cancel both completed and pending direct links without reporting
+                // a departure: those players are still present through the host.
+                for(size_t i = 0; i < host->peerCount; ++i) {
+                    ENetPeer* direct = &host->peers[i];
+                    if(direct == connectPeer) continue;
+                    peerList.remove(direct);
+                    awaitingConnectionList.remove(direct);
+                    delete static_cast<PeerData*>(direct->data);
+                    direct->data = nullptr;
+                    enet_peer_reset(direct);
+                }
+                for(const auto& name : previousNames) {
+                    if(std::find(relayPeerNames.begin(), relayPeerNames.end(), name) == relayPeerNames.end()
+                        && pOnPeerDisconnected) pOnPeerDisconnected(name, false, cause);
+                }
+            } break;
+
+            case NETWORKPACKET_RELAY: {
+                if(bIsServer || !hostRelayEnabled || peer != connectPeer || !source || !relayedSender.empty()) break;
+                const auto sender = packetStream.readString();
+                const auto payload = packetStream.readString();
+                if(sender == source->name || std::find(relayPeerNames.begin(), relayPeerNames.end(), sender) == relayPeerNames.end()) break;
+                ENetPacketIStream inner(enet_packet_create(payload.data(), payload.size(), 0));
+                handlePacket(peer, inner, sender);
+            } break;
+
             case NETWORKPACKET_CONNECT: {
 
-                if(bIsServer == false) {
+                if(!bIsServer && peer == connectPeer && !hostRelayEnabled) {
                     ENetAddress address;
 
                     address.host = SDL_SwapBE32(packetStream.readUint32());
@@ -730,6 +766,7 @@ void NetworkManager::handlePacket(ENetPeer* peer, ENetPacketIStream& packetStrea
             } break;
 
             case NETWORKPACKET_DISCONNECT: {
+                if(bIsServer || peer != connectPeer || hostRelayEnabled) break;
                 ENetAddress address;
 
                 address.host = SDL_SwapBE32(packetStream.readUint32());
@@ -752,6 +789,9 @@ void NetworkManager::handlePacket(ENetPeer* peer, ENetPacketIStream& packetStrea
             } break;
 
             case NETWORKPACKET_PEER_CONNECTED: {
+                if(hostRelayEnabled || (!bIsServer && peer != connectPeer)) break;
+                const auto* reportingPeer = static_cast<PeerData*>(peer->data);
+                if(bIsServer && (!reportingPeer || reportingPeer->peerState != PeerData::PeerState::Connected)) break;
 
                 ENetAddress address;
 
@@ -780,33 +820,7 @@ void NetworkManager::handlePacket(ENetPeer* peer, ENetPacketIStream& packetStrea
 
                                 sendPacketToAllConnectedPeers(packetOStream);
 
-                                // get change event list first
-                                ChangeEventList changeEventList = pGetChangeEventListForNewPlayerCallback(peerData->name);
-
-                                // move peer to peer list
-                                debugNetwork("Moving '%s' from awaiting connection list to peer list\n", peerData->name.c_str());
-                                peerList.push_back(pCurrentPeer);
-                                peerData->peerState = PeerData::PeerState::Connected;
-                                peerData->timeout = 0;
-                                awaitingConnectionList.remove(pCurrentPeer);
-
-                                // send peer game settings
-                                ENetPacketOStream packetOStream2(ENET_PACKET_FLAG_RELIABLE);
-                                packetOStream2.writeUint32(NETWORKPACKET_SENDGAMEINFO);
-                                pGameInitSettings->save(packetOStream2);
-
-                                changeEventList.save(packetOStream2);
-
-                                sendPacketToPeer(pCurrentPeer, packetOStream2);
-
-                                // Send mod info to newly connected peer for mod sync
-                                if(ModManager::instance().isInitialized()) {
-                                    std::string modName = ModManager::instance().getActiveModName();
-                                    std::string modChecksum = ModManager::instance().getEffectiveChecksums().combined;
-                                    SDL_Log("NetworkManager: Sending mod info to new peer - mod='%s', checksum=%s",
-                                            modName.c_str(), modChecksum.c_str());
-                                    sendModInfoToPeer(pCurrentPeer, modName, modChecksum);
-                                }
+                                admitPeer(pCurrentPeer);
                             }
                         }
                     }
@@ -832,7 +846,7 @@ void NetworkManager::handlePacket(ENetPeer* peer, ENetPacketIStream& packetStrea
             } break;
 
             case NETWORKPACKET_SENDGAMEINFO: {
-                if(!connectPeer) {
+                if(bIsServer || peer != connectPeer) {
                     break;
                 }
 
@@ -896,7 +910,12 @@ void NetworkManager::handlePacket(ENetPeer* peer, ENetPacketIStream& packetStrea
                     break;
                 }
 
+                if(peerData->peerState == PeerData::PeerState::Connected && !peerData->name.empty()) break;
                 std::string newName = packetStream.readString();
+                if(newName.empty() || newName.size() > 128) {
+                    enet_peer_disconnect_later(peer, NETWORKDISCONNECT_PLAYER_EXISTS);
+                    break;
+                }
                 bool bFoundName = false;
 
                 //check if name already exists
@@ -949,7 +968,13 @@ void NetworkManager::handlePacket(ENetPeer* peer, ENetPacketIStream& packetStrea
 
                 std::string message = packetStream.readString();
                 if(pOnReceiveChatMessage) {
-                    pOnReceiveChatMessage(peerData->name, message);
+                    pOnReceiveChatMessage(senderName, message);
+                }
+                if(bIsServer && hostRelayEnabled) {
+                    ENetPacketOStream payload(ENET_PACKET_FLAG_RELIABLE);
+                    payload.writeUint32(NETWORKPACKET_CHATMESSAGE);
+                    payload.writeString(message);
+                    relayPacket(peer, payload, 0);
                 }
             } break;
 
@@ -1125,6 +1150,7 @@ void NetworkManager::handlePacket(ENetPeer* peer, ENetPacketIStream& packetStrea
             } break;
 
             case NETWORKPACKET_STARTGAME: {
+                if(bIsServer || peer != connectPeer) break;
                 Uint32 timeLeft = packetStream.readUint32();
 
                 if(pOnStartGame) {
@@ -1172,7 +1198,14 @@ void NetworkManager::handlePacket(ENetPeer* peer, ENetPacketIStream& packetStrea
                 CommandList commandList(packetStream);
 
                 if(pOnReceiveCommandList) {
-                    pOnReceiveCommandList(peerData->name, commandList);
+                    pOnReceiveCommandList(senderName, commandList);
+                }
+                if(bIsServer && hostRelayEnabled) {
+                    ENetPacketOStream payload(ENET_PACKET_FLAG_UNSEQUENCED);
+                    payload.writeUint32(NETWORKPACKET_COMMANDLIST);
+                    payload.writeUint32(gameEpoch);
+                    commandList.save(payload);
+                    relayPacket(peer, payload, 1);
                 }
             } break;
 
@@ -1187,7 +1220,15 @@ void NetworkManager::handlePacket(ENetPeer* peer, ENetPacketIStream& packetStrea
                 std::set<Uint32> selectedList = packetStream.readUint32Set();
 
                 if(pOnReceiveSelectionList) {
-                    pOnReceiveSelectionList(peerData->name, selectedList, groupListIndex);
+                    pOnReceiveSelectionList(senderName, selectedList, groupListIndex);
+                }
+                if(bIsServer && hostRelayEnabled) {
+                    ENetPacketOStream payload(ENET_PACKET_FLAG_RELIABLE);
+                    payload.writeUint32(NETWORKPACKET_SELECTIONLIST);
+                    payload.writeUint32(gameEpoch);
+                    payload.writeSint32(groupListIndex);
+                    payload.writeUint32Set(selectedList);
+                    relayPacket(peer, payload, 0);
                 }
             } break;
 
@@ -1422,6 +1463,62 @@ void NetworkManager::handlePacket(ENetPeer* peer, ENetPacketIStream& packetStrea
 }
 
 
+void NetworkManager::admitPeer(ENetPeer* peer) {
+    auto* data = static_cast<PeerData*>(peer->data);
+    ChangeEventList changes = pGetChangeEventListForNewPlayerCallback(data->name);
+    peerList.push_back(peer);
+    awaitingConnectionList.remove(peer);
+    data->peerState = PeerData::PeerState::Connected;
+    data->timeout = 0;
+    data->notYetConnectedPeers.clear();
+    if(hostRelayEnabled) sendRelayRoster();
+
+    ENetPacketOStream info(ENET_PACKET_FLAG_RELIABLE);
+    info.writeUint32(NETWORKPACKET_SENDGAMEINFO);
+    pGameInitSettings->save(info);
+    changes.save(info);
+    sendPacketToPeer(peer, info);
+    if(!diagnosticsOnly && ModManager::instance().isInitialized()) {
+        sendModInfoToPeer(peer, ModManager::instance().getActiveModName(),
+            ModManager::instance().getEffectiveChecksums().combined);
+    }
+}
+
+void NetworkManager::sendRelayRoster(int disconnectCause) {
+    int maxRTT = 0;
+    for(const auto* peer : peerList) maxRTT = std::max(maxRTT, static_cast<int>(peer->roundTripTime));
+    for(auto* recipient : peerList) {
+        ENetPacketOStream roster(ENET_PACKET_FLAG_RELIABLE);
+        roster.writeUint32(NETWORKPACKET_RELAY_MODE);
+        roster.writeUint32(peerList.size()); // Host plus guests other than recipient.
+        roster.writeString(playerName);
+        for(const auto* peer : peerList) {
+            if(peer != recipient) roster.writeString(static_cast<const PeerData*>(peer->data)->name);
+        }
+        roster.writeUint32(maxRTT);
+        roster.writeUint32(disconnectCause);
+        sendPacketToPeer(recipient, roster);
+    }
+}
+
+void NetworkManager::relayPacket(ENetPeer* sender, ENetPacketOStream& payload, int channel) {
+    if(!bIsServer || !hostRelayEnabled) return;
+    const auto* data = static_cast<const PeerData*>(sender->data);
+    if(!data || data->peerState != PeerData::PeerState::Connected) return;
+    ENetPacket* packet = payload.getPacket();
+    ENetPacketOStream relay(packet->flags);
+    relay.writeUint32(NETWORKPACKET_RELAY);
+    relay.writeString(data->name); // Identity always comes from the host's connection.
+    relay.writeString(std::string(reinterpret_cast<char*>(packet->data), packet->dataLength));
+    enet_packet_destroy(packet);
+    ENetPacket* outgoing = relay.getPacket();
+    for(auto* peer : peerList) {
+        if(peer != sender && enet_peer_send(peer, channel, outgoing) < 0)
+            SDL_Log("NetworkManager: Cannot relay packet!");
+    }
+    if(outgoing->referenceCount == 0) enet_packet_destroy(outgoing);
+}
+
 void NetworkManager::sendPacketToHost(ENetPacketOStream& packetStream, int channel) {
     if(connectPeer == nullptr) {
         // This can happen if host disconnected but game hasn't processed the quit yet
@@ -1434,6 +1531,7 @@ void NetworkManager::sendPacketToHost(ENetPacketOStream& packetStream, int chann
     if(enet_peer_send(connectPeer, channel, enetPacket) < 0) {
         SDL_Log("NetworkManager: Cannot send packet!");
     }
+    if(enetPacket->referenceCount == 0) enet_packet_destroy(enetPacket);
 }
 
 void NetworkManager::sendPacketToPeer(ENetPeer* peer, ENetPacketOStream& packetStream, int channel) {
@@ -1528,7 +1626,8 @@ void NetworkManager::sendStartGame(unsigned int timeLeft) {
         ENetPacketOStream packetStream(ENET_PACKET_FLAG_RELIABLE);
         packetStream.writeUint32(NETWORKPACKET_STARTGAME);
 
-        packetStream.writeUint32(timeLeft - pCurrentPeer->roundTripTime/2);
+        const auto delay = pCurrentPeer->roundTripTime / 2;
+        packetStream.writeUint32(timeLeft > delay ? timeLeft - delay : 0);
 
         sendPacketToPeer(pCurrentPeer, packetStream);
     }
@@ -1702,13 +1801,13 @@ void NetworkManager::verifyCoopTransport() {
 }
 
 int NetworkManager::getMaxPeerRoundTripTime() {
-    int maxPeerRTT = 0;
+    int maxPeerRTT = hostRelayEnabled && !bIsServer ? relayRoundTripTime : 0;
 
     for(ENetPeer* pCurrentPeer : peerList) {
         maxPeerRTT = std::max(maxPeerRTT, (int) (pCurrentPeer->roundTripTime));
     }
 
-    return maxPeerRTT;
+    return hostRelayEnabled ? 2 * maxPeerRTT : maxPeerRTT;
 }
 
 void NetworkManager::debugNetwork(const char* fmt, ...) {
@@ -1952,3 +2051,7 @@ void NetworkManager::sendModAck(bool success, const std::string& modChecksum) {
 
     sendPacketToHost(packetStream);
 }
+
+#ifdef DUNELEGACY_RUNTIME_TESTS
+#include "../../tests/InternetRelaySmoke.h"
+#endif

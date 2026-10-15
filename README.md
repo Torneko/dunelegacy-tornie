@@ -1,5 +1,7 @@
 # Dune Legacy Tornie
 
+Version **[1.0.539 — Linux](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.539)** fixes third-player admission when guests cannot reach each other: after the direct connection attempt, the session uses the host as a relay, without VPN. Every participant needs **1.0.539 / protocol 10** and the same mod. Save format 9831 is unchanged. See [French notes](release_notes/1.0.539-FR.md), [English notes](release_notes/1.0.539-EN.md) and the [transport regression](tests/InternetRelaySmoke.h). Real UDP loopback tests reproduce blocked guest links; a three-connection human Internet match remains unverified. Earlier two-PC reports below refer to 1.0.538.
+
 The host lobby now provides **Load a save**, with manual multiplayer saves and automatic co-op checkpoints. Loading reopens the lobby; the guest rejoins. Automatic progress resume remains available.
 
 **Dune Legacy Tornie** is an independent Dune Legacy-derived real-time strategy project focused on classic Dune II gameplay plus Tornie's engine, faction, campaign, balance, graphics, audio and editor extensions.
@@ -25,7 +27,7 @@ Version **[1.0.537](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1
 
 Version **[1.0.536](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.536)** adds cooperative campaigns, Easy Mode and Jericho Lite. Co-op has since been tried by Tornie on two computers; 1.0.537 extends its lobby and save-loading options.
 
-The main menu now provides a [common cooperative campaign](docs/COOP-CAMPAIGN-EN.md) ([guide français](docs/COOP-CAMPAIGN.md)) over LAN or Internet. Two players each control their own base and army on the same team, and may choose the same faction. Nine shared missions have their own progress and checkpoints, independent of solo campaigns. New campaigns follow the original campaign of the host’s faction, with 405 co-op variants from 45 source campaigns. The guest starts with matching units and credits plus an MCV near the host’s Construction Yard; harvest objectives use a shared quota. Available factions: nine in Vanilla, twelve in Tornie/Jericho and six in each Lite edition. Older co-op sessions retain their previous layouts. Both computers need the **same 1.0.538 build**, using network protocol **9**.
+The main menu now provides a [common cooperative campaign](docs/COOP-CAMPAIGN-EN.md) ([guide français](docs/COOP-CAMPAIGN.md)) over LAN or Internet. Two players each control their own base and army on the same team, and may choose the same faction. Nine shared missions have their own progress and checkpoints, independent of solo campaigns. New campaigns follow the original campaign of the host’s faction, with 405 co-op variants from 45 source campaigns. The guest starts with matching units and credits plus an MCV near the host’s Construction Yard; harvest objectives use a shared quota. Available factions: nine in Vanilla, twelve in Tornie/Jericho and six in each Lite edition. Older co-op sessions retain their previous layouts. Both computers need the **same 1.0.539 build**, using network protocol **10**.
 
 Other 1.0.536 changes:
 

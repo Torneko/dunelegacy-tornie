@@ -94,3 +94,7 @@ add_custom_command(
         "${CMAKE_BINARY_DIR}/tests/data"
     COMMENT "Copying test data to build directory"
 )
+
+# Real three-player UDP tests, including an unreachable guest-to-guest link.
+add_test(NAME dunelegacy_network COMMAND $<TARGET_FILE:dunelegacy> --verify-network)
+set_tests_properties(dunelegacy_network PROPERTIES TIMEOUT 45)

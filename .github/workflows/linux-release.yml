@@ -6,7 +6,7 @@ on:
       release_tag:
         description: Existing release tag to build
         required: true
-        default: v1.0.533
+        default: v1.0.539
         type: string
 
 permissions:
@@ -77,12 +77,15 @@ jobs:
         run: echo "VCPKG_BINARY_SOURCES=clear;files,$HOME/.cache/vcpkg/archives,readwrite" >> "$GITHUB_ENV"
 
       - name: Configure CMake
-        run: cmake -B build -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_BUILD_TYPE=Release -DDUNELEGACY_BUILD_TESTS=OFF
+        run: cmake -B build -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_BUILD_TYPE=Release -DDUNELEGACY_BUILD_TESTS=ON -DVCPKG_MANIFEST_FEATURES=tests
 
       - name: Build
         # Limit to 2 parallel jobs — ubuntu-latest has 4 cores but only 7GB
         # RAM, and 4 concurrent g++ -O2 processes on large TUs exceed that.
         run: cmake --build build --config Release --parallel 2
+
+      - name: Verify engine and three-player Internet relay
+        run: ctest --test-dir build --output-on-failure
 
       - name: Create Linux Packages
         run: |
@@ -157,5 +160,5 @@ jobs:
             echo "Linux packages built from $RELEASE_TAG and attached to the existing release."
             echo
             echo "Formats: DEB, RPM, TAR.GZ and AppImage."
-            echo "Gameplay and unit test suites were not run for this packaging job."
+            echo "Engine tests and the real UDP direct/host-relay regression passed before packaging."
           } >> "$GITHUB_STEP_SUMMARY"

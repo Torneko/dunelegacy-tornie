@@ -1,5 +1,7 @@
 # Common co-op campaign — 1.0.538
 
+Linux 1.0.539 uses protocol 10; both players need the same build. Host relay fallback now supports guest isolation in custom Internet multiplayer; see [1.0.539 notes](../release_notes/1.0.539-EN.md). The two-PC report below concerns 1.0.538.
+
 Tornie confirmed co-op 1.0.538 works on two PCs (2026-10-09).
 
 [Guide français](COOP-CAMPAIGN.md)
@@ -83,7 +85,7 @@ Recorded checkpoint reinforcements and forces are restored without being added t
 a human or AI ally. Easy Mode may waive the intro. Unlocks stay local; each completed
 session counts once. Solo campaign awards retain their requirements.
 
-Both PCs require **1.0.538**, protocol **9**. New saves use **9831**; older saves remain
+Both PCs require **1.0.538**, protocol **10**. New saves use **9831**; older saves remain
 readable with their recorded forces and reinforcements. Start a new campaign or reach
 the next mission for the new reinforcement behavior. The public release is 1.0.538. Tornie confirmed two-PC co-op works. Mint 22.3 / kernel 7.0 still needs testing.
 

@@ -78,13 +78,13 @@ jobs:
         run: python3 scripts/check-campaign-regions.py
 
       - name: Build tests
-        run: cmake --build build --target dunelegacy_tests
+        run: cmake --build build --target dunelegacy dunelegacy_tests --parallel 2
 
       - name: Run tests
         run: |
           DUNELEGACY_SOURCE_DIR=${{ github.workspace }} \
           DUNELEGACY_DATADIR=${{ github.workspace }}/data \
-          ./build/bin/dunelegacy_tests
+          ctest --test-dir build --output-on-failure
 
   validate-french-locale:
     runs-on: ubuntu-latest
