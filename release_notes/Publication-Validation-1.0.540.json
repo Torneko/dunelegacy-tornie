@@ -1,0 +1,58 @@
+{
+  "version": "1.0.540",
+  "source": "17c7d375bfdfe0204acd110bea57409e9bbe4896",
+  "website": "afb742bb06b70b756388e89e8fb82e23313d1240",
+  "linuxRun": 38695978990,
+  "assets": [
+    {
+      "name": "DuneLegacyTornie-1.0.540-Linux-Mint-Compatible.AppImage",
+      "size": 35908088,
+      "sha256": "f2d09ea4d22366e37d13dca7052bd30ddd5245e68f44a6c2ecd63192bf543347"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.540-Linux-x64.deb",
+      "size": 41795504,
+      "sha256": "21260f7fa12ab54409ecb353416fdb3f17752fa62a684ced8a1d39c3da0b1ca6"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.540-Linux-x64.rpm",
+      "size": 41719039,
+      "sha256": "248c7e68931f0474a2c4628ee3c8238b28c161f3bce08303d0f47cd967812283"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.540-Linux-x64.tar.gz",
+      "size": 42151621,
+      "sha256": "f38ef6098b31d41257ab04bc90d6f59cccb26b4531410da344ae13f57463dc83"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.540-Linux-x86_64.AppImage",
+      "size": 35908088,
+      "sha256": "baaebf9bab1809a3c70ae8a23a62a3aaad3aedf884a69c49fa8d9f918b24a153"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.540-Sources.zip",
+      "size": 51962921,
+      "sha256": "639dda35fc165a8f6aebb7d91f88cef16aca861f86f542b8be789b2cd8a8bfaf"
+    },
+    {
+      "name": "Linux-Build-1.0.540.json",
+      "size": 419,
+      "sha256": "efea89dccc8c05e3a8c4ca06a233a91cf4ad6d53a26563b1df8a24b64123106a"
+    },
+    {
+      "name": "Release-Notes-1.0.540-EN.md",
+      "size": 1579,
+      "sha256": "29e7323f27d00917b41139bd2682b52fe4c0e62c7753fae27556221a111833f1"
+    },
+    {
+      "name": "Release-Notes-1.0.540-FR.md",
+      "size": 1812,
+      "sha256": "9e3ff0cdd46ba7e5658eb0739bc4d14a9a112be7122b9ba9cb6e8241e320d18d"
+    },
+    {
+      "name": "Validation-1.0.540.json",
+      "size": 1326,
+      "sha256": "4c7c3df137e3a51bbe8548dd1a03d67d91caf2eace116a5e04226cc0ec6fa6ff"
+    }
+  ]
+}

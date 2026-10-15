@@ -1,3 +1,16 @@
+# Published 1.0.540 — 2026-10-15
+
+Mint AppImage startup is corrected: the static executable no longer demands shared SDL mixer/TTF copies on the host. The Mint launcher, previous Mint profile, X11/software/PulseAudio and an automatic software fallback are included. The actual published Mint image passed a full menu startup without development-library paths, the UDP regression and an exact comparison of all 3,177 mod files.
+
+- Release: https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.540
+- Immutable game source: `17c7d375bfdfe0204acd110bea57409e9bbe4896`.
+- Successful package CI, including 122 engine cases, network regression and both AppImages' FR/EN menus with PulseAudio: https://github.com/Torneko/dunelegacy-tornie/actions/runs/38695978990
+- Published FR/EN site: `afb742b`, based on the recovered 1.0.539 tree `472b875`; Pages https://github.com/Torneko/dunelegacy-tornie/actions/runs/38696414786 — success.
+- Offline site, sources, checksums and 72 offline/live browser checks: https://github.com/Torneko/dunelegacy-tornie/actions/runs/38696548593 — success.
+- All thirteen manifest entries match GitHub SHA-256 digests. Fourteen release assets are public.
+
+Use `DuneLegacyTornie-1.0.540-Linux-Mint-Compatible.AppImage` on the affected Mint PC. Native Mint 22.3/kernel 6.17 still awaits user confirmation. Protocol 10, host relay, save format 9831, unit/building rules, factions, achievements and 121 gallery PNGs are retained. Recover this published gh-pages tree or the 1.0.540 offline ZIP for the next update.
+
 # 1.0.540 — Linux Mint startup fix
 
 Recover the current published `origin/gh-pages` tree at `472b875e13fd971447e840f5aca2bf040878f6cd` before this update. Update both languages to 1.0.540 and point the Mint download to `DuneLegacyTornie-1.0.540-Linux-Mint-Compatible.AppImage`. Document X11/software/PulseAudio, preservation of the previous Mint profile, startup logs and automatic renderer fallback. Keep protocol 10, save format 9831, unit/building routes, factions, achievements and original PNGs. Graphical startup is tested with the packaged AppImages in French/English under Xvfb; native Mint 22.3/kernel 6.17 remains for the affected PC to confirm.
