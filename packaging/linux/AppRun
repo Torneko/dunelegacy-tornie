@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Portable launcher. The Mint edition opts into stable X11/software defaults.
+set -uo pipefail
+app_dir="${APPDIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)}"
+export APPDIR="$app_dir"
+export LD_LIBRARY_PATH="$app_dir/usr/lib/dunelegacy:$app_dir/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+compat="${DUNELEGACY_MINT_COMPAT:-0}"
+launch_args=()
+if [[ -r /etc/os-release ]] && grep -q '^ID=linuxmint' /etc/os-release; then compat=1; fi
+if [[ "$compat" == 1 ]]; then
+    launch_args+=(--window)
+    export SDL_VIDEODRIVER="${SDL_VIDEODRIVER:-x11}"
+    export SDL_RENDER_DRIVER="${SDL_RENDER_DRIVER:-software}"
+    export SDL_AUDIODRIVER="${SDL_AUDIODRIVER:-${DUNELEGACY_AUDIO_DRIVER:-pulseaudio}}"
+    # Retain the previous published Mint profile, including saves and achievements.
+    export XDG_CONFIG_HOME="${DUNELEGACY_PROFILE_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/DuneLegacyTornieMintLocal538}"
+    profile="$XDG_CONFIG_HOME/DuneLegacyTornie"
+    mkdir -p "$profile"
+    if [[ ! -f "$profile/Dune Legacy.ini" ]]; then
+        cat > "$profile/Dune Legacy.ini" <<'CONFIG'
+[General]
+Language=fr
+Play Intro=false
+[Video]
+Fullscreen=false
+[Audio]
+Music Type=adl
+Play Music=true
+Play SFX=true
+CONFIG
+    fi
+fi
+log_dir="${XDG_STATE_HOME:-${XDG_CONFIG_HOME:-$HOME/.config}/DuneLegacyTornie}/DuneLegacyTornie"
+mkdir -p "$log_dir" || exit 1
+log_file="$log_dir/dernier-lancement.log"
+printf 'Journal : %s\n' "$log_file"
+{
+    printf 'Dune Legacy Tornie — noyau %s; vidéo=%s; rendu=%s; audio=%s\n' "$(uname -r)" "${SDL_VIDEODRIVER:-auto}" "${SDL_RENDER_DRIVER:-auto}" "${SDL_AUDIODRIVER:-auto}"
+    cd "$app_dir" || exit 1
+    "$app_dir/usr/bin/dunelegacy" "${launch_args[@]}" --showlog "$@"
+    status=$?
+    printf '\nCode de sortie : %s\n' "$status"
+    exit "$status"
+} 2>&1 | tee "$log_file"
+exit "${PIPESTATUS[0]}"

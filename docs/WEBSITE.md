@@ -1,3 +1,7 @@
+# 1.0.540 — Linux Mint startup fix
+
+Recover the current published `origin/gh-pages` tree at `472b875e13fd971447e840f5aca2bf040878f6cd` before this update. Update both languages to 1.0.540 and point the Mint download to `DuneLegacyTornie-1.0.540-Linux-Mint-Compatible.AppImage`. Document X11/software/PulseAudio, preservation of the previous Mint profile, startup logs and automatic renderer fallback. Keep protocol 10, save format 9831, unit/building routes, factions, achievements and original PNGs. Graphical startup is tested with the packaged AppImages in French/English under Xvfb; native Mint 22.3/kernel 6.17 remains for the affected PC to confirm.
+
 # Published 1.0.539 — 2026-10-15
 
 - Linux release: https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.539

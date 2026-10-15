@@ -183,8 +183,8 @@ void setVideoMode(int displayIndex)
 #ifdef _WIN32
     SDL_SetHint(SDL_HINT_RENDER_DRIVER, "direct3d11");
 #else
-    // On non-Windows platforms, let SDL choose the best renderer
-    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "");
+    // Preserve explicit renderer hints from portable/compatibility launchers.
+
 #endif
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");  // Use nearest-neighbor scaling for pixel-perfect look
     SDL_SetHint(SDL_HINT_RENDER_BATCHING, "1");       // Enable render batching for performance
@@ -198,9 +198,22 @@ void setVideoMode(int displayIndex)
         exit(EXIT_FAILURE);
     }
     // Create renderer (VSync set separately for macOS compatibility)
-    Uint32 rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE;
+    const char* requestedRenderer = SDL_GetHint(SDL_HINT_RENDER_DRIVER);
+    const bool softwareRequested = requestedRenderer && std::string(requestedRenderer) == "software";
+    Uint32 rendererFlags = (softwareRequested ? SDL_RENDERER_SOFTWARE : SDL_RENDERER_ACCELERATED)
+        | SDL_RENDERER_TARGETTEXTURE;
 
     renderer = SDL_CreateRenderer(window, -1, rendererFlags);
+    if(!renderer && !softwareRequested) {
+        SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Accelerated renderer unavailable (%s); trying software rendering", SDL_GetError());
+        for(int driver = 0; driver < SDL_GetNumRenderDrivers(); ++driver) {
+            SDL_RendererInfo info{};
+            if(SDL_GetRenderDriverInfo(driver, &info) == 0 && (info.flags & SDL_RENDERER_SOFTWARE)) {
+                renderer = SDL_CreateRenderer(window, driver, SDL_RENDERER_SOFTWARE | SDL_RENDERER_TARGETTEXTURE);
+                if(renderer) break;
+            }
+        }
+    }
     if (!renderer) {
         fprintf(stderr, "SDL_CreateRenderer failed: %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
@@ -802,6 +815,7 @@ int main(int argc, char *argv[]) {
         }
 
         bool bVerifyMods = false;
+        bool bVerifyStartup = false;
         bool bVerifyAchievements = false;
         bool bVerifyRelease538 = false;
         bool bVerifyPortraits = false;
@@ -819,6 +833,7 @@ int main(int argc, char *argv[]) {
                 SDL_Quit();
                 return EXIT_SUCCESS;
             }
+            if(parameter == "--verify-startup") { bVerifyMods = true; bVerifyStartup = true; continue; }
             if(parameter == "--verify-mods") { bVerifyMods = true; continue; }
             if(parameter == "--verify-achievements") { bVerifyMods = true; bVerifyAchievements = true; continue; }
             if(parameter == "--verify-release-538") { bVerifyMods = true; bVerifyRelease538 = true; continue; }
@@ -898,41 +913,10 @@ int main(int argc, char *argv[]) {
 
         SDL_Log("Starting Dune Legacy Tornie %s on %s", VERSION, SDL_GetPlatform());
 
-#if defined(__linux__) && !defined(__ANDROID__)
-        // Verify that required shared libraries are loadable before proceeding.
-        // If the binary was installed without bundled .so files and the system
-        // libraries are the wrong version or absent, dlopen catches this and
-        // logs a human-readable error instead of crashing silently on SDL_Init.
-        {
-            const char* const requiredLibs[] = {
-                "libSDL2-2.0.so.0",
-                "libSDL2_mixer-2.0.so.0",
-                "libSDL2_ttf-2.0.so.0",
-            };
-            bool allLibsFound = true;
-            for (const char* lib : requiredLibs) {
-                // RTLD_NOLOAD checks if already loaded (it is, since we're running);
-                // if it returns null anyway, fall back to a full load attempt.
-                void* handle = dlopen(lib, RTLD_LAZY | RTLD_NOLOAD);
-                if (!handle) {
-                    handle = dlopen(lib, RTLD_LAZY);
-                }
-                if (!handle) {
-                    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
-                        "Required library missing or incompatible: %s â€” %s", lib, dlerror());
-                    allLibsFound = false;
-                } else {
-                    dlclose(handle);
-                }
-            }
-            if (!allLibsFound) {
-                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
-                    "Cannot start: one or more required shared libraries could not be loaded. "
-                    "See log at: %s", getLogFilepath().c_str());
-                return EXIT_FAILURE;
-            }
-        }
-#endif
+        // SDL, mixer and TTF are linked dependencies. Portable builds can link
+        // them statically: demanding shared copies here rejects valid AppImages
+        // and can load a second, unrelated SDL runtime from the host system.
+
 
         // First check for missing files
         std::vector<std::string> missingFiles = FileManager::getMissingFiles();
@@ -1339,7 +1323,16 @@ int main(int argc, char *argv[]) {
 
                 #ifdef DUNELEGACY_RUNTIME_TESTS
                 if(bVerifyMods) {
-                    if(bCaptureEditor) {
+                    if(bVerifyStartup) {
+                        MainMenu menu;
+                        SDL_RenderClear(renderer);
+                        menu.draw();
+                        SDL_RenderPresent(renderer);
+                        SDL_RendererInfo info{};
+                        SDL_GetRendererInfo(renderer, &info);
+                        SDL_Log("STARTUP CHECK PASSED: menu drawn, renderer=%s, language=%s", info.name, settings.general.language.c_str());
+                    }
+                    else if(bCaptureEditor) {
                         const auto previousMod = ModManager::instance().getActiveModName();
                         const char* output = std::getenv("DUNELEGACY_SMOKE_DIR");
                         if(output == nullptr) throw std::runtime_error("Editor capture needs DUNELEGACY_SMOKE_DIR");

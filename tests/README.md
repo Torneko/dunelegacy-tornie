@@ -88,3 +88,5 @@ TEST_CASE_METHOD(ENetFixture, "Description", "[network]") {
 ## Internet relay regression
 
 Build both `dunelegacy` and `dunelegacy_tests` with `DUNELEGACY_BUILD_TESTS=ON`, then run CTest. `dunelegacy_network` calls `dunelegacy --verify-network` without graphics or original game data. It uses real UDP loopback sockets, filters guest-to-guest datagrams, checks the direct path and host fallback, lobby changes, twenty command cycles with preserved sender IDs, chat, selections, stale epochs, host authority, additional admission, disconnect/reconnect and host loss. It also retains the two-player co-op transport regression. It needs permission to open loopback UDP sockets. The Linux packaging workflow runs both CTest entries before uploading packages.
+
+`dunelegacy --verify-startup --window` initializes the full runtime and draws the actual main menu, then exits. Linux release CI runs it on both packaged AppImages in French/English with Xvfb and PulseAudio, plus a software fallback check with the dummy video backend.

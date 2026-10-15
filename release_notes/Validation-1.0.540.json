@@ -1,0 +1,22 @@
+{
+  "version": "1.0.540",
+  "protocol": 10,
+  "saveVersion": 9831,
+  "localEngine": {
+    "passed": true,
+    "cases": 122,
+    "assertions": 7412
+  },
+  "network": "real UDP direct/blocked guest host relay passed",
+  "startup": {
+    "softwareFallbackWithoutAcceleration": "passed",
+    "x11SoftwareFrenchMenu": "passed"
+  },
+  "nativeMint": {
+    "version": "22.3",
+    "kernel": "6.17",
+    "tested": false
+  },
+  "scope": "restore Mint launch profile and allow software renderer; no gameplay change",
+  "reproduction": "published static 1.0.539 AppImage exits 1 without host SDL2_mixer/SDL2_ttf libraries"
+}

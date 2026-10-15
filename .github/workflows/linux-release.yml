@@ -6,7 +6,7 @@ on:
       release_tag:
         description: Existing release tag to build
         required: true
-        default: v1.0.539
+        default: v1.0.540
         type: string
       documentation_only:
         description: Attach the matching bilingual offline site and supporting files after a successful Linux run
@@ -64,7 +64,7 @@ jobs:
           sudo apt-get install -y \
             autoconf autoconf-archive automake libtool libltdl-dev \
             build-essential pkg-config bison flex \
-            libsystemd-dev rpm
+            libsystemd-dev rpm xvfb xauth pulseaudio libpulse0
 
       - name: Cache vcpkg binary packages
         uses: actions/cache@v4
@@ -128,6 +128,8 @@ jobs:
           ARCH=x86_64 FUSE_APPIMAGE_EXTRACT_AND_RUN=1 \
             ../linuxdeploy-x86_64.AppImage \
             --appdir AppDir \
+            --custom-apprun ../packaging/linux/AppRun \
+            --library /usr/lib/x86_64-linux-gnu/libpulse.so.0 \
             --executable AppDir/usr/bin/dunelegacy \
             --desktop-file AppDir/usr/share/applications/dunelegacy-tornie.desktop \
             --icon-file AppDir/usr/share/icons/hicolor/128x128/apps/dunelegacy-tornie.png \
@@ -139,6 +141,45 @@ jobs:
             mv "$image" "DuneLegacyTornie-${VERSION}-Linux-x86_64.AppImage"
             break
           done
+
+      - name: Create the Mint compatibility AppImage
+        run: |
+          cd build
+          sed '2i export DUNELEGACY_MINT_COMPAT=1' ../packaging/linux/AppRun > MintAppRun
+          chmod +x MintAppRun
+          ARCH=x86_64 FUSE_APPIMAGE_EXTRACT_AND_RUN=1 \
+            ../linuxdeploy-x86_64.AppImage \
+            --appdir AppDir --custom-apprun MintAppRun \
+            --executable AppDir/usr/bin/dunelegacy \
+            --desktop-file AppDir/usr/share/applications/dunelegacy-tornie.desktop \
+            --icon-file AppDir/usr/share/icons/hicolor/128x128/apps/dunelegacy-tornie.png \
+            --output appimage
+          VERSION=$(sed -n 's/^project(DuneLegacyTornie VERSION \([0-9]*\.[0-9]*\.[0-9]*\).*/\1/p' ../CMakeLists.txt)
+          GENERATED=$(find . -maxdepth 1 -name '*.AppImage' ! -name 'DuneLegacyTornie-*' -print -quit)
+          test -n "$GENERATED"
+          mv "$GENERATED" "DuneLegacyTornie-${VERSION}-Linux-Mint-Compatible.AppImage"
+
+      - name: Verify the packaged graphical startup and software fallback
+        run: |
+          set -euo pipefail
+          pulseaudio --start --exit-idle-time=-1
+          pactl load-module module-null-sink sink_name=dune_startup
+          for IMAGE in "$PWD"/build/DuneLegacyTornie-*.AppImage; do
+            for LANGUAGE in en fr; do
+              PROFILE=$(mktemp -d)
+              mkdir -p "$PROFILE/DuneLegacyTornie"
+              printf '[General]\nLanguage=%s\nPlay Intro=false\n[Video]\nFullscreen=false\n' "$LANGUAGE" > "$PROFILE/DuneLegacyTornie/Dune Legacy.ini"
+              XDG_CONFIG_HOME="$PROFILE" DUNELEGACY_PROFILE_DIR="$PROFILE" \
+              SDL_AUDIODRIVER=pulseaudio \
+                timeout 60 xvfb-run -a "$IMAGE" --appimage-extract-and-run --verify-startup --window > "$PROFILE/startup.log" 2>&1
+              grep 'STARTUP CHECK PASSED' "$PROFILE/startup.log"
+            done
+          done
+          PROFILE=$(mktemp -d)
+          XDG_CONFIG_HOME="$PROFILE" SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy \
+            timeout 60 ./build/bin/dunelegacy --verify-startup --window > "$PROFILE/fallback.log" 2>&1
+          grep 'Accelerated renderer unavailable' "$PROFILE/fallback.log"
+          grep 'STARTUP CHECK PASSED.*renderer=software' "$PROFILE/fallback.log"
 
       - name: Upload Packages
         uses: actions/upload-artifact@v4
@@ -164,12 +205,12 @@ jobs:
           test "${#DEB[@]}" -eq 1
           test "${#RPM[@]}" -eq 1
           test "${#TGZ[@]}" -eq 1
-          test "${#APPIMAGE[@]}" -eq 1
+          test "${#APPIMAGE[@]}" -eq 2
           gh release upload "$RELEASE_TAG" "${DEB[@]}" "${RPM[@]}" "${TGZ[@]}" "${APPIMAGE[@]}" --repo "$GITHUB_REPOSITORY" --clobber
           {
             echo "Linux packages built from $RELEASE_TAG and attached to the existing release."
             echo
-            echo "Formats: DEB, RPM, TAR.GZ and AppImage."
+            echo "Formats: DEB, RPM, TAR.GZ, standard AppImage and Mint compatibility AppImage."
             echo "Engine tests and the real UDP direct/host-relay regression passed before packaging."
           } >> "$GITHUB_STEP_SUMMARY"
 
@@ -230,7 +271,7 @@ jobs:
           cp "release_notes/$VERSION-EN.md" "supporting/Release-Notes-$VERSION-EN.md"
           cp "offline/DuneLegacyTornie-Site-Local/dist/documents/Validation-$VERSION.json" supporting/
           gh release download "$RELEASE_TAG" --pattern '*Linux*' --dir supporting
-          test "$(find supporting -maxdepth 1 -name '*.AppImage' | wc -l)" -eq 1
+          test "$(find supporting -maxdepth 1 -name '*.AppImage' | wc -l)" -ge 1
           test "$(find supporting -maxdepth 1 -name '*.deb' | wc -l)" -eq 1
           test "$(find supporting -maxdepth 1 -name '*.rpm' | wc -l)" -eq 1
           test "$(find supporting -maxdepth 1 -name '*.tar.gz' | wc -l)" -eq 1
