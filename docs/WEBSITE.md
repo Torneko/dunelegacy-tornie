@@ -1,3 +1,25 @@
+# Published 1.0.539 — 2026-10-15
+
+- Linux release: https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.539
+- Immutable tagged game source: `12d67c60b889102b419c762694bad6995e953fcb`.
+- Linux build, 122 engine cases / 7,412 assertions and real UDP direct/relay regression:
+  https://github.com/Torneko/dunelegacy-tornie/actions/runs/38685210586 — success.
+- Published FR/EN Pages source: `472b875` (recovered from `973ba9c5` before editing).
+  https://github.com/Torneko/dunelegacy-tornie/actions/runs/38686129594 — success.
+- Offline site, tagged sources, notes, checksums and 72 real-browser offline/live
+  FR/EN desktop/mobile route checks:
+  https://github.com/Torneko/dunelegacy-tornie/actions/runs/38686221371 — success.
+- The published AppImage passed the network regression again after extraction;
+  all 3,177 bundled mod files exactly match the tagged source. Full local runtime
+  verification loaded 1,210 scenarios. All eleven manifest digests match GitHub's
+  asset digests. Twelve release assets are public.
+
+All participants need 1.0.539 / protocol 10 and the same mod. Save format stays
+9831. Windows 1.0.538 remains a clearly labelled previous download and cannot
+join 1.0.539. Three independent human Internet connections and native Mint
+22.3/kernel 7.0 remain untested. Recover this published gh-pages tree or
+`DuneLegacyTornie-Site-Local-1.0.539.zip` for the next update.
+
 # Release 1.0.539 — Internet host relay (Linux)
 
 The 1.0.539 site is based on freshly recovered `origin/gh-pages` commit
