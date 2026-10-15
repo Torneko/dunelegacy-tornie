@@ -12,6 +12,7 @@ const {chromium}=require('playwright'),fs=require('fs');
    const r=await page.evaluate(()=>({heading:document.querySelector('main h1')?.innerText,version:document.querySelector('.edition').innerText,overflow:document.documentElement.scrollWidth>innerWidth+2,missing:[...document.images].filter(i=>!i.complete||i.naturalWidth===0).map(i=>i.src),network:document.querySelector('.network539')?.innerText,links:[...document.querySelectorAll('a[href]')].map(a=>a.getAttribute('href'))}));
    if(!r.heading||!r.version.includes(expected)||r.overflow||r.missing.length)throw Error(JSON.stringify({base,width,lang,route,r}));
    if(['accueil','guide','projet'].includes(route)&&(!r.network?.includes(expected)||!r.network?.includes('10')))throw Error('network notice missing');
+   if(process.env.REQUIRE_WINDOWS_VERSION&&['accueil','guide','projet'].includes(route)&&!r.links.some(h=>h.includes('DuneLegacyTornie-'+process.env.REQUIRE_WINDOWS_VERSION+'-Windows-x64.zip')))throw Error('current Windows download missing');
    results.push({base,width,lang,route,heading:r.heading});
   }
   // Search and filter retain the 67-entry catalogue.

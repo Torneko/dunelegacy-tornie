@@ -16,6 +16,10 @@ on:
         description: Successful Linux package run ID (required for documentation_only)
         type: string
         default: ''
+      verified_windows_run:
+        description: Successful Windows package run ID (optional for documentation_only)
+        type: string
+        default: ''
 
 permissions:
   contents: write
@@ -236,6 +240,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ inputs.release_tag }}
           VERIFIED_LINUX_RUN: ${{ inputs.verified_linux_run }}
+          VERIFIED_WINDOWS_RUN: ${{ inputs.verified_windows_run }}
         run: |
           set -euo pipefail
           [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
@@ -252,6 +257,20 @@ jobs:
           assert build['run'] == run['id'] and build['workflowSource'] == run['head_sha'], 'Build provenance differs from the verified run'
           assert run['path'] == '.github/workflows/linux-release.yml', 'Unexpected package workflow'
           PYTHON
+          if [[ -n "$VERIFIED_WINDOWS_RUN" ]]; then
+            [[ "$VERIFIED_WINDOWS_RUN" =~ ^[0-9]+$ ]]
+            gh api "repos/$GITHUB_REPOSITORY/actions/runs/$VERIFIED_WINDOWS_RUN" > windows-run.json
+            gh release download "$RELEASE_TAG" --pattern "Windows-Build-${RELEASE_TAG#v}.json" --dir .
+            python3 - <<'PYTHON'
+          import json, subprocess, os
+          run = json.load(open('windows-run.json'))
+          build = json.load(open('Windows-Build-'+os.environ['RELEASE_TAG'][1:]+'.json', encoding='utf-8-sig'))
+          assert run['conclusion'] == 'success', 'Windows package run has not succeeded'
+          assert build['source'] == subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(), 'Windows packages use another source'
+          assert build['run'] == run['id'] and build['workflowSource'] == run['head_sha'], 'Windows provenance differs from the verified run'
+          assert run['path'] == '.github/workflows/build.yml', 'Unexpected Windows workflow'
+          PYTHON
+          fi
           git fetch --depth=1 origin gh-pages
           mkdir -p offline/DuneLegacyTornie-Site-Local/dist supporting
           git archive FETCH_HEAD | tar -x -C offline/DuneLegacyTornie-Site-Local/dist
@@ -275,26 +294,39 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ inputs.release_tag }}
           VERIFIED_LINUX_RUN: ${{ inputs.verified_linux_run }}
+          VERIFIED_WINDOWS_RUN: ${{ inputs.verified_windows_run }}
         run: |
           set -euo pipefail
           VERSION="${RELEASE_TAG#v}"
           git archive --format=zip --prefix="DuneLegacyTornie-$VERSION/" -o "supporting/DuneLegacyTornie-$VERSION-Sources.zip" HEAD
-          cp "release_notes/$VERSION-FR.md" "supporting/Release-Notes-$VERSION-FR.md"
-          cp "release_notes/$VERSION-EN.md" "supporting/Release-Notes-$VERSION-EN.md"
+          cp "offline/DuneLegacyTornie-Site-Local/dist/documents/Notes-$VERSION.md" "supporting/Release-Notes-$VERSION-FR.md"
+          cp "offline/DuneLegacyTornie-Site-Local/dist/documents/Notes-$VERSION-EN.md" "supporting/Release-Notes-$VERSION-EN.md"
           cp "offline/DuneLegacyTornie-Site-Local/dist/documents/Validation-$VERSION.json" supporting/
           gh release download "$RELEASE_TAG" --pattern '*Linux*' --dir supporting
           test "$(find supporting -maxdepth 1 -name '*.AppImage' | wc -l)" -ge 1
           test "$(find supporting -maxdepth 1 -name '*.deb' | wc -l)" -eq 1
           test "$(find supporting -maxdepth 1 -name '*.rpm' | wc -l)" -eq 1
           test "$(find supporting -maxdepth 1 -name '*.tar.gz' | wc -l)" -eq 1
+          if [[ -n "$VERIFIED_WINDOWS_RUN" ]]; then
+            gh release download "$RELEASE_TAG" --pattern "DuneLegacyTornie-$VERSION-Windows-x64.zip" --pattern "Windows-Build-$VERSION.json" --dir supporting
+            python3 - <<'PYTHON'
+          import json, hashlib, pathlib, os
+          root = pathlib.Path('supporting')
+          build = json.loads((root / ('Windows-Build-'+os.environ['RELEASE_TAG'][1:]+'.json')).read_text(encoding='utf-8-sig'))
+          assert hashlib.sha256((root / build['package']).read_bytes()).hexdigest() == build['sha256'], 'Windows ZIP differs from the tested package'
+          PYTHON
+          fi
           cp supporting/* offline/DuneLegacyTornie-Site-Local/dist/documents/
           # The current Linux release explicitly retains the previous Windows
           # download for offline documentation; it is not network-compatible.
-          gh release download v1.0.538 --pattern DuneLegacyTornie-1.0.538-Windows-x64.zip --dir offline/DuneLegacyTornie-Site-Local/dist/documents --clobber
+          if [[ -z "$VERIFIED_WINDOWS_RUN" ]]; then
+            gh release download v1.0.538 --pattern DuneLegacyTornie-1.0.538-Windows-x64.zip --dir offline/DuneLegacyTornie-Site-Local/dist/documents --clobber
+          fi
           python3 - <<'PYTHON'
           import hashlib, json, os, pathlib, subprocess, zipfile
           root = pathlib.Path('supporting')
           report = {'version': os.environ['RELEASE_TAG'][1:], 'source': subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(), 'website': subprocess.check_output(['git','rev-parse','FETCH_HEAD'],text=True).strip(), 'linuxRun': int(os.environ['VERIFIED_LINUX_RUN']), 'assets': []}
+          if os.environ.get('VERIFIED_WINDOWS_RUN'): report['windowsRun'] = int(os.environ['VERIFIED_WINDOWS_RUN'])
           for path in sorted(root.iterdir()):
               report['assets'].append({'name':path.name,'size':path.stat().st_size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest()})
           (root / ('Publication-Validation-'+report['version']+'.json')).write_text(json.dumps(report,indent=2)+'\n')
@@ -307,6 +339,7 @@ jobs:
           SITE_BROWSER="$(command -v google-chrome || command -v chromium)" \
           NODE_PATH="$RUNNER_TEMP/site-checks/node_modules" \
           RELEASE_VERSION="$VERSION" \
+          REQUIRE_WINDOWS_VERSION="${VERIFIED_WINDOWS_RUN:+$VERSION}" \
           SITE_VALIDATION_OUTPUT="supporting/Website-Validation-$VERSION.json" \
             node /tmp/check-documentation-site.cjs \
               "file://$GITHUB_WORKSPACE/offline/DuneLegacyTornie-Site-Local/dist/" \
