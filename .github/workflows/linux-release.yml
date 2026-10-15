@@ -227,7 +227,7 @@ jobs:
           git archive --format=zip --prefix="DuneLegacyTornie-$VERSION/" -o "supporting/DuneLegacyTornie-$VERSION-Sources.zip" HEAD
           cp "release_notes/$VERSION-FR.md" "supporting/Release-Notes-$VERSION-FR.md"
           cp "release_notes/$VERSION-EN.md" "supporting/Release-Notes-$VERSION-EN.md"
-          cp "release_notes/Validation-$VERSION.json" supporting/
+          cp "offline/DuneLegacyTornie-Site-Local/dist/documents/Validation-$VERSION.json" supporting/
           gh release download "$RELEASE_TAG" --pattern '*Linux*' --dir supporting
           test "$(find supporting -maxdepth 1 -name '*.AppImage' | wc -l)" -eq 1
           test "$(find supporting -maxdepth 1 -name '*.deb' | wc -l)" -eq 1
