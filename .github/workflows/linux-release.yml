@@ -19,6 +19,7 @@ on:
 
 permissions:
   contents: write
+  actions: read
 
 concurrency:
   group: linux-release-${{ inputs.release_tag }}
