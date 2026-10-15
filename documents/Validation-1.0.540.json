@@ -44,5 +44,31 @@
     "cleanEnvironmentStartup": "passed without development library paths",
     "networkRegression": "passed",
     "exactModFiles": 3177
+  },
+  "windowsCI": {
+    "package": "DuneLegacyTornie-1.0.540-Windows-x64.zip",
+    "run": 38789679153,
+    "installedRuntimeChecks": [
+      "fr",
+      "en"
+    ],
+    "engineAndNetworkTests": true,
+    "workflowSource": "a5850027c29a1843900e11611482566ebc412744",
+    "version": "1.0.540",
+    "source": "17c7d375bfdfe0204acd110bea57409e9bbe4896",
+    "menuStartupChecks": [
+      "fr",
+      "en"
+    ],
+    "sha256": "807e6aaae7f6632ebd2a46675618cf71b16c58324cf3122e377cbb62984307e1"
+  },
+  "windowsPackage": {
+    "version": "1.0.540",
+    "source": "17c7d375bfdfe0204acd110bea57409e9bbe4896",
+    "package": "DuneLegacyTornie-1.0.540-Windows-x64.zip",
+    "sha256": "807e6aaae7f6632ebd2a46675618cf71b16c58324cf3122e377cbb62984307e1",
+    "exactModFiles": 3177,
+    "CI": 38789679153,
+    "passed": true
   }
 }

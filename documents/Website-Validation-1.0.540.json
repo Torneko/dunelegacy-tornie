@@ -7,21 +7,21 @@
       "width": 1440,
       "lang": "fr",
       "route": "accueil",
-      "heading": "Conna\u00eetre ses unit\u00e9s.\nConstruire sa strat\u00e9gie."
+      "heading": "Connaître ses unités.\nConstruire sa stratégie."
     },
     {
       "base": "http://127.0.0.1:8040/",
       "width": 1440,
       "lang": "fr",
       "route": "unites",
-      "heading": "Les unit\u00e9s"
+      "heading": "Les unités"
     },
     {
       "base": "http://127.0.0.1:8040/",
       "width": 1440,
       "lang": "fr",
       "route": "batiments",
-      "heading": "Les b\u00e2timents"
+      "heading": "Les bâtiments"
     },
     {
       "base": "http://127.0.0.1:8040/",
@@ -133,21 +133,21 @@
       "width": 390,
       "lang": "fr",
       "route": "accueil",
-      "heading": "Conna\u00eetre ses unit\u00e9s.\nConstruire sa strat\u00e9gie."
+      "heading": "Connaître ses unités.\nConstruire sa stratégie."
     },
     {
       "base": "http://127.0.0.1:8040/",
       "width": 390,
       "lang": "fr",
       "route": "unites",
-      "heading": "Les unit\u00e9s"
+      "heading": "Les unités"
     },
     {
       "base": "http://127.0.0.1:8040/",
       "width": 390,
       "lang": "fr",
       "route": "batiments",
-      "heading": "Les b\u00e2timents"
+      "heading": "Les bâtiments"
     },
     {
       "base": "http://127.0.0.1:8040/",
