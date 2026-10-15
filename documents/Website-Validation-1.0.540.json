@@ -1,0 +1,259 @@
+{
+  "passed": true,
+  "count": 36,
+  "results": [
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "fr",
+      "route": "accueil",
+      "heading": "Conna\u00eetre ses unit\u00e9s.\nConstruire sa strat\u00e9gie."
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "fr",
+      "route": "unites",
+      "heading": "Les unit\u00e9s"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "fr",
+      "route": "batiments",
+      "heading": "Les b\u00e2timents"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "fr",
+      "route": "technologies",
+      "heading": "Les technologies, niveau par niveau"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "fr",
+      "route": "factions",
+      "heading": "Factions & modes"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "fr",
+      "route": "hauts-faits",
+      "heading": "Les hauts faits"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "fr",
+      "route": "guide",
+      "heading": "Le guide du joueur"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "fr",
+      "route": "galerie",
+      "heading": "Les PNG du jeu"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "fr",
+      "route": "projet",
+      "heading": "Dune Legacy Tornie"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "en",
+      "route": "accueil",
+      "heading": "Know your units.\nBuild your strategy."
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "en",
+      "route": "unites",
+      "heading": "Units"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "en",
+      "route": "batiments",
+      "heading": "Buildings"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "en",
+      "route": "technologies",
+      "heading": "Technologies, level by level"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "en",
+      "route": "factions",
+      "heading": "Factions & modes"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "en",
+      "route": "hauts-faits",
+      "heading": "Achievements"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "en",
+      "route": "guide",
+      "heading": "The player guide"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "en",
+      "route": "galerie",
+      "heading": "Game PNGs"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 1440,
+      "lang": "en",
+      "route": "projet",
+      "heading": "Dune Legacy Tornie"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "fr",
+      "route": "accueil",
+      "heading": "Conna\u00eetre ses unit\u00e9s.\nConstruire sa strat\u00e9gie."
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "fr",
+      "route": "unites",
+      "heading": "Les unit\u00e9s"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "fr",
+      "route": "batiments",
+      "heading": "Les b\u00e2timents"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "fr",
+      "route": "technologies",
+      "heading": "Les technologies, niveau par niveau"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "fr",
+      "route": "factions",
+      "heading": "Factions & modes"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "fr",
+      "route": "hauts-faits",
+      "heading": "Les hauts faits"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "fr",
+      "route": "guide",
+      "heading": "Le guide du joueur"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "fr",
+      "route": "galerie",
+      "heading": "Les PNG du jeu"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "fr",
+      "route": "projet",
+      "heading": "Dune Legacy Tornie"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "en",
+      "route": "accueil",
+      "heading": "Know your units.\nBuild your strategy."
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "en",
+      "route": "unites",
+      "heading": "Units"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "en",
+      "route": "batiments",
+      "heading": "Buildings"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "en",
+      "route": "technologies",
+      "heading": "Technologies, level by level"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "en",
+      "route": "factions",
+      "heading": "Factions & modes"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "en",
+      "route": "hauts-faits",
+      "heading": "Achievements"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "en",
+      "route": "guide",
+      "heading": "The player guide"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "en",
+      "route": "galerie",
+      "heading": "Game PNGs"
+    },
+    {
+      "base": "http://127.0.0.1:8040/",
+      "width": 390,
+      "lang": "en",
+      "route": "projet",
+      "heading": "Dune Legacy Tornie"
+    }
+  ],
+  "errors": []
+}
