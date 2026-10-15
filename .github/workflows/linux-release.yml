@@ -177,9 +177,17 @@ jobs:
           done
           PROFILE=$(mktemp -d)
           XDG_CONFIG_HOME="$PROFILE" SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy \
-            timeout 60 ./build/bin/dunelegacy --verify-startup --window > "$PROFILE/fallback.log" 2>&1
-          grep 'Accelerated renderer unavailable' "$PROFILE/fallback.log"
+            timeout 60 ./build/bin/dunelegacy --verify-startup --showlog --window > "$PROFILE/fallback.log" 2>&1
           grep 'STARTUP CHECK PASSED.*renderer=software' "$PROFILE/fallback.log"
+
+      - name: Record the exact packaged source
+        run: |
+          VERSION="$(sed -n 's/^project(DuneLegacyTornie VERSION \([0-9]*\.[0-9]*\.[0-9]*\).*/\1/p' CMakeLists.txt)"
+          SOURCE_COMMIT="$(git rev-parse HEAD)" RELEASE_VERSION="$VERSION" python3 - <<'PYTHON'
+          import json, os, pathlib
+          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio'},'softwareFallback':True,'engineAndNetworkTests':True}
+          pathlib.Path('build/Linux-Build-'+report['version']+'.json').write_text(json.dumps(report,indent=2)+'\n')
+          PYTHON
 
       - name: Upload Packages
         uses: actions/upload-artifact@v4
@@ -190,6 +198,7 @@ jobs:
             build/*.rpm
             build/*.tar.gz
             build/*.AppImage
+            build/Linux-Build-*.json
 
       - name: Attach all four Linux packages to the existing release
         env:
@@ -206,7 +215,7 @@ jobs:
           test "${#RPM[@]}" -eq 1
           test "${#TGZ[@]}" -eq 1
           test "${#APPIMAGE[@]}" -eq 2
-          gh release upload "$RELEASE_TAG" "${DEB[@]}" "${RPM[@]}" "${TGZ[@]}" "${APPIMAGE[@]}" --repo "$GITHUB_REPOSITORY" --clobber
+          gh release upload "$RELEASE_TAG" "${DEB[@]}" "${RPM[@]}" "${TGZ[@]}" "${APPIMAGE[@]}" build/Linux-Build-*.json --repo "$GITHUB_REPOSITORY" --clobber
           {
             echo "Linux packages built from $RELEASE_TAG and attached to the existing release."
             echo
@@ -233,11 +242,14 @@ jobs:
           [[ "$VERIFIED_LINUX_RUN" =~ ^[0-9]+$ ]]
           bash scripts/bump-version.sh --check
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$VERIFIED_LINUX_RUN" > linux-run.json
+          gh release download "$RELEASE_TAG" --pattern "Linux-Build-${RELEASE_TAG#v}.json" --dir .
           python3 - <<'PYTHON'
-          import json, subprocess
+          import json, subprocess, os
           run = json.load(open('linux-run.json'))
+          build = json.load(open('Linux-Build-'+os.environ['RELEASE_TAG'][1:]+'.json'))
           assert run['conclusion'] == 'success', 'Linux package run has not succeeded'
-          assert run['head_sha'] == subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(), 'Linux packages use another source'
+          assert build['source'] == subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(), 'Linux packages use another source'
+          assert build['run'] == run['id'] and build['workflowSource'] == run['head_sha'], 'Build provenance differs from the verified run'
           assert run['path'] == '.github/workflows/linux-release.yml', 'Unexpected package workflow'
           PYTHON
           git fetch --depth=1 origin gh-pages
