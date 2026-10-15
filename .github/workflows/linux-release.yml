@@ -207,6 +207,15 @@ jobs:
           if(c.window.SITE_DATA.version!==process.env.RELEASE_VERSION)throw Error('Website version differs from the release');
           JAVASCRIPT
 
+      - name: Load the current documentation verification script
+        run: |
+          # The game tag remains immutable; publication tooling follows the
+          # workflow revision used for this dispatch.
+          git fetch --depth=1 origin "${{ github.sha }}"
+          git show FETCH_HEAD:scripts/check-documentation-site.cjs > /tmp/check-documentation-site.cjs
+          git fetch --depth=1 origin gh-pages
+          npm install --prefix "$RUNNER_TEMP/site-checks" playwright@1.56.1
+
       - name: Assemble and attach release documents
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -241,6 +250,13 @@ jobs:
               for path in sorted(pathlib.Path('offline').rglob('*')):
                   if path.is_file(): archive.write(path,path.relative_to('offline'))
           PYTHON
+          SITE_BROWSER="$(command -v google-chrome || command -v chromium)" \
+          NODE_PATH="$RUNNER_TEMP/site-checks/node_modules" \
+          RELEASE_VERSION="$VERSION" \
+          SITE_VALIDATION_OUTPUT="supporting/Website-Validation-$VERSION.json" \
+            node /tmp/check-documentation-site.cjs \
+              "file://$GITHUB_WORKSPACE/offline/DuneLegacyTornie-Site-Local/dist/" \
+              "https://torneko.github.io/dunelegacy-tornie/"
           (cd supporting && sha256sum * > "SHA256SUMS-$VERSION.txt")
           gh release upload "$RELEASE_TAG" supporting/* --clobber
           echo "Bilingual offline site, tagged sources, notes and SHA-256 checksums attached to $RELEASE_TAG." >> "$GITHUB_STEP_SUMMARY"
