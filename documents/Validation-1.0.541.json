@@ -5,7 +5,9 @@
   "localEngine": {
     "passed": true,
     "cases": 130,
-    "assertions": 10138
+    "assertions": 10138,
+    "finalCTestPassed": true,
+    "ctestTests": 2
   },
   "localFullRuntime": {
     "passed": true,
@@ -15,7 +17,10 @@
     ],
     "scenariosPerLanguage": 1606,
     "achievementsPassed": true,
-    "note": "Full candidate checks preceded the final editor ordering, Lite donor-price and Vanilla herald refinements; dedicated final rules checks cover these, and CI rechecks the tagged source."
+    "note": "Both full language checks passed against the final source, including all seven modes, 1606 campaign scenarios per language, achievements, final 541 rules and expanded co-op fixtures.",
+    "finalSourceEnglishPassed": true,
+    "source": "1ebb5ec34c5ffd791b0fdde6fce951627d09bcc1",
+    "finalSourceFrenchPassed": true
   },
   "finalRules": {
     "passed": true,
@@ -134,6 +139,20 @@
     "linux": "Linux-Build-1.0.541.json",
     "windows": "Windows-Build-1.0.541.json",
     "publication": "Publication-Validation-1.0.541.json",
-    "note": "The release assets record immutable source, CI run IDs and package hashes."
+    "note": "The release assets record immutable source, CI run IDs and package hashes.",
+    "linuxRun": 38928318200,
+    "linuxPassed": true,
+    "linuxURL": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/38928318200",
+    "windowsRun": 38928313974,
+    "windowsURL": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/38928313974",
+    "windowsBuildtreeRuntimePassed": true
+  },
+  "source": "1ebb5ec34c5ffd791b0fdde6fce951627d09bcc1",
+  "linuxPackageAudit": {
+    "passed": true,
+    "images": 2,
+    "exactModFilesPerImage": 5467,
+    "originalHuskyAndOrangeHeraldExact": true,
+    "report": "Linux-Package-Audit-1.0.541.json"
   }
 }

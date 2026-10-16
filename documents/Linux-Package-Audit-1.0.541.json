@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "source": "1ebb5ec34c5ffd791b0fdde6fce951627d09bcc1",
+  "linuxRun": 38928318200,
+  "images": [
+    {
+      "package": "DuneLegacyTornie-1.0.541-Linux-Mint-Compatible.AppImage",
+      "sha256": "0042a22fc16647bf3e4f8a0f356c5bef2f06446294e028256e9bd7318f81b117",
+      "exactModFiles": 5467
+    },
+    {
+      "package": "DuneLegacyTornie-1.0.541-Linux-x86_64.AppImage",
+      "sha256": "db508fd5eafdb9157cb6a7d81465e024de53eb9eddf30128a6b60eac6bb497cb",
+      "exactModFiles": 5467
+    }
+  ]
+}
