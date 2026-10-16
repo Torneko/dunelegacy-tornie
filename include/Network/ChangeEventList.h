@@ -39,7 +39,8 @@ public:
             ChangeExtraEnemyForces,
             ChangeExtraHardEnemyForces,
             ChangeArchonPlayer,
-            ChangeArchonAssignment
+            ChangeArchonAssignment,
+            ChangeAlliedBuilding
         };
 
 

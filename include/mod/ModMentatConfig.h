@@ -40,6 +40,7 @@ struct ModMentatInfo {
     int eyesCropY = 0, eyesCropHeight = 0, eyesWidth = 0, eyesHeight = 0;
     int mouthCropY = 0, mouthCropHeight = 0, mouthWidth = 0, mouthHeight = 0;
     bool restFromBackground = false;
+    bool factionTint = false;
     int eyesBrightness = 255, mouthBrightness = 255;
     // Each facial feature has stable destination anchors and one source per
     // atlas cell. This avoids moving the nose/fur when an atlas has padding.

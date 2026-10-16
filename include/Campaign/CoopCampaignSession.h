@@ -47,6 +47,7 @@ struct Context {
     bool chaosEligible = false;
     bool alliedControl = false, easyMode = false, extraEnemyForces = false;
     bool extraHardEnemyForces = false, archon = false;
+    bool alliedBuilding = false;
     int alliedCapacity = 2;
     bool randomVariants = false;
     int missionVariant = 0;
@@ -80,6 +81,7 @@ int factionForHouse(const Context& context, int runtimeHouse);
 int mapSlotForHouse(const Context& context, int runtimeHouse);
 bool isCoopAIClass(const std::string& playerClass);
 bool canControlHouse(const Context& context, int playerHouse, int objectHouse);
+bool canBuildOnAlliedLand(const Context& context, int builderHouse, int landHouse);
 
 class CoopCampaignSession {
 public:
@@ -102,6 +104,7 @@ public:
     void setPlayerColor(int playerSlot, int color);
     void setChaosEligible(bool eligible);
     void setAlliedControl(bool enabled) { context_.alliedControl = enabled; }
+    void setAlliedBuilding(bool enabled) { context_.alliedBuilding = enabled; }
     void setEasyMode(bool enabled) { context_.easyMode = enabled; }
     void setExtraEnemyForces(bool enabled) { context_.extraEnemyForces = enabled; }
     void setExtraHardEnemyForces(bool enabled) { context_.extraHardEnemyForces = enabled; }

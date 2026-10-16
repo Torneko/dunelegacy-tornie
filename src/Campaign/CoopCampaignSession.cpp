@@ -237,6 +237,7 @@ std::string serialize(const Context& context) {
         << "\nStage=" << context.stage << "\nCompletedMask=" << context.completedMask
         << "\nSeed=" << context.seed << "\nChaosEligible=" << (context.chaosEligible ? 1 : 0)
         << "\nAlliedControl=" << (context.alliedControl ? 1 : 0)
+        << "\nAlliedBuilding=" << (context.alliedBuilding ? 1 : 0)
         << "\nEasyMode=" << (context.easyMode ? 1 : 0)
         << "\nExtraEnemyForces=" << (context.extraEnemyForces ? 1 : 0) << "\nRoster=";
     for(std::size_t i = 0; i < context.roster.size(); ++i) {
@@ -398,6 +399,18 @@ bool canControlHouse(const Context& context, int playerHouse, int objectHouse) {
     return allied(playerHouse) && allied(objectHouse);
 }
 
+bool canBuildOnAlliedLand(const Context& context, int builderHouse, int landHouse) {
+    if(!context.alliedBuilding) return false;
+    bool builderAllied=false, landAllied=false;
+    for(const int index:context.alliedSlots()) {
+        const auto& slot=context.slots[index];
+        if(!slot.active()) continue;
+        builderAllied |= slot.house==builderHouse;
+        landAllied |= slot.house==landHouse;
+    }
+    return builderAllied && landAllied;
+}
+
 std::optional<Context> readContext(const std::string& mapData) {
     const auto section = readSection(mapData, "COOP");
     if(!section) return std::nullopt;
@@ -431,6 +444,8 @@ std::optional<Context> readContext(const std::string& mapData) {
     context.chaosEligible = boolean(require(*section, "ChaosEligible"));
     if(const auto control = section->find("alliedcontrol"); control != section->end())
         context.alliedControl = boolean(control->second);
+    if(const auto field=section->find("alliedbuilding");field!=section->end())
+        context.alliedBuilding=boolean(field->second);
     if(const auto field = section->find("easymode"); field != section->end())
         context.easyMode = boolean(field->second);
     if(const auto field = section->find("extraenemyforces"); field != section->end())
@@ -732,6 +747,7 @@ void CoopCampaignSession::reconfigurePlayers(const std::array<int, 2>& playerFac
     revised.context_.stage = context_.stage;
     revised.context_.completedMask = context_.completedMask;
     revised.context_.alliedControl = context_.alliedControl;
+    revised.context_.alliedBuilding = context_.alliedBuilding;
     revised.context_.easyMode = context_.easyMode;
     revised.context_.extraEnemyForces = context_.extraEnemyForces;
     revised.context_.extraHardEnemyForces=context_.extraHardEnemyForces;

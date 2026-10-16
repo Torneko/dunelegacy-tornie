@@ -126,7 +126,7 @@ private:
     std::optional<coop::CoopCampaignSession> coopSession;
     SettingsClass::GameOptionsClass coopGameOptions;
     bool bUpdatingCoopLobby = false;
-    Checkbox alliedControlCheckbox;
+    Checkbox alliedControlCheckbox, alliedBuildingCheckbox;
     Checkbox coopEasyModeCheckbox, extraEnemyForcesCheckbox, extraHardEnemyForcesCheckbox;
     struct ArchonRow { HBox box; Label name; DropDownBox faction; };
     std::array<ArchonRow,8> archonRows;

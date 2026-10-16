@@ -1,3 +1,9 @@
+# Préparation du remplacement 1.0.541 — construction alliée et mentat Rebels
+
+L’option coop Construction sur terrain allié, le correctif du propriétaire sélectionné dans l’éditeur et le chat animé Rebels teinté selon le mod sont préparés dans une nouvelle révision 1.0.541 (aucune 542). Protocole 13, sauvegardes 9833 ; anciennes sauvegardes lisibles, construction alliée désactivée en l’absence de champ enregistré. Récupérer le site publié `0e91f751a1d2946e97e4a22d937fd9fec63a50d1`, qui contient le précédent remplacement, avant toute modification. Les ressources originales du chat sont réutilisées sans les repeindre ; la teinte est appliquée par le moteur aux pixels de fourrure/vêtement, avec les mêmes ancrages animés.
+
+Les comptes rendus ci-dessous décrivent les publications précédentes. La CI construira et vérifiera Linux/Windows avant de remplacer le tag, les paquets et le site français/anglais avec son archive hors ligne.
+
 # Remplacement de la 1.0.541 — crédits coop et couleurs ArcaKev
 
 Correctifs de même version demandés par Tornie : capital initial de l’hôte pour chaque faction alliée active, bonus facile appliqué ensuite une fois, Rebels gris foncé et Corruptique jaune dans ArcaKev sans modifier les bannières. Protocole 12, sauvegardes 9832. Retélécharger les paquets sur tous les postes ; les chargements conservent les soldes enregistrés.

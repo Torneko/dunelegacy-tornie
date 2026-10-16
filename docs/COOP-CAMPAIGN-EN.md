@@ -2,9 +2,9 @@
 
 [Guide français](COOP-CAMPAIGN.md)
 
-Every participant needs **1.0.541 / protocol 12**, the same mod and a distinct name. LAN or Internet play uses the host relay when guests cannot communicate directly, without a VPN. The host must remain reachable and connected.
+Every participant needs **1.0.541 / protocol 13**, the same mod and a distinct name. LAN or Internet play uses the host relay when guests cannot communicate directly, without a VPN. The host must remain reachable and connected.
 
-At every new mission start, all active allied factions receive **the same initial budget as the host**, including zero or missing optional-player credit fields. Easy Mode then adds 500 credits once per faction. Loading a save preserves recorded balances. This fix replaces 1.0.541: all participants must download it again (protocol 12).
+At every new mission start, all active allied factions receive **the same initial budget as the host**, including zero or missing optional-player credit fields. Easy Mode then adds 500 credits once per faction. Loading a save preserves recorded balances. This fix replaces 1.0.541: all participants must download it again (protocol 13).
 
 ## Players and factions
 
@@ -13,6 +13,8 @@ A new campaign supports **four allied factions** with separate bases, armies and
 Enable **Archon** when creating the campaign to admit **eight players**. The host freely assigns each controller to any of the four allied factions, including all eight in one faction. Controllers in the same faction share its objects and money. Uncontrolled factions may remain closed or use AI. Enemies remain AI-controlled.
 
 Optional **Allied control** also permits commands to other allied factions; their owners pay the costs. The host selects AI types and difficulties. Guests can select bonus colours.
+
+**Build on allied land**, off by default, is set by the host before a new mission. Every active allied faction may build near other allies’ slabs and buildings, including Archon. Buildings and expenses retain their owners; terrain must remain valid and unoccupied. This option is independent of Allied control. Guests receive the host’s setting. Saves retain it, and it is locked when loading a mission already in progress. Older saves without the field keep shared construction disabled.
 
 There are 63 source campaigns and 1,386 co-op maps: Vanilla 9/198; Tornie, Jericho and ArcaKev 12/264 each; Tornie Lite, Jericho Lite and ArcaKev Lite 6/132 each. Nine stages follow the host faction's original campaign, fixed when the session starts.
 
@@ -39,7 +41,7 @@ Independent **Enemy forces +5** and **Enemy forces +10** switches combine to **1
 
 Shared progress and checkpoint files are `coop/<session>.ini` and `coop/<session>.dls`, next to `Dune Legacy.ini`, separate from solo progress. Keep both files. Resuming preserves the mod, selected scenario and checkpoint. Controller names can be reassigned; already-started saves retain controller counts per faction.
 
-The host lobby's **Load a save** offers manual `mpsave/*.dls` saves and automatic `coop/*.dls` checkpoints. Loading a compatible save reopens the lobby; all guests rejoin. Cancelling preserves the lobby. New saves use format **9832**; older saves remain readable with their stored maps and rules.
+The host lobby's **Load a save** offers manual `mpsave/*.dls` saves and automatic `coop/*.dls` checkpoints. Loading a compatible save reopens the lobby; all guests rejoin. Cancelling preserves the lobby. New saves use format **9833**; older saves remain readable with their stored maps and rules.
 
 **Together on Arrakis / COOP_CONQUEROR** rewards completing the shared campaign with a human or AI ally, including Easy Mode. It does not complete a solo campaign. The catalogue remains 67 achievements, with local profiles.
 

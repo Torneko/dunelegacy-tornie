@@ -2,9 +2,9 @@
 
 [English guide](COOP-CAMPAIGN-EN.md)
 
-Tous les participants doivent installer **1.0.541 / protocole 12**, activer le même mod et utiliser des noms différents. La connexion LAN ou Internet utilise le relais par l’hôte lorsque les invités ne peuvent pas communiquer directement, sans VPN. L’hôte doit rester joignable et connecté.
+Tous les participants doivent installer **1.0.541 / protocole 13**, activer le même mod et utiliser des noms différents. La connexion LAN ou Internet utilise le relais par l’hôte lorsque les invités ne peuvent pas communiquer directement, sans VPN. L’hôte doit rester joignable et connecté.
 
-À chaque nouveau départ de mission, toutes les factions alliées actives reçoivent **le même capital initial que l’hôte**, même si leur champ de crédits est nul ou absent. Le mode facile ajoute ensuite 500 crédits par faction, une seule fois. Un chargement de sauvegarde conserve les soldes enregistrés. Cette correction remplace la 1.0.541 : tous les participants doivent la retélécharger (protocole 12).
+À chaque nouveau départ de mission, toutes les factions alliées actives reçoivent **le même capital initial que l’hôte**, même si leur champ de crédits est nul ou absent. Le mode facile ajoute ensuite 500 crédits par faction, une seule fois. Un chargement de sauvegarde conserve les soldes enregistrés. Cette correction remplace la 1.0.541 : tous les participants doivent la retélécharger (protocole 13).
 
 ## Joueurs et factions
 
@@ -13,6 +13,8 @@ Une nouvelle campagne propose jusqu’à **quatre factions alliées**, avec leur
 Cocher **Archonte** lors de la création permet jusqu’à **huit joueurs**. Dans le lobby, l’hôte attribue librement chaque contrôleur à une des quatre factions alliées ; tous les huit peuvent partager une seule faction. Les contrôleurs d’une même faction partagent ses unités, bâtiments et crédits. Une faction sans contrôleur peut rester fermée ou recevoir une IA. Les ennemis restent contrôlés par l’IA.
 
 **Contrôles alliés**, facultatif, autorise aussi les ordres aux objets des autres factions alliées ; les dépenses restent à la charge du propriétaire. L’hôte choisit les types et difficultés des IA. Les invités ont accès à leurs couleurs bonus.
+
+**Construction sur terrain allié**, désactivée par défaut, est réglée par l’hôte avant une nouvelle mission. Chaque faction alliée active peut construire près des dalles et bâtiments des autres alliés, y compris en archonte. Les bâtiments et dépenses restent à leur propriétaire ; le terrain doit rester valide et libre. Cette option est indépendante des Contrôles alliés. Les invités reçoivent le choix de l’hôte. Une sauvegarde conserve ce choix ; il reste verrouillé lors du chargement d’une mission déjà commencée. Les anciennes sauvegardes sans ce réglage gardent l’option désactivée.
 
 | Édition | Campagnes sources | Variantes coop |
 |---|---:|---:|
@@ -58,7 +60,7 @@ Le tirage est commun aux participants, stocké dans la progression et conservé 
 
 La progression reste indépendante du solo : `coop/<session>.ini` et checkpoint `coop/<session>.dls`, à côté de `Dune Legacy.ini`. Conserver les deux fichiers. Une reprise utilise le mod de la session et le checkpoint existant ; les noms des contrôleurs peuvent être réattribués, avec les effectifs par faction conservés pour une partie déjà commencée.
 
-**Charger une sauvegarde**, dans le lobby hôte, propose les sauvegardes manuelles `mpsave/*.dls` et automatiques `coop/*.dls`. Un chargement compatible rouvre le lobby sur la mission enregistrée ; tous les invités le rejoignent à nouveau. Annuler conserve le lobby. Les nouveaux fichiers utilisent le format **9832** ; les anciens restent lisibles avec leur carte et leurs règles enregistrées.
+**Charger une sauvegarde**, dans le lobby hôte, propose les sauvegardes manuelles `mpsave/*.dls` et automatiques `coop/*.dls`. Un chargement compatible rouvre le lobby sur la mission enregistrée ; tous les invités le rejoignent à nouveau. Annuler conserve le lobby. Les nouveaux fichiers utilisent le format **9833** ; les anciens restent lisibles avec leur carte et leurs règles enregistrées.
 
 Le haut fait **Ensemble sur Arrakis / COOP_CONQUEROR** récompense la fin de la campagne commune, avec un humain ou une IA ; le mode facile est accepté. Il ne complète aucune campagne solo. Le catalogue conserve 67 hauts faits et les profils restent locaux.
 

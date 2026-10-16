@@ -3775,18 +3775,37 @@ void GFXManager::invalidateAllSpriteTextures() {
     }
 }
 
+// Reuse the cat art and animation anchors while following this faction's mod palette.
+// Only the original magenta fur/cloth pixels are recoloured; alpha, green irises,
+// gold details and the room retain their original values.
+static sdl2::surface_ptr tintMentatFaction(SDL_Surface* source,int colorSlot) {
+    auto result=sdl2::surface_ptr{SDL_ConvertSurfaceFormat(source,SDL_PIXELFORMAT_RGBA32,0)};
+    if(!result) return nullptr;
+    const auto tint=getHouseColorSDL(colorSlot,0);
+    for(int y=0;y<result->h;++y) for(int x=0;x<result->w;++x) {
+        auto* pixel=static_cast<Uint8*>(result->pixels)+y*result->pitch+x*4;
+        if(pixel[3] && pixel[0]>2*pixel[1]+4 && pixel[2]>2*pixel[1]+4) {
+            const int light=std::min(128,std::max<int>(pixel[0],pixel[2]));
+            pixel[0]=tint.r*light/128;pixel[1]=tint.g*light/128;pixel[2]=tint.b*light/128;
+        }
+    }
+    return result;
+}
+
 // Fit optional generated strips at render time. The source background is never
 // rewritten; idle frames use its exact pixels to avoid a seam at rest.
 static std::unique_ptr<Animation> loadFittedMentatAnimation(
     const std::string& filename, int count, double rate, SDL_Surface* background,
     int x, int y, int width, int height, int cropY, int cropHeight, bool eyes,
-    const std::vector<ModMentatPatch>& patches, int brightness) {
+    const std::vector<ModMentatPatch>& patches, int brightness, int tintSlot) {
     if(!background || count < 2 || width <= 0 || height <= 0
        || x < 0 || y < 0 || x + width > background->w || y + height > background->h
        || !pFileManager->exists(filename)) return nullptr;
     auto strip = LoadPNG_RW(pFileManager->openFile(filename).get());
     if(!strip || strip->w < count || cropY < 0 || cropHeight <= 0
        || cropY + cropHeight > strip->h) return nullptr;
+    if(tintSlot>=0) strip=tintMentatFaction(strip.get(),tintSlot);
+    if(!strip) return nullptr;
     auto animation = std::make_unique<Animation>();
     for(int frame = 0; frame < count; ++frame) {
         auto base = getSubPicture(background, x, y, width, height);
@@ -3908,8 +3927,11 @@ void GFXManager::loadMentatGraphics() {
         const ModMentatInfo& info = modManager.getActiveMentatInfo(house);
         if(!info.enabled) continue;
 
+        const int tintSlot=info.factionTint ? getDefaultHouseColorSlot(
+            getRuntimeHouseForIdentity(static_cast<HOUSETYPE>(house))) : -1;
         if(!info.backgroundAsset.empty()) {
             auto background = loadMentatBackgroundPng(info.backgroundAsset);
+            if(background && tintSlot>=0) background=tintMentatFaction(background.get(),tintSlot);
             if(background != nullptr) {
                 uiGraphic[UI_MentatBackground][house] = std::move(background);
             } else {
@@ -3933,7 +3955,7 @@ void GFXManager::loadMentatGraphics() {
             modMentatEyes[house] = info.restFromBackground ? loadFittedMentatAnimation(
                 info.eyesAsset, info.eyesFrames, info.eyesFrameRate,
                 uiGraphic[UI_MentatBackground][house].get(), info.eyesX, info.eyesY,
-                info.eyesWidth, info.eyesHeight, info.eyesCropY, info.eyesCropHeight, true, info.eyesPatches, info.eyesBrightness)
+                info.eyesWidth, info.eyesHeight, info.eyesCropY, info.eyesCropHeight, true, info.eyesPatches, info.eyesBrightness, tintSlot)
                 : loadPngStripAnimation(
                 info.eyesAsset, info.eyesFrames, info.eyesFrameRate,
                 info.doubleEyes, info.eyesTransparentColor);
@@ -3946,7 +3968,7 @@ void GFXManager::loadMentatGraphics() {
             modMentatMouth[house] = info.restFromBackground ? loadFittedMentatAnimation(
                 info.mouthAsset, info.mouthFrames, info.mouthFrameRate,
                 uiGraphic[UI_MentatBackground][house].get(), info.mouthX, info.mouthY,
-                info.mouthWidth, info.mouthHeight, info.mouthCropY, info.mouthCropHeight, false, info.mouthPatches, info.mouthBrightness)
+                info.mouthWidth, info.mouthHeight, info.mouthCropY, info.mouthCropHeight, false, info.mouthPatches, info.mouthBrightness, tintSlot)
                 : loadPngStripAnimation(
                 info.mouthAsset, info.mouthFrames, info.mouthFrameRate,
                 info.doubleMouth, info.mouthTransparentColor);

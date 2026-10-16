@@ -183,6 +183,7 @@ public:
 
     bool canPlayerControlHouse(const House* playerHouse, const House* owner) const;
     bool canControlHouse(const House* owner) const;
+    bool canBuildOnAlliedLand(const House* builderHouse, int landHouse) const;
     bool isCoopCampaign() const { return coopContext.has_value(); }
 
     bool hasFinished() const { return finished && !bQuitGame; }
