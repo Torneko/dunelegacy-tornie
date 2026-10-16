@@ -44,7 +44,10 @@ inline void verifyExpandedCoop(const std::string& output,const std::string& mod)
                 const auto& slot=context.slots[index];const auto* house=game->getHouse(slot.house);
                 if(!slot.active()) { require(!house,"closed ally has a live house");continue; }
                 require(house && house->getFactionID()==slot.faction,"faction/runtime binding");
-                require(house->getCredits()==map.getIntValue("Player"+std::to_string(index+1),"Credits",0)+500,
+                const int sourceCredits=map.getIntValue("Player1","Credits",-1);
+                require(sourceCredits>=0 && map.getIntValue("Player"+std::to_string(index+1),"Credits",-1)==sourceCredits,
+                    "allied starting funds differ from the host at stage "+std::to_string(stage)+" slot "+std::to_string(index+1));
+                require(house->getCredits()==sourceCredits+500,
                     "Easy Mode starting credits at stage "+std::to_string(stage));
                 require(house->getNumUnits()>0,"active ally has no starting army");
                 for(const auto& name:slot.humanNames()) {
@@ -63,6 +66,11 @@ inline void verifyExpandedCoop(const std::string& output,const std::string& mod)
             }
             if(stage==3 || stage==9) {
                 const auto save=(std::filesystem::path(output)/(mod+"-expanded-"+std::to_string(mode)+"-"+std::to_string(stage)+".dls")).string();
+                std::map<int,int> savedCredits;
+                for(const int index:context.alliedSlots()) if(context.slots[index].active()) {
+                    const int house=context.slots[index].house;
+                    savedCredits[house]=game->getHouse(house)->getCredits();
+                }
                 require(game->saveGame(save),"expanded save");
                 game.reset();currentGame=nullptr;pLocalHouse=nullptr;pLocalPlayer=nullptr;
                 game=std::make_unique<Game>();currentGame=game.get();
@@ -71,6 +79,8 @@ inline void verifyExpandedCoop(const std::string& output,const std::string& mod)
                 game->initGame(load);
                 const auto restored=coop::readContext(game->getGameInitSettings().getFiledata());
                 require(restored && restored->humanNames()==context.humanNames(),"saved controller roster");
+                for(const auto& balance:savedCredits) require(game->getHouse(balance.first)
+                    && game->getHouse(balance.first)->getCredits()==balance.second,"saved allied starting funds");
                 for(const auto& name:context.humanNames()) require(game->getPlayerByName(name)!=nullptr,"saved controller object");
             }
             game.reset();currentGame=nullptr;pLocalHouse=nullptr;pLocalPlayer=nullptr;
@@ -125,6 +135,50 @@ inline void verifyExpandedCoop(const std::string& output,const std::string& mod)
         SDL_RenderSetClipRect(renderer,nullptr);SDL_RenderClear(renderer);lobby.draw();
         auto pixels=renderReadSurface(renderer);
         require(pixels && SavePNG(pixels.get(),(std::filesystem::path(output)/(mod+(archon ? "-archon-lobby.png" : "-four-coop-lobby.png"))).string().c_str())==0,"lobby capture");
+    }
+    // Exercise the real lobby twice (prepare + countdown), then the settings
+    // received by each guest. Compare with the host, not the guest map field.
+    for(const bool easy:{false,true}) {
+        auto session=create(false);
+        auto initial=coop::makeGameSettings(session,options,"Starting funds lobby");
+        initial.setMapData(initial.getFiledata()+"SourcePending=1\n");
+        GameInitSettings committed;
+        {
+            auto lobby=std::make_unique<CustomGamePlayers>(initial,true);
+            const auto indices=session.context().alliedSlots();
+            for(int ordinal=0;ordinal<4;++ordinal) lobby->setPlayer2Slot(names[ordinal],indices[ordinal]*2);
+            lobby->coopEasyModeCheckbox.setChecked(easy);
+            lobby->addAllPlayersToGameInitSettings();
+            lobby->addAllPlayersToGameInitSettings();
+            committed=lobby->gameInitSettings;
+        }
+        OMemoryStream wire;committed.save(wire);
+        IMemoryStream incoming(wire.getData(),wire.getDataLength());
+        GameInitSettings received(incoming);
+        const auto context=coop::readContext(received.getFiledata());
+        require(context && context->humanNames().size()==4,"starting funds lobby roster");
+        auto data=sdl2::RWops_ptr{SDL_RWFromConstMem(received.getFiledata().data(),received.getFiledata().size())};
+        INIFile map(data.get());
+        const int expected=map.getIntValue("Player1","Credits",-1)+(easy ? 500 : 0);
+        // Optional player sections may contain an empty budget in an older or
+        // partially initialized map. They must receive the host's starting funds.
+        const auto indices=context->alliedSlots();
+        map.setIntValue("Player"+std::to_string(indices[2]+1),"Credits",0);
+        map.removeKey("Player"+std::to_string(indices[3]+1),"Credits");
+        std::vector<char> buffer(received.getFiledata().size()*2+1024);
+        auto written=sdl2::RWops_ptr{SDL_RWFromMem(buffer.data(),buffer.size())};
+        require(map.saveChangesTo(written.get()),"starting funds fixture serialization");
+        received.setMapData(std::string(buffer.data(),static_cast<std::size_t>(SDL_RWtell(written.get()))));
+        for(int ordinal=0;ordinal<4;++ordinal) {
+            settings.general.playerName=names[ordinal];
+            auto game=std::make_unique<Game>();currentGame=game.get();game->initGame(received);
+            const auto* player=game->getPlayerByName(names[ordinal]);
+            require(player && pLocalHouse==player->getHouse(),"starting funds guest local ownership");
+            require(pLocalHouse->getCredits()==expected,"starting funds guest "+std::to_string(ordinal+1)
+                +" expected "+std::to_string(expected)+" got "+std::to_string(pLocalHouse->getCredits()));
+            game.reset();currentGame=nullptr;pLocalHouse=nullptr;pLocalPlayer=nullptr;
+        }
+        settings.general.playerName=host;
     }
     SDL_Log("EXPANDED COOP PASS: %s, stages 1-9, closed/four/eight controllers, Easy credits, save/load and lobby assignments",mod.c_str());
 }

@@ -741,8 +741,19 @@ void INIMapLoader::loadHouses()
 
         housename2house[houseName] = houseID;
 
-        int startingCredits = pGame->getGameInitSettings().campaignStartingCredits(
-            inifile->getIntValue(houseName,"Credits",DEFAULT_STARTINGCREDITS), houseID);
+        int baseCredits=inifile->getIntValue(houseName,"Credits",DEFAULT_STARTINGCREDITS);
+        if(coopContext && coopContext->alliedCapacity==4) {
+            const int slot=coop::mapSlotForHouse(*coopContext,houseID)-1;
+            if(slot>=0 && coopContext->isAlliedSlot(slot)) {
+                // Every active allied base receives the original host budget.
+                // Optional/older player sections can contain zero or omit it.
+                baseCredits=inifile->getIntValue("Player1","Credits",DEFAULT_STARTINGCREDITS);
+            }
+        }
+        const int startingCredits=pGame->getGameInitSettings().campaignStartingCredits(baseCredits,houseID);
+        if(coopContext && coopContext->isAlliedSlot(coop::mapSlotForHouse(*coopContext,houseID)-1))
+            SDL_Log("COOP START FUNDS: stage=%d slot=%d house=%d base=%d total=%d",
+                coopContext->stage,coop::mapSlotForHouse(*coopContext,houseID),houseID,baseCredits,startingCredits);
 
         int maxUnits = 0;
         if(currentGame->getGameInitSettings().getGameOptions().maximumNumberOfUnitsOverride >= 0) {

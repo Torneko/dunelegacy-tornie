@@ -1,3 +1,11 @@
+# Remplacement de la 1.0.541 — crédits coop et couleurs ArcaKev
+
+Correctifs de même version demandés par Tornie : capital initial de l’hôte pour chaque faction alliée active, bonus facile appliqué ensuite une fois, Rebels gris foncé et Corruptique jaune dans ArcaKev sans modifier les bannières. Protocole 12, sauvegardes 9832. Retélécharger les paquets sur tous les postes ; les chargements conservent les soldes enregistrés.
+
+Le site courant a été récupéré depuis `origin/gh-pages` à `f835c84832e67a23afa5f06eef1ffa56029e3336`. Préparer les pages FR/EN et le paquet hors ligne à partir de cette révision. La CI permet de construire les deux plateformes sans publication (`source_ref`, `publish_packages=false`), puis de joindre ensemble les artefacts des deux runs réussis (`replace_packages=true`, IDs vérifiés) après mise à jour du tag existant. Aucun numéro 1.0.542 n’est créé. Les rapports de validation et de publication préciseront la révision et les résultats finaux.
+
+Le compte rendu ci-dessous décrit la publication initiale de 1.0.541 (protocole 11), avant ce remplacement.
+
 # Publication 1.0.541 — 2026-10-16
 
 La [release Linux/Windows 1.0.541](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.541) est publiée. Source immuable : `1ebb5ec34c5ffd791b0fdde6fce951627d09bcc1`. Site français/anglais : `f835c84832e67a23afa5f06eef1ffa56029e3336`, récupéré depuis le site 1.0.540 `fabd49f` avant modification. Le paquet `DuneLegacyTornie-Site-Local-1.0.541.zip` reprend exactement les 252 fichiers du site publié, avec les paquets Linux/Windows et les sources de cette release.

@@ -12,6 +12,18 @@ on:
         description: Attach the matching bilingual offline site and supporting files after a successful Linux run
         type: boolean
         default: false
+      source_ref:
+        description: Optional source revision to stage before replacing an existing release
+        type: string
+        default: ''
+      publish_packages:
+        description: Attach the built Linux packages to the release
+        type: boolean
+        default: true
+      replace_packages:
+        description: Publish staged Linux and Windows artifacts from the two verified runs
+        type: boolean
+        default: false
       verified_linux_run:
         description: Successful Linux package run ID (required for documentation_only)
         type: string
@@ -31,13 +43,13 @@ concurrency:
 
 jobs:
   build-linux:
-    if: ${{ !inputs.documentation_only }}
+    if: ${{ !inputs.documentation_only && !inputs.replace_packages }}
     # Ubuntu 22.04 keeps glibc compatibility with Linux Mint 21 and remains compatible with Mint 22.
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.release_tag }}
+          ref: ${{ inputs.source_ref || inputs.release_tag }}
 
       - name: Confirm release tag and source version
         env:
@@ -204,7 +216,8 @@ jobs:
             build/*.AppImage
             build/Linux-Build-*.json
 
-      - name: Attach all four Linux packages to the existing release
+      - name: Attach all five Linux packages to the existing release
+        if: inputs.publish_packages
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ inputs.release_tag }}
@@ -227,8 +240,58 @@ jobs:
             echo "Engine tests and the real UDP direct/host-relay regression passed before packaging."
           } >> "$GITHUB_STEP_SUMMARY"
 
+  replace-packages:
+    if: ${{ inputs.replace_packages && !inputs.documentation_only }}
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.release_tag }}
+      - name: Verify and publish both staged platforms
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          VERIFIED_LINUX_RUN: ${{ inputs.verified_linux_run }}
+          VERIFIED_WINDOWS_RUN: ${{ inputs.verified_windows_run }}
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          [[ "$VERIFIED_LINUX_RUN" =~ ^[0-9]+$ && "$VERIFIED_WINDOWS_RUN" =~ ^[0-9]+$ ]]
+          bash scripts/bump-version.sh --check
+          mkdir -p staged/linux staged/windows
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$VERIFIED_LINUX_RUN" > staged/linux-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$VERIFIED_WINDOWS_RUN" > staged/windows-run.json
+          gh run download "$VERIFIED_LINUX_RUN" --repo "$GITHUB_REPOSITORY" --name DuneLegacyTornie-Linux-Packages --dir staged/linux
+          gh run download "$VERIFIED_WINDOWS_RUN" --repo "$GITHUB_REPOSITORY" --name DuneLegacyTornie-Windows-Installer --dir staged/windows
+          python3 - <<'PYTHON'
+          import hashlib, json, os, pathlib, subprocess
+          version = os.environ['RELEASE_TAG'][1:]
+          source = subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip()
+          for platform, workflow in [('linux','linux-release.yml'),('windows','build.yml')]:
+              run = json.load(open('staged/'+platform+'-run.json'))
+              root = pathlib.Path('staged')/platform
+              build = json.loads((root/(platform.title()+'-Build-'+version+'.json')).read_text(encoding='utf-8-sig'))
+              assert run['conclusion'] == 'success' and run['path'] == '.github/workflows/'+workflow
+              assert build['source'] == source and build['version'] == version, 'Package source differs from the replacement tag'
+              assert build['run'] == run['id'] and build['workflowSource'] == run['head_sha'], 'Package provenance differs from the verified run'
+              assert build['engineAndNetworkTests'] is True
+              if platform == 'windows':
+                  assert build['installedRuntimeChecks'] == ['fr','en'] and build['menuStartupChecks'] == ['fr','en']
+                  package = root/build['package']
+                  assert package.name == 'DuneLegacyTornie-'+version+'-Windows-x64.zip'
+                  assert hashlib.sha256(package.read_bytes()).hexdigest() == build['sha256']
+                  assert len(list(root.iterdir())) == 2
+              else:
+                  assert build['graphicalStartup']['passed'] and build['softwareFallback']
+                  assert len(list(root.glob('*.AppImage'))) == 2
+                  for extension in ['*.deb','*.rpm','*.tar.gz']: assert len(list(root.glob(extension))) == 1
+                  assert len(list(root.iterdir())) == 6
+          PYTHON
+          gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
+          gh release upload "$RELEASE_TAG" staged/linux/* staged/windows/* --repo "$GITHUB_REPOSITORY" --clobber
+
   release-documents:
-    if: ${{ inputs.documentation_only }}
+    if: ${{ inputs.documentation_only && !inputs.replace_packages }}
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4

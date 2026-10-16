@@ -53,12 +53,14 @@ def build():
         info=re.sub(r'(?m)^Game Version = .*$', 'Game Version = 1.0.541',info)
         info=re.sub(r'(?m)^(Red Spice|Purple Spice) = .*$',r'\1 = false',info)
         (dest/'mod.ini').write_text(info)
-        if not mod.endswith('Lite'):shutil.copyfile(ROOT/'mods/Tornie/CustomHouse.ini',dest/'CustomHouse.ini')
+        if not mod.endswith('Lite'):
+            custom=(ROOT/'mods/Tornie/CustomHouse.ini').read_bytes().replace(b'Palette Index = 224',b'Palette Index = 192')
+            (dest/'CustomHouse.ini').write_bytes(custom)
         manifest=json.loads((dest/'manifest.json').read_text())
         manifest['mod'].update(id=mod,displayName=mod.replace('Lite',' Lite'),gameVersion='1.0.541')
         manifest['isolation']['root']='mods/'+mod
         if not mod.endswith('Lite'):
-            manifest['customHouse'].update(displayName='Corruptique',scenarioLetter='C',regionPrefix='COR',paletteIndex=224,fallbackHouse=2)
+            manifest['customHouse'].update(displayName='Corruptique',scenarioLetter='C',regionPrefix='COR',paletteIndex=192,fallbackHouse=2)
         manifest['factionOrder']=order
         manifest['spiceFamilies']=['normal','green','blue']
         (dest/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')

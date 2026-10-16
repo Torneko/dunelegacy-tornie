@@ -1,5 +1,11 @@
 # Dune Legacy Tornie 1.0.541 — ArcaKev, co-op and fixes
 
+**Replacement 1.0.541 — co-op starting funds and ArcaKev colours**
+
+- Every active allied faction receives the host’s initial budget when a new mission loads, including zero or missing optional-player credit fields. Easy Mode then adds 500 credits once to each ally. Closed slots receive no army or funds.
+- In **ArcaKev**, **Rebels is dark grey** and **Corruptique yellow**, across units, buildings, interfaces and the editor. Existing banners are retained.
+- **Download this replacement 1.0.541 on every computer**: protocol **12** prevents mixing the old and corrected starting-funds rules. Save format remains 9832; loading preserves recorded balances. The corrected budget applies at new mission starts.
+
 - **ArcaKev and ArcaKev Lite**: Jericho-derived mods with custom units and **normal plus green and blue spice**, matching editor and map generation, distinct campaigns and region ownership.
 - ArcaKev house/campaign order: **Harkonnen, Atreides, Ordos, Fremen, Sardaukar, Mercenary, Kleshmersh, Wildspade, Rebels, Neutral, Tharpique, Corruptique**. Persistent faction IDs remain stable.
 - **Four allied factions in co-op**, **eight players in Archon**, with freely assigned controllers, including all eight in one faction. Closed slots 3/4 spawn no army, MCV or reinforcements.
@@ -16,6 +22,6 @@
 - **Editor** team changes work through scrolling dropdowns, with **12 teams**, ArcaKev order and matching custom units/spice.
 - **FR/EN website** lists every house's Palace power and recharge by mod, updated technology, new mods, husky and notes; matching offline content.
 
-Every player needs **1.0.541 / protocol 11** and the same mod. New saves use **9832**; older saves remain readable. The Internet host relay without VPN and 1.0.540 AppImage/Mint startup fixes are retained. The host must remain reachable and connected. On Mint use `DuneLegacyTornie-1.0.541-Linux-Mint-Compatible.AppImage`; add `--appimage-extract-and-run` without FUSE. On Windows, extract the entire ZIP into a fresh directory before starting `dunelegacy.exe`.
+Every player needs **1.0.541 / protocol 12** and the same mod. New saves use **9832**; older saves remain readable. The Internet host relay without VPN and 1.0.540 AppImage/Mint startup fixes are retained. The host must remain reachable and connected. On Mint use `DuneLegacyTornie-1.0.541-Linux-Mint-Compatible.AppImage`; add `--appimage-extract-and-run` without FUSE. On Windows, extract the entire ZIP into a fresh directory before starting `dunelegacy.exe`.
 
 Automated tests isolate guests in eight-participant UDP sessions and verify commands, start, saves and all seven modes. The validation report records final results and CI links. Human play across independent Internet connections and native Mint 22.3/kernel 6.17 startup remain pending.

@@ -67,10 +67,15 @@ bool UPnPManager::discover(int timeoutMs) {
     }
     
     // Find a valid IGD (Internet Gateway Device)
+#if MINIUPNPC_API_VERSION >= 18
     char wanAddress[64] = {0};
-    int result = UPNP_GetValidIGD(deviceList, &data->urls, &data->igdData, 
+    int result = UPNP_GetValidIGD(deviceList, &data->urls, &data->igdData,
                                    data->lanAddress, sizeof(data->lanAddress),
                                    wanAddress, sizeof(wanAddress));
+#else
+    int result = UPNP_GetValidIGD(deviceList, &data->urls, &data->igdData,
+                                   data->lanAddress, sizeof(data->lanAddress));
+#endif
     
     freeUPNPDevlist(deviceList);
     
