@@ -93,7 +93,8 @@ void SFXManager::loadEnglishVoice() {
 
     const bool tornieVoiceFx = ModManager::instance().isInitialized()
         && (ModManager::instance().getActiveModName() == "Tornie"
-            || ModManager::instance().getActiveModName() == "Jericho");
+            || ModManager::instance().getActiveModName() == "Jericho"
+            || ModManager::instance().getActiveModName() == "ArcaKev");
 
     // now we can load
     for(auto house = 0; house < NUM_HOUSES; house++) {

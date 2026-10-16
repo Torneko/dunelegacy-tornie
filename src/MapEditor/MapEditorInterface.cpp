@@ -953,7 +953,9 @@ void MapEditorInterface::onHouseChanges() {
 
     int currentIndex = 0;
     int currentPlayerNum = 1;
-    for(const MapEditor::Player& player : pMapEditor->getPlayers()) {
+    for(const int index : getFactionSelectionOrder()) {
+        if(index >= static_cast<int>(pMapEditor->getPlayers().size())) continue;
+        const auto& player=pMapEditor->getPlayers()[index];
         if(!isCampaignHouseAvailable(player.house)) continue;
         std::string entryName = player.bActive ? (player.bAnyHouse ? (_("Player") + " " + std::to_string(currentPlayerNum++)) : getHouseDisplayNameByNumber(player.house)) : ("(" + getHouseDisplayNameByNumber(player.house) + ")");
 
@@ -1551,23 +1553,21 @@ void MapEditorInterface::changeInterfaceColor(HOUSETYPE newHouse) {
     editorModeTerrain_ThickWhiteSpice.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_ThickWhiteSpice, newHouse));
     editorModeTerrain_WhiteSpiceBloom.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_WhiteSpiceBloom, newHouse));
 
-    const std::string activeMod = ModManager::instance().getActiveModName();
-    const bool useTornieSpice = activeMod == "Tornie" || activeMod == "TornieLite";
-    const bool useJerichoSpice = ModManager::instance().usesJerichoSpicePalette();
-    // Hide complete rows as well as their buttons so inactive spice types do
-    // not reserve vertical space and push the active choices out of the panel.
-    editorModeTerrain_HBox4.setVisible(useTornieSpice);
-    editorModeTerrain_HBox5.setVisible(useJerichoSpice);
-    editorModeTerrain_HBox6.setVisible(useTornieSpice);
-    editorModeTerrain_HBox7.setVisible(useJerichoSpice);
-    for(SymbolButton* button : { &editorModeTerrain_GreenSpice, &editorModeTerrain_ThickGreenSpice, &editorModeTerrain_GreenSpiceBloom,
-                                 &editorModeTerrain_PaleLilacSpice, &editorModeTerrain_ThickPaleLilacSpice, &editorModeTerrain_PaleLilacSpiceBloom }) {
-        button->setVisible(useTornieSpice);
-    }
-    for(SymbolButton* button : { &editorModeTerrain_RedSpice, &editorModeTerrain_ThickRedSpice, &editorModeTerrain_RedSpiceBloom,
-                                 &editorModeTerrain_WhiteSpice, &editorModeTerrain_ThickWhiteSpice, &editorModeTerrain_WhiteSpiceBloom }) {
-        button->setVisible(useJerichoSpice);
-    }
+    const auto content=ModManager::instance().getActiveContentOptions();
+    // The editor follows the mod's saved checkboxes, including ArcaKev's
+    // normal + green + blue defaults, instead of a hard-coded mod-name pair.
+    editorModeTerrain_HBox4.setVisible(content.greenSpice);
+    editorModeTerrain_HBox5.setVisible(content.redSpice);
+    editorModeTerrain_HBox6.setVisible(content.purpleSpice);
+    editorModeTerrain_HBox7.setVisible(content.blueSpice);
+    for(SymbolButton* button : { &editorModeTerrain_GreenSpice, &editorModeTerrain_ThickGreenSpice, &editorModeTerrain_GreenSpiceBloom })
+        button->setVisible(content.greenSpice);
+    for(SymbolButton* button : { &editorModeTerrain_RedSpice, &editorModeTerrain_ThickRedSpice, &editorModeTerrain_RedSpiceBloom })
+        button->setVisible(content.redSpice);
+    for(SymbolButton* button : { &editorModeTerrain_PaleLilacSpice, &editorModeTerrain_ThickPaleLilacSpice, &editorModeTerrain_PaleLilacSpiceBloom })
+        button->setVisible(content.purpleSpice);
+    for(SymbolButton* button : { &editorModeTerrain_WhiteSpice, &editorModeTerrain_ThickWhiteSpice, &editorModeTerrain_WhiteSpiceBloom })
+        button->setVisible(content.blueSpice);
     editorModeTerrain_SpiceBloom.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_SpiceBloom, newHouse));
     editorModeTerrain_Rock.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_Rock, newHouse));
     editorModeTerrain_Mountain.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_Mountain, newHouse));

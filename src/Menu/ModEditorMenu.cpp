@@ -82,32 +82,12 @@ ModEditorMenu::ModEditorMenu(const std::string& modName)
     }
     mainVBox.addWidget(VSpacer::create(8));
 
-    // Instructions
-    instructionsLabel1.setText(_("To customize this mod, edit these files:"));
-    mainVBox.addWidget(&instructionsLabel1);
-    mainVBox.addWidget(VSpacer::create(10));
-    
-    // Path
-    pathLabel.setText(_("Mod folder: ") + modPath);
-    mainVBox.addWidget(&pathLabel);
-    mainVBox.addWidget(VSpacer::create(15));
-    
-    // Files list
-    filesLabel.setText(_("Editable files:"));
-    mainVBox.addWidget(&filesLabel);
-    mainVBox.addWidget(VSpacer::create(5));
-    
-    objectDataLabel.setText(_("  - ObjectData.ini (unit/structure stats)"));
-    mainVBox.addWidget(&objectDataLabel);
-    mainVBox.addWidget(VSpacer::create(3));
-    
-    quantBotLabel.setText(_("  - QuantBot Config.ini (AI settings)"));
-    mainVBox.addWidget(&quantBotLabel);
-    mainVBox.addWidget(VSpacer::create(3));
-    
-    gameOptionsLabel.setText(_("  - GameOptions.ini (game rules)"));
-    mainVBox.addWidget(&gameOptionsLabel);
-    
+    instructionsLabel1.setText(settings.general.language == "fr"
+        ? "Ces options s'appliquent aux nouvelles parties de ce mod."
+        : "These options apply to new games using this mod.");
+    mainVBox.addWidget(&instructionsLabel1, 24);
+    pathLabel.setText(_("Mod folder: ") + modName);
+    mainVBox.addWidget(&pathLabel, 20);
     mainVBox.addWidget(Spacer::create());
 
     // Buttons at bottom

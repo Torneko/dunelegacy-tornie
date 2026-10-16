@@ -29,6 +29,7 @@
 #include <misc/SDL2pp.h>
 
 #include <array>
+#include <vector>
 #include <memory>
 
 #define _(msgid) pTextManager->getLocalized(msgid)
@@ -168,6 +169,7 @@ void applyCustomPaletteRuntimeHouseRamps();
 bool isHouseAvailable(HOUSETYPE house);
 // Campaign/editor roster reuses existing runtime IDs, including former guest factions.
 bool isCampaignHouseAvailable(HOUSETYPE house);
+std::vector<int> getFactionSelectionOrder();
 int getNumAvailableHouses();
 bool isCustomGameHouseAvailable(HOUSETYPE house);
 int getNumCustomGameHouses();

@@ -61,6 +61,7 @@ public:
 
 
 private:
+    friend struct Release541EditorFixture;
 
     void onCancel();
     void onAdvancedBasicToggle();

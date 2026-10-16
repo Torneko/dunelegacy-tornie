@@ -34,6 +34,7 @@
  * Simple menu for editing mod name/version and showing file locations
  */
 class ModEditorMenu final : public MenuBase {
+    friend struct ModOptionsUIFixture;
 public:
     explicit ModEditorMenu(const std::string& modName);
     virtual ~ModEditorMenu();

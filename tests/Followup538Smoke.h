@@ -87,7 +87,7 @@ inline void verifyDoublefinery538Graphics(const std::string& output, const std::
         }
     }
     currentZoomlevel=previousZoom;
-    SDL_Log("538 DOUBLEFINERY GRAPHICS PASS: %s, 21 colour slots, three zooms, ten nonempty complete frames, exact editor preview and placed map pixels",mod.c_str());
+    SDL_Log("538 DOUBLEFINERY GRAPHICS PASS: %s, all colour slots, three zooms, ten nonempty complete frames, exact editor preview and placed map pixels",mod.c_str());
 }
 
 inline void verifyFollowup538(const std::string& output, const std::string& mod) {
@@ -176,7 +176,7 @@ inline void verifyFollowup538(const std::string& output, const std::string& mod)
         }
         require(!refinery->isFree() && refinery->getContainedHarvesters().size()==2,"two occupied bays");
         const auto credits=house->getStoredCredits();refinery->update();
-        require(house->getStoredCredits()-credits==1.25_fix,"two simultaneous extraction streams");
+        require(house->getStoredCredits()-credits==1.4375_fix,"two simultaneous extraction streams gain fifteen percent");
         screenborder->setNewScreenCenter(refinery->getLocation()*TILESIZE+Coord(2*TILESIZE,TILESIZE));
         CaptureHuntGameFixture::start(*game);
         SDL_RenderSetClipRect(renderer,nullptr);game->drawScreen();
@@ -237,7 +237,7 @@ inline void verifyFollowup538(const std::string& output, const std::string& mod)
         for(auto* building:structureList) if(building->getItemID()==Structure_Doublefinery) refinery=static_cast<Refinery*>(building);
         require(refinery && refinery->getContainedHarvesters().size()==2,"both occupants restored");
         const auto credits=refinery->getOwner()->getStoredCredits();refinery->update();
-        require(refinery->getOwner()->getStoredCredits()-credits==1.25_fix,"two extractions after load");
+        require(refinery->getOwner()->getStoredCredits()-credits==1.4375_fix,"two extractions retain fifteen percent after load");
         auto cargo=refinery->getContainedHarvesters();
         auto* first=static_cast<Harvester*>(cargo[0]);auto* second=static_cast<Harvester*>(cargo[1]);
         auto* carrier=static_cast<Carryall*>(refinery->getOwner()->createUnit(Unit_Carryall,true));

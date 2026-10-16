@@ -1,10 +1,12 @@
-# Campaigns / Campagnes — 1.0.535
+# Campaigns / Campagnes — 1.0.541
 
-Two independent plans; one occurrence of each faction in each opponent role. / Deux plans indépendants ; chaque faction apparaît une fois dans chaque rôle.
+Six mod plans, stable runtime faction IDs. / Six plans de mods, identifiants de factions stables.
+
+ArcaKev order / ordre : Harkonnen, Atreides, Ordos, Fremen, Sardaukar, Mercenary, Kleshmersh, Wildspade, Rebels, Neutral, Tharpique, Corruptique. Lite editions offer the first six.
 
 ## Tornie
 
-| Campaign / Campagne | First / Premier | Second / Deuxième | Final / Final |
+| Campaign / Campagne | First / Premier | Second / Deuxième | Final |
 |---|---|---|---|
 | Harkonnen | Atreides | Sardaukar | Rebels |
 | Atreides | Ordos | Mercenary | Corruptique |
@@ -21,7 +23,7 @@ Two independent plans; one occurrence of each faction in each opponent role. / D
 
 ## Jericho
 
-| Campaign / Campagne | First / Premier | Second / Deuxième | Final / Final |
+| Campaign / Campagne | First / Premier | Second / Deuxième | Final |
 |---|---|---|---|
 | Harkonnen | Ordos | Mercenary | Wildspade |
 | Atreides | Fremen | Neutral | Kleshmersh |
@@ -36,20 +38,64 @@ Two independent plans; one occurrence of each faction in each opponent role. / D
 | Kleshmersh | Harkonnen | Fremen | Rebels |
 | Tharpique | Atreides | Sardaukar | Corruptique |
 
-## Preserved rules / Règles conservées
+## TornieLite
 
-22 scenarios per campaign: the original terrain and three-route region progression remain. The third opponent replaces the original imperial/Sardaukar role in the final scenario. Player credits, quota and buildings remain. All 24 first missions have **two bonus Tanks, three Troopers orders (nine individual Troopers) and two Special orders**. Existing regular vehicles remain; the old Wildspade-only bonus is replaced, not stacked. Starting Soldier/Infantry markers remain absent. Special orders use the existing faction pool and deterministic game RNG. Later missions keep their original forces.
+| Campaign / Campagne | First / Premier | Second / Deuxième | Final |
+|---|---|---|---|
+| Harkonnen | Atreides | Ordos | Fremen |
+| Atreides | Ordos | Fremen | Sardaukar |
+| Ordos | Fremen | Sardaukar | Mercenary |
+| Fremen | Sardaukar | Mercenary | Harkonnen |
+| Sardaukar | Mercenary | Harkonnen | Atreides |
+| Mercenary | Harkonnen | Atreides | Ordos |
 
-22 scénarios par campagne : terrains et progression des régions conservés. Le troisième adversaire remplace le rôle impérial/Sardaukar dans la finale. Crédits, quota et bâtiments conservés. Les 24 premières missions offrent **deux Tanks en bonus, trois escouades Troopers (neuf fantassins) et deux Special**. Les autres véhicules ordinaires sont conservés ; l’ancien bonus Wildspade est remplacé sans cumul. Aucun Soldier/Infantry initial. Les Special utilisent le tirage déterministe propre à la faction. Les forces des missions suivantes sont conservées.
+## JerichoLite
 
-Opening enemies are reduced from eighteen to twelve orders. The six added enemies are removed; remaining enemy Special markers become ordinary Tanks, and Hunt orders become Area Guard to avoid immediate map-wide pursuit. Ambush encounters remain. Original border entries are moved inside the playable map so all twelve enemies actually deploy. This targets moderate opening pressure; extended campaign balance still depends on playtesting.
+| Campaign / Campagne | First / Premier | Second / Deuxième | Final |
+|---|---|---|---|
+| Harkonnen | Sardaukar | Mercenary | Atreides |
+| Atreides | Mercenary | Harkonnen | Ordos |
+| Ordos | Harkonnen | Atreides | Fremen |
+| Fremen | Atreides | Ordos | Sardaukar |
+| Sardaukar | Ordos | Fremen | Mercenary |
+| Mercenary | Fremen | Sardaukar | Harkonnen |
 
-Les ennemis des intros passent de dix-huit à douze ordres : retrait des six ennemis supplémentaires, Special ennemis remplacés par des Tanks ordinaires, et ordres Hunt remplacés par Area Guard pour limiter les attaques immédiates. Les embuscades sont conservées. Les entrées hors bordure sont replacées dans la carte pour que les douze ennemis apparaissent réellement. L’objectif est une pression initiale modérée ; l’équilibrage complet reste à apprécier en jeu.
+## ArcaKev
 
-The two opponent sets for a given player are disjoint: six different opponents across the two mods. No fourth opponent is introduced. Region owners and localized briefing names follow the same plan. Vanilla and Tornie Lite campaigns are unchanged. Existing saved games keep their stored scenario; start a new campaign to use the rebuilt maps.
+| Campaign / Campagne | First / Premier | Second / Deuxième | Final |
+|---|---|---|---|
+| Harkonnen | Fremen | Neutral | Kleshmersh |
+| Atreides | Sardaukar | Rebels | Tharpique |
+| Ordos | Mercenary | Corruptique | Harkonnen |
+| Fremen | Neutral | Wildspade | Atreides |
+| Sardaukar | Rebels | Kleshmersh | Ordos |
+| Mercenary | Corruptique | Tharpique | Fremen |
+| Kleshmersh | Atreides | Sardaukar | Corruptique |
+| Wildspade | Harkonnen | Fremen | Rebels |
+| Rebels | Kleshmersh | Atreides | Mercenary |
+| Neutral | Wildspade | Harkonnen | Sardaukar |
+| Tharpique | Ordos | Mercenary | Wildspade |
+| Corruptique | Tharpique | Ordos | Neutral |
 
-Pour une même faction, les deux mods offrent six adversaires différents. Aucun quatrième adversaire. Régions et noms dans les briefings suivent le même plan. Campagnes Vanilla et Tornie Lite conservées. Les sauvegardes existantes gardent leur scénario ; commence une nouvelle campagne pour utiliser les nouvelles cartes.
+## ArcaKevLite
 
-## Maintenance
+| Campaign / Campagne | First / Premier | Second / Deuxième | Final |
+|---|---|---|---|
+| Harkonnen | Ordos | Fremen | Sardaukar |
+| Atreides | Fremen | Sardaukar | Mercenary |
+| Ordos | Sardaukar | Mercenary | Harkonnen |
+| Fremen | Mercenary | Harkonnen | Atreides |
+| Sardaukar | Harkonnen | Atreides | Ordos |
+| Mercenary | Atreides | Ordos | Fremen |
 
-Source: `config/CampaignPlans.json`. Runtime briefing adapters: `mods/{Tornie,Jericho}/data/CampaignPlan.ini`. Run `python scripts/check-campaign-regions.py`. The one-shot `scripts/rebuild-campaigns.py` reconstructs from immutable `v1.0.534` and applies the revised intro policy. `scripts/tune-campaign-openings.py` can separately reapply only the openings from immutable original-release commit `fa2a5de3d23507f95332e243d060eeb419ce8fd5`; it is idempotent and preserves later missions. Do not use the replaced `v1.0.535` tag as its historical baseline.
+## Consistency / Cohérence
+
+Each house appears once in each enemy role. ArcaKev's three enemies are disjoint from both full Tornie and Jericho for the same player. Lite has only six houses; its distinct plan changes enemy roles, while completely disjoint three-enemy sets across three Lite mods are mathematically impossible. Region ownership and briefing names follow the same plan.
+
+Chaque maison apparaît une fois dans chaque rôle adverse. Les trois ennemis d’une campagne ArcaKev sont différents de ceux de Tornie et Jericho complets. Les éditions Lite n’ont que six maisons : leur plan change les rôles ; trois ensembles disjoints de trois ennemis sont impossibles. Régions et noms des briefings suivent le même plan.
+
+Solo campaign terrain, economy and forces remain unchanged by 1.0.541. Scenario 22 now actually unlocks engine technology 9 in campaign/skirmish. Co-op draws existing scenarios per new stage; see the bilingual co-op guides. Saved missions retain their stored maps.
+
+Terrains, économie et forces solo sont conservés. La finale 22 débloque le niveau technologique moteur 9 en campagne/skirmish. La coop choisit les scénarios existants à chaque nouvelle étape ; voir les guides bilingues. Les missions sauvegardées conservent leurs cartes.
+
+Source: `config/CampaignPlans.json`; runtime briefings: `mods/<mod>/data/CampaignPlan.ini`. Validate with `scripts/check-campaign-regions.py`, `scripts/check-bundled-mods.py` and `scripts/build-coop-campaign.py --check`. `scripts/build-arcakev.py --write` bootstraps only ArcaKev's solo plans from Jericho; it does not replace source mod campaigns.

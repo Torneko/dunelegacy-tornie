@@ -182,7 +182,7 @@ public:
     inline void setMapData(const std::string& mapData) { filedata = mapData; coopHarvestCached_ = false; coopEasyCached_ = false; }
     struct CoopHarvestObjective {
         int quota = 0;
-        std::array<int, 2> houses{{-1, -1}};
+        std::array<int, 4> houses{{-1, -1, -1, -1}};
     };
     // Derived from map metadata; no binary save or network fields are added.
     const CoopHarvestObjective& getCoopHarvestObjective() const;
@@ -257,7 +257,7 @@ private:
     mutable CoopHarvestObjective coopHarvestObjective_;
     void cacheCoopEasyMode() const;
     mutable bool coopEasyCached_ = false, coopEasyEnabled_ = false;
-    mutable std::array<int, 2> coopEasyHouses_{{HOUSE_INVALID, HOUSE_INVALID}};
+    mutable std::array<int, 4> coopEasyHouses_{{HOUSE_INVALID, HOUSE_INVALID, HOUSE_INVALID, HOUSE_INVALID}};
     mutable int coopEasyStage_ = 0;
 };
 

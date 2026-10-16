@@ -25,7 +25,7 @@ private:
     VBox mainVBox;
     Label caption;
     TextView description;
-    Checkbox chaosMode;
+    Checkbox chaosMode, archonMode;
     TextButton newCampaignButton;
     TextButton resumeButton;
     TextButton backButton;

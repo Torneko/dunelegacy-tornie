@@ -256,7 +256,7 @@ inline coop::Context verifyMission(Game& game, const GameInitSettings& init,
     require(map.getIntValue("COOP_TEMPLATE", "SourceFaction", -1) == sourceFaction
             && map.getIntValue("COOP_TEMPLATE", "OriginalMission", -1) == missions[stage - 1],
             "wrong original faction/mission selected");
-    const int expectedTech = mod == "vanilla" && stage == 9 ? 8 : stage;
+    const int expectedTech = stage;
     require(game.techLevel == expectedTech, "original mission technology/progression changed");
     verifySource(map);
     std::set<int> controls;
@@ -527,7 +527,7 @@ inline void verifyCoopFactionMatrix(const std::string& output, const std::string
     std::vector<int> roster;
     for(int h = 0; h < NUM_HOUSES; ++h)
         if(isCampaignHouseAvailable(static_cast<HOUSETYPE>(h))) roster.push_back(h);
-    const std::size_t expected = mod == "vanilla" ? 9 : (mod == "TornieLite" || mod == "JerichoLite" ? 6 : 12);
+    const std::size_t expected = mod == "vanilla" ? 9 : (isLiteMod(mod) ? 6 : 12);
     coopSmoke::require(roster.size() == expected, "unexpected campaign roster");
     auto options = effectiveGameOptions; options.chaosMode = false; options.easyMode = false;
     {

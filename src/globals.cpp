@@ -95,7 +95,7 @@ namespace {
 bool crossModCustomGameHousesActive() {
     if(!ModManager::instance().isInitialized()) return false;
     const std::string activeMod = ModManager::instance().getActiveModName();
-    return activeMod == "Tornie" || activeMod == "Jericho";
+    return activeMod == "Tornie" || activeMod == "Jericho" || activeMod == "ArcaKev";
 }
 
 const std::array<SDL_Color, 8> wildspadeRamp{{
@@ -172,7 +172,7 @@ int getCampaignHouseColorSlot(HOUSETYPE house, HOUSETYPE campaignHouse) {
 }
 
 int getHouseColorPaletteIndexFromSlot(int colorSlot) {
-    if(colorSlot >= HOUSECOLOR_KLESH_HARKONNEN && colorSlot <= HOUSECOLOR_KLESH_MERCENARY)
+    if(colorSlot >= HOUSECOLOR_KLESH_HARKONNEN && colorSlot <= HOUSECOLOR_KLESH_ORANGE)
         return PALCOLOR_HARKONNEN;
     if(!isValidHouseColorSlot(colorSlot)) {
         return PALCOLOR_HARKONNEN;
@@ -229,6 +229,11 @@ SDL_Color getHouseColorSDL(int colorSlot, int shadeOffset) {
         {76,240,220,255},{52,220,204,255},{32,196,184,255},{20,172,164,255},
         {12,140,136,255},{8,108,108,255},{4,76,80,255},{0,44,48,255}
     }};
+    static const std::array<SDL_Color, 8> campaignOrange{{
+        {255,168,48,255},{240,144,32,255},{220,120,20,255},{196,96,12,255},
+        {164,72,8,255},{132,52,4,255},{96,36,0,255},{60,20,0,255}
+    }};
+    if(colorSlot == HOUSECOLOR_KLESH_ORANGE) return campaignOrange[shadeOffset];
     if(colorSlot == HOUSECOLOR_KLESH_HARKONNEN) return campaignGreen[shadeOffset];
     if(colorSlot == HOUSECOLOR_KLESH_SARDAUKAR) return campaignFuchsia[shadeOffset];
     if(colorSlot == HOUSECOLOR_KLESH_MERCENARY) return campaignTurquoise[shadeOffset];
@@ -348,6 +353,19 @@ bool isCampaignHouseAvailable(HOUSETYPE house) {
     return isCustomGameHouseAvailable(house);
 }
 
+std::vector<int> getFactionSelectionOrder() {
+    const bool arcaKev = isArcaKevMod(ModManager::instance().getActiveModName());
+    const int canonical[] = {HOUSE_HARKONNEN,HOUSE_ATREIDES,HOUSE_ORDOS,HOUSE_FREMEN,
+        HOUSE_SARDAUKAR,HOUSE_MERCENARY,HOUSE_KLESHMERSH,HOUSE_WILDSPADE,
+        HOUSE_REBELS,HOUSE_NEUTRAL,HOUSE_THARPIQUE,HOUSE_CUSTOM};
+    std::vector<int> result;
+    for(int i = 0; i < NUM_HOUSES; ++i) {
+        const int house = arcaKev ? canonical[i] : i;
+        if(isCampaignHouseAvailable(static_cast<HOUSETYPE>(house))) result.push_back(house);
+    }
+    return result;
+}
+
 HOUSETYPE getHouseFactionIdentity(HOUSETYPE house) {
     if(!crossModCustomGameHousesActive()
        || ModManager::instance().getActiveModName() != "Jericho") {
@@ -388,6 +406,8 @@ bool isHouseFaction(HOUSETYPE house, HOUSETYPE identity) {
 
 int getDefaultHouseColorSlot(HOUSETYPE house) {
     const HOUSETYPE identity = getHouseFactionIdentity(house);
+    if(identity == HOUSE_KLESHMERSH && ModManager::instance().getActiveModName() == "vanilla")
+        return HOUSECOLOR_KLESH_ORANGE;
     if(identity == HOUSE_REBELS
        && ModManager::instance().isInitialized()
        && ModManager::instance().getActiveModName() == "vanilla") {

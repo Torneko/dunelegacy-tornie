@@ -270,9 +270,10 @@ void House::addCredits(FixPoint newCredits, bool wasRefined) {
         storedCredits += newCredits;
         const auto& sharedHarvest = currentGame->getGameInitSettings().getCoopHarvestObjective();
         if(sharedHarvest.quota > 0) {
-            if(houseID == sharedHarvest.houses[0] || houseID == sharedHarvest.houses[1]) {
+            if(std::find(sharedHarvest.houses.begin(),sharedHarvest.houses.end(),houseID)!=sharedHarvest.houses.end()) {
                 FixPoint teamStoredCredits = 0;
                 for(const int alliedHouse : sharedHarvest.houses) {
+                    if(alliedHouse<0 || alliedHouse>=NUM_HOUSES) continue;
                     if(const auto* ally = currentGame->getHouse(alliedHouse))
                         teamStoredCredits += ally->getStoredCredits();
                 }

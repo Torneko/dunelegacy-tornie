@@ -1,4 +1,31 @@
-# Published 1.0.540 — 2026-10-15
+# Publication 1.0.541 — 2026-10-16
+
+La [release Linux/Windows 1.0.541](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.541) est publiée. Source immuable : `1ebb5ec34c5ffd791b0fdde6fce951627d09bcc1`. Site français/anglais : `f835c84832e67a23afa5f06eef1ffa56029e3336`, récupéré depuis le site 1.0.540 `fabd49f` avant modification. Le paquet `DuneLegacyTornie-Site-Local-1.0.541.zip` reprend exactement les 252 fichiers du site publié, avec les paquets Linux/Windows et les sources de cette release.
+
+- Linux, tests moteur/réseau, deux AppImages et menus FR/EN avec PulseAudio : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38928318200 — succès.
+- Windows, moteur/réseau, 1 606 scénarios et hauts faits dans les deux langues du dossier installé, menus FR/EN : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38928313974 — succès.
+- Déploiement Pages : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38932048127 — succès.
+- Site hors ligne, sources, rapports, sommes de contrôle et 72 parcours réels dans un navigateur, publics/hors ligne, FR/EN et ordinateur/mobile : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38932158226 — succès.
+- Contrôles locaux : 130 cas moteur / 10 138 assertions, CTest 2/2, 1 606 scénarios par langue sur le code final et 28 contextes de fonctionnalités du site. Le réseau UDP réel vérifie huit participants aux communications directes entre invités bloquées, les identités et cycles de commandes, le lobby et le démarrage via l’hôte.
+- Les 5 467 fichiers de mods correspondent exactement aux sources dans le ZIP Windows et les deux AppImages ; les PNG du husky et la bannière orange sont conservés. Les sept paquets/sources intégrés au site local ont les mêmes SHA-256 que la release. Les 15 entrées du manifeste correspondent aux empreintes GitHub ; 16 fichiers sont publics.
+
+Le site documente les sept modes, l’ordre ArcaKev, les campagnes et technologies, la coop à quatre factions et l’archonte à huit contrôleurs, les pouvoirs et recharges des palais, le husky fourni, les 67 hauts faits et les 124 PNG. Les guides d’installation, du mode facile et de la coop sont synchronisés en français/anglais. Tous les participants doivent utiliser 1.0.541 / protocole 11 et le même mod ; nouvelles sauvegardes 9832, anciennes sauvegardes lisibles. Mint 22.3/noyau 6.17 et une partie humaine sur des accès Internet indépendants restent à confirmer.
+
+Linux and Windows 1.0.541, both website languages and the matching offline package are published. All four CI runs above succeeded; 72 offline/live browser routes, 28 local feature contexts, exact package payloads and all 15 manifest digests were verified. The supplied animated Kleshmersh husky is included. Native Mint and human Internet playtesting remain pending. Recover this `origin/gh-pages` revision or the 1.0.541 offline archive for the next update on either PC. Reports are attached to the release and retained under `release_notes/`.
+
+# Windows 1.0.540 published — 2026-10-15
+
+The Windows 64-bit ZIP is now attached to the same 1.0.540 release as Linux. It uses the immutable game source `17c7d375bfdfe0204acd110bea57409e9bbe4896`, protocol 10 and save format 9831, including the host relay for isolated guests. Extract the entire ZIP into a new folder and launch `dunelegacy.exe`. All players need the same version and mod.
+
+- Windows build, engine/network tests, installed FR/EN mod/achievement checks and actual menu startup: https://github.com/Torneko/dunelegacy-tornie/actions/runs/38789679153 — success.
+- Public Windows ZIP SHA-256: `807e6aaae7f6632ebd2a46675618cf71b16c58324cf3122e377cbb62984307e1`. All 3,177 mod files match the tagged source exactly; the download returns HTTP 200.
+- FR/EN site recovered from `afb742b` and published at `fabd49f`: https://github.com/Torneko/dunelegacy-tornie/actions/runs/38792866861 — success.
+- Matching offline package with Windows 1.0.540, notes, reports and checksums: https://github.com/Torneko/dunelegacy-tornie/actions/runs/38792988463 — success; 72 offline/live FR/EN desktop/mobile browser checks passed, including the current Windows links.
+- All 15 checksum entries match GitHub's public asset digests. Sixteen release assets are public. The five Linux package digests are unchanged.
+
+Windows 1.0.538 remains historical and cannot join protocol 10 sessions. Three independent human Internet connections and native Mint 22.3/kernel 6.17 still await user confirmation. Recover this published site or the refreshed 1.0.540 offline ZIP for the next update.
+
+# Initial Linux publication 1.0.540 — 2026-10-15
 
 Mint AppImage startup is corrected: the static executable no longer demands shared SDL mixer/TTF copies on the host. The Mint launcher, previous Mint profile, X11/software/PulseAudio and an automatic software fallback are included. The actual published Mint image passed a full menu startup without development-library paths, the UDP regression and an exact comparison of all 3,177 mod files.
 

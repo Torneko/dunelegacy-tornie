@@ -203,7 +203,7 @@ bool Scoutpost::isChemipostUpgradeEligible() const {
     }
 
     const std::string& activeMod = ModManager::instance().getActiveModName();
-    return activeMod == "Tornie" || activeMod == "Jericho";
+    return activeMod == "Tornie" || activeMod == "Jericho" || activeMod == "ArcaKev";
 }
 
 int Scoutpost::getChemipostUpgradeCost() const {

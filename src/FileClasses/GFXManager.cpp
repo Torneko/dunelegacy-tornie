@@ -536,7 +536,7 @@ GFXManager::GFXManager() {
                     Scaler::defaultDoubleSurface(objPic[objPicEnum][HOUSE_HARKONNEN][0].get());
                 if(objPic[objPicEnum][HOUSE_HARKONNEN][1]) {
                     objPic[objPicEnum][HOUSE_HARKONNEN][2] =
-                        Scaler::defaultDoubleSurface(objPic[objPicEnum][HOUSE_HARKONNEN][1].get());
+                        Scaler::defaultTripleSurface(objPic[objPicEnum][HOUSE_HARKONNEN][0].get());
                 }
             }
             SDL_Log("GFXManager: %s sprite '%s' loaded", label, pngName);
@@ -617,7 +617,7 @@ GFXManager::GFXManager() {
             Scaler::defaultDoubleSurface(objPic[objPicEnum][HOUSE_HARKONNEN][0].get());
         if(objPic[objPicEnum][HOUSE_HARKONNEN][1]) {
             objPic[objPicEnum][HOUSE_HARKONNEN][2] =
-                Scaler::defaultDoubleSurface(objPic[objPicEnum][HOUSE_HARKONNEN][1].get());
+                Scaler::defaultTripleSurface(objPic[objPicEnum][HOUSE_HARKONNEN][0].get());
         }
         SDL_Log("GFXManager: installed Tornie %s ground-unit atlas", label);
         return true;
@@ -1054,7 +1054,7 @@ GFXManager::GFXManager() {
                 SDL_Log("GFXManager: FlameTank step 6: generate zoom 2");
                 if(objPic[ObjPic_FlameTankGunTornie][HOUSE_HARKONNEN][1]) {
                     objPic[ObjPic_FlameTankGunTornie][HOUSE_HARKONNEN][2] =
-                        Scaler::defaultDoubleSurface(objPic[ObjPic_FlameTankGunTornie][HOUSE_HARKONNEN][1].get());
+                        Scaler::defaultTripleSurface(objPic[ObjPic_FlameTankGunTornie][HOUSE_HARKONNEN][0].get());
                 }
             }
             SDL_Log("GFXManager: FlameTank.png loaded (all zoom levels)");
@@ -1089,7 +1089,7 @@ GFXManager::GFXManager() {
                     Scaler::defaultDoubleSurface(objPic[ObjPic_EliteSiegeTankGunTornie][HOUSE_HARKONNEN][0].get());
                 if(objPic[ObjPic_EliteSiegeTankGunTornie][HOUSE_HARKONNEN][1]) {
                     objPic[ObjPic_EliteSiegeTankGunTornie][HOUSE_HARKONNEN][2] =
-                        Scaler::defaultDoubleSurface(objPic[ObjPic_EliteSiegeTankGunTornie][HOUSE_HARKONNEN][1].get());
+                        Scaler::defaultTripleSurface(objPic[ObjPic_EliteSiegeTankGunTornie][HOUSE_HARKONNEN][0].get());
                 }
             }
             SDL_Log("GFXManager: EliteSiegeTank.png loaded (all zoom levels)");
@@ -1953,8 +1953,7 @@ GFXManager::GFXManager() {
             uiGraphic[UI_Herald_Grey][HOUSE_WILDSPADE]=PicFactory->createGreyHouseChoice(uiGraphic[UI_Herald_Colored][HOUSE_WILDSPADE].get());
         }
         if(isCampaignHouseAvailable(HOUSE_KLESHMERSH)) {
-            const bool vanilla=ModManager::instance().getActiveModName()=="vanilla";
-            loadBonusHerald(HOUSE_KLESHMERSH,vanilla ? "HeraldKleshmershBrown.png" : "HeraldKleshmersh.png",
+            loadBonusHerald(HOUSE_KLESHMERSH,"HeraldKleshmersh.png",
                             uiGraphic[UI_Herald_Colored][HOUSE_HARKONNEN].get());
             uiGraphic[UI_Herald_Grey][HOUSE_KLESHMERSH]=PicFactory->createGreyHouseChoice(uiGraphic[UI_Herald_Colored][HOUSE_KLESHMERSH].get());
         }
@@ -4391,7 +4390,7 @@ void GFXManager::reloadRuntimeModPortraits() {
     loadPortrait(Picture_LoveFactory, "LoveFactoryIcon.png", "STARPORT.WSA", tornieGraphicsVisible);
     loadPortrait(Picture_PalaceLightVehicles, "PalaceTrikeAndQuadIcon.png", "FREMEN.WSA", tornieGraphicsVisible);
     loadPortrait(Picture_PalaceRebelsCharging, "PalaceRebelsChargingIcon.png", "FREMEN.WSA",
-                 activeMod == "Tornie" || activeMod == "Jericho" || activeMod == "vanilla");
+                 activeMod == "Tornie" || activeMod == "Jericho" || activeMod == "ArcaKev" || activeMod == "vanilla");
     loadPortrait(Picture_Harvestank, "HarvestankIcon.png", "HARVEST.WSA", tornieGraphicsVisible);
 
 
@@ -4772,7 +4771,7 @@ void GFXManager::reloadModDependentUiGraphics() {
             case HOUSE_NEUTRAL: return "HeraldNeu.png";
             case HOUSE_REBELS: return "HeraldRebels.png";
             case HOUSE_WILDSPADE: return "HeraldWildspade.png";
-            case HOUSE_KLESHMERSH: return ModManager::instance().getActiveModName()=="vanilla" ? "HeraldKleshmershBrown.png" : "HeraldKleshmersh.png";
+            case HOUSE_KLESHMERSH: return "HeraldKleshmersh.png";
             default: return nullptr;
         }
     };

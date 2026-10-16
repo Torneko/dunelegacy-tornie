@@ -16,6 +16,7 @@
  */
 
 #include <units/UnitBase.h>
+#include <units/Trooper.h>
 #include <Achievements/AchievementEvents.h>
 
 #include <globals.h>
@@ -248,7 +249,7 @@ bool UnitBase::attack() {
             int currentBulletType = bulletType;
             Sint32 currentWeaponDamage = currentGame->objectData.data[itemID][getProductionHouseID()].weapondamage;
 
-            if(getItemID() == Unit_Trooper && !bAirBullet) {
+            if(getItemID() == Unit_Trooper && !bAirBullet && currentBulletType != Bullet_Flame) {
                 // Troopers change weapon type depending on distance
 
                 FixPoint distance = distanceFrom(centerPoint, targetCenterPoint);
@@ -267,6 +268,9 @@ bool UnitBase::attack() {
                     currentGame->combatStats.launcherFiresOnOrni++;
                     currentGame->combatStats.launcherRocketsSpawned++;
                 }
+
+                if(getItemID() == Unit_Trooper && currentBulletType == Bullet_Flame)
+                    currentWeaponDamage = static_cast<Trooper*>(this)->flameWeaponDamage(currentWeaponDamage);
 
                 bulletList.push_back( new Bullet( objectID, &centerPoint, &targetCenterPoint, currentBulletType, currentWeaponDamage, bAirBullet, pObject) );
                 if(pObject != nullptr) {

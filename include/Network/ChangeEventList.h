@@ -36,7 +36,10 @@ public:
             SetHumanPlayer,
             ChangeAlliedControl,
             ChangeCoopEasyMode,
-            ChangeExtraEnemyForces
+            ChangeExtraEnemyForces,
+            ChangeExtraHardEnemyForces,
+            ChangeArchonPlayer,
+            ChangeArchonAssignment
         };
 
 
@@ -49,11 +52,14 @@ public:
          : eventType(EventType::SetHumanPlayer), slot(slot), newStringValue(newStringValue) {
         }
 
+        ChangeEvent(EventType type,Uint32 slot,const std::string& value)
+            : eventType(type),slot(slot),newStringValue(value) {}
+
         explicit ChangeEvent(InputStream& stream) {
             eventType = static_cast<EventType>(stream.readUint32());
             slot = stream.readUint32();
 
-            if(eventType == EventType::SetHumanPlayer) {
+            if(eventType == EventType::SetHumanPlayer || eventType == EventType::ChangeArchonPlayer) {
                 newStringValue = stream.readString();
             } else {
                 newValue = stream.readUint32();
@@ -63,7 +69,7 @@ public:
         void save(OutputStream& stream) const {
             stream.writeUint32(static_cast<Uint32>(eventType));
             stream.writeUint32(slot);
-            if(eventType == EventType::SetHumanPlayer) {
+            if(eventType == EventType::SetHumanPlayer || eventType == EventType::ChangeArchonPlayer) {
                 stream.writeString(newStringValue);
             } else {
                 stream.writeUint32(newValue);

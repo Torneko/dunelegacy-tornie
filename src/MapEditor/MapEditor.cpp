@@ -698,8 +698,11 @@ void MapEditor::saveMap(const std::string& filepath) {
 
     std::string house2housename[NUM_HOUSES];
     int currentAnyHouseNumber = 1;
-    int i = 0;
-    for(const Player& player : players) {
+    auto saveOrder=getFactionSelectionOrder();
+    for(int index=0;index<static_cast<int>(players.size());++index)
+        if(std::find(saveOrder.begin(),saveOrder.end(),index)==saveOrder.end()) saveOrder.push_back(index);
+    for(const int i:saveOrder) {
+        const Player& player=players[i];
         if(player.bAnyHouse) {
             house2housename[i] =  "Player" + std::to_string(currentAnyHouseNumber);
         } else {
@@ -735,7 +738,6 @@ void MapEditor::saveMap(const std::string& filepath) {
             // remove corresponding house name
             loadedINIFile->removeSection(player.name);
         }
-        i++;
     }
 
     // remove players that are leftovers

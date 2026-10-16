@@ -34,6 +34,10 @@ public:
     bool hasBumpyMovementOnRock() const override { return true; }
 
     void playAttackSound() override;
+    void save(OutputStream& stream) const override;
+    Sint32 flameWeaponDamage(Sint32 base);
+private:
+    Uint8 flameDamageRemainder = 0;
 };
 
 #endif //TROOPER_H

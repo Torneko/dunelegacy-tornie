@@ -145,6 +145,22 @@ public:
         return true;
     }
 
+    bool handleMouseMovementOverlay(Sint32 x, Sint32 y) override {
+        return content && content->handleMouseMovementOverlay(x, y + scrollbar.getCurrentValue());
+    }
+
+    bool handleMouseLeftOverlay(Sint32 x, Sint32 y, bool pressed) override {
+        return content && content->handleMouseLeftOverlay(x, y + scrollbar.getCurrentValue(), pressed);
+    }
+
+    bool handleMouseRightOverlay(Sint32 x, Sint32 y, bool pressed) override {
+        return content && content->handleMouseRightOverlay(x, y + scrollbar.getCurrentValue(), pressed);
+    }
+
+    bool handleMouseWheelOverlay(Sint32 x, Sint32 y, bool up) override {
+        return content && content->handleMouseWheelOverlay(x, y + scrollbar.getCurrentValue(), up);
+    }
+
     void draw(Point position) override {
         if(isVisible() == false || content == nullptr) {
             return;

@@ -10,9 +10,9 @@ inline void verifyEditorSpiceDefaults(const std::string& output, const std::stri
         if(!value) throw std::runtime_error("Editor spice defaults: " + message);
     };
     const bool jericho = mod == "Jericho" || mod == "JerichoLite";
-    const bool tornie = mod == "Tornie" || mod == "TornieLite";
+    const bool arcakev = isArcaKevMod(mod);
     const auto& mods = ModManager::instance();
-    require(mods.getActiveContentOptions().spiceMask() == (mod == "vanilla" ? 0u : 15u)
+    require(mods.getActiveContentOptions().spiceMask() == (mod == "vanilla" ? 0u : arcakev ? 9u : 15u)
             && effectiveGameOptions.content == mods.getActiveContentOptions(),
             mod + " installed defaults or effective options dropped a spice family");
     if(mod == "JerichoLite") {
@@ -24,11 +24,12 @@ inline void verifyEditorSpiceDefaults(const std::string& output, const std::stri
     editor.setMap(MapData(32, 32, Terrain_Rock), MapInfo());
     MapEditorInterface ui(&editor);
     ui.onModeButton(1);
-    require(ui.editorModeTerrain_HBox4.isVisible() == tornie
-            && ui.editorModeTerrain_HBox6.isVisible() == tornie
-            && ui.editorModeTerrain_HBox5.isVisible() == jericho
-            && ui.editorModeTerrain_HBox7.isVisible() == jericho,
-            mod + " custom spice palette rows are hidden or belong to another mod");
+    const auto content=mods.getActiveContentOptions();
+    require(ui.editorModeTerrain_HBox4.isVisible() == content.greenSpice
+            && ui.editorModeTerrain_HBox6.isVisible() == content.purpleSpice
+            && ui.editorModeTerrain_HBox5.isVisible() == content.redSpice
+            && ui.editorModeTerrain_HBox7.isVisible() == content.blueSpice,
+            mod + " editor rows disagree with the saved spice checkboxes");
     if(jericho) {
         require(ui.editorModeTerrain_RedSpice.isVisible() && ui.editorModeTerrain_RedSpice.isEnabled()
                 && ui.editorModeTerrain_WhiteSpice.isVisible() && ui.editorModeTerrain_WhiteSpice.isEnabled(),
@@ -63,7 +64,7 @@ inline void verifyEditorSpiceDefaults(const std::string& output, const std::stri
     generator.onMapTypeChanged(1);
     int first = 0, second = 0, unexpected = 0;
     const int firstTerrain = jericho ? Terrain_RedSpice : Terrain_GreenSpice;
-    const int secondTerrain = jericho ? Terrain_WhiteSpice : Terrain_PaleLilacSpice;
+    const int secondTerrain = (jericho || arcakev) ? Terrain_WhiteSpice : Terrain_PaleLilacSpice;
     for(int y = 0; y < generator.mapdata.getSizeY(); ++y)
         for(int x = 0; x < generator.mapdata.getSizeX(); ++x) {
             int type = generator.mapdata(x, y);
@@ -170,7 +171,7 @@ inline void verifyGeneratedSpice(const std::string& output, const std::string& m
         const auto counts = sample();
         require(counts == sample(), "same seed differs");
         for(int color = 0; color < 5; ++color)
-            require((mod == "vanilla" && color > 0) ? counts[color] == 0 : counts[color] > 0,
+            require((color>0 && !(ModManager::instance().getActiveContentOptions().spiceMask() & (1u<<(color-1)))) ? counts[color] == 0 : counts[color] > 0,
                     mod + " missing/generated unexpected color " + std::to_string(color));
         const Uint32 seed = currentGame->randomGen.getSeed();
         require(currentGameMap->chooseGeneratedSpiceTerrain(Terrain_WhiteSpice, Terrain_ThickWhiteSpice) == families[4]

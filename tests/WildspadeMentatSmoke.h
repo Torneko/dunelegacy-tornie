@@ -3,7 +3,7 @@
 #include <Menu/BriefingMenu.h>
 
 inline void verifyWildspadeMentat(const std::string& output, const std::string& mod) {
-    if(mod != "Tornie" && mod != "Jericho") return;
+    if(mod != "Tornie" && mod != "Jericho" && mod != "ArcaKev") return;
     auto require=[](bool value,const std::string& message) {
         if(!value) throw std::runtime_error("Wildspade mentat check: "+message);
     };

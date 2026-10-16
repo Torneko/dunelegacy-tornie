@@ -58,7 +58,7 @@ static const char* CUSTOM_HOUSE_CONFIG = "CustomHouse.ini";
 
 static CustomHouseInfo makeGuestCustomHouse(const std::string& activeModName) {
     CustomHouseInfo info;
-    if(activeModName == TORNIE_MOD_NAME) {
+    if(activeModName == TORNIE_MOD_NAME || activeModName == "ArcaKev") {
         info.enabled = true;
         info.displayName = "Tharpique";
         info.scenarioLetter = 'T';
@@ -127,7 +127,9 @@ void ModManager::initialize() {
         TORNIE_MOD_NAME,
         TORNIE_LITE_MOD_NAME,
         JERICHO_MOD_NAME,
-        JERICHO_LITE_MOD_NAME
+        JERICHO_LITE_MOD_NAME,
+        "ArcaKev",
+        "ArcaKevLite"
     };
     for(const char* modName : bundledTornieMods) {
         if(!modExists(modName) || bundledTornieModNeedsReseed(modName)) {
@@ -203,14 +205,27 @@ const ModMentatInfo& ModManager::getActiveMentatInfo(int house) const {
         info.useBaseExtras = false;
         return info;
     }();
+    static const ModMentatInfo vanillaKleshmershHusky = [] {
+        ModMentatInfo info = vanillaChani;
+        info.backgroundAsset = "MentatHusky_Kleshmersh.png";
+        info.eyesAsset = "MentatHusky_Kleshmersh_Eyes.png";
+        info.mouthAsset = "MentatHusky_Kleshmersh_Mouth.png";
+        info.doubleEyes = false;
+        info.doubleMouth = false;
+        info.eyesX = 66;
+        info.eyesY = 158;
+        info.mouthX = 78;
+        info.mouthY = 252;
+        return info;
+    }();
     if(house >= HOUSE_WILDSPADE && house <= HOUSE_THARPIQUE
-       && (activeMod == TORNIE_MOD_NAME || activeMod == JERICHO_MOD_NAME)
+       && (activeMod == TORNIE_MOD_NAME || activeMod == JERICHO_MOD_NAME || activeMod == "ArcaKev")
        && (!initialized || !activeMentats[house].enabled)) {
         house = HOUSE_NEUTRAL + (house - HOUSE_WILDSPADE);
     }
     if(initialized && activeMod == VANILLA_MOD_NAME
        && (house == HOUSE_NEUTRAL || house == HOUSE_REBELS || house == HOUSE_KLESHMERSH)) {
-        return vanillaChani;
+        return house == HOUSE_KLESHMERSH ? vanillaKleshmershHusky : vanillaChani;
     }
     if(!initialized || house < 0 || static_cast<std::size_t>(house) >= activeMentats.size()) {
         return noOverride;
@@ -328,11 +343,6 @@ ModInfo ModManager::getModInfo(const std::string& name) const {
 
     std::string modPath = getModPath(name);
 
-    // Check which files exist
-    info.hasObjectData = existsFile(modPath + "/" + OBJECT_DATA_FILE);
-    info.hasQuantBotConfig = existsFile(modPath + "/" + QUANTBOT_CONFIG_FILE);
-    info.hasGameOptions = existsFile(modPath + "/" + GAME_OPTIONS_FILE);
-
     // Read mod.json if it exists
     std::string jsonPath = modPath + "/" + MOD_INI_FILE;
     if (existsFile(jsonPath)) {
@@ -344,6 +354,11 @@ ModInfo ModManager::getModInfo(const std::string& name) const {
         info.description = "";
         info.gameVersion = "";
     }
+
+    // Check which files exist
+    info.hasObjectData = existsFile(modPath + "/" + OBJECT_DATA_FILE);
+    info.hasQuantBotConfig = existsFile(modPath + "/" + QUANTBOT_CONFIG_FILE);
+    info.hasGameOptions = existsFile(modPath + "/" + GAME_OPTIONS_FILE);
 
     // Ensure string fields are never null (defensive)
     if(info.displayName.empty()) info.displayName = name;
@@ -417,8 +432,7 @@ SettingsClass::GameOptionsClass ModManager::loadEffectiveGameOptions(
 
     // Random spice blooms are enabled by default in the Tornie-family mods.
     // The in-game Game Options window can still override this per match.
-    if(initialized && (activeMod == "Tornie" || activeMod == "TornieLite"
-                       || activeMod == "Tornie Lite" || activeMod == "Jericho" || activeMod == "JerichoLite")) {
+    if(initialized && isTornieFamilyMod(activeMod)) {
         result.randomSpiceBlooms = true;
     }
 
@@ -1153,27 +1167,14 @@ ModInfo ModManager::readModIni(const std::string& modPath) const {
     };
 
     std::string line;
-    while (std::getline(file, line)) {
-        // Skip empty lines and comments
-        if (line.empty() || line[0] == '#' || line[0] == ';' || line[0] == '[') continue;
-
-        size_t equalsPos = line.find('=');
-        if (equalsPos == std::string::npos) continue;
-
-        std::string key = line.substr(0, equalsPos);
-        std::string value = line.substr(equalsPos + 1);
-
-        trim(key);
-        trim(value);
-
-        if (key == "Display Name") info.displayName = value;
-        else if (key == "Author") info.author = value;
-        else if (key == "Description") info.description = value;
-        else if (key == "Version") info.version = value;
-        else if (key == "Game Version") info.gameVersion = value;
-        else if (key == "Enables City Mode") {
-        }
-    }
+    // Use the same quoted-string parser as the writer. Hand parsing retained
+    // quote delimiters and doubled them again on each save.
+    INIFile metadata(iniPath);
+    info.displayName = metadata.getStringValue("Mod", "Display Name", "");
+    info.author = metadata.getStringValue("Mod", "Author", "");
+    info.description = metadata.getStringValue("Mod", "Description", "");
+    info.version = metadata.getStringValue("Mod", "Version", "");
+    info.gameVersion = metadata.getStringValue("Mod", "Game Version", "");
 
     file.close();
 
@@ -1403,7 +1404,8 @@ void ModManager::writeModInfo(const std::string& modPath, const ModInfo& info) c
     options.setBoolValue("Content Options", "Red Spice", info.content.redSpice);
     options.setBoolValue("Content Options", "Purple Spice", info.content.purpleSpice);
     options.setBoolValue("Content Options", "Blue Spice", info.content.blueSpice);
-    options.saveChangesTo(modPath + "/UserContentOptions.ini");
+    if(!options.saveChangesTo(modPath + "/UserContentOptions.ini"))
+        THROW(std::runtime_error, "Cannot save content options for %s", modPath.c_str());
 }
 
 std::string ModManager::getInstallConfigPath() const {

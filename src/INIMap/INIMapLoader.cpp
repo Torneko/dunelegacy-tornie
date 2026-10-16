@@ -119,7 +119,8 @@ int chooseSpecialVehicle(Game* pGame, int houseID) {
         && ModManager::instance().getActiveModName() == "Jericho";
     const bool corruptiqueActive = modInitialized
         && houseID == HOUSE_CUSTOM
-        && ModManager::instance().getActiveModName() == "Tornie";
+        && (ModManager::instance().getActiveModName() == "Tornie"
+            || ModManager::instance().getActiveModName() == "ArcaKev");
     const auto objectDataIxCandidates = discoverHouseSpecialVehicleCandidates([&](int candidate) {
         const auto& data = pGame->objectData.data[candidate][houseID];
         return HouseSpecialVehicleCandidateData{
@@ -252,7 +253,7 @@ void INIMapLoader::loadMap() {
 
     if(pGame->techLevel == 0) {
         const int defaultTechLevel = (ModManager::instance().isInitialized()
-                                      && ModManager::instance().getActiveModName() == "Tornie") ? 9 : 8;
+                                      && ModManager::instance().isTornieContentActive()) ? 9 : 8;
         pGame->techLevel = inifile->getIntValue("BASIC","TechLevel", defaultTechLevel);
     }
 
@@ -593,6 +594,20 @@ void INIMapLoader::loadMap() {
         }
     }
 
+    const auto startRock=inifile->getStringValue("MAP","CoopStartRock","");
+    if(!startRock.empty()) {
+        const auto context=coop::readContext(pGame->getGameInitSettings().getFiledata());
+        if(!context || context->alliedCapacity!=4) throw std::runtime_error("Invalid optional co-op terrain");
+        for(const auto& value:splitStringToStringVector(startRock)) {
+            int position=-1;
+            if(!parseString(value,position) || !currentGameMap->tileExists(getXPos(position),getYPos(position)))
+                throw std::runtime_error("Invalid optional co-op rock position");
+            auto* tile=currentGameMap->getTile(getXPos(position),getYPos(position));
+            if(tile->getType()!=Terrain_Sand && tile->getType()!=Terrain_Dunes && tile->getType()!=Terrain_Rock)
+                throw std::runtime_error("Optional co-op start overwrites protected terrain");
+            tile->setType(Terrain_Rock);
+        }
+    }
     screenborder->adjustScreenBorderToMapsize(currentGameMap->getSizeX(), currentGameMap->getSizeY());
 }
 
@@ -604,20 +619,18 @@ void INIMapLoader::loadHouses()
     const GameInitSettings::HouseInfoList& houseInfoList = pGame->getGameInitSettings().getHouseInfoList();
     const auto coopContext = coop::readContext(pGame->getGameInitSettings().getFiledata());
     originalCoopOwners = coopContext && coopContext->followsOriginalCampaign();
-    if(coopContext && houseInfoList.size() != coopContext->slots.size())
+    if(coopContext && houseInfoList.size()!=static_cast<std::size_t>(std::count_if(coopContext->slots.begin(),coopContext->slots.end(),[](const coop::Slot& slot){return slot.active();})))
         throw std::runtime_error("Invalid co-op campaign house setup.");
     if(coopContext && coopContext->followsOriginalCampaign()) {
         const auto wildlifeOwner = strToLower(inifile->getStringValue("COOP_TEMPLATE", "WildlifeOwner", ""));
         if(!wildlifeOwner.empty()) {
             if(wildlifeOwner != "coopwildlife") logError("Invalid co-op wildlife owner.");
-            const auto free = std::find_if(coopContext->roster.begin(), coopContext->roster.end(),
-                [&](int candidate) {
-                    return coop::mapSlotForHouse(*coopContext, candidate) < 0 && !pGame->house[candidate];
-                });
-            if(free == coopContext->roster.end()) logError("No independent house available for co-op wildlife.");
+            int freeHouse=0;
+            while(freeHouse<NUM_HOUSES && (coop::mapSlotForHouse(*coopContext,freeHouse)>=0 || pGame->house[freeHouse])) ++freeHouse;
+            if(freeHouse>=NUM_HOUSES) logError("No independent house available for co-op wildlife.");
             // getOrCreateHouse creates anonymous custom-game houses in team0.
             // This house stays outside both the participant metadata and lobby.
-            housename2house["coopwildlife"] = static_cast<HOUSETYPE>(*free);
+            housename2house["coopwildlife"] = static_cast<HOUSETYPE>(freeHouse);
         }
     }
 
@@ -873,7 +886,8 @@ void INIMapLoader::loadUnits()
                 continue;
             }
             const bool guestCopy = coopContext && coopContext->followsOriginalCampaign()
-                && houseID == coopContext->slots[1].house
+                && houseID != coopContext->slots[0].house
+                && std::any_of(coopContext->slots.begin(),coopContext->slots.end(),[&](const coop::Slot& slot){return slot.allied && slot.active() && slot.house==houseID;})
                 && key.getKeyName().rfind("IDCOOP", 0) == 0;
 
             int pos;
@@ -1095,8 +1109,8 @@ void INIMapLoader::loadStructures()
 */
 void INIMapLoader::loadExtraCoopForces() {
     const auto context = coop::readContext(pGame->getGameInitSettings().getFiledata());
-    if(!context || !context->extraEnemyForces) return;
-    for(std::size_t slot = 2; slot < context->slots.size(); ++slot) {
+    if(!context || (!context->extraEnemyForces && !context->extraHardEnemyForces)) return;
+    for(std::size_t slot = 2; slot < context->enemyPresent.size()+2; ++slot) {
         if(!context->enemyPresent[slot - 2]) continue;
         const auto& binding = context->slots[slot];
         auto* house = pGame->getHouse(binding.house);
@@ -1119,7 +1133,8 @@ void INIMapLoader::loadExtraCoopForces() {
             if(data.enabled && data.techLevel <= pGame->techLevel) pool.push_back(item);
         }
         if(pool.empty()) throw std::runtime_error("No technology-appropriate co-op enemy unit");
-        for(int index = 0; index < 5; ++index) {
+        const int count=(context->extraEnemyForces ? 5 : 0)+(context->extraHardEnemyForces ? 10 : 0);
+        for(int index = 0; index < count; ++index) {
             auto* unit = house->createUnit(pool[index % pool.size()], true);
             if(!unit) throw std::runtime_error("Cannot create extra co-op enemy unit");
             bool placed = false;
@@ -1250,10 +1265,13 @@ void INIMapLoader::loadReinforcements()
         if(pGame->objectData.data[itemID][House::factionForRuntimeHouse(houseID)].enabled)
             addDelivery(houseID, itemID);
         if(hostDelivery) {
-            const int guest = context->slots[1].house;
-            const int adapted = resolveCoopGuestUnit(pGame, guest,
-                replaceJerichoWildspadeUnit(pGame, guest, originalItem));
-            if(adapted != ItemID_Invalid) addDelivery(guest, adapted);
+            for(const int index:context->alliedSlots()) {
+                if(index==0 || !context->slots[index].active()) continue;
+                const int guest=context->slots[index].house;
+                const int adapted=resolveCoopGuestUnit(pGame,guest,
+                    replaceJerichoWildspadeUnit(pGame,guest,originalItem));
+                if(adapted!=ItemID_Invalid) addDelivery(guest,adapted);
+            }
         }
     }
 }

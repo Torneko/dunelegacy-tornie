@@ -32,6 +32,7 @@
 #include <GUI/Checkbox.h>
 #include <GUI/TextView.h>
 #include <GUI/TextBox.h>
+#include <GUI/ScrollView.h>
 
 #include <Network/ChangeEventList.h>
 
@@ -67,6 +68,7 @@ public:
 private:
 #ifdef DUNELEGACY_RUNTIME_TESTS
     friend void verifyCoopLobby(const std::string&, const std::string&);
+    friend void verifyExpandedCoop(const std::string&, const std::string&);
 #endif
     ChangeEventList getChangeEventList();
 
@@ -113,13 +115,24 @@ private:
     void enforceCoopLobby();
     bool isCoopLobbyReady() const;
     int loadingCoopFaction(int slot) const;
+    bool expandedCoop() const { return coopSession && coopSession->context().alliedCapacity==4; }
+    void configureExpandedCoopLobby();
+    void refreshArchonRows();
+    void enforceExpandedCoopLobby();
+    bool expandedCoopReady() const;
+    void commitExpandedCoop();
 
     GameInitSettings                gameInitSettings;
     std::optional<coop::CoopCampaignSession> coopSession;
     SettingsClass::GameOptionsClass coopGameOptions;
     bool bUpdatingCoopLobby = false;
     Checkbox alliedControlCheckbox;
-    Checkbox coopEasyModeCheckbox, extraEnemyForcesCheckbox;
+    Checkbox coopEasyModeCheckbox, extraEnemyForcesCheckbox, extraHardEnemyForcesCheckbox;
+    struct ArchonRow { HBox box; Label name; DropDownBox faction; };
+    std::array<ArchonRow,8> archonRows;
+    std::array<std::string,8> archonNames{};
+    std::array<int,8> archonAssignments{};
+    bool archonRowsInitialized=false;
     TextButton loadCoopSaveButton;
     std::optional<GameInitSettings> selectedCoopSave;
     GameInitSettings::HouseInfoList houseInfoListSetup;     ///< only used if we are loading a savegame
@@ -135,6 +148,7 @@ private:
     VBox            leftVBox;
     HBox            playerListHBox;
     VBox            playerListVBox;
+    ScrollView      playerListScroll;
 
     // right VBox with mini map
     VBox            rightVBox;

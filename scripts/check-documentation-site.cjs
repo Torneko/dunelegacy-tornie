@@ -2,7 +2,8 @@ const {chromium}=require('playwright'),fs=require('fs');
 (async()=>{
  const browser=await chromium.launch({executablePath:process.env.SITE_BROWSER||'/usr/bin/chromium',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
  const results=[],errors=[];
- const expected=process.env.RELEASE_VERSION||'1.0.539';
+ const expected=process.env.RELEASE_VERSION||'1.0.541';
+ const protocol=process.env.NETWORK_PROTOCOL||'11';
  const routes=['accueil','unites','batiments','technologies','factions','hauts-faits','guide','galerie','projet'];
  const bases=process.argv.slice(2);if(!bases.length)throw Error('Provide the offline file URL and/or published site URL');
  for(const base of bases)for(const width of [1440,390])for(const lang of ['fr','en']){
@@ -11,7 +12,8 @@ const {chromium}=require('playwright'),fs=require('fs');
    await page.goto(base+(lang==='en'?'index-en.html':'index.html')+'#'+route+'?mod=Tornie&house=A');await page.evaluate(async()=>{await Promise.all([...document.images].map(i=>{i.loading='eager';return i.decode().catch(()=>{});}));});
    const r=await page.evaluate(()=>({heading:document.querySelector('main h1')?.innerText,version:document.querySelector('.edition').innerText,overflow:document.documentElement.scrollWidth>innerWidth+2,missing:[...document.images].filter(i=>!i.complete||i.naturalWidth===0).map(i=>i.src),network:document.querySelector('.network539')?.innerText,links:[...document.querySelectorAll('a[href]')].map(a=>a.getAttribute('href'))}));
    if(!r.heading||!r.version.includes(expected)||r.overflow||r.missing.length)throw Error(JSON.stringify({base,width,lang,route,r}));
-   if(['accueil','guide','projet'].includes(route)&&(!r.network?.includes(expected)||!r.network?.includes('10')))throw Error('network notice missing');
+   if(['accueil','guide','projet'].includes(route)&&(!r.network?.includes(expected)||!r.network?.includes(protocol)))throw Error('network notice missing');
+   if(process.env.REQUIRE_WINDOWS_VERSION&&['accueil','guide','projet'].includes(route)&&!r.links.some(h=>h.includes('DuneLegacyTornie-'+process.env.REQUIRE_WINDOWS_VERSION+'-Windows-x64.zip')))throw Error('current Windows download missing');
    results.push({base,width,lang,route,heading:r.heading});
   }
   // Search and filter retain the 67-entry catalogue.

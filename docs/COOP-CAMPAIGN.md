@@ -1,108 +1,67 @@
-# Campagne coop commune — 1.0.538
-
-La version Linux 1.0.540 utilise le protocole 10 ; les deux joueurs doivent avoir la même version. Le relais par l’hôte permet désormais les invités isolés en multijoueur Internet personnalisé ; voir les [notes 1.0.539](../release_notes/1.0.539-FR.md). Le compte rendu à deux PC ci-dessous concerne 1.0.538.
-
-Tornie a confirmé le bon fonctionnement de la coop 1.0.538 sur deux PC (2026-10-09).
+# Campagne coop et archonte — 1.0.541
 
 [English guide](COOP-CAMPAIGN-EN.md)
 
-L’entrée **Campagne coop** du menu principal permet de jouer à deux sur LAN ou Internet. Chaque joueur choisit librement sa faction et contrôle sa propre base, ses unités et ses crédits, dans la même équipe. Les alliés peuvent choisir la même faction. Leurs propriétaires et crédits restent séparés ; les contrôles peuvent être partagés avec l’option du lobby.
+Tous les participants doivent installer **1.0.541 / protocole 11**, activer le même mod et utiliser des noms différents. La connexion LAN ou Internet utilise le relais par l’hôte lorsque les invités ne peuvent pas communiquer directement, sans VPN. L’hôte doit rester joignable et connecté.
 
-La campagne coop suit les neuf étapes de la campagne d’origine de la faction choisie par l’hôte au lancement. Ses terrains, structures, forces adverses et objectifs sont conservés. La campagne source reste fixée lors des reprises ; la progression et les checkpoints restent indépendants du solo.
+## Joueurs et factions
 
-Factions disponibles : 12 dans Tornie et Jericho, 6 dans Tornie Lite et Jericho Lite, 9 en Vanilla. Les 45 campagnes sources fournissent 405 variantes coop, à raison de neuf étapes chacune.
+Une nouvelle campagne propose jusqu’à **quatre factions alliées**, avec leurs bases, armées et crédits propres. Les emplacements 3 et 4 sont fermés au départ : tant qu’ils ne sont pas activés, ils ne créent aucune unité de départ, aucun MCV et aucun renfort. Les alliés peuvent choisir la même faction.
 
-| Édition | Factions disponibles | Missions coop |
+Cocher **Archonte** lors de la création permet jusqu’à **huit joueurs**. Dans le lobby, l’hôte attribue librement chaque contrôleur à une des quatre factions alliées ; tous les huit peuvent partager une seule faction. Les contrôleurs d’une même faction partagent ses unités, bâtiments et crédits. Une faction sans contrôleur peut rester fermée ou recevoir une IA. Les ennemis restent contrôlés par l’IA.
+
+**Contrôles alliés**, facultatif, autorise aussi les ordres aux objets des autres factions alliées ; les dépenses restent à la charge du propriétaire. L’hôte choisit les types et difficultés des IA. Les invités ont accès à leurs couleurs bonus.
+
+| Édition | Campagnes sources | Variantes coop |
 |---|---:|---:|
-| Vanilla | 9 | 9 |
-| Tornie | 12 | 9 |
-| Jericho | 12 | 9 |
-| Tornie Lite | 6 | 9 |
-| Jericho Lite | 6 | 9 |
+| Vanilla | 9 | 198 |
+| Tornie | 12 | 264 |
+| Jericho | 12 | 264 |
+| ArcaKev | 12 | 264 |
+| Tornie Lite | 6 | 132 |
+| Jericho Lite | 6 | 132 |
+| ArcaKev Lite | 6 | 132 |
 
-## Créer et rejoindre une partie
+Les 63 campagnes sources fournissent 1 386 cartes coop. La progression suit neuf étapes de la campagne de la faction choisie par l’hôte au départ ; cette source reste fixée dans la session.
 
-1. Utiliser la **même version 1.0.538** sur les deux PC. Son protocole réseau est la version **9**. La 1.0.536 utilise un autre protocole réseau et ne peut pas rejoindre ce lobby.
-2. Activer la même édition dans le menu **Mods**. Utiliser deux noms de joueur différents.
-3. Ouvrir **Campagne coop**, puis choisir le navigateur LAN ou Internet. L’hôte crée la partie et choisit **Nouvelle campagne**. Le second joueur rejoint sa partie depuis le navigateur ou la connexion par adresse.
-4. Dans le lobby, connecter un invité ou sélectionner une IA au deuxième emplacement, puis choisir les factions. L’hôte peut régler le type et la difficulté de chaque IA adverse. Les factions peuvent être identiques. Les deux joueurs sont alliés ; les places adverses restent contrôlées par l’IA.
-5. L’hôte lance la partie après la synchronisation des versions, règles et ressources du mod.
+## Créer et jouer
 
-Les adversaires suivent la carte d’origine : les premiers niveaux peuvent n’avoir qu’un adversaire. Les finales des mods conservent leurs trois rôles ; certaines finales Vanilla ont quatre ou cinq adversaires. Si un adversaire utilise la faction d’un des deux alliés, il reçoit une autre faction disponible tout en conservant son rôle et ses forces. Les couleurs des deux alliés et des adversaires sont distinctes.
+1. Ouvrir **Campagne coop**, puis LAN ou Internet, et créer une nouvelle campagne. Choisir le mode archonte si souhaité.
+2. Les autres joueurs rejoignent depuis le navigateur ou par adresse. Régler les quatre factions alliées, les IA et les contrôleurs archonte dans le lobby.
+3. Lancer après la synchronisation des versions, règles et ressources de tous les invités.
+4. Après chaque mission, tous les humains connectés confirment être prêts avant la transition commune. Une déconnexion n’avance pas la campagne.
 
-Le joueur principal conserve sa base et ses unités de départ. Le partenaire reçoit les mêmes forces et crédits, avec un MCV supplémentaire sur du rocher libre près du chantier principal. Il déploie sa propre base. Dans une nouvelle intro, il reçoit aussi un WOR sur de la roche libre, au plus près du WOR principal (ou du chantier si le premier joueur n’a pas de WOR). Les Special et les unités indisponibles utilisent un équivalent compatible avec sa faction.
+Le premier joueur conserve les forces d’origine. Chaque autre faction alliée active reçoit les forces et crédits adaptés à sa faction, un MCV déployable proche du chantier et, dans les intros concernées, un WOR. Les renforts du premier joueur sont reproduits pour chaque allié actif avec une unité compatible. Les objectifs de récolte additionnent l’épice des factions alliées et multiplient le quota solo par leur nombre ; plusieurs contrôleurs d’une même faction ne multiplient pas son quota.
 
-Les objectifs de récolte sont partagés : l’épice stockée par les deux joueurs est additionnée, avec un quota commun égal à deux fois le quota solo. La victoire est calculée de la même façon sur les deux PC.
+Les adversaires conservent leurs forces et rôles. Une faction ennemie en conflit avec un allié est remplacée ; dans les éditions Lite, plusieurs adversaires peuvent partager une faction lorsque quatre alliés occupent le catalogue, mais leur propriété reste distincte.
 
-Les campagnes coop créées avec les anciennes cartes gardent leur disposition enregistrée. Créer une nouvelle campagne pour recevoir les cartes d’origine et le départ avec MCV.
+## Variantes et difficulté
 
-## Victoire, défaite et reprise
+Chaque **nouvelle mission** tire un des scénarios existants, sans modifier les terrains originaux :
 
-La victoire et la défaite concernent l’équipe. Si une base alliée est détruite, l’autre joueur peut continuer tant que l’équipe possède encore des forces selon les règles de la carte.
+| Étape coop | Scénarios possibles |
+|---|---|
+| 1 | 001 |
+| 2–7 | 002–004, 005–007, 008–010, 011–013, 014–016, 017–019 |
+| 8 | 020 ou 021 |
+| 9 | 022, technologie 9 |
 
-Après une mission avec deux humains, chacun confirme qu’il est prêt. Avec une IA alliée, l’hôte peut continuer seul. Une victoire débloque la mission suivante ; une défaite permet de rejouer la mission actuelle sans avancer la progression. La victoire à la neuvième mission termine la campagne commune. Quitter ou perdre la connexion ne débloque pas une mission.
+Le tirage est commun aux participants, stocké dans la progression et conservé après une défaite ou un chargement. Certaines cartes existantes ont le même seed de terrain tout en différant par leurs forces. Les anciennes sessions gardent leur choix antérieur.
 
-La progression et les checkpoints sont enregistrés dans le dossier `coop/` du profil utilisateur, à côté de `Dune Legacy.ini` :
+**Mode facile**, désactivé par défaut : une nouvelle campagne commence à l’étape 2 ; chaque faction alliée active, humaine ou IA, reçoit **500 crédits à chaque départ de mission** et paie ses achats 25 crédits de moins (minimum 1). Les ennemis ne reçoivent aucun bonus.
 
-```text
-coop/
-    <session>.ini   progression commune et réglages
-    <session>.dls   checkpoint de la mission
-```
+**Forces ennemies +5** et **Forces ennemies +10** sont indépendantes et cumulables : 5, 10 ou **15 unités supplémentaires par adversaire présent**, à chaque nouvelle mission, adaptées à la technologie et placées près de ses forces ou sur une bordure pour un adversaire arrivant par renforts. Un adversaire absent ne reçoit rien. Les checkpoints restaurent les forces existantes sans les ajouter de nouveau.
 
-L’identifiant de session distingue les campagnes communes. Les fichiers de progression et les sauvegardes solo restent séparés. Conserver la progression et son checkpoint dans le profil utilisé pour reprendre la partie.
+## Sauvegardes et reprise
 
-Pour reprendre, l’hôte active l’édition concernée, ouvre **Campagne coop**, choisit **Reprendre une campagne commune** et sélectionne son fichier `.ini`. Le second joueur rejoint le lobby. Un checkpoint disponible permet de reprendre la mission enregistrée ; sans checkpoint référencé, la progression relance la mission courante depuis son départ. Les noms des deux joueurs peuvent être réattribués dans le lobby sans fusionner leurs bases.
+La progression reste indépendante du solo : `coop/<session>.ini` et checkpoint `coop/<session>.dls`, à côté de `Dune Legacy.ini`. Conserver les deux fichiers. Une reprise utilise le mod de la session et le checkpoint existant ; les noms des contrôleurs peuvent être réattribués, avec les effectifs par faction conservés pour une partie déjà commencée.
 
-Les enregistrements de progression utilisent un fichier temporaire et une copie de secours pendant le remplacement. Un enregistrement endommagé peut être récupéré depuis cette dernière copie complète. Une campagne terminée reste enregistrée ; créer une nouvelle campagne pour recommencer.
+**Charger une sauvegarde**, dans le lobby hôte, propose les sauvegardes manuelles `mpsave/*.dls` et automatiques `coop/*.dls`. Un chargement compatible rouvre le lobby sur la mission enregistrée ; tous les invités le rejoignent à nouveau. Annuler conserve le lobby. Les nouveaux fichiers utilisent le format **9832** ; les anciens restent lisibles avec leur carte et leurs règles enregistrées.
 
-Depuis le lobby de l’hôte, **Charger une sauvegarde** ouvre deux onglets : **Manuelles** (`mpsave/`, fichiers `.dls`) et **Automatiques** (`coop/`, checkpoints `.dls`). La sauvegarde doit appartenir à une campagne coop du mod actif. Le chargement ferme l’ancien lobby et en ouvre un sur la mission enregistrée ; l’invité doit le rejoindre à nouveau. Annuler ou choisir un fichier incompatible conserve le lobby actuel. La reprise automatique par le fichier de progression `.ini` reste disponible.
+Le haut fait **Ensemble sur Arrakis / COOP_CONQUEROR** récompense la fin de la campagne commune, avec un humain ou une IA ; le mode facile est accepté. Il ne complète aucune campagne solo. Le catalogue conserve 67 hauts faits et les profils restent locaux.
 
-## Contrôles alliés et IA
+## Validation et maintenance
 
-**Contrôles alliés**, désactivé par défaut, autorise les ordres aux unités et bâtiments de l’allié : déplacement, combat, production, placement, réparation et capacités. La production utilise les crédits du propriétaire. Les maisons et leurs statistiques restent séparées. Sans cette option, chacun contrôle uniquement ses objets.
+Les tests automatisés couvrent les sept modes, les étapes 1–9, les alliés fermés ou actifs, le déploiement des MCV 3/4, les huit contrôleurs dans une faction, les crédits faciles, les forces +5/+10/+15, les sauvegardes et les affectations du lobby. Le transport UDP à huit filtre les communications directes entre invités et vérifie le relais, le démarrage et les commandes de tous les participants. Une partie humaine sur plusieurs connexions Internet reste à confirmer ; la confirmation historique de Tornie sur deux PC concerne 1.0.538.
 
-Au deuxième emplacement, l’hôte peut choisir une IA qBot, Mentat, SmartBot ou AI Player. Il choisit aussi le type et la difficulté des IA adverses ; l’IA de campagne reste la valeur initiale. Ces choix et le contrôle allié persistent lors des missions suivantes et des reprises. Les types supportent leurs niveaux propres, du défensif au brutal selon l’IA choisie.
-
-## Options et hauts faits
-
-## Nouveautés 1.0.538
-
-Deux options de lobby sont désactivées par défaut : **Mode facile** et **Forces ennemies +5**.
-Le mode facile commence une nouvelle campagne à la mission 2. Chacun des deux alliés,
-humain ou IA, reçoit 500 crédits supplémentaires au départ de cette mission seulement.
-Leurs achats d’unités et de bâtiments coûtent 25 crédits de moins (minimum 1) pendant
-la campagne. Les ennemis ne reçoivent ni crédits ni réduction.
-
-Forces ennemies +5 ajoute cinq unités adaptées à la technologie par adversaire présent
-à chaque mission, près de ses bâtiments ou forces. Un adversaire arrivant uniquement
-par renforts reçoit ses unités sur une bordure opposée à la base principale. Les unités
-commencent en garde de zone. Les adversaires absents de la mission ne reçoivent rien.
-
-Les renforts destinés au premier joueur sont aussi envoyés au second allié, avec le
-même nombre, le même moment, le même lieu relatif et la même répétition. Une unité
-indisponible est adaptée à la faction alliée. Les renforts et forces déjà enregistrés
-dans un checkpoint sont restaurés, jamais ajoutés une seconde fois.
-
-**Ensemble sur Arrakis / COOP_CONQUEROR** demande de terminer toutes les étapes de la
-campagne commune, avec un humain ou une IA. Le mode facile autorise le saut de l’intro.
-Le déblocage reste local et une session terminée ne compte qu’une fois dans le cumul.
-Les succès des campagnes solo gardent leurs conditions.
-
-Les deux PC doivent utiliser **1.0.538**, protocole **10**. Les nouvelles sauvegardes
-portent la version **9831** ; les anciennes restent lisibles avec leurs forces et
-renforts enregistrés. Commencer une nouvelle campagne ou passer à la mission suivante
-pour profiter des nouveaux renforts. La version publique est 1.0.538. La coop sur deux PC est confirmée par Tornie. Mint 22.3 / noyau 7.0 reste à essayer.
-
-
-Le lobby propose le **Mode Chaos**, désactivé par défaut, dans les quatre mods ; Vanilla le désactive. Le tirage utilise une graine commune et les règles sont identiques sur les deux PC. Les sauvegardes conservent les règles de la mission.
-
-Les hauts faits **Commander**, la conquête des campagnes et **Maître du chaos / `CHAOS_CONQUEROR`** concernent les campagnes solo. Terminer la campagne commune ne valide pas la campagne solo d’une faction. Les autres hauts faits utilisent leurs règles ordinaires de multijoueur et les événements du joueur local ; les profils de hauts faits restent locaux.
-
-## État de validation et maintenance
-
-Tornie a testé la coop 1.0.538 sur deux PC et confirmé son bon fonctionnement le 9 octobre 2026. Le test Mint 22.3 / noyau 7.0 reste à faire sur le PC concerné.
-
-Les templates de campagne d’origine sont dans `coop/faction<id>/coopNN.ini` sous `data/` pour Vanilla et `mods/<mod>/campaign/` pour les mods. Les 45 templates précédents à la racine sont conservés pour les anciennes sessions. `scripts/build-coop-campaign.py --check` vérifie les 405 variantes sources et les cartes précédentes ; `--write` actualise uniquement les templates coop et les checksums. Le cache `config/CoopCampaignTerrain.json` est calculé par l’algorithme `MapSeed.cpp` du jeu.
-
-Le modèle `Campaign/CoopCampaignSession` conserve la session, les participants et la progression. Le contexte `[COOP]` est inclus dans les données de carte de `GameInitSettings`, déjà transmises par le réseau et sauvegardées. Il distingue la maison de contrôle d’une faction et sa colonne de règles, ce qui permet deux joueurs de même faction. Le contrôleur `Campaign/CoopCampaignRuntime` garde la connexion pendant l’enchaînement des missions ; les transitions vérifient le partenaire, la session et l’étape avant d’avancer.
+Templates : `data/coop/faction<id>/` pour Vanilla, `mods/<mod>/campaign/coop/faction<id>/` pour les mods, avec suffixes `-v1` et `-v2`. `scripts/build-coop-campaign.py --check` contrôle les 1 386 variantes, les 63 anciennes cartes racines et les empreintes des 2 342 fichiers solo protégés. Les sections auxiliaires des alliés 3/4 sont matérialisées seulement lorsqu’ils sont actifs ; le contexte `[COOP]` synchronise la carte, les contrôleurs et le tirage.

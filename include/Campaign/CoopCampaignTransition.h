@@ -2,8 +2,10 @@
 #define COOP_CAMPAIGN_TRANSITION_H
 
 #include <optional>
+#include <map>
 #include <string>
 #include <utility>
+#include <vector>
 
 namespace coop {
 
@@ -15,21 +17,30 @@ enum class Advance : unsigned char { Aborted = 0, Retry = 1, Next = 2, Complete 
 class MissionBarrier {
 public:
     MissionBarrier(std::string session, int stage, std::string partner)
-        : session_(std::move(session)), stage_(stage), partner_(std::move(partner)) {}
+        : MissionBarrier(std::move(session),stage,
+              partner.empty() ? std::vector<std::string>{} : std::vector<std::string>{std::move(partner)}) {}
+
+    MissionBarrier(std::string session,int stage,const std::vector<std::string>& partners)
+        : session_(std::move(session)),stage_(stage) {
+        for(const auto& partner:partners) remote_.emplace(partner,std::nullopt);
+    }
 
     bool receive(const std::string& partner, const std::string& session,
         int stage, Outcome outcome) {
-        if(partner != partner_ || session != session_ || stage != stage_
+        const auto found=remote_.find(partner);
+        if(found==remote_.end() || session != session_ || stage != stage_
             || static_cast<unsigned>(outcome) > static_cast<unsigned>(Outcome::Won)) return false;
-        if(remote_ && *remote_ != outcome) remote_ = Outcome::Aborted;
-        else remote_ = outcome;
+        if(found->second && *found->second != outcome) found->second=Outcome::Aborted;
+        else found->second=outcome;
         return true;
     }
 
     std::optional<Advance> decision(Outcome local, int finalStage) const {
         if(local == Outcome::Aborted) return Advance::Aborted;
-        if(!remote_) return std::nullopt;
-        if(*remote_ != local) return Advance::Aborted;
+        for(const auto& report:remote_) {
+            if(!report.second) return std::nullopt;
+            if(*report.second!=local) return Advance::Aborted;
+        }
         if(local == Outcome::Lost) return Advance::Retry;
         return stage_ == finalStage ? Advance::Complete : Advance::Next;
     }
@@ -44,8 +55,7 @@ public:
 private:
     std::string session_;
     int stage_;
-    std::string partner_;
-    std::optional<Outcome> remote_;
+    std::map<std::string,std::optional<Outcome>> remote_;
 };
 
 } // namespace coop
