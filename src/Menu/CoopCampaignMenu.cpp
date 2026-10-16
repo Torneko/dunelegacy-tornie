@@ -31,13 +31,15 @@ CoopCampaignMenu::CoopCampaignMenu(bool LANServer) : LANServer(LANServer) {
     mainVBox.addWidget(VSpacer::create(20));
     description.setTextFontSize(14);
     description.setText(french
-        ? "Deux joueurs, deux bases et deux armées alliées. Chacun choisit sa faction, y compris la même faction.\n\nNeuf étapes suivent la campagne de la faction de l’hôte. Le partenaire reçoit les mêmes unités et un MCV près du chantier. La progression reste séparée du solo.\n\nMod actif : " + ModManager::instance().getActiveModName()
-        : "Two players with separate allied bases and armies. Each chooses a faction, including the same faction.\n\nNine stages follow the host faction’s campaign. The partner receives matching units and an MCV near the Construction Yard. Progress remains separate from solo.\n\nActive mod: " + ModManager::instance().getActiveModName());
+        ? "Jusqu’à quatre bases alliées, ou huit joueurs en mode archonte. Chacun choisit sa faction, y compris la même faction.\n\nNeuf étapes suivent la campagne de la faction de l’hôte. Le partenaire reçoit les mêmes unités et un MCV près du chantier. La progression reste séparée du solo.\n\nMod actif : " + ModManager::instance().getActiveModName()
+        : "Up to four allied bases, or eight players in Archon mode. Each chooses a faction, including the same faction.\n\nNine stages follow the host faction’s campaign. The partner receives matching units and an MCV near the Construction Yard. Progress remains separate from solo.\n\nActive mod: " + ModManager::instance().getActiveModName());
     mainVBox.addWidget(&description, 0.65);
     chaosMode.setText("Chaos Mode");
     chaosMode.setChecked(false);
     chaosMode.setEnabled(ModManager::instance().getActiveModName() != "vanilla");
     mainVBox.addWidget(&chaosMode, 26);
+    archonMode.setText(french ? "Mode archonte (jusqu\'a 8 joueurs)" : "Archon mode (up to 8 players)");
+    mainVBox.addWidget(&archonMode,26);
     mainVBox.addWidget(VSpacer::create(16));
     newCampaignButton.setText(french ? "Nouvelle campagne" : "New campaign");
     MainMenuButtonColor::apply(newCampaignButton);
@@ -58,14 +60,14 @@ CoopCampaignMenu::CoopCampaignMenu(bool LANServer) : LANServer(LANServer) {
 void CoopCampaignMenu::onNewCampaign() {
     try {
         std::vector<int> roster;
-        for(int h = 0; h < NUM_HOUSES; ++h)
-            if(isCampaignHouseAvailable(static_cast<HOUSETYPE>(h))) roster.push_back(h);
+        for(const int h : getFactionSelectionOrder()) roster.push_back(h);
         if(roster.size() < 5) throw std::runtime_error("The active mod needs at least five available factions.");
         const auto seed = static_cast<Uint32>(getRandomInt());
         const auto sessionId = std::to_string(SDL_GetTicks()) + "-" + std::to_string(seed);
         auto session = coop::CoopCampaignSession::create(sessionId,
             ModManager::instance().getActiveModName(), roster, {roster[0], roster[1]},
             {settings.general.playerName, settings.general.playerName == "Guest" ? "Guest 2" : "Guest"}, seed, chaosMode.isChecked());
+        session.enableExpandedAllies(archonMode.isChecked());
         auto options = effectiveGameOptions;
         options.easyMode = false;
         options.immortalHumanPlayer = false;

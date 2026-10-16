@@ -76,9 +76,9 @@ struct ModInfo {
     CustomHouseInfo customHouse; ///< Optional generic ninth-house registration
     std::vector<ModMentatInfo> mentats; ///< Optional active-mod Mentat presentations by house ID
 
-    bool hasObjectData;          ///< Does this mod have ObjectData.ini?
-    bool hasQuantBotConfig;      ///< Does this mod have QuantBot Config.ini?
-    bool hasGameOptions;         ///< Does this mod have GameOptions.ini?
+    bool hasObjectData = false;          ///< Does this mod have ObjectData.ini?
+    bool hasQuantBotConfig = false;      ///< Does this mod have QuantBot Config.ini?
+    bool hasGameOptions = false;         ///< Does this mod have GameOptions.ini?
 
 };
 

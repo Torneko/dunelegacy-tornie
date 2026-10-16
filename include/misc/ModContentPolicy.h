@@ -18,6 +18,7 @@ inline int neutralVanillaMapItem(int item) {
         case Structure_AdvancedWindTrap:
         case Structure_AdvancedWindTrapMK2:
         case Structure_AdvancedWindTrapMK3: return Structure_WindTrap;
+        case Structure_Doublefinery: return Structure_Refinery;
         case Structure_Worfinery: return Structure_WOR;
         case Structure_TechCenter: return Structure_Palace;
         case Structure_Scoutpost: return Structure_Radar;

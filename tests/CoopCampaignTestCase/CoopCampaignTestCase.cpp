@@ -451,3 +451,103 @@ TEST_CASE("Coop options default off and persist independently of allied control"
     auto legacy=map; replace(legacy,"EasyMode=1\n",""); replace(legacy,"ExtraEnemyForces=1\n","");
     const auto old=coop::readContext(legacy); REQUIRE(old); REQUIRE_FALSE(old->easyMode); REQUIRE_FALSE(old->extraEnemyForces);
 }
+
+TEST_CASE("Four co-op starts materialize only active allies", "[coop][four-players]") {
+    auto value=originalSession();
+    value.enableExpandedAllies(false);
+    REQUIRE(value.context().slots.size()==7);
+    const std::string extras=
+        "[UNITS]\nIDHOST=Player1,Tank,256,100,64,Guard\nIDCOOPMCV=Player2,MCV,256,102,64,Guard\n"
+        "[COOP_EXTRA_PLAYER3]\nCredits=1200\nBrain=Team 1\n"
+        "[COOP_EXTRA_UNITS3]\nIDCOOP3MCV=Player2,MCV,256,104,64,Guard\n"
+        "[COOP_EXTRA_STRUCTURES3]\n"
+        "[COOP_EXTRA_PLAYER4]\nCredits=1200\nBrain=Team 1\n"
+        "[COOP_EXTRA_UNITS4]\nIDCOOP4MCV=Player2,MCV,256,106,64,Guard\n"
+        "[COOP_EXTRA_STRUCTURES4]\n";
+    const auto source=originalTemplate(1,1)+extras;
+    const auto closed=value.prepareMap(source);
+    REQUIRE(closed.find("COOP_EXTRA_")==std::string::npos);
+    REQUIRE(closed.find("IDCOOP3MCV")==std::string::npos);
+    REQUIRE(closed.find("IDCOOP4MCV")==std::string::npos);
+    value.configureAlly(2,3,"HumanPlayer","Third");
+    const auto three=value.prepareMap(source);
+    REQUIRE(three.find("IDCOOP3MCV=Player6,MCV")!=std::string::npos);
+    REQUIRE(three.find("IDCOOP4MCV")==std::string::npos);
+    value.configureAlly(3,4,"HumanPlayer","Fourth");
+    const auto four=value.prepareMap(source);
+    const auto restored=coop::readContext(four);
+    REQUIRE(restored);
+    REQUIRE(restored->humanNames()==std::vector<std::string>{"Host","Guest","Third","Fourth"});
+    REQUIRE(four.find("IDCOOP4MCV=Player7,MCV")!=std::string::npos);
+    std::set<int> houses;
+    for(const auto& slot:restored->slots) REQUIRE(houses.insert(slot.house).second);
+    for(std::size_t i=0;i<restored->enemyPresent.size();++i) {
+        const auto enemy=restored->slots[i+2].faction;
+        REQUIRE((enemy==0 || enemy==5)); // Six factions, four allies: repeat enemy roles safely.
+    }
+}
+
+TEST_CASE("Eight Archon controllers may share one faction", "[coop][archon][save]") {
+    auto value=originalSession();
+    value.enableExpandedAllies(true);
+    value.configureAlly(1,2,"Closed","Guest");
+    const std::vector<std::string> names{"Host","Two","Three","Four","Five","Six","Seven","Eight"};
+    value.configureAlly(0,1,"HumanPlayer","Host",names);
+    const auto source=originalTemplate(1,1)+
+        "[UNITS]\nIDCOOPMCV=Player2,MCV,256,100,64,Guard\n"
+        "[STRUCTURES]\nIDCOOPWOR=Player2,WOR,256,102\n"
+        "[REINFORCEMENTS]\n1=Player2,MCV,Homebase,1\n";
+    const auto map=value.prepareMap(source);
+    REQUIRE(map.find("IDCOOPMCV")==std::string::npos);
+    REQUIRE(map.find("IDCOOPWOR")==std::string::npos);
+    REQUIRE(map.find("1=Player2")==std::string::npos);
+    const auto restored=coop::CoopCampaignSession::fromMapData(map);
+    REQUIRE(restored.context().humanNames()==names);
+    REQUIRE(restored.context().archon);
+    REQUIRE_THROWS(value.configureAlly(2,3,"HumanPlayer","Ninth"));
+    REQUIRE_THROWS(value.configureAlly(2,3,"HumanPlayer","Two"));
+    auto normal=originalSession();normal.enableExpandedAllies(false);
+    REQUIRE_THROWS(normal.configureAlly(0,1,"HumanPlayer","Host",names));
+}
+
+TEST_CASE("Co-op mission transition waits for all seven Archon guests", "[coop][network][archon]") {
+    const std::vector<std::string> names{"Two","Three","Four","Five","Six","Seven","Eight"};
+    coop::MissionBarrier barrier("archon",3,names);
+    for(std::size_t i=0;i<names.size()-1;++i) {
+        REQUIRE(barrier.receive(names[i],"archon",3,coop::Outcome::Won));
+        REQUIRE_FALSE(barrier.decision(coop::Outcome::Won,9));
+    }
+    REQUIRE_FALSE(barrier.receive("Stranger","archon",3,coop::Outcome::Won));
+    REQUIRE_FALSE(barrier.receive(names.back(),"archon",2,coop::Outcome::Won));
+    REQUIRE(barrier.receive(names.back(),"archon",3,coop::Outcome::Won));
+    REQUIRE(barrier.decision(coop::Outcome::Won,9)==coop::Advance::Next);
+    REQUIRE(barrier.receive(names.back(),"archon",3,coop::Outcome::Lost));
+    REQUIRE(barrier.decision(coop::Outcome::Won,9)==coop::Advance::Aborted);
+}
+
+TEST_CASE("Co-op selects an existing scenario branch once per new mission", "[coop][variants][save]") {
+    std::array<std::set<int>,10> choices;
+    for(unsigned seed=1;seed<=48;++seed) {
+        auto value=coop::CoopCampaignSession::create("variant-check","JerichoLite",{0,1,2,3,4,5},
+            {1,2},{"Host","Guest"},seed,false);
+        value.enableExpandedAllies(false);
+        for(int stage=1;stage<=9;++stage) {
+            const auto variant=value.context().missionVariant;
+            REQUIRE(variant>=0);
+            REQUIRE(variant<coop::missionVariantCount(stage));
+            choices[stage].insert(variant);
+            auto data=originalTemplate(stage,1);
+            replace(data,"OriginalMission="+std::to_string(coop::OriginalMissionNumbers[stage-1]),
+                "OriginalMission="+std::to_string(coop::OriginalMissionNumbers[stage-1]+variant));
+            const auto executable=value.prepareMap(data);
+            const auto resumed=coop::CoopCampaignSession::fromMapData(executable);
+            REQUIRE(resumed.context().missionVariant==variant);
+            REQUIRE(resumed.missionFilename()==value.missionFilename());
+            value.completeMission(false);
+            REQUIRE(value.context().missionVariant==variant);
+            value.completeMission(true);
+        }
+    }
+    for(int stage=1;stage<=9;++stage)
+        REQUIRE(choices[stage].size()==static_cast<std::size_t>(coop::missionVariantCount(stage)));
+}

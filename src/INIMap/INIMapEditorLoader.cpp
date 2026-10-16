@@ -368,8 +368,7 @@ void INIMapEditorLoader::loadHouses()
     for(int i=1;i<=MAX_CUSTOM_GAME_PLAYERS;i++) {
         std::string sectionname = "player" + std::to_string(i);
         if(inifile->hasSection(sectionname)) {
-            for(int houseID = 0; houseID < NUM_HOUSES; houseID++) {
-                if(!isCampaignHouseAvailable(static_cast<HOUSETYPE>(houseID))) continue;
+            for(const int houseID:getFactionSelectionOrder()) {
                 MapEditor::Player& player = pMapEditor->getPlayers()[houseID];
 
                 if(player.bActive == false) {

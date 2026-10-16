@@ -211,9 +211,19 @@ def connected_cells(cells, blocked, origin):
     return reached
 
 
-def extra_units(ini, house, intro=False):
+def extra_units(ini, house, intro=False, reserved=None, allow_rock_patches=False):
     size, offset, cells = terrain(ini)
     occupied, structures = occupied_cells(ini, offset)
+    occupied.update(reserved["occupied"] if reserved else ())
+    structures.update(reserved["structures"] if reserved else ())
+    protected=set()
+    for field in ("Bloom","Special"):
+        for value in ini["MAP"].get(field,"").split(","):
+            if value.strip():
+                pos=int(value)
+                protected.add((pos%64-offset,pos//64-offset))
+    rock_patches=set()
+    allowed="2789" if reserved or allow_rock_patches else "28"
     yard = [value.split(",") for value in ini["STRUCTURES"].values()
             if value.split(",")[:2] == [house, "Const Yard"]]
     assert len(yard) == 1, (house, "Expected one original construction yard")
@@ -225,12 +235,13 @@ def extra_units(ini, house, intro=False):
         footprint = {(x + dx, y + dy) for dx in range(2) for dy in range(2)}
         distance = max(abs(x - origin[0]), abs(y - origin[1]))
         if (distance <= 10 and footprint.isdisjoint(occupied)
-                and all(p in cells and cells[p] in "28" for p in footprint)):
-            candidates.append((distance, abs(x - origin[0]) + abs(y - origin[1]), y, x))
+                and footprint.isdisjoint(protected) and all(p in cells and cells[p] in allowed for p in footprint)):
+            candidates.append((sum(cells[p] not in "28" for p in footprint), distance, abs(x - origin[0]) + abs(y - origin[1]), y, x))
     assert candidates, (house, ini["MAP"]["Seed"], "No nearby deployable MCV position")
-    _, _, my, mx = min(candidates)
+    _, _, _, my, mx = min(candidates)
     footprint = {(mx + dx, my + dy) for dx in range(2) for dy in range(2)}
     occupied.update(footprint)
+    rock_patches.update(p for p in footprint if cells[p] not in "28")
     wor = None
     wor_reference = origin
     if intro:
@@ -242,11 +253,11 @@ def extra_units(ini, house, intro=False):
         candidates = []
         for x, y in reached:
             area = {(x + dx, y + dy) for dx in range(2) for dy in range(2)}
-            if area.isdisjoint(occupied) and all(p in cells and cells[p] in "28" for p in area):
+            if area.isdisjoint(occupied) and area.isdisjoint(protected) and all(p in cells and cells[p] in allowed for p in area):
                 distance = max(abs(x-wor_reference[0]), abs(y-wor_reference[1]))
-                candidates.append((distance, abs(x-wor_reference[0])+abs(y-wor_reference[1]), y, x))
+                candidates.append((sum(cells[p] not in "28" for p in area),distance, abs(x-wor_reference[0])+abs(y-wor_reference[1]), y, x))
         assert candidates, (house, "No free connected rock footprint for guest WOR")
-        for _, _, wy, wx in sorted(candidates):
+        for _, _, _, wy, wx in sorted(candidates):
             area = {(wx + dx, wy + dy) for dx in range(2) for dy in range(2)}
             remaining = connected_cells(cells, structures | footprint | area, origin)
             if any((mx + dx, my + dy) in remaining for dx, dy in ((-1,0),(0,-1),(2,0),(0,2))):
@@ -257,6 +268,7 @@ def extra_units(ini, house, intro=False):
         area = {(wx + dx, wy + dy) for dx in range(2) for dy in range(2)}
         occupied.update(area)
         structures.update(area)
+        rock_patches.update(p for p in area if cells[p] not in "28")
     reached = connected_cells(cells, structures | footprint, origin)
     assert any((mx + dx, my + dy) in reached for dx, dy in ((-1, 0), (0, -1), (2, 0), (0, 2))), "Sealed MCV construction spot"
     additions = {"IDCOOPMCV": f"Player2,MCV,256,{(my + offset) * 64 + mx + offset},64,Guard"}
@@ -267,7 +279,7 @@ def extra_units(ini, house, intro=False):
         choices = []
         for x, y in reached:
             distance = max(abs(x - origin[0]), abs(y - origin[1]))
-            if (distance <= 12 and (x, y) not in occupied
+            if (distance <= (24 if reserved else 12) and (x, y) not in occupied
                     and (parts[1] != "Sandworm" or cells[x, y] in "79bc")):
                 choices.append((max(abs(x - mx), abs(y - my)), distance, y, x))
         assert choices, (house, key, "No nearby free unit position")
@@ -277,20 +289,20 @@ def extra_units(ini, house, intro=False):
         parts[3] = str((y + offset) * 64 + x + offset)
         additions["IDCOOP" + key[2:]] = ",".join(parts)
     return additions, {"constructionYard": origin, "mcv": (mx, my), "mcvDistance": max(abs(mx - origin[0]), abs(my - origin[1])),
-                       "guestWor": wor, "worReference": wor_reference if intro else None,
+                       "optionalRock": sorted((y+offset)*64+x+offset for x,y in rock_patches), "guestWor": wor, "worReference": wor_reference if intro else None,
                        "guestWorPosition": (wor[1]+offset)*64+wor[0]+offset if wor else None}
 
 
-def destination(mod, faction, stage):
+def destination(mod, faction, stage, variant=0):
     base = ROOT / "data" if mod == "vanilla" else ROOT / "mods" / mod / "campaign"
-    return base / "coop" / f"faction{faction}" / f"coop{stage:02}.ini"
+    return base / "coop" / f"faction{faction}" / (f"coop{stage:02}"+(f"-v{variant}" if variant else "")+".ini")
 
 
-def generate(mod, house, roles, stage):
-    mission = MISSIONS[stage - 1]
+def generate(mod, house, roles, stage, variant=0):
+    mission = MISSIONS[stage - 1]+variant
     source, provenance = source_bytes(mod, house, mission)
     original = read(source)
-    additions, placement = extra_units(original, house, stage == 1)
+    additions, placement = extra_units(original, house, stage == 1, allow_rock_patches=variant>0)
     owners, corrections, wildlife = normalized_owners(mod, house, roles, mission, original)
     actual, initial, future = active_opponents(original, house, owners)
     roles = stage_roles(mod, roles, actual)
@@ -311,7 +323,7 @@ def generate(mod, house, roles, stage):
                 parts[0] = "CoopWildlife" if owner == "CoopWildlife" else mapping[owner]
                 value = ",".join(parts)
             ini[target][key] = value
-    ini["BASIC"]["TechLevel"] = str(min(stage, 8) if mod == "vanilla" else stage)
+    ini["BASIC"]["TechLevel"] = str(stage)
     ini.add_section("Player2")
     ini["Player2"].update(dict(original[house]))
     for slot in range(1, participant_count + 1):
@@ -323,6 +335,31 @@ def generate(mod, house, roles, stage):
     ini["UNITS"].update(additions)
     if placement["guestWorPosition"] is not None:
         ini["STRUCTURES"]["IDCOOPWOR"] = f"Player2,WOR,256,{placement['guestWorPosition']}"
+    # Optional starts stay outside the engine's ordinary sections. The host
+    # materializes only active allied slots when committing a new mission.
+    _, offset, _ = terrain(original)
+    if placement["optionalRock"]:
+        ini["COOP_EXTRA_TERRAIN2"]={"Rock": ",".join(map(str,placement["optionalRock"]))}
+    reserved = {"occupied":set(),"structures":set()}
+    def reserve(units, start):
+        for value in units.values():
+            position = int(value.split(",")[3])
+            reserved["occupied"].add((position % 64-offset, position//64-offset))
+        for origin in (start["mcv"], start["guestWor"]):
+            if origin:
+                area={(origin[0]+dx,origin[1]+dy) for dx in range(2) for dy in range(2)}
+                reserved["occupied"].update(area)
+                reserved["structures"].update(area)
+    reserve(additions,placement)
+    for ally in (3,4):
+        units, start = extra_units(original,house,stage==1,reserved)
+        reserve(units,start)
+        if start["optionalRock"]:
+            ini[f"COOP_EXTRA_TERRAIN{ally}"] = {"Rock": ",".join(map(str,start["optionalRock"]))}
+        ini[f"COOP_EXTRA_PLAYER{ally}"] = dict(ini["Player2"])
+        ini[f"COOP_EXTRA_UNITS{ally}"] = {f"IDCOOP{ally}"+key[6:]: value for key,value in units.items()}
+        ini[f"COOP_EXTRA_STRUCTURES{ally}"] = ({f"IDCOOP{ally}WOR": f"Player2,WOR,256,{start['guestWorPosition']}"}
+                                              if start["guestWorPosition"] is not None else {})
     ini.add_section("COOP_TEMPLATE")
     quota = original.getint(house, "Quota", fallback=0) if original.getint("BASIC", "WinFlags") & 4 else 0
     marker = ini["COOP_TEMPLATE"]
@@ -349,13 +386,13 @@ def generate(mod, house, roles, stage):
     return text, {**placement, "canonicalOwnerCorrections": corrections, "wildlifeOrders": wildlife}
 
 
-def validate(text, mod, house, roles, stage):
+def validate(text, mod, house, roles, stage, variant=0):
     # A full reconstruction comparison checks all original fields/objects,
     # enemy orders, timers, CHOAM, terrain options and human economy together.
-    expected, placement = generate(mod, house, roles, stage)
+    expected, placement = generate(mod, house, roles, stage, variant)
     assert text == expected, (mod, house, stage, "Original scenario fidelity or cooperative start drift")
     ini = read(text.encode("cp850"))
-    original_bytes, _ = source_bytes(mod, house, MISSIONS[stage - 1])
+    original_bytes, _ = source_bytes(mod, house, MISSIONS[stage - 1]+variant)
     original = read(original_bytes)
     for key, value in original["BASIC"].items():
         if key != "TechLevel":
@@ -397,7 +434,7 @@ def validate(text, mod, house, roles, stage):
             if point not in cells:
                 outside_crop.append({"section": section, "key": key, "sourceValue": value})
     return {"mod": mod, "sourceFaction": runtime_faction(mod, house), "sourceHouse": house,
-            "stage": stage, "originalMission": MISSIONS[stage - 1], "sourceSha256": ini["COOP_TEMPLATE"]["SourceSha256"], "sourceHashNormalization": "LF",
+            "stage": stage, "variant": variant, "originalMission": MISSIONS[stage - 1]+variant, "sourceSha256": ini["COOP_TEMPLATE"]["SourceSha256"], "sourceHashNormalization": "LF",
             "startingUnitOrdersEach": len(own), "participantCount": int(ini["COOP_TEMPLATE"]["ParticipantCount"]),
             "presentOpponents": sum(int(ini["COOP_TEMPLATE"][f"EnemyPresent{i}"]) for i in range(1, int(ini["COOP_TEMPLATE"]["ParticipantCount"]) - 1)),
             "participatingOpponents": sum(int(ini["COOP_TEMPLATE"][f"EnemyFaction{i}"]) >= 0 for i in range(1, int(ini["COOP_TEMPLATE"]["ParticipantCount"]) - 1)),
@@ -413,25 +450,30 @@ def build(write=False):
     global last_audit
     protected = {ROOT / "data" / name for name in ("SCENARIO.PAK", "OPENSD2.PAK", "Extra.PAK")}
     directories = [ROOT / "data/campaign_vanilla"]
-    directories += [ROOT / "mods" / mod / folder for mod in ("Tornie", "Jericho", "TornieLite", "JerichoLite")
+    directories += [ROOT / "mods" / mod / folder for mod in ("Tornie", "Jericho", "TornieLite", "JerichoLite", "ArcaKev", "ArcaKevLite")
                     for folder in ("campaign", "data")]
     for directory in directories:
         protected.update(path for path in directory.iterdir() if path.is_file() and path.suffix.lower() == ".ini"
                          and (path.name.upper().startswith(("SCEN", "REGION")) or path.name == "CampaignPlan.ini"))
     before = {path: hashlib.sha256(path.read_bytes()).digest() for path in protected}
     reports = []
-    for mod in ("vanilla", "Tornie", "Jericho", "TornieLite", "JerichoLite"):
+    for mod in ("vanilla", "Tornie", "Jericho", "TornieLite", "JerichoLite", "ArcaKev", "ArcaKevLite"):
         for house, roles in campaigns(mod):
             for stage in range(1, 10):
-                path = destination(mod, runtime_faction(mod, house), stage)
+              variant_count=3 if 2<=stage<=7 else 2 if stage==8 else 1
+              seeds={read(source_bytes(mod,house,MISSIONS[stage-1]+variant)[0])["MAP"]["Seed"] for variant in range(variant_count)}
+              # Original scenarios may share a terrain seed but retain distinct forces and objectives.
+              assert len({MISSIONS[stage-1]+v for v in range(variant_count)})==variant_count
+              for variant in range(variant_count):
+                path = destination(mod, runtime_faction(mod, house), stage, variant)
                 if write:
-                    text, _ = generate(mod, house, roles, stage)
+                    text, _ = generate(mod, house, roles, stage, variant)
                     path.parent.mkdir(parents=True, exist_ok=True)
                     path.write_text(text, encoding="cp850", newline="\n")
-                reports.append(validate(path.read_text(encoding="cp850"), mod, house, roles, stage))
-    assert len(reports) == 405, len(reports)
+                reports.append(validate(path.read_text(encoding="cp850"), mod, house, roles, stage, variant))
+    assert len(reports) == sum(len(campaigns(mod)) for mod in ("vanilla", "Tornie", "Jericho", "TornieLite", "JerichoLite", "ArcaKev", "ArcaKevLite")) * 22, len(reports)
     assert all(hashlib.sha256(path.read_bytes()).digest() == digest for path, digest in before.items()), "Original solo resource changed"
-    last_audit = {"protectedSoloFilesUnchanged": len(before),
+    last_audit = {"optionalAlliedSlots":4,"scenarioVariantsPerCampaign":22,"protectedSoloFilesUnchanged": len(before),
                   "canonicalCorrectionMaps": sum(bool(row["canonicalOwnerCorrections"]) for row in reports),
                   "canonicalCorrectionRecords": sum(len(row["canonicalOwnerCorrections"]) for row in reports),
                   "wildlifeMaps": sum(bool(row["wildlifeOrders"]) for row in reports),

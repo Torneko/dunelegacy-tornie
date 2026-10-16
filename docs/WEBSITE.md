@@ -1,3 +1,9 @@
+# Préparation 1.0.541 — 2026-10-16
+
+Site récupéré depuis `origin/gh-pages` : `fabd49f7a7c92e915c9624e7c0a914a71f3be238`, puis branche `site-1.0.541`. Les sept modes, l’ordre ArcaKev, les technologies corrigées, les pouvoirs des palais exportés du moteur, la coop à quatre et l’archonte à huit sont documentés en français et anglais. Les trois PNG du husky fourni sont conservés ; 124 PNG sont présents dans les deux archives de galerie. Les notes, guides et téléchargements doivent accompagner la release Linux/Windows 1.0.541 et le ZIP hors ligne par la CI existante. Publication en attente des contrôles finaux.
+
+Prepared from the freshly fetched published site, with FR/EN seven-mode routes, Palace powers from engine exports, ArcaKev house order, updated technology and co-op, original husky PNGs and matching 124-image archives. Final CI/source links and publication verification will be recorded below once available.
+
 # Windows 1.0.540 published — 2026-10-15
 
 The Windows 64-bit ZIP is now attached to the same 1.0.540 release as Linux. It uses the immutable game source `17c7d375bfdfe0204acd110bea57409e9bbe4896`, protocol 10 and save format 9831, including the host relay for isolated guests. Extract the entire ZIP into a new folder and launch `dunelegacy.exe`. All players need the same version and mod.

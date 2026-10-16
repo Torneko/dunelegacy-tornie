@@ -74,10 +74,10 @@ bool boolean(const std::string& text) {
     throw std::invalid_argument("Invalid coop boolean");
 }
 
-int participantCount(const Section& section) {
+int participantCount(const Section& section, bool expanded = false) {
     const auto field = section.find("participantcount");
     const int count = field == section.end() ? SlotCount : number<int>(field->second);
-    if(count < SlotCount || count > MaxSlotCount)
+    if(count < SlotCount || count > (expanded ? MaxSlotCount : MaxEnemyCount+2))
         throw std::invalid_argument("Invalid coop participant count");
     return count;
 }
@@ -124,75 +124,106 @@ bool validPlayerName(const std::string& value) {
 void validate(const Context& context) {
     if(context.campaign != "common" || !safeIdentifier(context.sessionId) || !safeIdentifier(context.modName))
         throw std::invalid_argument("Invalid coop campaign identity");
-    if(context.stage < 1 || context.stage > StageCount + 1
-       || context.completedMask != ((1u << (context.stage - 1)) - 1u))
+    if(context.stage < 1 || context.stage > StageCount+1
+       || context.completedMask != ((1u << (context.stage-1))-1u))
         throw std::invalid_argument("Invalid coop campaign progression");
     std::set<int> roster;
-    for(const int faction : context.roster) {
-        if(faction < 0 || faction >= NUM_HOUSES || !roster.insert(faction).second)
+    for(const int faction : context.roster)
+        if(faction<0 || faction>=NUM_HOUSES || !roster.insert(faction).second)
             throw std::invalid_argument("Invalid coop faction roster");
-    }
-    if(context.slots.size() < SlotCount || context.slots.size() > MaxSlotCount
-       || context.enemyPresent.size() != context.slots.size() - 2
-       || ((context.modName != "vanilla" || !context.followsOriginalCampaign()) && context.slots.size() != SlotCount))
+    if((context.alliedCapacity!=2 && context.alliedCapacity!=4)
+       || context.slots.size()!=context.enemyPresent.size()+context.alliedCapacity
+       || context.enemyPresent.size()<3 || context.enemyPresent.size()>MaxEnemyCount
+       || (context.modName!="vanilla" && context.enemyPresent.size()!=3)
+       || (context.archon && context.alliedCapacity!=4))
         throw std::invalid_argument("Invalid coop participant count");
-    if(roster.size() < context.slots.size() || roster.size() > NUM_HOUSES)
-        throw std::invalid_argument("Coop requires at least five available runtime houses");
-    if(context.mapLayout != "legacy" && context.mapLayout != "original")
+    if(roster.size()<5 || (context.alliedCapacity==2 && roster.size()<context.slots.size()))
+        throw std::invalid_argument("Not enough coop factions");
+    if(context.mapLayout!="legacy" && context.mapLayout!="original")
         throw std::invalid_argument("Invalid coop map layout");
     if(context.followsOriginalCampaign()) {
-        if(roster.count(context.sourceFaction) == 0
-           || std::none_of(context.enemyPresent.begin(), context.enemyPresent.end(), [](bool present) { return present; }))
+        if(!roster.count(context.sourceFaction)
+           || std::none_of(context.enemyPresent.begin(),context.enemyPresent.end(),[](bool p){return p;}))
             throw std::invalid_argument("Invalid coop campaign source");
-    } else if(context.sourceFaction != -1
-              || std::any_of(context.enemyPresent.begin(), context.enemyPresent.end(), [](bool present) { return !present; })) {
+    } else if(context.sourceFaction!=-1
+              || std::any_of(context.enemyPresent.begin(),context.enemyPresent.end(),[](bool p){return !p;}))
         throw std::invalid_argument("Invalid legacy coop campaign source");
-    }
-    std::set<int> houses;
-    std::set<int> enemies;
-    for(std::size_t i = 0; i < context.slots.size(); ++i) {
-        const auto& slot = context.slots[i];
-        if(roster.count(slot.house) == 0 || roster.count(slot.faction) == 0
-           || !houses.insert(slot.house).second || slot.color < -1 || slot.color >= NUM_HOUSE_COLOR_SLOTS)
+    std::set<int> houses,enemies;
+    std::set<std::string> humanNames;
+    for(std::size_t i=0;i<context.slots.size();++i) {
+        const auto& slot=context.slots[i];
+        if(slot.house<0 || slot.house>=NUM_HOUSES || !roster.count(slot.faction)
+           || (context.alliedCapacity==2 && !roster.count(slot.house))
+           || !houses.insert(slot.house).second || slot.color < -1 || slot.color>=NUM_HOUSE_COLOR_SLOTS
+           || slot.allied!=context.isAlliedSlot(i))
             throw std::invalid_argument("Invalid coop slot identity");
-        if(i < 2) {
-            if((slot.playerClass != "HumanPlayer" && (i == 0 || !isCoopAIClass(slot.playerClass)))
-               || !validPlayerName(slot.playerName))
+        if(slot.allied) {
+            if(!validPlayerName(slot.playerName)
+               || (slot.playerClass!="HumanPlayer" && !isCoopAIClass(slot.playerClass)
+                   && !(context.alliedCapacity==4 && slot.playerClass=="Closed"))
+               || (i==0 && slot.playerClass!="HumanPlayer"))
                 throw std::invalid_argument("Invalid coop allied player");
+            const auto names=slot.humanNames();
+            if((!context.archon && names.size()>1)
+               || (!slot.controllers.empty() && (slot.playerClass!="HumanPlayer" || slot.playerName!=slot.controllers.front())))
+                throw std::invalid_argument("Invalid Archon controllers");
+            for(const auto& name:names)
+                if(!validPlayerName(name) || !humanNames.insert(name).second)
+                    throw std::invalid_argument("Coop players must have distinct network names");
         } else {
-            if(!isCoopAIClass(slot.playerClass) || !enemies.insert(slot.faction).second
-               || (!context.followsOriginalCampaign()
-                   && (slot.faction == context.slots[0].faction || slot.faction == context.slots[1].faction)))
+            if(!isCoopAIClass(slot.playerClass) || !slot.controllers.empty()
+               || (!enemies.insert(slot.faction).second && context.alliedCapacity==2))
                 throw std::invalid_argument("Invalid coop opponent");
+            if(!context.followsOriginalCampaign())
+                for(const int ally:context.alliedSlots())
+                    if(context.slots[ally].active() && slot.faction==context.slots[ally].faction)
+                        throw std::invalid_argument("Coop opponent matches an ally");
         }
     }
-    if(context.slots[0].playerName == context.slots[1].playerName)
-        throw std::invalid_argument("Coop players must have distinct network names");
-    if(context.modName == "vanilla" && context.chaosEligible)
+    if(humanNames.empty() || humanNames.size()>static_cast<std::size_t>(context.archon ? 8 : context.alliedCapacity))
+        throw std::invalid_argument("Invalid coop human player count");
+    if(context.missionVariant<0 || context.missionVariant>=missionVariantCount(context.stage)
+       || (!context.randomVariants && context.missionVariant!=0)
+       || (context.randomVariants && (context.alliedCapacity!=4 || !context.followsOriginalCampaign())))
+        throw std::invalid_argument("Invalid coop mission variant");
+    if(context.modName=="vanilla" && context.chaosEligible)
         throw std::invalid_argument("Vanilla does not support Chaos campaign progression");
 }
-
 void bindEnemySlots(Context& context, const std::vector<int>& factions,
     const std::vector<bool>& present) {
-    if(factions.size() < SlotCount - 2 || factions.size() > MaxSlotCount - 2
-       || factions.size() != present.size())
+    if(factions.size()<3 || factions.size()>MaxEnemyCount || factions.size()!=present.size())
         throw std::invalid_argument("Invalid coop opponent count");
-    context.slots.resize(factions.size() + 2);
-    std::set<int> usedHouses{context.slots[0].house, context.slots[1].house};
-    for(std::size_t i = 0; i < factions.size(); ++i) {
-        auto& slot = context.slots[i + 2];
-        slot.faction = factions[i];
-        slot.house = factions[i];
+    std::vector<Slot> extra;
+    for(int i=2;i<context.alliedCapacity;++i) extra.push_back(context.slots[context.enemyPresent.size()+i]);
+    context.slots.resize(factions.size()+context.alliedCapacity);
+    for(std::size_t i=0;i<extra.size();++i) context.slots[factions.size()+2+i]=extra[i];
+    context.enemyPresent=present;
+    std::set<int> usedHouses;
+    const auto allocate=[&](Slot& slot) {
+        slot.house=slot.faction;
         if(usedHouses.count(slot.house)) {
-            const auto free = std::find_if(context.roster.begin(), context.roster.end(),
-                [&usedHouses](int house) { return !usedHouses.count(house); });
-            if(free == context.roster.end()) throw std::logic_error("No free coop runtime house");
-            slot.house = *free;
+            if(context.alliedCapacity==2) {
+                const auto free=std::find_if(context.roster.begin(),context.roster.end(),[&](int h){return !usedHouses.count(h);});
+                if(free==context.roster.end()) throw std::logic_error("No free coop runtime house");
+                slot.house=*free;
+            } else {
+                slot.house=0;
+                while(usedHouses.count(slot.house)) ++slot.house;
+                if(slot.house>=NUM_HOUSES) throw std::logic_error("No free coop runtime house");
+            }
         }
         usedHouses.insert(slot.house);
-        slot.color = -1;
-        if(slot.playerClass.empty()) slot.playerClass = "CampaignAIPlayer";
-        slot.playerName = "Opponent " + std::to_string(i + 1);
+    };
+    for(const int ally:context.alliedSlots()) allocate(context.slots[ally]);
+    for(std::size_t i=0;i<factions.size();++i) {
+        auto& slot=context.slots[i+2];
+        slot.faction=factions[i];
+        allocate(slot);
+        slot.allied=false;
+        slot.controllers.clear();
+        slot.color=-1;
+        if(slot.playerClass.empty() || slot.playerClass=="Closed" || slot.playerClass=="HumanPlayer") slot.playerClass="CampaignAIPlayer";
+        slot.playerName="Opponent "+std::to_string(i+1);
     }
     context.enemyPresent = present;
     validate(context);
@@ -201,7 +232,7 @@ void bindEnemySlots(Context& context, const std::vector<int>& factions,
 std::string serialize(const Context& context) {
     validate(context);
     std::ostringstream output;
-    output << "[COOP]\nSchema=1\nCampaign=" << context.campaign
+    output << "[COOP]\nSchema=" << (context.alliedCapacity==4 ? 2 : 1) << "\nCampaign=" << context.campaign
         << "\nSession=" << context.sessionId << "\nMod=" << context.modName
         << "\nStage=" << context.stage << "\nCompletedMask=" << context.completedMask
         << "\nSeed=" << context.seed << "\nChaosEligible=" << (context.chaosEligible ? 1 : 0)
@@ -213,6 +244,10 @@ std::string serialize(const Context& context) {
         output << context.roster[i];
     }
     output << '\n';
+    if(context.alliedCapacity==4) output << "AlliedCapacity=4\nArchon=" << context.archon << '\n';
+    if(context.extraHardEnemyForces) output << "ExtraHardEnemyForces=1\n";
+    if(context.randomVariants) output << "RandomVariants=1\nMissionVariant=" << context.missionVariant << '\n';
+    if(context.alliedCapacity==4 && !context.followsOriginalCampaign()) output << "ParticipantCount=" << context.slots.size() << '\n';
     if(context.followsOriginalCampaign()) {
         output << "MapLayout=original\nSourceFaction=" << context.sourceFaction
             << "\nParticipantCount=" << context.slots.size() << '\n';
@@ -227,6 +262,11 @@ std::string serialize(const Context& context) {
             << key << "Color=" << slot.color << '\n'
             << key << "NameHex=" << hex(slot.playerName) << '\n'
             << key << "Class=" << slot.playerClass << '\n';
+        if(!slot.controllers.empty()) {
+            output << key << "Controllers=";
+            for(std::size_t n=0;n<slot.controllers.size();++n) output << (n ? "," : "") << hex(slot.controllers[n]);
+            output << '\n';
+        }
     }
     return output.str();
 }
@@ -250,6 +290,76 @@ std::string withoutMetadata(const std::string& data) {
             skip = section == "coop" || section == "progress";
         }
         if(!skip) output << line << '\n';
+    }
+    return output.str();
+}
+
+std::string materializeAllies(const std::string& data,const Context& context) {
+    if(context.alliedCapacity==2) return data;
+    using Entries=std::vector<std::pair<std::string,std::string>>;
+    std::map<std::string,Entries> additions;
+    std::set<std::string> closed;
+    std::string rocks;
+    const auto allies=context.alliedSlots();
+    for(int ordinal=0;ordinal<context.alliedCapacity;++ordinal) {
+        const int slot=allies[ordinal];
+        const auto player="player"+std::to_string(slot+1);
+        if(!context.slots[slot].active()) { closed.insert(player);continue; }
+        const auto suffix=std::to_string(ordinal+1);
+        if(const auto terrain=readSection(data,"COOP_EXTRA_TERRAIN"+suffix)) {
+            const auto rock=terrain->find("rock");
+            if(rock!=terrain->end() && !rock->second.empty()) rocks+=(rocks.empty() ? "" : ",")+rock->second;
+        }
+        if(ordinal<2) continue;
+        for(const std::string kind:{"PLAYER","UNITS","STRUCTURES"}) {
+            const auto source=readSection(data,"COOP_EXTRA_"+kind+suffix);
+            if(!source) throw std::invalid_argument("Missing optional co-op start");
+            const auto destination=kind=="PLAYER" ? player : lower(kind);
+            for(const auto& sourceEntry:*source) {
+                std::pair<std::string,std::string> entry(sourceEntry.first,sourceEntry.second);
+                if(kind!="PLAYER") {
+                    for(char& c:entry.first) if(c>='a' && c<='z') c-=32;
+                    const auto comma=entry.second.find(',');
+                    if(comma==std::string::npos || lower(trim(entry.second.substr(0,comma)))!="player2")
+                        throw std::invalid_argument("Invalid optional co-op order");
+                    entry.second="Player"+std::to_string(slot+1)+entry.second.substr(comma);
+                }
+                additions[destination].push_back(entry);
+            }
+        }
+
+    }
+    if(!rocks.empty()) additions["map"].emplace_back("CoopStartRock",rocks);
+    // Drop every ordinary order and player section for closed allied houses.
+    // Auxiliary source starts never enter an executable map, active or closed.
+    std::istringstream input(data);
+    std::ostringstream output;
+    std::set<std::string> emitted;
+    std::string line,section;
+    bool skip=false;
+    while(std::getline(input,line)) {
+        const auto cleaned=trim(line);
+        if(!cleaned.empty() && cleaned.front()=='[' && cleaned.back()==']') {
+            section=lower(trim(cleaned.substr(1,cleaned.size()-2)));
+            skip=closed.count(section) || section.rfind("coop_extra_",0)==0;
+            if(!skip) {
+                output << line << '\n';
+                for(const auto& entry:additions[section]) output << entry.first << '=' << entry.second << '\n';
+                emitted.insert(section);
+            }
+            continue;
+        }
+        if(skip) continue;
+        if(section=="units" || section=="structures" || section=="reinforcements" || section=="teams") {
+            const auto equals=cleaned.find('='),comma=cleaned.find(',',equals==std::string::npos ? 0 : equals+1);
+            if(equals!=std::string::npos && comma!=std::string::npos
+               && closed.count(lower(trim(cleaned.substr(equals+1,comma-equals-1))))) continue;
+        }
+        output << line << '\n';
+    }
+    for(const auto& section:additions) if(!emitted.count(section.first) && !section.second.empty()) {
+        output << "\n[" << section.first << "]\n";
+        for(const auto& entry:section.second) output << entry.first << '=' << entry.second << '\n';
     }
     return output.str();
 }
@@ -281,7 +391,9 @@ bool canControlHouse(const Context& context, int playerHouse, int objectHouse) {
     if(playerHouse == objectHouse) return true;
     if(!context.alliedControl) return false;
     const auto allied = [&](int house) {
-        return house == context.slots[0].house || house == context.slots[1].house;
+        for(const int i:context.alliedSlots())
+            if(context.slots[i].active() && house==context.slots[i].house) return true;
+        return false;
     };
     return allied(playerHouse) && allied(objectHouse);
 }
@@ -289,16 +401,22 @@ bool canControlHouse(const Context& context, int playerHouse, int objectHouse) {
 std::optional<Context> readContext(const std::string& mapData) {
     const auto section = readSection(mapData, "COOP");
     if(!section) return std::nullopt;
-    if(require(*section, "Schema") != "1") throw std::invalid_argument("Unsupported coop schema");
+    const auto schema=require(*section,"Schema");
+    if(schema!="1" && schema!="2") throw std::invalid_argument("Unsupported coop schema");
     Context context;
     context.campaign = require(*section, "Campaign");
     context.sessionId = require(*section, "Session");
     context.modName = require(*section, "Mod");
     if(const auto layout = section->find("maplayout"); layout != section->end())
         context.mapLayout = layout->second;
-    const int count = participantCount(*section);
+    if(schema=="2") {
+        context.alliedCapacity=number<int>(require(*section,"AlliedCapacity"));
+        if(context.alliedCapacity!=4) throw std::invalid_argument("Invalid coop allied capacity");
+        context.archon=boolean(require(*section,"Archon"));
+    }
+    const int count=participantCount(*section,schema=="2");
     context.slots.resize(count);
-    context.enemyPresent.resize(count - 2, true);
+    context.enemyPresent.resize(count-context.alliedCapacity,true);
     if(context.followsOriginalCampaign()) {
         context.sourceFaction = number<int>(require(*section, "SourceFaction"));
         for(std::size_t i = 0; i < context.enemyPresent.size(); ++i) {
@@ -317,6 +435,10 @@ std::optional<Context> readContext(const std::string& mapData) {
         context.easyMode = boolean(field->second);
     if(const auto field = section->find("extraenemyforces"); field != section->end())
         context.extraEnemyForces = boolean(field->second);
+    if(const auto field=section->find("extrahardenemyforces");field!=section->end())
+        context.extraHardEnemyForces=boolean(field->second);
+    if(const auto field=section->find("randomvariants");field!=section->end()) context.randomVariants=boolean(field->second);
+    if(const auto field=section->find("missionvariant");field!=section->end()) context.missionVariant=number<int>(field->second);
     std::istringstream roster(require(*section, "Roster"));
     std::string entry;
     while(std::getline(roster, entry, ',')) context.roster.push_back(number<int>(trim(entry)));
@@ -328,7 +450,12 @@ std::optional<Context> readContext(const std::string& mapData) {
         slot.color = number<int>(require(*section, key + "Color"));
         slot.playerName = unhex(require(*section, key + "NameHex"));
         slot.playerClass = require(*section, key + "Class");
-        slot.allied = i < 2;
+        slot.allied=context.isAlliedSlot(i);
+        if(const auto field=section->find(lower(key+"Controllers"));field!=section->end()) {
+            std::istringstream names(field->second);
+            std::string name;
+            while(std::getline(names,name,',')) slot.controllers.push_back(unhex(name));
+        }
     }
     validate(context);
     return context;
@@ -402,6 +529,66 @@ CoopCampaignSession CoopCampaignSession::create(const std::string& sessionId,
     return session;
 }
 
+void CoopCampaignSession::enableExpandedAllies(bool archon) {
+    if(context_.alliedCapacity!=2) throw std::invalid_argument("Coop already has four allied slots");
+    auto revised=context_;
+    revised.alliedCapacity=4;
+    revised.archon=archon;
+    for(int i=2;i<4;++i) {
+        Slot slot;
+        slot.faction=context_.roster[i];
+        slot.playerName="Guest "+std::to_string(i+1);
+        slot.playerClass="Closed";
+        slot.allied=true;
+        revised.slots.push_back(slot);
+    }
+    std::vector<int> enemies;
+    for(std::size_t i=0;i<revised.enemyPresent.size();++i) enemies.push_back(revised.slots[i+2].faction);
+    bindEnemySlots(revised,enemies,revised.enemyPresent);
+    context_=std::move(revised);
+    context_.randomVariants=context_.followsOriginalCampaign();
+    chooseMissionVariant();
+}
+
+void CoopCampaignSession::chooseMissionVariant() {
+    if(!context_.randomVariants || context_.isComplete()) { context_.missionVariant=0;return; }
+    std::uint32_t state=context_.seed^0x4d415000u^(0x9e3779b9u*static_cast<std::uint32_t>(context_.stage));
+    if(state==0) state=1;
+    context_.missionVariant=nextRandom(state)%missionVariantCount(context_.stage);
+}
+
+void CoopCampaignSession::reconfigureAllies(const std::vector<Slot>& allies) {
+    if(allies.size()!=static_cast<std::size_t>(context_.alliedCapacity))
+        throw std::invalid_argument("Invalid allied slot count");
+    auto revised=*this;
+    const auto indices=revised.context_.alliedSlots();
+    for(std::size_t i=0;i<allies.size();++i) {
+        revised.context_.slots[indices[i]]=allies[i];
+        revised.context_.slots[indices[i]].allied=true;
+    }
+    if(!revised.context_.followsOriginalCampaign()) revised.chooseOpponents();
+    else {
+        std::vector<int> enemies;
+        for(std::size_t i=0;i<revised.context_.enemyPresent.size();++i) enemies.push_back(revised.context_.slots[i+2].faction);
+        bindEnemySlots(revised.context_,enemies,revised.context_.enemyPresent);
+    }
+    validate(revised.context_);
+    context_=std::move(revised.context_);
+}
+
+void CoopCampaignSession::configureAlly(int ordinal,int faction,const std::string& playerClass,
+    const std::string& name,const std::vector<std::string>& controllers) {
+    if(ordinal<0 || ordinal>=context_.alliedCapacity) throw std::invalid_argument("Invalid allied slot");
+    std::vector<Slot> allies;
+    for(const int i:context_.alliedSlots()) allies.push_back(context_.slots[i]);
+    auto& slot=allies[ordinal];
+    slot.faction=faction;
+    slot.playerClass=playerClass;
+    slot.playerName=name;
+    slot.controllers=controllers;
+    reconfigureAllies(allies);
+}
+
 CoopCampaignSession CoopCampaignSession::fromMapData(const std::string& mapData) {
     auto context = readContext(mapData);
     if(!context) throw std::invalid_argument("Not a coop campaign map");
@@ -412,7 +599,8 @@ std::string CoopCampaignSession::missionFilename() const {
     if(isComplete()) throw std::logic_error("Coop campaign is complete");
     return (context_.followsOriginalCampaign()
         ? "faction" + std::to_string(context_.sourceFaction) + "/" : "")
-        + "coop0" + std::to_string(context_.stage) + ".ini";
+        + "coop0" + std::to_string(context_.stage)
+        + (context_.missionVariant ? "-v"+std::to_string(context_.missionVariant) : "") + ".ini";
 }
 
 std::string CoopCampaignSession::prepareMap(const std::string& templateData) const {
@@ -422,13 +610,25 @@ std::string CoopCampaignSession::prepareMap(const std::string& templateData) con
     if(!basic || !marker || number<int>(require(*marker, "Stage")) != context_.stage)
         throw std::invalid_argument("Coop map does not match campaign stage");
     auto prepared = context_;
+    const auto executable=context_.alliedCapacity==4 ? readContext(templateData) : std::nullopt;
+    if(executable) {
+        if(executable->sessionId!=context_.sessionId || executable->stage!=context_.stage
+           || executable->alliedCapacity!=context_.alliedCapacity || executable->slots.size()!=context_.slots.size())
+            throw std::invalid_argument("Prepared coop map does not match this session");
+        for(std::size_t i=0;i<context_.slots.size();++i)
+            if(executable->slots[i].faction!=context_.slots[i].faction || executable->slots[i].active()!=context_.slots[i].active())
+                throw std::invalid_argument("Cannot change factions or starts in a running coop save");
+        return withoutMetadata(templateData)+'\n'+serialize(context_);
+    }
     if(context_.followsOriginalCampaign()) {
-        const int techLevel = context_.modName == "vanilla" && context_.stage == StageCount
-            ? 8 : context_.stage;
+        const int mapTech=number<int>(require(*basic,"TechLevel"));
+        const bool legacyFinal=context_.alliedCapacity==2 && context_.modName=="vanilla"
+            && context_.stage==StageCount && mapTech==8;
+        const int techLevel=context_.stage;
         if(require(*marker, "Schema") != "1"
-           || number<int>(require(*basic, "TechLevel")) != techLevel
+           || (mapTech!=techLevel && !legacyFinal)
            || number<int>(require(*marker, "SourceFaction")) != context_.sourceFaction
-           || number<int>(require(*marker, "OriginalMission")) != OriginalMissionNumbers[context_.stage - 1]
+           || number<int>(require(*marker, "OriginalMission")) != OriginalMissionNumbers[context_.stage - 1]+context_.missionVariant
            || require(*marker, "Mod") != context_.modName)
             throw std::invalid_argument("Coop map does not match the original campaign source");
         const int count = participantCount(*marker);
@@ -448,62 +648,59 @@ std::string CoopCampaignSession::prepareMap(const std::string& templateData) con
             if((factions[i] == -1 && present[i]) || invalidFaction)
                 throw std::invalid_argument("Invalid original campaign opponent");
         }
-        // Keep original roles and forces, but never use either ally's faction
-        // as an opponent. Resolve collisions in roster order on every peer.
-        for(auto& faction : factions) {
-            if(faction == context_.slots[0].faction || faction == context_.slots[1].faction) {
-                usedFactions.erase(faction);
-                faction = -1;
-            }
+        const auto alliedFaction=[&](int faction) {
+            for(const int i:context_.alliedSlots())
+                if(context_.slots[i].active() && faction==context_.slots[i].faction) return true;
+            return false;
+        };
+        for(auto& faction:factions) if(alliedFaction(faction)) {
+            usedFactions.erase(faction);
+            faction=-1;
         }
-        for(std::size_t i = 0; i < factions.size(); ++i) if(factions[i] == -1) {
-            const auto free = std::find_if(context_.roster.begin(), context_.roster.end(),
-                [&](int faction) { return !usedFactions.count(faction)
-                    && faction != context_.sourceFaction && faction != context_.slots[0].faction
-                    && faction != context_.slots[1].faction; });
-            if(free == context_.roster.end()) throw std::invalid_argument("No spare inactive coop faction");
-            factions[i] = *free;
+        for(std::size_t i=0;i<factions.size();++i) if(factions[i]==-1) {
+            auto free=std::find_if(context_.roster.begin(),context_.roster.end(),[&](int faction) {
+                return !usedFactions.count(faction) && faction!=context_.sourceFaction && !alliedFaction(faction);
+            });
+            if(free==context_.roster.end() && context_.alliedCapacity==4)
+                free=std::find_if(context_.roster.begin(),context_.roster.end(),[&](int faction) {
+                    return faction!=context_.sourceFaction && !alliedFaction(faction);
+                });
+            if(free==context_.roster.end()) throw std::invalid_argument("No spare inactive coop faction");
+            factions[i]=*free;
             usedFactions.insert(*free);
         }
         bindEnemySlots(prepared, factions, present);
     } else if(number<int>(require(*basic, "TechLevel")) != context_.stage) {
         throw std::invalid_argument("Coop map does not match campaign stage");
     }
-    for(std::size_t i = 1; i <= prepared.slots.size(); ++i)
+    for(std::size_t i = 1; i <= prepared.enemyPresent.size()+2; ++i)
         if(!readSection(templateData, "Player" + std::to_string(i)))
             throw std::invalid_argument("Coop map is missing a participant slot");
-    return withoutMetadata(templateData) + '\n' + serialize(prepared);
+    return materializeAllies(withoutMetadata(templateData),prepared) + '\n' + serialize(prepared);
 }
 
 void CoopCampaignSession::chooseOpponents() {
     std::vector<int> enemies;
-    for(const int faction : context_.roster)
-        if(faction != context_.slots[0].faction && faction != context_.slots[1].faction) enemies.push_back(faction);
-    std::uint32_t random = context_.seed ^ 0x434f4f50u;
-    if(random == 0) random = 1;
-    for(std::size_t i = enemies.size(); i > 1; --i)
-        std::swap(enemies[i - 1], enemies[nextRandom(random) % i]);
-    std::set<int> used{context_.slots[0].house, context_.slots[1].house};
-    for(int i = 2; i < SlotCount; ++i) {
-        auto& slot = context_.slots[i];
-        slot.faction = enemies[(context_.stage - 1 + i - 2) % enemies.size()];
-        slot.house = slot.faction;
-        if(used.count(slot.house)) {
-            const auto free = std::find_if(context_.roster.begin(), context_.roster.end(),
-                [&used](int house) { return !used.count(house); });
-            if(free == context_.roster.end()) throw std::logic_error("No free coop runtime house");
-            slot.house = *free;
-        }
-        used.insert(slot.house);
-        slot.color = -1;
+    for(const int faction:context_.roster) {
+        bool allied=false;
+        for(const int i:context_.alliedSlots())
+            allied=allied || (context_.slots[i].active() && faction==context_.slots[i].faction);
+        if(!allied) enemies.push_back(faction);
     }
-    validate(context_);
+    if(enemies.empty()) throw std::invalid_argument("Not enough coop opponents");
+    std::uint32_t random=context_.seed^0x434f4f50u;
+    if(random==0) random=1;
+    for(std::size_t i=enemies.size();i>1;--i) std::swap(enemies[i-1],enemies[nextRandom(random)%i]);
+    std::vector<int> selected(context_.enemyPresent.size());
+    for(std::size_t i=0;i<selected.size();++i) selected[i]=enemies[(context_.stage-1+i)%enemies.size()];
+    bindEnemySlots(context_,selected,context_.enemyPresent);
 }
 
 void CoopCampaignSession::skipIntroForEasyMode() {
     if(context_.easyMode && context_.stage == 1 && context_.completedMask == 0) {
         context_.stage = 2;
         context_.completedMask = 1; // Mission 1 is explicitly waived by Easy Mode.
+        chooseMissionVariant();
         if(!context_.followsOriginalCampaign()) chooseOpponents();
     }
 }
@@ -513,15 +710,18 @@ void CoopCampaignSession::completeMission(bool won) {
     if(!won) return;
     context_.completedMask |= 1u << (context_.stage - 1);
     ++context_.stage;
+    chooseMissionVariant();
     if(!isComplete() && !context_.followsOriginalCampaign()) chooseOpponents();
     validate(context_);
 }
 
-void CoopCampaignSession::setPlayerName(int playerSlot, const std::string& playerName) {
-    if(playerSlot < 0 || playerSlot >= 2 || !validPlayerName(playerName)
-       || playerName == context_.slots[1 - playerSlot].playerName)
+void CoopCampaignSession::setPlayerName(int playerSlot,const std::string& name) {
+    if(playerSlot<0 || playerSlot>=context_.alliedCapacity || !validPlayerName(name))
         throw std::invalid_argument("Invalid coop player name");
-    context_.slots[playerSlot].playerName = playerName;
+    const auto& slot=context_.slots[context_.alliedSlots()[playerSlot]];
+    auto controllers=slot.controllers;
+    if(!controllers.empty()) controllers.front()=name;
+    configureAlly(playerSlot,slot.faction,slot.playerClass,name,controllers);
 }
 
 void CoopCampaignSession::reconfigurePlayers(const std::array<int, 2>& playerFactions,
@@ -534,24 +734,33 @@ void CoopCampaignSession::reconfigurePlayers(const std::array<int, 2>& playerFac
     revised.context_.alliedControl = context_.alliedControl;
     revised.context_.easyMode = context_.easyMode;
     revised.context_.extraEnemyForces = context_.extraEnemyForces;
+    revised.context_.extraHardEnemyForces=context_.extraHardEnemyForces;
+    revised.context_.alliedCapacity=context_.alliedCapacity;
+    revised.context_.archon=context_.archon;
+    revised.context_.randomVariants=context_.randomVariants;
+    revised.context_.missionVariant=context_.missionVariant;
+    for(int i=2;i<context_.alliedCapacity;++i)
+        revised.context_.slots.push_back(context_.slots[context_.alliedSlots()[i]]);
     for(int i = 0; i < 2; ++i) {
         revised.context_.slots[i].color = context_.slots[i].color;
         revised.context_.slots[i].playerClass = context_.slots[i].playerClass;
+        revised.context_.slots[i].controllers=context_.slots[i].controllers;
+        if(!revised.context_.slots[i].controllers.empty()) revised.context_.slots[i].controllers.front()=playerNames[i];
     }
     if(context_.followsOriginalCampaign()) {
         std::vector<int> enemies(context_.enemyPresent.size());
         for(std::size_t i = 0; i < enemies.size(); ++i) enemies[i] = context_.slots[i + 2].faction;
         bindEnemySlots(revised.context_, enemies, context_.enemyPresent);
     } else if(!revised.isComplete()) revised.chooseOpponents();
-    for(std::size_t i = 2; i < context_.slots.size(); ++i)
+    for(std::size_t i = 2; i < context_.enemyPresent.size()+2; ++i)
         revised.context_.slots[i].playerClass = context_.slots[i].playerClass;
     context_.slots = std::move(revised.context_.slots);
 }
 
 void CoopCampaignSession::setPlayerColor(int playerSlot, int color) {
-    if(playerSlot < 0 || playerSlot >= 2 || color < -1 || color >= NUM_HOUSE_COLOR_SLOTS)
+    if(playerSlot < 0 || playerSlot >= context_.alliedCapacity || color < -1 || color >= NUM_HOUSE_COLOR_SLOTS)
         throw std::invalid_argument("Invalid coop player color");
-    context_.slots[playerSlot].color = color;
+    context_.slots[context_.alliedSlots()[playerSlot]].color = color;
 }
 
 void CoopCampaignSession::setChaosEligible(bool eligible) {
@@ -561,10 +770,12 @@ void CoopCampaignSession::setChaosEligible(bool eligible) {
 
 void CoopCampaignSession::setPlayerClass(int slot, const std::string& playerClass) {
     if(slot < 1 || slot >= static_cast<int>(context_.slots.size())
-       || (playerClass != "HumanPlayer" && !isCoopAIClass(playerClass))
-       || (slot >= 2 && playerClass == "HumanPlayer"))
+       || (playerClass != "HumanPlayer" && !isCoopAIClass(playerClass)
+           && !(context_.alliedCapacity==4 && context_.isAlliedSlot(slot) && playerClass=="Closed"))
+       || (!context_.isAlliedSlot(slot) && playerClass == "HumanPlayer"))
         throw std::invalid_argument("Invalid coop player class");
     context_.slots[slot].playerClass = playerClass;
+    if(playerClass!="HumanPlayer") context_.slots[slot].controllers.clear();
 }
 
 void CoopCampaignSession::saveProgress(const std::string& path, const std::string& settingsBlob,

@@ -12,7 +12,8 @@ coop_spec = spec_from_file_location('original_coop', ROOT / 'scripts/original-co
 original_coop = module_from_spec(coop_spec)
 coop_spec.loader.exec_module(original_coop)
 for name, letters in [('Tornie', 'HAOFSMNRCWKT'), ('TornieLite', 'HAOFSM'),
-                      ('Jericho', 'HAOFSMNRCWKT'), ('JerichoLite', 'HAOFSM')]:
+                      ('Jericho', 'HAOFSMNRCWKT'), ('JerichoLite', 'HAOFSM'),
+                      ('ArcaKev', 'HAOFSMKWRNTC'), ('ArcaKevLite', 'HAOFSM')]:
     root = ROOT / 'mods' / name
     config = configparser.ConfigParser(interpolation=None, strict=False)
     config.read(root / 'mod.ini', encoding='utf-8-sig')
@@ -29,7 +30,9 @@ for name, letters in [('Tornie', 'HAOFSMNRCWKT'), ('TornieLite', 'HAOFSM'),
     for house, _ in original_coop.campaigns(name):
         faction = original_coop.runtime_faction(name, house)
         for mission in range(1, 10):
-            assert original_coop.destination(name, faction, mission).is_file(), (name, faction, mission)
+            count = 3 if 2 <= mission <= 7 else 2 if mission == 8 else 1
+            for variant in range(count):
+                assert original_coop.destination(name, faction, mission, variant).is_file(), (name, faction, mission, variant)
     for section in config.sections():
         if section.startswith('Mentat '):
             for key in ('Background', 'Foreground', 'Eyes', 'Mouth'):
@@ -48,4 +51,6 @@ for name, letters in [('Tornie', 'HAOFSMNRCWKT'), ('TornieLite', 'HAOFSM'),
     print(f'{name}: {len(letters)} campaigns, {checked} exact payload checksums, presentation assets verified')
 for house, _ in original_coop.campaigns('vanilla'):
     for mission in range(1, 10):
-        assert original_coop.destination('vanilla', original_coop.runtime_faction('vanilla', house), mission).is_file(), ('vanilla', house, mission)
+        count = 3 if 2 <= mission <= 7 else 2 if mission == 8 else 1
+        for variant in range(count):
+            assert original_coop.destination('vanilla', original_coop.runtime_faction('vanilla', house), mission, variant).is_file(), ('vanilla', house, mission, variant)

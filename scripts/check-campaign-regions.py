@@ -34,7 +34,7 @@ def vanilla_scenarios(pak='Extra.PAK'):
         end=data.index(0,pos);name=data[pos:end].decode('ascii');pos=end+1;entries.append((name.upper(),start))
     return {name:data[start:entries[i+1][1] if i+1<len(entries) else len(data)] for i,(name,start) in enumerate(entries)}
 
-for mod,letters in [('Tornie','HAOFSMNRCWKT'),('TornieLite','HAOFSM'),('Jericho','HAOFSMNRCWKT'),('JerichoLite','HAOFSM'),('vanilla','NRK')]:
+for mod,letters in [('Tornie','HAOFSMNRCWKT'),('TornieLite','HAOFSM'),('Jericho','HAOFSMNRCWKT'),('JerichoLite','HAOFSM'),('ArcaKev','HAOFSMKWRNTC'),('ArcaKevLite','HAOFSM'),('vanilla','NRK')]:
     directory=ROOT/'data/campaign_vanilla' if mod=='vanilla' else ROOT/'mods'/mod/'campaign'
     files={p.name.upper():p for p in directory.iterdir() if p.is_file()}
     if mod=='vanilla':

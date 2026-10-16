@@ -16,6 +16,7 @@
  */
 
 #include <Game.h>
+#include <misc/CampaignTechLevel.h>
 #include <Achievements/AchievementEvents.h>
 #include <Achievements/AchievementManager.h>
 #include <main.h>
@@ -138,6 +139,10 @@ bool getTornieStructurePlacementPreview(int itemID, StructurePlacementPreview& p
                 TornieStructureFrame_BuildSite,
                 -1
             };
+            return true;
+
+        case Structure_Doublefinery:
+            preview = { ObjPic_Doublefinery, 10, 1, TornieStructureFrame_Active, -1 };
             return true;
 
         case Structure_Worfinery:
@@ -417,7 +422,7 @@ void Game::initGame(const GameInitSettings& newGameInitSettings) {
             objectData.logSettings();
 
             if(gameInitSettings.getMission() != 0) {
-                techLevel = ((gameInitSettings.getMission() + 1)/3) + 1 ;
+                techLevel = campaignTechLevel(gameInitSettings.getMission());
             }
 
             try {

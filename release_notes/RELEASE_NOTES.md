@@ -1,72 +1,45 @@
-# Dune Legacy Tornie 1.0.538
+# Dune Legacy Tornie 1.0.541 — ArcaKev, coop et corrections
 
-### Portrait and Worfinery correction
+- **ArcaKev et ArcaKev Lite** : dérivés Jericho, unités personnalisées, épice normale **plus verte et bleue**, éditeur et génération de cartes adaptés. Campagnes et régions propres au nouveau mod.
+- Ordre ArcaKev : **Harkonnen, Atreides, Ordos, Fremen, Sardaukar, Mercenary, Kleshmersh, Wildspade, Rebels, Neutral, Tharpique, Corruptique**. Les identifiants de sauvegarde restent stables.
+- **Coop jusqu’à quatre factions alliées** ; **archonte jusqu’à huit joueurs**, affectation libre des contrôleurs, y compris tous dans une seule faction. Emplacements 3/4 fermés : aucune armée, MCV ou renfort.
+- À chaque nouvelle mission, tirage parmi les scénarios existants : trois variantes aux étapes 2–7 (002–019), deux à l’étape 8 (020/021). Tirage conservé après défaite ou chargement. Finale 22 : **technologie 9**, en campagne et skirmish.
+- **Facile** : +500 crédits au départ de **chaque mission** pour tous les alliés actifs, réduction d’achat de 25 conservée. **Forces ennemies +10** en option, cumulables avec +5 pour un total de **15** par adversaire présent.
+- Renforts et quota commun adaptés aux factions alliées actives. Transition après confirmation de tous les humains. Lobby, reprise et sauvegardes gèrent les huit contrôleurs ; couleurs bonus accessibles aux invités.
+- **Cases des mods** correctement appliquées ; sauvegarde des métadonnées sans accumulation de guillemets et bouton Enregistrer accessible. **Bannières Jericho** actualisées au démarrage.
+- **Kleshmersh Vanilla orange**, Troopers ordinaires sans feu. Hors Vanilla, une **WOR Kleshmersh empruntée en Chaos** produit les Troopers incendiaires au prix nominal Kleshmersh de **200 crédits**, y compris dans les éditions Lite. Dégâts d’impact du **Trooper lance-flammes +20 %**.
+- **Scoutpost, Flamepost et Chemipost** : missiles dès la base et après amélioration, portée **7 cases** au lieu de 5. Flamepost : effet du Flame Tank et **12 dégâts** au lieu de 10. Chemipost conserve le missile de soin allié.
+- **Sonic Trike** au niveau suivant lorsqu’il était au niveau 2. **Wildspade et Sardaukar** : Light Factory niveau **2**, hors Vanilla. **Ordos et Neutral** : Siege Tank niveau **6**, troisième amélioration.
+- **Doublefinery** : déchargement des récolteurs **15 % plus rapide** dans les deux baies ; aperçu solide **5×2** dans la grille pointillée **5×3**, placement cohérent avec le bâtiment.
+- **Tourelles ajoutées aux véhicules personnalisés** : proportions cohérentes aux zooms **1×, 2× et 3×**. Les trikes conservent leurs graphismes.
+- **Mentat husky animé de Kleshmersh**, issu du ZIP fourni par Tornie : cinq états de regard et de bouche, dans Vanilla, Tornie, Jericho et ArcaKev. PNG natifs conservés, parole liée au briefing.
+- **Éditeur** : changement d’équipe fonctionnel dans les listes défilantes et **12 équipes**. Ordre ArcaKev, unités et épices adaptés.
+- **Site français/anglais** : pouvoirs de chaque palais par maison et mod, recharge, technologies, nouveaux mods, husky et notes ; même contenu dans le site local.
 
-The six supplied PNGs distinguish single Soldiers/Troopers, squads of 3 and
-squads of 5. Only the Barracks/WOR/Worfinery production lists in Tornie, Jericho and their
-Lite editions use these portraits; their price text is white. The website's
-cards, technology views and detail pages show the matching variants.
-The Worfinery displays the Harvester last. This display order preserves current
-production and saved orders. Tornie tested co-op 1.0.538 on two PCs and confirmed
-it works. Mint 22.3 / kernel 7.0 still needs testing on the target computer.
+Tous les joueurs doivent utiliser **1.0.541 / protocole 11**, avec le même mod. Les nouvelles sauvegardes utilisent **9832** ; les anciennes restent lisibles. Le relais Internet par l’hôte sans VPN et les correctifs AppImage/Mint de 1.0.540 sont conservés. L’hôte doit rester connecté et joignable. Sous Mint, choisir `DuneLegacyTornie-1.0.541-Linux-Mint-Compatible.AppImage` ; sans FUSE, ajouter `--appimage-extract-and-run`. Sous Windows, extraire tout le ZIP dans un nouveau dossier avant de lancer `dunelegacy.exe`.
 
-## Changes in 1.0.538
-
-Two lobby options are off by default: **Easy Mode** and **Enemy forces +5**.
-Easy Mode starts a new campaign at mission 2. Each ally, human or AI, gets 500 extra
-credits at that mission's start only. Their unit and building purchases cost 25 credits
-less (minimum 1) throughout the campaign. Enemies receive no bonus or discount.
-
-Enemy forces +5 adds five technology-appropriate units per present opponent in each
-mission, near its base or army. Reinforcement-only opponents start on a map edge opposite
-the main allied base. Extra units use Area Guard. Absent opponents receive no units.
-
-Host reinforcements also reach the second ally with the same number, timing, relative
-drop location and repeat rule. Unavailable units receive a faction-compatible equivalent.
-Recorded checkpoint reinforcements and forces are restored without being added twice.
-
-**Together on Arrakis / COOP_CONQUEROR** requires every common-campaign stage, with
-a human or AI ally. Easy Mode may waive the intro. Unlocks stay local; each completed
-session counts once. Solo campaign awards retain their requirements.
-
-Both PCs require **1.0.538**, protocol **7**. New saves use **9829**; older saves remain
-readable with their recorded forces and reinforcements. Start a new campaign or reach
-the next mission for the new reinforcement behavior. Tornie confirmed two-PC co-op works. Mint 22.3 / kernel 7.0 still needs testing.
-
-## Portraits, banners and achievements
-
-New single/squad portraits apply only to Barracks/WOR/Worfinery production lists in Tornie, Jericho and their Lite editions. Vanilla, Starport and selected-unit portraits keep their images. Supplied PNGs are copied unchanged.
-
-Wildspade/Tornie uses its new banner and dark purple. Rebels/Jericho uses its new banner and dark grey. Other factions and mods retain their variants.
-
-The catalogue grows from 47 to 67 awards: a complete co-op campaign, Fuel Waste, three enemy buildings destroyed with one palace missile, scores of 1,500 / 2,000, a 10,000-point total, and cumulative-counter milestones. Friendly hits and nonlethal damage exclude Fuel Waste. All impacts of one missile are grouped; buildings count once. Won mission scores are deduplicated after reloading; unrecorded historical scores are not invented.
+Les tests automatisés reproduisent des invités isolés avec huit participants UDP, vérifient les commandes, le démarrage, les sauvegardes et les sept modes. Les résultats finaux et liens CI sont consignés dans le rapport de validation. Une partie humaine sur plusieurs accès Internet et le lancement natif sur Mint 22.3 / noyau 6.17 restent à confirmer.
 
 ---
 
-# Dune Legacy Tornie 1.0.537
+# Dune Legacy Tornie 1.0.541 — ArcaKev, co-op and fixes
 
-In the host lobby, **Load a save** opens **Manual** (`mpsave/`, `.dls` files) and **Automatic** (`coop/`, `.dls` checkpoints) tabs. The save must be a co-op campaign for the active mod. Loading closes the old lobby and opens a new one for the saved mission; the guest must rejoin. Cancelling or selecting an incompatible file keeps the current lobby. Automatic resume through the `.ini` progress record remains available.
+- **ArcaKev and ArcaKev Lite**: Jericho-derived mods with custom units and **normal plus green and blue spice**, matching editor and map generation, distinct campaigns and region ownership.
+- ArcaKev house/campaign order: **Harkonnen, Atreides, Ordos, Fremen, Sardaukar, Mercenary, Kleshmersh, Wildspade, Rebels, Neutral, Tharpique, Corruptique**. Persistent faction IDs remain stable.
+- **Four allied factions in co-op**, **eight players in Archon**, with freely assigned controllers, including all eight in one faction. Closed slots 3/4 spawn no army, MCV or reinforcements.
+- Each new mission draws existing scenarios: three variants at stages 2–7 (002–019), two at stage 8 (020/021). Retries and saves retain the selection. Final scenario 22 uses **technology 9** in campaign and skirmish.
+- **Easy Mode** grants every active ally **500 credits at every mission start**, retaining the 25-credit purchase discount. Optional **Enemy forces +10** combines with +5 for **15** per present opponent.
+- Reinforcements and shared harvest quota follow active allied factions. All humans confirm mission transitions. Lobby, resume and saves support eight controllers; guests can select bonus colours.
+- **Mod checkboxes** take effect; metadata no longer accumulates quotes and Save remains visible. **Jericho banners** refresh at startup.
+- **Vanilla Kleshmersh is orange**, with ordinary non-flame Troopers. Outside Vanilla, a **Chaos-borrowed Kleshmersh WOR** produces flame Troopers at Kleshmersh’s nominal **200-credit price**, including Lite editions. **Flame Trooper impact damage increases by 20%.**
+- **Scoutpost, Flamepost and Chemipost** fire missiles before and after upgrading, at **7 tiles** instead of 5. Flamepost uses the Flame Tank effect and deals **12 damage** instead of 10. Chemipost retains allied healing missiles.
+- **Sonic Trike** moves to the next level wherever it previously unlocked at 2. **Wildspade and Sardaukar** receive Light Factory at **level 2** outside Vanilla. **Ordos and Neutral** receive Siege Tank at **level 6, upgrade three**.
+- **Doublefinery** unloads Harvesters **15% faster** in both bays, with a solid **5×2** preview inside the dotted **5×3** grid and matching map placement.
+- Added turrets on custom vehicles retain their proportions at **1×, 2× and 3×**. Trike graphics are retained.
+- **Animated Kleshmersh husky mentat**, from Tornie's original supplied ZIP: five gaze and speech states in Vanilla, Tornie, Jericho and ArcaKev; original PNGs and briefing-driven speech.
+- **Editor** team changes work through scrolling dropdowns, with **12 teams**, ArcaKev order and matching custom units/spice.
+- **FR/EN website** lists every house's Palace power and recharge by mod, updated technology, new mods, husky and notes; matching offline content.
 
-Optional allied control (off by default), selectable enemy AI type/difficulty and an AI guest, separate bases and funds, guest intro WOR, enemy faction/color collision handling, French/English How to Play including Jericho Lite, and refined Wildspade eye/mouth rendering. See `docs/COOP-CAMPAIGN-EN.md` and `docs/COOP-CAMPAIGN.md`.
+Every player needs **1.0.541 / protocol 11** and the same mod. New saves use **9832**; older saves remain readable. The Internet host relay without VPN and 1.0.540 AppImage/Mint startup fixes are retained. The host must remain reachable and connected. On Mint use `DuneLegacyTornie-1.0.541-Linux-Mint-Compatible.AppImage`; add `--appimage-extract-and-run` without FUSE. On Windows, extract the entire ZIP into a fresh directory before starting `dunelegacy.exe`.
 
-Both PCs require 1.0.537 and protocol 6. Save version 9828 protects the new cooperative options from older executables; old saves remain readable. Tornie has tried co-op on two PCs and confirmed loading saves from the lobby. Automated Windows/Linux checks cover the new options; extended playtesting and the Mint 22.3/kernel 7.0 compatibility check remain open.
-
----
-
-# Dune Legacy Tornie 1.0.536
-
-Version 1.0.536. Co-op is available for playtesting; a human match between two computers remains unconfirmed.
-
-- Co-op now follows the original campaign of the host’s faction: nine stages, preserved terrain and opponents, and a partner with an MCV near the Construction Yard and matching starting forces. Harvest objectives are shared. A live two-computer match remains unconfirmed.
-- Separate co-op progress/checkpoints, resuming with new participant names and explicit readiness between missions. Lobby choices are locked during launch; a disconnected partner cancels the countdown. Messages from an earlier mission are discarded.
-- Easy Mode is off by default and exclusive to solo campaigns: begin at mission 2 with 500 extra credits for the player's starting house; its unit/building purchases cost 25 fewer credits, minimum 1, throughout the campaign.
-- Jericho Lite: six Tornie Lite factions and technology, all four Jericho spice families enabled by default with the same colors and effects, including in the editor and generator. Its six opening missions copy Tornie Lite’s terrain, economy, structures and forces; only the opponents follow Jericho Lite’s distinct plan.
-- Tornie and Jericho intros include five extra dispersed enemies, bringing the total to 17 without an initial rush. Two bonus Tanks, nine Troopers and two Special Unit Spawns remain.
-- Ornithopter attack orders continue hunting after their target disappears. Wildspade Ornithopters cost 550 credits.
-- Builder price contrast panels are removed. Raider Trike and Rocket Trike prices use black numbers directly on their light portraits, with no background or border; other prices retain their usual color. Long descriptions in the Mods menu remain wrapped. Cat mentat eye/mouth overlays are slightly darker.
-- 47 achievements: Chaos Conqueror requires completing a solo campaign played with Chaos Mode from its start. Co-op progress does not complete a faction's solo campaign.
-- Continuing an older campaign adds opponents required by the next map, including Wildspade's third final-mission opponent.
-
-For co-op playtesting, use this same build and mod on both computers with different player names. Open Co-op Campaign, create/join a lobby and select factions. Check independent bases, victory followed by both players choosing Ready, and resuming progress. Local transport checks are complete; a human match between two computers remains pending.
-
-Extract the entire Windows ZIP and run `dunelegacy.exe`. The bilingual website is updated for this version and also supplied as an offline ZIP.
+Automated tests isolate guests in eight-participant UDP sessions and verify commands, start, saves and all seven modes. The validation report records final results and CI links. Human play across independent Internet connections and native Mint 22.3/kernel 6.17 startup remain pending.

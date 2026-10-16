@@ -6,7 +6,7 @@ on:
       release_tag:
         description: Existing release tag to build
         required: true
-        default: v1.0.540
+        default: v1.0.541
         type: string
       documentation_only:
         description: Attach the matching bilingual offline site and supporting files after a successful Linux run

@@ -21,9 +21,9 @@ inline void verifyEditorHouseColors(const std::string& output, const std::string
         if(mod == "Jericho" && roster[i] >= HOUSE_NEUTRAL) {
             static const int slots[]={15,16,17,6,7,8};expected=slots[roster[i]-HOUSE_NEUTRAL];
         }
-        if(mod == "Tornie" && roster[i]>=HOUSE_WILDSPADE)expected=15+roster[i]-HOUSE_WILDSPADE;
+        if((mod == "Tornie" || mod=="ArcaKev") && roster[i]>=HOUSE_WILDSPADE)expected=15+roster[i]-HOUSE_WILDSPADE;
         if(mod == "vanilla" && roster[i] == HOUSE_REBELS) expected = HOUSECOLOR_CUSTOM_APPLE_GREEN;
-        if(mod=="vanilla" && roster[i]==HOUSE_KLESHMERSH)expected=HOUSECOLOR_GUEST_2;
+        if(mod=="vanilla" && roster[i]==HOUSE_KLESHMERSH)expected=HOUSECOLOR_KLESH_ORANGE;
         require(getHouseVisualHouse(house) == expected,
                 mod + " " + stage + " wrong color for " + getHouseDisplayNameByNumber(house)
                 + ": " + std::to_string(getHouseVisualHouse(house)) + " instead of " + std::to_string(expected));

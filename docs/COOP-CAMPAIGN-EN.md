@@ -1,103 +1,48 @@
-# Common co-op campaign — 1.0.538
-
-Windows and Linux 1.0.540 use protocol 10; both players need the same build. Host relay fallback now supports guest isolation in custom Internet multiplayer; see [1.0.539 notes](../release_notes/1.0.539-EN.md). The two-PC report below concerns 1.0.538.
-
-Tornie confirmed co-op 1.0.538 works on two PCs (2026-10-09).
+# Co-op and Archon campaigns — 1.0.541
 
 [Guide français](COOP-CAMPAIGN.md)
 
-The main menu's **Co-op campaign** entry supports two players over LAN or Internet. Each player freely chooses a faction and controls a separate base, army and credit balance on the same team. Allies may choose the same faction while keeping separate ownership and funds. Optional allied control permits shared commands.
+Every participant needs **1.0.541 / protocol 11**, the same mod and a distinct name. LAN or Internet play uses the host relay when guests cannot communicate directly, without a VPN. The host must remain reachable and connected.
 
-Co-op follows the nine stages of the original campaign for the faction chosen by the host at launch. Its terrain, structures, opposing forces and objectives are retained. The source campaign stays fixed when resuming; progress and checkpoints remain independent of solo.
+## Players and factions
 
-Available factions: 12 in Tornie and Jericho, 6 in Tornie Lite and Jericho Lite, 9 in Vanilla. The 45 source campaigns provide 405 co-op variants, with nine stages each.
+A new campaign supports **four allied factions** with separate bases, armies and funds. Slots 3 and 4 start closed: closed slots spawn no MCV, starting forces or reinforcements. Allies may choose the same faction.
 
-| Edition | Available factions | Co-op missions |
-|---|---:|---:|
-| Vanilla | 9 | 9 |
-| Tornie | 12 | 9 |
-| Jericho | 12 | 9 |
-| Tornie Lite | 6 | 9 |
-| Jericho Lite | 6 | 9 |
+Enable **Archon** when creating the campaign to admit **eight players**. The host freely assigns each controller to any of the four allied factions, including all eight in one faction. Controllers in the same faction share its objects and money. Uncontrolled factions may remain closed or use AI. Enemies remain AI-controlled.
 
-## Hosting and joining
+Optional **Allied control** also permits commands to other allied factions; their owners pay the costs. The host selects AI types and difficulties. Guests can select bonus colours.
 
-1. Run the **same 1.0.538 build** on both computers. Its network protocol is version **9**. Version 1.0.536 uses a different network protocol and cannot join this lobby.
-2. Activate the same edition in **Mods**. Use different player names.
-3. Open **Co-op campaign**, then choose the LAN or Internet browser. The host creates a game and selects **New campaign**. The second player joins through the browser or address connection.
-4. Connect a human guest or select an AI in the second slot, then choose factions. The host can select each enemy AI’s type and difficulty. Identical factions are allowed. Both players are allies; the opponent slots remain AI-controlled.
-5. The host starts after versions, rules and mod resources have synchronized.
+There are 63 source campaigns and 1,386 co-op maps: Vanilla 9/198; Tornie, Jericho and ArcaKev 12/264 each; Tornie Lite, Jericho Lite and ArcaKev Lite 6/132 each. Nine stages follow the host faction's original campaign, fixed when the session starts.
 
-Opponents follow the original map: early stages may have a single opponent. Mod finales keep their three roles; some Vanilla finales have four or five opponents. An enemy using either ally’s faction receives another available faction while keeping its role and forces. Both allies and all opponents use distinct colors.
+## Creating and playing
 
-The main player keeps the original base and starting units. The partner receives matching forces and credits, plus an extra MCV on free rock near the main Construction Yard, to deploy a separate base. New intros also provide a WOR on free rock as close as possible to the host WOR, or Construction Yard when the host has no WOR. Special spawns and unavailable units use an equivalent compatible with the partner’s faction.
+1. Open **Co-op campaign**, select LAN or Internet, create a campaign and choose Archon if desired.
+2. Other players join through the browser or address. Configure allied factions, AI and Archon assignments in the lobby.
+3. Start after every guest has synchronized version, rules and mod resources.
+4. After each mission, all connected humans must confirm readiness. Disconnection never advances progress.
 
-Harvest objectives are shared: spice stored by both players is added together, with a common target of twice the solo quota. Both computers calculate the same team victory.
+The host retains the original forces. Each other active allied faction receives compatible starting forces and credits, a nearby deployable MCV and an intro WOR when applicable. Host reinforcements are copied to each active ally with compatible units. Harvest objectives sum allied spice and multiply the solo quota by the number of active allied factions, independent of their controller counts.
 
-Co-op campaigns created with the previous maps retain their recorded layout. Start a new campaign to receive the original maps and MCV starting position.
+Enemy forces and roles remain. A faction conflicting with an ally is replaced. With four allies in Lite, multiple enemies may share a faction while retaining separate ownership.
 
-## Victory, defeat and resuming
+## Variants and difficulty
 
-Victory and defeat apply to the team. If one allied base is destroyed, the partner may continue while the team retains forces under the map's rules.
+Each **new mission** draws an existing scenario: stage 1 uses 001; stages 2–7 choose from 002–004, 005–007, 008–010, 011–013, 014–016 and 017–019 respectively; stage 8 chooses 020 or 021; stage 9 uses 022 at technology 9. The shared draw is stored and remains stable on retry or reload. Some original scenarios share terrain seeds but have different forces. Older sessions retain their previous selection.
 
-Both players confirm readiness after a mission. A victory advances the common campaign; a defeat retries the current mission without advancing progress. Winning the ninth mission completes the campaign. Leaving or disconnecting does not unlock another mission.
+**Easy Mode**, off by default, starts a new campaign at stage 2. Each active allied faction, human or AI, receives **500 credits at every mission start** and a 25-credit purchase discount, minimum price 1. Enemies receive neither benefit.
 
-Progress and checkpoints are stored in `coop/` beside the user's `Dune Legacy.ini`:
+Independent **Enemy forces +5** and **Enemy forces +10** switches combine to **15 extra units per present enemy**, at every new mission. Units match the technology and appear near existing forces or at an edge for reinforcement-only enemies. Absent opponents receive none. Checkpoint loads restore forces without adding them again.
 
-```text
-coop/
-    <session>.ini   common progress and settings
-    <session>.dls   mission checkpoint
-```
+## Saves and resuming
 
-The session identifier distinguishes common campaigns. Solo progress and saves remain separate. Keep the progress record and checkpoint in the profile used to resume.
+Shared progress and checkpoint files are `coop/<session>.ini` and `coop/<session>.dls`, next to `Dune Legacy.ini`, separate from solo progress. Keep both files. Resuming preserves the mod, selected scenario and checkpoint. Controller names can be reassigned; already-started saves retain controller counts per faction.
 
-To resume, the host activates the campaign's edition, opens **Co-op campaign**, selects **Resume a common campaign** and chooses its `.ini` record. The partner joins the lobby. An available referenced checkpoint resumes the saved mission; without one, the progress record restarts the current mission. Human names can be reassigned in the lobby while the bases remain separate.
+The host lobby's **Load a save** offers manual `mpsave/*.dls` saves and automatic `coop/*.dls` checkpoints. Loading a compatible save reopens the lobby; all guests rejoin. Cancelling preserves the lobby. New saves use format **9832**; older saves remain readable with their stored maps and rules.
 
-Progress writes use a temporary file and keep the previous complete record during replacement. A damaged record can recover from that backup. Completed campaigns remain recorded; create a new campaign to start again.
+**Together on Arrakis / COOP_CONQUEROR** rewards completing the shared campaign with a human or AI ally, including Easy Mode. It does not complete a solo campaign. The catalogue remains 67 achievements, with local profiles.
 
-In the host lobby, **Load a save** opens **Manual** (`mpsave/`, `.dls` files) and **Automatic** (`coop/`, `.dls` checkpoints) tabs. The save must be a co-op campaign for the active mod. Loading closes the old lobby and opens a new one for the saved mission; the guest must rejoin. Cancelling or selecting an incompatible file keeps the current lobby. Automatic resume through the `.ini` progress record remains available.
+## Verification and maintenance
 
-## Allied control and AI
+Automated checks cover all seven modes and stages 1–9, closed/active allies, MCV 3/4 deployment, eight controllers in one faction, Easy credits, +5/+10/+15 forces, saves and lobby assignments. The eight-player UDP check filters direct guest links and verifies host relay, start and every participant's commands. Human play across independent Internet connections remains pending. Tornie's historical two-PC confirmation concerns 1.0.538.
 
-**Allied control**, off by default, enables orders to allied units and buildings: movement, combat, production, placement, repair and abilities. Production uses the owner’s funds; houses and statistics stay separate. Without this option, each player controls only their own objects.
-
-The host can select a qBot, Mentat, SmartBot or AI Player ally in the second slot, and choose enemy AI types and difficulties. Campaign AI remains the initial enemy choice. These choices and allied control persist across missions and resumes. Difficulty levels depend on the selected AI family.
-
-## Options and achievements
-
-## Changes in 1.0.538
-
-Two lobby options are off by default: **Easy Mode** and **Enemy forces +5**.
-Easy Mode starts a new campaign at mission 2. Each ally, human or AI, gets 500 extra
-credits at that mission's start only. Their unit and building purchases cost 25 credits
-less (minimum 1) throughout the campaign. Enemies receive no bonus or discount.
-
-Enemy forces +5 adds five technology-appropriate units per present opponent in each
-mission, near its base or army. Reinforcement-only opponents start on a map edge opposite
-the main allied base. Extra units use Area Guard. Absent opponents receive no units.
-
-Host reinforcements also reach the second ally with the same number, timing, relative
-drop location and repeat rule. Unavailable units receive a faction-compatible equivalent.
-Recorded checkpoint reinforcements and forces are restored without being added twice.
-
-**Together on Arrakis / COOP_CONQUEROR** requires every common-campaign stage, with
-a human or AI ally. Easy Mode may waive the intro. Unlocks stay local; each completed
-session counts once. Solo campaign awards retain their requirements.
-
-Both PCs require **1.0.538**, protocol **10**. New saves use **9831**; older saves remain
-readable with their recorded forces and reinforcements. Start a new campaign or reach
-the next mission for the new reinforcement behavior. The public release is 1.0.538. Tornie confirmed two-PC co-op works. Mint 22.3 / kernel 7.0 still needs testing.
-
-
-The lobby offers **Chaos Mode**, off by default, in the four mods; Vanilla disables it. The draw uses a shared seed and both computers use the same rules. Saves preserve the mission's rules.
-
-**Commander** awards, campaign conquest and **Chaos Conqueror / `CHAOS_CONQUEROR`** require solo campaigns. Completing the common campaign does not complete a faction's solo campaign. Other achievements follow their ordinary multiplayer rules and local-player events; achievement profiles remain local.
-
-## Validation status and maintenance
-
-Tornie tested co-op 1.0.538 on two PCs and confirmed it works on 9 October 2026. Mint 22.3 / kernel 7.0 still needs testing on the target computer.
-
-Original-campaign templates live in `coop/faction<id>/coopNN.ini` under `data/` for Vanilla and `mods/<mod>/campaign/` for the mods. The 45 previous root templates remain for older sessions. `scripts/build-coop-campaign.py --check` validates the 405 source variants and previous maps; `--write` updates only co-op templates and checksums. `config/CoopCampaignTerrain.json` is generated with the game’s `MapSeed.cpp` algorithm.
-
-The `Campaign/CoopCampaignSession` model stores the session, participants and progress. Its `[COOP]` context is embedded in `GameInitSettings` map data, which already travels through the network and game saves. Runtime ownership and the chosen faction's rules column are separate, allowing identical faction selections. `Campaign/CoopCampaignRuntime` retains the connection between missions; transitions validate the partner, session and stage before advancing.
+Templates live in `data/coop/faction<id>/` for Vanilla and `mods/<mod>/campaign/coop/faction<id>/` for mods, with `-v1`/`-v2` variants. `scripts/build-coop-campaign.py --check` audits all 1,386 variants, 63 legacy root maps and 2,342 protected solo file hashes. Optional ally sections materialize only for active slots; the `[COOP]` context synchronizes map, controllers and mission selection.

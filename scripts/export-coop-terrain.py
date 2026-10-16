@@ -45,7 +45,7 @@ def seeds_in(data):
     return {ini.getint('MAP','Seed')} if ini.has_option('MAP','Seed') else set()
 
 seeds=set()
-for mod in ('Tornie','Jericho','TornieLite','JerichoLite'):
+for mod in ('Tornie','Jericho','TornieLite','JerichoLite','ArcaKev','ArcaKevLite'):
     for path in (ROOT/'mods'/mod/'campaign').glob('scen*.ini'):
         seeds.update(seeds_in(path.read_bytes()))
 for path in (ROOT/'data/campaign_vanilla').glob('scen*.ini'):

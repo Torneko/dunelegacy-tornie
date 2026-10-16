@@ -26,10 +26,12 @@
 #include <GUI/dune/GameOptionsWindow.h>
 #include <Menu/HouseChoiceInfoMenu.h>
 #include <SoundPlayer.h>
+#include <mod/ModManager.h>
 
 
 namespace {
 std::vector<int> getHouseOrder() {
+    if(isArcaKevMod(ModManager::instance().getActiveModName())) return getFactionSelectionOrder();
     const int candidates[] = { HOUSE_ATREIDES, HOUSE_ORDOS, HOUSE_HARKONNEN,
         HOUSE_MERCENARY, HOUSE_FREMEN, HOUSE_SARDAUKAR, HOUSE_NEUTRAL,
         HOUSE_REBELS, HOUSE_CUSTOM, HOUSE_WILDSPADE, HOUSE_KLESHMERSH, HOUSE_THARPIQUE };

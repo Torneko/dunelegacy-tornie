@@ -166,6 +166,7 @@ NewMapWindow::NewMapWindow(HOUSETYPE currentHouse) : Window(0,0,0,0), house(curr
     centralVBox.addWidget(&basicMapPropertiesHBox);
 
     const bool isJericho = ModManager::instance().usesJerichoSpicePalette();
+    const bool blueSecondary = isJericho || isArcaKevMod(ModManager::instance().getActiveModName());
     greenSpiceCheckbox.setText(isJericho ? _("Red spice") : _("Green spice"));
     greenSpiceCheckbox.setTextColor(color);
     greenSpiceCheckbox.setOnClick(std::bind(&NewMapWindow::onMapPropertiesChanged,this));
@@ -178,7 +179,7 @@ NewMapWindow::NewMapWindow(HOUSETYPE currentHouse) : Window(0,0,0,0), house(curr
 
     tornieSpiceHBox.addWidget(HSpacer::create(18));
 
-    redSpiceCheckbox.setText(isJericho ? _("Blue spice") : _("Purple spice"));
+    redSpiceCheckbox.setText(blueSecondary ? _("Blue spice") : _("Purple spice"));
     redSpiceCheckbox.setTextColor(color);
     redSpiceCheckbox.setOnClick(std::bind(&NewMapWindow::onMapPropertiesChanged,this));
     tornieSpiceHBox.addWidget(&redSpiceCheckbox, 110);
@@ -337,9 +338,10 @@ void NewMapWindow::onMapTypeChanged(int buttonID) {
 void NewMapWindow::onMapPropertiesChanged() {
     const bool showTornieSpice = randomMapRadioButton.isChecked() && (ModManager::instance().isTornieContentActive());
     const bool isJericho = ModManager::instance().usesJerichoSpicePalette();
+    const bool blueSecondary = isJericho || isArcaKevMod(ModManager::instance().getActiveModName());
     const unsigned enabledSpice = ModManager::instance().getActiveContentOptions().spiceMask();
     const bool firstEnabled = showTornieSpice && (enabledSpice & (isJericho ? 2u : 1u));
-    const bool secondEnabled = showTornieSpice && (enabledSpice & (isJericho ? 8u : 4u));
+    const bool secondEnabled = showTornieSpice && (enabledSpice & (blueSecondary ? 8u : 4u));
     greenSpiceCheckbox.setEnabled(firstEnabled);
     redSpiceCheckbox.setEnabled(secondEnabled);
     greenSpiceDigitsTextBox.setEnabled(firstEnabled && greenSpiceCheckbox.isChecked());
@@ -365,7 +367,7 @@ void NewMapWindow::onMapPropertiesChanged() {
 
         mapSeed = INVALID;
         const TERRAINTYPE firstCustomSpice = isJericho ? Terrain_RedSpice : Terrain_GreenSpice;
-        const TERRAINTYPE secondCustomSpice = isJericho ? Terrain_WhiteSpice : Terrain_PaleLilacSpice;
+        const TERRAINTYPE secondCustomSpice = blueSecondary ? Terrain_WhiteSpice : Terrain_PaleLilacSpice;
         mapdata = generateRandomMap(sizeX, sizeY, seed, rock, spice, mirrorMode, greenSpice, redSpice,
                                     firstCustomSpice, secondCustomSpice);
 

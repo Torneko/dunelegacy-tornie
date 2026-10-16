@@ -33,6 +33,7 @@
 #include <mod/ModManager.h>
 
 #include <structures/BuilderBase.h>
+#include <GUI/dune/StructureSizePreview.h>
 #include <structures/StarPort.h>
 #include <structures/ChaosFactory.h>
 
@@ -68,7 +69,7 @@ BuilderList::BuilderList(Uint32 builderObjectID) {
     const auto mod = ModManager::instance().getActiveModName();
     if(builder && (builder->getItemID() == Structure_Barracks || builder->getItemID() == Structure_WOR
                    || builder->getItemID() == Structure_Worfinery)
-       && (mod == "Tornie" || mod == "Jericho" || mod == "TornieLite" || mod == "JerichoLite")) {
+       && isTornieFamilyMod(mod)) {
         const std::pair<int, const char*> icons[] = {
             {Unit_Soldier, "ProductionSoldier.png"}, {Unit_Infantry, "ProductionInfantry3.png"},
             {Unit_Infantry5, "ProductionInfantry5.png"}, {Unit_Trooper, "ProductionTrooper.png"},
@@ -264,14 +265,11 @@ void BuilderList::draw(Point position) {
                 }
 
                 if(isStructure(buildItem.itemID)) {
-                    SDL_Texture* pLattice = pGFXManager->getUIGraphic(UI_StructureSizeLattice);
-                    SDL_Rect destLattice = calcDrawingRect(pLattice, dest.x + 2, dest.y + 2);
-                    SDL_RenderCopy(renderer, pLattice, nullptr, &destLattice);
-
-                    SDL_Texture* pConcrete = pGFXManager->getUIGraphic(UI_StructureSizeConcrete);
-                    SDL_Rect srcConcrete = { 0, 0, 1 + getStructureSize(buildItem.itemID).x*6, 1 + getStructureSize(buildItem.itemID).y*6 };
-                    SDL_Rect destConcrete = { dest.x + 2, dest.y + 2, srcConcrete.w, srcConcrete.h };
-                    SDL_RenderCopy(renderer, pConcrete, &srcConcrete, &destConcrete);
+                    const Coord footprint=getStructureSize(buildItem.itemID);
+                    drawStructureSizePreview(renderer,
+                        pGFXManager->getUIGraphic(UI_StructureSizeLattice),
+                        pGFXManager->getUIGraphic(UI_StructureSizeConcrete),
+                        dest.x+2,dest.y+2,footprint.x,footprint.y);
                 }
 
                 if(pStarport != nullptr) {

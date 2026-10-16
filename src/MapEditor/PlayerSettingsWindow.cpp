@@ -20,6 +20,7 @@
 #include <GUI/Spacer.h>
 
 #include <globals.h>
+#include <mod/ModManager.h>
 
 #include <sand.h>
 
@@ -59,9 +60,12 @@ PlayerSettingsWindow::PlayerSettingsWindow(MapEditor* pMapEditor, HOUSETYPE curr
     mainVBox.addWidget(&centralScroll, 360);
 
     const int playerCount = static_cast<int>(pMapEditor->getPlayers().size());
-    for(int i = 0; i < playerCount; i++) {
+    int displayPlayerNumber=0;
+    for(const int i : getFactionSelectionOrder()) {
+        if(i >= playerCount) continue;
         if(!isCampaignHouseAvailable(static_cast<HOUSETYPE>(i))) continue;
 
+        ++displayPlayerNumber;
         MapEditor::Player& playerInfo = pMapEditor->getPlayers()[i];
 
         Uint32 currentColor = getHouseInterfaceColor(playerInfo.colorOfHouse);
@@ -74,7 +78,7 @@ PlayerSettingsWindow::PlayerSettingsWindow(MapEditor* pMapEditor, HOUSETYPE curr
             playerWidgets[i].playerCheckbox.setText(_("House") + " " + getHouseDisplayNameByNumber((HOUSETYPE) i) + ":");
             playerWidgets[i].playerHBox.addWidget(&playerWidgets[i].playerCheckbox, 150);
         } else {
-            playerWidgets[i].playerCheckbox.setText(fmt::sprintf(_("Player %d:"), i+1));
+            playerWidgets[i].playerCheckbox.setText(fmt::sprintf(_("Player %d:"), isArcaKevMod(ModManager::instance().getActiveModName()) ? displayPlayerNumber : i+1));
             playerWidgets[i].playerHBox.addWidget(&playerWidgets[i].playerCheckbox, 0.22);
         }
 
@@ -117,17 +121,17 @@ PlayerSettingsWindow::PlayerSettingsWindow(MapEditor* pMapEditor, HOUSETYPE curr
             playerWidgets[i].teamDropDownBox.addEntry("Human", 0);
             playerWidgets[i].teamDropDownBox.addEntry("CPU", 1);
 
-            if(playerInfo.brain == "Human") {
-                playerWidgets[i].teamDropDownBox.setSelectedItem(0);
-            } else {
-                playerWidgets[i].teamDropDownBox.setSelectedItem(1);
-            }
+            for(int team = 1; team <= NUM_HOUSES; ++team)
+                playerWidgets[i].teamDropDownBox.addEntry("Team" + std::to_string(team), team + 1);
+            for(int entry = 0; entry < playerWidgets[i].teamDropDownBox.getNumEntries(); ++entry)
+                if(playerWidgets[i].teamDropDownBox.getEntry(entry) == playerInfo.brain)
+                    playerWidgets[i].teamDropDownBox.setSelectedItem(entry);
         } else {
-            for(int team = 0; team < playerCount; team++) {
+            for(int team = 0; team < NUM_HOUSES; team++) {
                 playerWidgets[i].teamDropDownBox.addEntry("Team" + std::to_string(team + 1), team);
             }
 
-            for(int j = 0; j < playerCount; j++) {
+            for(int j = 0; j < playerWidgets[i].teamDropDownBox.getNumEntries(); j++) {
                 if(playerWidgets[i].teamDropDownBox.getEntry(j) == playerInfo.brain) {
                     playerWidgets[i].teamDropDownBox.setSelectedItem(j);
                     break;
@@ -136,7 +140,7 @@ PlayerSettingsWindow::PlayerSettingsWindow(MapEditor* pMapEditor, HOUSETYPE curr
         }
 
         playerWidgets[i].teamDropDownBox.setColor(currentColor);
-        playerWidgets[i].playerHBox.addWidget(&playerWidgets[i].teamDropDownBox, 65);
+        playerWidgets[i].playerHBox.addWidget(&playerWidgets[i].teamDropDownBox, 90);
 
         // prepare advanced widgets
         playerWidgets[i].spiceQuotaLabel.setText(_("Quota") + ":");
@@ -239,7 +243,7 @@ void PlayerSettingsWindow::onAdvancedBasicToggle() {
             playerWidgets[i].playerHBox.addWidget(&playerWidgets[i].creditsTextBox, 80);
             playerWidgets[i].playerHBox.addWidget(&playerWidgets[i].spacer, 5.0);
             playerWidgets[i].playerHBox.addWidget(&playerWidgets[i].teamLabel);
-            playerWidgets[i].playerHBox.addWidget(&playerWidgets[i].teamDropDownBox, 65);
+            playerWidgets[i].playerHBox.addWidget(&playerWidgets[i].teamDropDownBox, 90);
         }
     }
 }

@@ -4,6 +4,11 @@ namespace {
 ENetHost* relayTestFirst = nullptr;
 ENetHost* relayTestSecond = nullptr;
 unsigned relayTestDropped = 0;
+enet_uint16 relayTestHostPort=0;
+int ENET_CALLBACK blockAllRelayGuestLinks(ENetHost* host,ENetEvent*) {
+    if(host->receivedAddress.port!=relayTestHostPort) { ++relayTestDropped;return 1; }
+    return 0;
+}
 int ENET_CALLBACK blockRelayTestGuestLink(ENetHost* host, ENetEvent*) {
     const auto otherPort = host == relayTestFirst ? relayTestSecond->address.port : relayTestFirst->address.port;
     if(host->receivedAddress.port == otherPort) { ++relayTestDropped; return 1; }
@@ -20,6 +25,7 @@ void NetworkManager::verifyInternetRelayTransport() {
         GameInitSettings lobby;
         int players = 1, firstJoined = 0, secondJoined = 0, extraJoined = 0;
         bool unexpectedDeparture = false;
+        std::vector<std::unique_ptr<NetworkManager>> late;
         server.setGetChangeEventListForNewPlayerCallback([&](const std::string& name) {
             server.updateServer(++players);
             ChangeEventList changes;
@@ -38,8 +44,8 @@ void NetworkManager::verifyInternetRelayTransport() {
         first.setOnPeerDisconnected([&](const std::string&, bool, int) { unexpectedDeparture = true; });
         second.setOnPeerDisconnected([&](const std::string&, bool, int) { unexpectedDeparture = true; });
         // Internet mode, but diagnosticsOnly suppresses STUN/UPnP/discovery.
-        server.startServer(false, "Internet relay regression", "Host", &lobby, 1, 4);
-        const auto pump = [&] { server.update(); first.update(); second.update(); extra.update(); SDL_Delay(1); };
+        server.startServer(false, "Internet relay regression", "Host", &lobby, 1, blocked ? 8 : 4);
+        const auto pump = [&] { server.update(); first.update(); second.update(); extra.update(); for(auto& client:late) client->update(); SDL_Delay(1); };
         const auto until = [&](const std::function<bool()>& done) {
             const Uint32 started = SDL_GetTicks();
             while(!done() && SDL_GetTicks() - started < AWAITING_CONNECTION_TIMEOUT + 3000) pump();
@@ -161,6 +167,69 @@ void NetworkManager::verifyInternetRelayTransport() {
             extra.connect("127.0.0.1", server.getHost()->address.port, "Guest3");
             until([&] { return extraJoined == 2; });
             require(extra.getConnectedPeers().size() == 3, "reconnected roster is stale");
+            // Full Archon admission and command fan-out with every guest link blocked.
+            relayTestHostPort=server.getHost()->address.port;
+            for(auto* guest:{&first,&second,&extra}) guest->getHost()->intercept=blockAllRelayGuestLinks;
+            int lateJoined=0;
+            for(int i=0;i<4;++i) {
+                late.emplace_back(std::make_unique<NetworkManager>(0,"",true));
+                auto& client=*late.back();
+                client.getHost()->intercept=blockAllRelayGuestLinks;
+                client.setOnReceiveGameInfo([&](const GameInitSettings&,const ChangeEventList&){++lateJoined;});
+                client.connect("127.0.0.1",relayTestHostPort,"Guest"+std::to_string(i+4));
+                until([&]{return lateJoined==i+1;});
+            }
+            settle();
+            std::vector<NetworkManager*> eight{&server,&first,&second,&extra};
+            for(auto& client:late) eight.push_back(client.get());
+            const std::vector<std::string> eightNames{"Host","Guest1","Guest2","Guest3","Guest4","Guest5","Guest6","Guest7"};
+            std::array<int,8> eightCommands{},eightChats{};
+            int eightStarts=0,eightChanges=0;
+            for(int i=0;i<8;++i) {
+                require(eight[i]->getConnectedPeers().size()==7,"eight-player relay roster incomplete");
+                require(eight[i]->hostRelayEnabled,"eight-player relay mode lost");
+                eight[i]->setGameEpoch(701);
+                eight[i]->setOnReceiveSelectionList({});
+                eight[i]->setOnReceiveChatMessage([&,i](const std::string& name,const std::string& message) {
+                    require(name!=eightNames[i] && name==message,"eight-player chat identity");++eightChats[i];
+                });
+                eight[i]->setOnReceiveCommandList([&,i](const std::string& name,const CommandList& list) {
+                    const auto sender=std::find(eightNames.begin(),eightNames.end(),name);
+                    require(sender!=eightNames.end() && name!=eightNames[i] && list.commandList.size()==20,"eight-player command source");
+                    for(std::size_t cycle=0;cycle<20;++cycle) {
+                        const auto& entry=list.commandList[cycle];
+                        require(entry.cycle==300+cycle && entry.commands.size()==1
+                            && entry.commands[0].getPlayerID()==std::distance(eightNames.begin(),sender)
+                            && entry.commands[0].getCommandID()==CMD_TEST_SYNC
+                            && entry.commands[0].getParameter()==std::vector<Uint32>{9000+static_cast<Uint32>(cycle)},
+                            "eight-player synchronized command changed");
+                    }
+                    ++eightCommands[i];
+                });
+                if(i>0) {
+                    eight[i]->setOnStartGame([&](unsigned){++eightStarts;});
+                    eight[i]->setOnReceiveChangeEventList([&](const ChangeEventList& list) {
+                        require(list.changeEventList.size()==2 && list.changeEventList.front().newStringValue=="Guest7"
+                            && list.changeEventList.back().newValue==3,"Archon lobby snapshot changed");++eightChanges;
+                    });
+                }
+            }
+            ChangeEventList archonChanges;
+            archonChanges.changeEventList.emplace_back(ChangeEventList::ChangeEvent::EventType::ChangeArchonPlayer,7,std::string("Guest7"));
+            archonChanges.changeEventList.emplace_back(ChangeEventList::ChangeEvent::EventType::ChangeArchonAssignment,7,3);
+            server.sendChangeEventList(archonChanges);server.sendStartGame(1000);
+            until([&]{return eightChanges==7 && eightStarts==7;});
+            for(int i=0;i<8;++i) {
+                CommandList list;
+                for(Uint32 cycle=0;cycle<20;++cycle)
+                    list.commandList.emplace_back(300+cycle,std::vector<Command>{Command(i,CMD_TEST_SYNC,9000+cycle)});
+                eight[i]->sendCommandList(list);eight[i]->sendChatMessage(eightNames[i]);
+            }
+            until([&]{return std::all_of(eightCommands.begin(),eightCommands.end(),[](int count){return count==7;})
+                && std::all_of(eightChats.begin(),eightChats.end(),[](int count){return count==7;});});
+            settle();
+            for(int i=0;i<8;++i) require(eightCommands[i]==7 && eightChats[i]==7,"eight-player relay duplicate delivery");
+            SDL_Log("NETWORK EIGHT-PLAYER RELAY PASSED: 8 peers, blocked guest links, Archon lobby, start, chat, 20 synchronized cycles each");
             bool hostLeft = false;
             second.setOnPeerDisconnected([&](const std::string&, bool isHost, int) { hostLeft = isHost; });
             server.disconnect();

@@ -19,6 +19,7 @@
 #define MODMANAGER_H
 
 #include <mod/ModInfo.h>
+#include <mod/ModFamily.h>
 #include <DataTypes.h>
 #include <string>
 #include <vector>
@@ -69,11 +70,11 @@ public:
     std::string getActiveModName() const;
     bool isTornieContentActive() const {
         const std::string activeModName = getActiveModName();
-        return activeModName == "Tornie" || activeModName == "TornieLite" || activeModName == "Jericho" || activeModName == "JerichoLite";
+        return isTornieFamilyMod(activeModName);
     }
 
     bool isTornieLiteActive() const {
-        return getActiveModName() == "TornieLite" || getActiveModName() == "JerichoLite";
+        return isLiteMod(getActiveModName());
     }
     bool usesJerichoSpicePalette() const {
         const std::string name = getActiveModName();

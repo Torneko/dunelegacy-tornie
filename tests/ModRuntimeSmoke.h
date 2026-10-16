@@ -25,10 +25,12 @@
 #include "FactionPresentationSmoke.h"
 #include "ChaosModeSmoke.h"
 #include "WildspadeMentatSmoke.h"
+#include "KleshmershMentatSmoke.h"
 #include "CampaignContinuationSmoke.h"
 #include "CoopFactionSmoke.h"
 #include "CoopLobbySmoke.h"
 #include <Network/NetworkManager.h>
+#include "CustomUnitZoomSmoke.h"
 
 inline void verifyChaosFactoryGraphics(const std::string& output, const std::string& mod,
                                       const std::string& stage) {
@@ -80,6 +82,9 @@ inline void verifyChaosFactoryGraphics(const std::string& output, const std::str
             mod.c_str(), stage.c_str());
 }
 
+inline void verifyRelease541Rules(const std::string&,const std::string&);
+inline void verifyExpandedCoop(const std::string&,const std::string&);
+
 inline void runModRuntimeSmoke() {
     NetworkManager::verifyCoopTransport();
     auto require = [](bool value, const std::string& message) {
@@ -96,23 +101,29 @@ inline void runModRuntimeSmoke() {
     verifyFremenConfirmation(output, "startup");
     if(mods.isTornieContentActive()) verifyChaosFactoryGraphics(output, previousMod, "startup");
     int scenarios = 0;
-    for(const std::string mod : {"Tornie", "TornieLite", "Jericho", "JerichoLite", "vanilla", "Jericho", "TornieLite"}) {
+    std::set<std::string> release541Checked;
+    for(const std::string mod : {"Tornie", "TornieLite", "Jericho", "JerichoLite", "ArcaKev", "ArcaKevLite", "vanilla", "Jericho", "TornieLite"}) {
         require(mods.modExists(mod), "missing selectable mod " + mod);
         require(mods.setActiveMod(mod), "cannot activate " + mod);
         effectiveGameOptions = mods.loadEffectiveGameOptions(settings.gameOptions);
         require(pSFXManager != nullptr, "audio manager unavailable");
-        require(mods.isCustomHouseRegistered() == (mod == "Jericho" || mod == "Tornie"),
+        require(mods.isCustomHouseRegistered() == (mod == "Jericho" || mod == "Tornie" || mod == "ArcaKev"),
                 "custom-house registration leaked across a mod switch");
-        require(getNumAvailableHouses() == ((mod == "Tornie" || mod == "Jericho") ? 9 : 8),
+        require(getNumAvailableHouses() == ((mod == "Tornie" || mod == "Jericho" || mod == "ArcaKev") ? 9 : 8),
                 "registered house slots leaked across a mod switch");
         verifyEditorHouseColors(output, mod, "switch");
         verifyJerichoHeralds(output,"switch");
         verifyEditorHouseColorRoundtrip(output, mod);
         verifyEditorMapLoading(output, mod);
         verifyGeneratedSpice(output, mod);
+        verifyCustomUnitZooms(output, mod);
+        if(release541Checked.insert(mod).second) {
+            verifyRelease541Rules(output,mod);verifyExpandedCoop(output,mod);
+        }
         verifyFremenConfirmation(output, "switch");
         verifyWildspadeTechnology(output, mod);
         verifyWildspadeMentat(output, mod);
+        verifyKleshmershMentat(output,mod);
         verifyChaosMode(output, mod);
         verifyCampaignContinuation(output, mod);
         verifyCoopFactionRules(output, mod);
@@ -136,7 +147,7 @@ inline void runModRuntimeSmoke() {
             const auto name=getHouseNameByNumber(house);
             require(pTextManager->getBriefingText(0,MISSION_DESCRIPTION,h).find(name)!=std::string::npos,
                     "faction description uses another house name: "+name);
-            if(mod == "Tornie" || mod == "Jericho") {
+            if(mod == "Tornie" || mod == "Jericho" || mod == "ArcaKev") {
                 INIFile plan(pFileManager->openFile("CampaignPlan.ini").get());
                 const auto first=plan.getStringValue(name,"Opponent1","");
                 require(!first.empty() && pTextManager->getBriefingText(1,MISSION_DESCRIPTION,h).find(first)!=std::string::npos,
@@ -363,5 +374,5 @@ inline void runModRuntimeSmoke() {
         SDL_Log("MOD SMOKE PASS: %s activation, campaign loading, new objects, save/load", mod.c_str());
     }
     require(mods.setActiveMod(previousMod), "cannot restore previous mod");
-    SDL_Log("MOD SMOKE COMPLETE: %d campaign scenarios loaded (all 528 rebuilt maps plus reload/legacy coverage)", scenarios);
+    SDL_Log("MOD SMOKE COMPLETE: %d campaign scenarios loaded (all selected campaign maps plus reload/legacy coverage)", scenarios);
 }

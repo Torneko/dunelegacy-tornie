@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <mod/ModFamily.h>
 
 // Custom objects and spice families are independent rules. IDs are never removed.
 struct ModContentOptions {
@@ -22,9 +23,9 @@ struct ModContentOptions {
     }
     static ModContentOptions legacy(const std::string& name) {
         ModContentOptions options;
-        const bool variants = name == "Tornie" || name == "TornieLite"
-            || name == "Jericho" || name == "JerichoLite";
-        options.greenSpice = options.redSpice = options.purpleSpice = options.blueSpice = variants;
+        const bool variants = isTornieFamilyMod(name);
+        options.greenSpice = options.blueSpice = variants;
+        options.redSpice = options.purpleSpice = variants && !isArcaKevMod(name);
         return options;
     }
 };

@@ -20,6 +20,7 @@
 #include <sand.h>
 
 #include <filesystem>
+#include <set>
 #include <fstream>
 #include <iterator>
 #include <optional>
@@ -111,12 +112,15 @@ bool sameParticipants(const Context& first, const Context& second) {
         || first.completedMask != second.completedMask
         || first.chaosEligible != second.chaosEligible
         || first.alliedControl != second.alliedControl
-        || first.easyMode != second.easyMode || first.extraEnemyForces != second.extraEnemyForces) return false;
+        || first.easyMode != second.easyMode || first.extraEnemyForces != second.extraEnemyForces
+        || first.extraHardEnemyForces!=second.extraHardEnemyForces || first.archon!=second.archon
+        || first.alliedCapacity!=second.alliedCapacity || first.randomVariants!=second.randomVariants
+        || first.missionVariant!=second.missionVariant) return false;
     for(std::size_t i = 0; i < first.slots.size(); ++i) {
         const auto& a = first.slots[i];
         const auto& b = second.slots[i];
         if(a.house != b.house || a.faction != b.faction || a.color != b.color
-            || a.playerName != b.playerName || a.playerClass != b.playerClass) return false;
+            || a.playerName != b.playerName || a.playerClass != b.playerClass || a.controllers!=b.controllers) return false;
     }
     return true;
 }
@@ -126,10 +130,10 @@ bool sameParticipants(const Context& first, const Context& second) {
 class TransitionMenu final : public MenuBase {
 public:
     TransitionMenu(CoopCampaignSession session, const GameInitSettings& settings,
-        Outcome outcome, std::string partner)
+        Outcome outcome, std::vector<std::string> partners)
         : session_(std::move(session)), settings_(settings), outcome_(outcome),
-          partner_(std::move(partner)), barrier_(session_.context().sessionId,
-              session_.context().stage, partner_) {
+          partners_(std::move(partners)), barrier_(session_.context().sessionId,
+              session_.context().stage, partners_) {
         auto* background = pGFXManager->getUIGraphic(UI_MenuBackground);
         setBackground(background);
         resize(getTextureSize(background));
@@ -143,8 +147,8 @@ public:
         message_.setText((french ? "Mission " : "Mission ")
             + std::to_string(session_.context().stage) + "/9\n\n"
             + (outcome == Outcome::Won
-                ? (french ? "Victoire de votre équipe.\nLes deux joueurs doivent être prêts pour continuer."
-                          : "Your team won.\nBoth players must be ready to continue.")
+                ? (french ? "Victoire de votre équipe.\nTous les joueurs doivent être prêts pour continuer."
+                          : "Your team won.\nAll players must be ready to continue.")
                 : (french ? "Votre équipe a perdu.\nLa progression reste à cette mission."
                           : "Your team lost.\nProgress remains at this mission.")));
         container_.addWidget(&message_, Point(36, 110), Point(getRendererWidth() - 72, 160));
@@ -156,8 +160,7 @@ public:
         cancel_.setText(french ? "Retour au menu" : "Return to menu");
         cancel_.setOnClick([this] { quit(); });
         container_.addWidget(&cancel_, Point(getRendererWidth() / 2 - 150, 360), Point(300, 32));
-        if(partner_.empty()) {
-            barrier_.receive("", session_.context().sessionId, session_.context().stage, outcome_);
+        if(partners_.empty()) {
             if(outcome_ == Outcome::Won) message_.setText(french
                 ? "Victoire de votre équipe. Continuer avec votre allié IA."
                 : "Your team won. Continue with your AI ally.");
@@ -178,14 +181,14 @@ public:
     void update() override {
         if(!pNetworkManager || isQuiting()) return;
         const auto peers = pNetworkManager->getConnectedPeers();
-        if(partner_.empty() ? !peers.empty() : (peers.size() != 1 || peers.front() != partner_)) { quit(); return; }
+        if(std::set<std::string>(peers.begin(),peers.end())!=std::set<std::string>(partners_.begin(),partners_.end())) { quit(); return; }
         if(pNetworkManager->isServer()) {
             for(const auto& message : pNetworkManager->takeCoopReady()) {
                 if(message.epoch != pNetworkManager->getGameEpoch()) continue;
                 barrier_.receive(message.playerName, message.sessionId, message.stage,
                     static_cast<Outcome>(message.outcome));
                 // Leaving does not wait for the host's Ready button.
-                if(message.playerName == partner_ && message.sessionId == session_.context().sessionId
+                if(std::find(partners_.begin(),partners_.end(),message.playerName)!=partners_.end() && message.sessionId == session_.context().sessionId
                     && message.stage == session_.context().stage && message.outcome == 0) {
                     quit(); return;
                 }
@@ -273,7 +276,7 @@ private:
     CoopCampaignSession session_;
     GameInitSettings settings_;
     Outcome outcome_;
-    std::string partner_;
+    std::vector<std::string> partners_;
     MissionBarrier barrier_;
     bool ready_ = false, resolved_ = false, complete_ = false;
     std::optional<GameInitSettings> next_;
@@ -337,10 +340,12 @@ GameInitSettings makeGameSettings(const CoopCampaignSession& session,
     if(!prepared) throw std::runtime_error("Missing prepared co-op context");
     GameInitSettings settings(session.missionFilename(), mapData, serverName, false, options);
     settings.setRandomSeed(session.context().seed ^ (0x9e3779b9u * static_cast<Uint32>(session.context().stage)));
+    settings.setMultiplePlayersPerHouse(prepared->archon);
     std::array<bool, NUM_HOUSE_COLOR_SLOTS> usedColors{};
     for(std::size_t i = 0; i < prepared->slots.size(); ++i) {
         const auto& slot = prepared->slots[i];
-        GameInitSettings::HouseInfo house(static_cast<HOUSETYPE>(slot.house), i < 2 ? 1 : 2);
+        if(!slot.active()) continue;
+        GameInitSettings::HouseInfo house(static_cast<HOUSETYPE>(slot.house), slot.team());
         int color = isValidHouseColorSlot(slot.color) ? slot.color
             : getDefaultHouseColorSlot(static_cast<HOUSETYPE>(slot.faction));
         if(!isValidHouseColorSlot(color) || usedColors[color]) {
@@ -349,7 +354,9 @@ GameInitSettings makeGameSettings(const CoopCampaignSession& session,
         }
         house.colorOfHouse = color;
         usedColors[color] = true;
-        house.addPlayerInfo(GameInitSettings::PlayerInfo(slot.playerName, slot.playerClass));
+        if(slot.playerClass==HUMANPLAYERCLASS) {
+            for(const auto& name:slot.humanNames()) house.addPlayerInfo(GameInitSettings::PlayerInfo(name,HUMANPLAYERCLASS));
+        } else house.addPlayerInfo(GameInitSettings::PlayerInfo(slot.playerName,slot.playerClass));
         settings.addHouseInfo(house);
     }
     return settings;
@@ -397,7 +404,25 @@ void runMultiplayerSession(const GameInitSettings& initialSettings) {
             std::optional<CoopCampaignSession> session;
             if(context) {
                 session = CoopCampaignSession::fromMapData(settings.getFiledata());
-                if(multiplayerResume) {
+                if(multiplayerResume && context->alliedCapacity==4) {
+                    std::vector<Slot> allies;
+                    auto participants=settings.getHouseInfoList();
+                    for(const int i:context->alliedSlots()) {
+                        auto slot=context->slots[i];
+                        for(const auto& requested:requestedParticipants) if(requested.houseID==slot.house) {
+                            slot.controllers.clear();
+                            for(const auto& player:requested.playerInfoList) if(player.playerClass==HUMANPLAYERCLASS)
+                                slot.controllers.push_back(player.playerName);
+                            if(!slot.controllers.empty()) slot.playerName=slot.controllers.front();
+                            for(auto& house:participants) if(house.houseID==slot.house) house.playerInfoList=requested.playerInfoList;
+                        }
+                        if(!context->archon) slot.controllers.clear();
+                        allies.push_back(slot);
+                    }
+                    session->reconfigureAllies(allies);
+                    currentGame->updateCoopParticipants(session->prepareMap(settings.getFiledata()),participants);
+                    settings=currentGame->getGameInitSettings();
+                } else if(multiplayerResume) {
                     std::array<std::string, 2> names{context->slots[0].playerName, context->slots[1].playerName};
                     for(int i = 0; i < 2; ++i)
                         for(const auto& house : requestedParticipants)
@@ -451,9 +476,10 @@ void runMultiplayerSession(const GameInitSettings& initialSettings) {
             destroyGame();
             if(!pNetworkManager) return;
             const auto peers = pNetworkManager->getConnectedPeers();
-            const bool aiAlly = context->slots[1].playerClass != "HumanPlayer";
-            if(aiAlly ? !peers.empty() : peers.size() != 1) return;
-            TransitionMenu transition(*session, settings, outcome, aiAlly ? "" : peers.front());
+            auto participants=context->humanNames();
+            participants.erase(std::remove(participants.begin(),participants.end(),::settings.general.playerName),participants.end());
+            if(std::set<std::string>(peers.begin(),peers.end())!=std::set<std::string>(participants.begin(),participants.end())) return;
+            TransitionMenu transition(*session, settings, outcome,participants);
             transition.showMenu();
             if(transition.complete()) {
                 CompletionMenu completion;

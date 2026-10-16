@@ -235,6 +235,8 @@ void Refinery::updateStructureSpecificStuff() {
         if(harvesterGetAmountOfSpice(pHarvester) > 0) {
             FixPoint extractionSpeed = MAXIMUMHARVESTEREXTRACTSPEED;
 
+            if(itemID == Structure_Doublefinery) extractionSpeed = extractionSpeed * 115 / 100;
+
             int scale = floor(5*getHealth()/getMaxHealth());
             if(scale == 0) {
                 scale = 1;

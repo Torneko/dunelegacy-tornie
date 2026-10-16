@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 _original_spec = spec_from_file_location("original_coop", ROOT / "scripts/original-coop-campaign.py")
 original_coop = module_from_spec(_original_spec)
 _original_spec.loader.exec_module(original_coop)
-MODS = ("vanilla", "Tornie", "Jericho", "TornieLite", "JerichoLite")
+MODS = ("vanilla", "Tornie", "Jericho", "TornieLite", "JerichoLite", "ArcaKev", "ArcaKevLite")
 SIZE = 64
 SIZES = {
     "Const Yard": (2, 2), "Windtrap": (2, 2), "Refinery": (3, 2),
@@ -231,6 +231,7 @@ def refresh_checksums(mod):
     index = root / "checksums.sha256"
     entries = {line.split(None, 1)[1].strip() for line in index.read_text().splitlines() if line.strip()}
     entries.update(path.relative_to(root).as_posix() for path in (root / "campaign" / "coop").rglob("*.ini"))
+    entries.update(path.relative_to(root).as_posix() for path in (root / "data").glob("MentatHusky_*.png"))
     result = []
     for relative in sorted(entries):
         path = root / relative
@@ -251,7 +252,7 @@ def main():
     for mod in MODS:
         for stage in range(1, 10):
             path = destination(mod, stage)
-            if args.legacy_write:
+            if args.legacy_write or (args.write and mod in ("ArcaKev", "ArcaKevLite")):
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(generate(mod, stage), encoding="ascii", newline="\n")
             text = path.read_text(encoding="ascii")
@@ -271,7 +272,7 @@ def main():
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps({"summary": original_coop.last_audit, "originalMaps": original_reports}, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"mods": len(MODS), "legacyMapsUnchanged": checked,
-                      "originalCampaigns": len(original_reports) // 9, "originalMaps": len(original_reports),
+                      "originalCampaigns": len(original_reports) // 22, "originalMaps": len(original_reports),
                       "nearbyMCV": True, "maximumMCVDistance": max(row["mcvDistance"] for row in original_reports),
                       "terrainAndPlayer1AndEnemyOrdersPreserved": True, **original_coop.last_audit}))
 

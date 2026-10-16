@@ -60,6 +60,9 @@
 #include <CutScenes/Intro.h>
 #ifdef DUNELEGACY_RUNTIME_TESTS
 #include "../tests/ModRuntimeSmoke.h"
+#include "../tests/ExpandedCoopSmoke.h"
+#include "../tests/Release541RuntimeSmoke.h"
+#include "../tests/ModOptionsSmoke.h"
 #include "../tests/AchievementRuntimeSmoke.h"
 #include "../tests/Release538Smoke.h"
 #include "../tests/SelectedPortraitSmoke.h"
@@ -816,6 +819,8 @@ int main(int argc, char *argv[]) {
 
         bool bVerifyMods = false;
         bool bVerifyStartup = false;
+        bool bVerifyExpandedCoop = false;
+        bool bVerifyRelease541 = false;
         bool bVerifyAchievements = false;
         bool bVerifyRelease538 = false;
         bool bVerifyPortraits = false;
@@ -833,6 +838,8 @@ int main(int argc, char *argv[]) {
                 SDL_Quit();
                 return EXIT_SUCCESS;
             }
+            if(parameter == "--verify-release541") { bVerifyMods=true;bVerifyRelease541=true;continue; }
+            if(parameter == "--verify-coop-expanded") { bVerifyMods=true;bVerifyExpandedCoop=true;continue; }
             if(parameter == "--verify-startup") { bVerifyMods = true; bVerifyStartup = true; continue; }
             if(parameter == "--verify-mods") { bVerifyMods = true; continue; }
             if(parameter == "--verify-achievements") { bVerifyMods = true; bVerifyAchievements = true; continue; }
@@ -1282,6 +1289,7 @@ int main(int argc, char *argv[]) {
 #endif
 
                 GUIStyle::setGUIStyle(std::make_unique<DuneStyle>());
+                pGFXManager->reloadModDependentUiGraphics();
 
                 if(bFirstInit == true) {
                     SDL_Log("Starting sound player...");
@@ -1324,6 +1332,13 @@ int main(int argc, char *argv[]) {
                 #ifdef DUNELEGACY_RUNTIME_TESTS
                 if(bVerifyMods) {
                     if(bVerifyStartup) {
+                        if(const char* output=std::getenv("DUNELEGACY_SMOKE_DIR")) {
+                            verifyJerichoHeralds(output,"cold-start");
+                            verifyKleshmershMentat(output,ModManager::instance().getActiveModName());
+                        }
+                        ModOptionsUIFixture::verify();
+                        if(const char* output=std::getenv("DUNELEGACY_SMOKE_DIR"))
+                            verifyCustomUnitZooms(output,ModManager::instance().getActiveModName());
                         MainMenu menu;
                         SDL_RenderClear(renderer);
                         menu.draw();
@@ -1331,6 +1346,24 @@ int main(int argc, char *argv[]) {
                         SDL_RendererInfo info{};
                         SDL_GetRendererInfo(renderer, &info);
                         SDL_Log("STARTUP CHECK PASSED: menu drawn, renderer=%s, language=%s", info.name, settings.general.language.c_str());
+                    }
+                    else if(bVerifyRelease541) {
+                        const char* output=std::getenv("DUNELEGACY_SMOKE_DIR");
+                        if(!output) throw std::runtime_error("Release rules check needs DUNELEGACY_SMOKE_DIR");
+                        for(const std::string mod:{"Tornie","TornieLite","Jericho","JerichoLite","ArcaKev","ArcaKevLite","vanilla"}) {
+                            if(!ModManager::instance().setActiveMod(mod)) throw std::runtime_error("Release rules mod activation");
+                            effectiveGameOptions=ModManager::instance().loadEffectiveGameOptions(settings.gameOptions);
+                            verifyRelease541Rules(output,mod);verifyCustomUnitZooms(output,mod);verifyKleshmershMentat(output,mod);
+                        }
+                    }
+                    else if(bVerifyExpandedCoop) {
+                        const char* output=std::getenv("DUNELEGACY_SMOKE_DIR");
+                        if(!output) throw std::runtime_error("Expanded coop check needs DUNELEGACY_SMOKE_DIR");
+                        for(const std::string mod:{"Tornie","TornieLite","Jericho","JerichoLite","ArcaKev","ArcaKevLite","vanilla"}) {
+                            if(!ModManager::instance().setActiveMod(mod)) throw std::runtime_error("Expanded coop mod activation");
+                            effectiveGameOptions=ModManager::instance().loadEffectiveGameOptions(settings.gameOptions);
+                            verifyExpandedCoop(output,mod);
+                        }
                     }
                     else if(bCaptureEditor) {
                         const auto previousMod = ModManager::instance().getActiveModName();

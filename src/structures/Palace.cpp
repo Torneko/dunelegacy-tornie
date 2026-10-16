@@ -117,7 +117,7 @@ bool Palace::usesTornieMainRebelsCooldown() const {
         return faction == HOUSE_NEUTRAL || faction == HOUSE_REBELS || faction == HOUSE_KLESHMERSH;
     }
 
-    return (activeMod == "Tornie" || activeMod == "Jericho")
+    return (activeMod == "Tornie" || activeMod == "Jericho" || activeMod == "ArcaKev")
         && faction == HOUSE_REBELS;
 }
 

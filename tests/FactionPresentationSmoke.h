@@ -5,8 +5,10 @@
 #include <cstring>
 
 inline void verifyJerichoHeralds(const std::string& output, const std::string& stage) {
-    if(ModManager::instance().getActiveModName()!="Jericho")return;
+    const auto mod=ModManager::instance().getActiveModName();
+    if(mod!="Jericho" && mod!="vanilla")return;
     for(auto identity:{HOUSE_NEUTRAL,HOUSE_REBELS,HOUSE_WILDSPADE,HOUSE_KLESHMERSH}) {
+        if(mod=="vanilla" && identity!=HOUSE_KLESHMERSH) continue;
         const char* name=identity==HOUSE_NEUTRAL ? "HeraldNeu.png" : identity==HOUSE_REBELS ? "HeraldRebels.png"
             : identity==HOUSE_WILDSPADE ? "HeraldWildspade.png" : "HeraldKleshmersh.png";
         auto expected=LoadPNG_RW(pFileManager->openFile(name).get());
@@ -25,7 +27,7 @@ inline void verifyJerichoHeralds(const std::string& output, const std::string& s
         if(SDL_SaveBMP(actual,(std::filesystem::path(output)/(std::string(name)+"-"+stage+".bmp")).string().c_str())!=0)
             throw std::runtime_error("Faction presentation check: herald capture");
     }
-    SDL_Log("JERICHO HERALDS PASS: %s, Neutral/Rebels/Wildspade/Kleshmersh exact faction pixels",stage.c_str());
+    SDL_Log("FACTION HERALDS PASS: %s %s, exact faction pixels",mod.c_str(),stage.c_str());
 }
 
 inline void verifyVanillaKleshmershVoice() {

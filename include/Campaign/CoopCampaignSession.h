@@ -11,8 +11,10 @@ namespace coop {
 
 constexpr int StageCount = 9;
 constexpr int SlotCount = 5;
-constexpr int MaxSlotCount = 7;
+constexpr int MaxSlotCount = 9;
+constexpr int MaxEnemyCount = 5;
 constexpr std::array<int, StageCount> OriginalMissionNumbers{1, 2, 5, 8, 11, 14, 17, 20, 22};
+constexpr int missionVariantCount(int stage) { return stage>=2 && stage<=7 ? 3 : stage==8 ? 2 : 1; }
 
 // A runtime house owns objects/commands; a faction supplies its rules and art.
 // They can differ when both humans select the same faction.
@@ -23,7 +25,13 @@ struct Slot {
     std::string playerName;
     std::string playerClass;
     bool allied = false; // Derived from the numbered slot, never from AI class.
+    std::vector<std::string> controllers;
     int team() const { return allied || playerClass == "HumanPlayer" ? 1 : 2; }
+    bool active() const { return playerClass != "Closed"; }
+    std::vector<std::string> humanNames() const {
+        if(playerClass != "HumanPlayer") return {};
+        return controllers.empty() ? std::vector<std::string>{playerName} : controllers;
+    }
 };
 
 struct Context {
@@ -38,11 +46,31 @@ struct Context {
     std::uint32_t seed = 0;
     bool chaosEligible = false;
     bool alliedControl = false, easyMode = false, extraEnemyForces = false;
+    bool extraHardEnemyForces = false, archon = false;
+    int alliedCapacity = 2;
+    bool randomVariants = false;
+    int missionVariant = 0;
     std::vector<int> roster;
     std::vector<Slot> slots = std::vector<Slot>(SlotCount);
     std::vector<bool> enemyPresent = std::vector<bool>(SlotCount - 2, true);
     bool followsOriginalCampaign() const { return mapLayout == "original"; }
     bool isComplete() const { return stage == StageCount + 1; }
+    bool isAlliedSlot(std::size_t index) const {
+        return index < 2 || index >= enemyPresent.size()+2;
+    }
+    std::vector<int> alliedSlots() const {
+        std::vector<int> result{0,1};
+        for(int i=2;i<alliedCapacity;++i) result.push_back(static_cast<int>(enemyPresent.size())+i);
+        return result;
+    }
+    std::vector<std::string> humanNames() const {
+        std::vector<std::string> result;
+        for(const int i : alliedSlots()) {
+            const auto names=slots[i].humanNames();
+            result.insert(result.end(),names.begin(),names.end());
+        }
+        return result;
+    }
 };
 
 // Map data already travels in GameInitSettings and game saves, so this context
@@ -76,6 +104,11 @@ public:
     void setAlliedControl(bool enabled) { context_.alliedControl = enabled; }
     void setEasyMode(bool enabled) { context_.easyMode = enabled; }
     void setExtraEnemyForces(bool enabled) { context_.extraEnemyForces = enabled; }
+    void setExtraHardEnemyForces(bool enabled) { context_.extraHardEnemyForces = enabled; }
+    void enableExpandedAllies(bool archon);
+    void configureAlly(int ordinal, int faction, const std::string& playerClass,
+        const std::string& name, const std::vector<std::string>& controllers = {});
+    void reconfigureAllies(const std::vector<Slot>& allies);
     void skipIntroForEasyMode();
     void setPlayerClass(int slot, const std::string& playerClass);
 
@@ -89,6 +122,7 @@ public:
 private:
     explicit CoopCampaignSession(Context context);
     void chooseOpponents();
+    void chooseMissionVariant();
     Context context_;
     std::string settingsBlob_;
     std::string checkpointPath_;

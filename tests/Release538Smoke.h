@@ -20,7 +20,7 @@ inline void runRelease538Smoke() {
     const auto previous = ModManager::instance().getActiveModName();
     const std::filesystem::path output(std::getenv("DUNELEGACY_SMOKE_DIR"));
     auto& manager = achievements::AchievementManager::instance();
-    for(const std::string mod : {"vanilla", "Tornie", "Jericho", "TornieLite", "JerichoLite"}) {
+    for(const std::string mod : {"vanilla", "Tornie", "Jericho", "TornieLite", "JerichoLite", "ArcaKev", "ArcaKevLite"}) {
         require(ModManager::instance().setActiveMod(mod), "mod activation");
         verifyFollowup538(output.string(), mod);
         std::vector<int> roster;
@@ -59,8 +59,8 @@ inline void runRelease538Smoke() {
                     require(actual[owner]==ordinary[owner]+extra,"exactly five added units per active enemy");
                     require(enhanced.campaignPurchasePrice(100,owner)==(slot<2?75:100),"allied-only discount");
                     require(enhanced.campaignPurchasePrice(10,owner)==(slot<2?1:10),"minimum purchase price");
-                    require(enhanced.campaignStartingCredits(1000,owner)==(slot<2 && stage==2?1500:1000),"only mission-two allied funds");
-                    require(game->getHouse(owner)->getCredits()==originalCredits[owner]+FixPoint(slot<2 && stage==2?500:0),"actual allied starting funds");
+                    require(enhanced.campaignStartingCredits(1000,owner)==(slot<2?1500:1000),"allied funds at every mission");
+                    require(game->getHouse(owner)->getCredits()==originalCredits[owner]+FixPoint(slot<2?500:0),"actual allied starting funds");
                 }
                 triggerCount=game->getTriggerManager().getTriggers().size();
                 require(game->saveGame(save),"options checkpoint");
@@ -80,7 +80,7 @@ inline void runRelease538Smoke() {
                     const int owner=context->slots[slot].house;
                     const int extra=slot>=2 && context->enemyPresent[slot-2]?5:0;
                     require(actual[owner]==ordinary[owner]+extra,"extra forces duplicated on reload");
-                    require(game->getHouse(owner)->getCredits()==originalCredits[owner]+FixPoint(slot<2 && stage==2?500:0),"starting credit bonus repeated on reload");
+                    require(game->getHouse(owner)->getCredits()==originalCredits[owner]+FixPoint(slot<2?500:0),"starting credit bonus repeated on reload");
                 }
                 if(stage==2) {
                     StaticContainer container;

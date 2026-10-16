@@ -80,7 +80,7 @@ TextManager::~TextManager() = default;
 void TextManager::loadData() {
     campaignTextPlans.clear();
     const auto& mod = ModManager::instance().getActiveModName();
-    if((mod == "Tornie" || mod == "Jericho") && pFileManager->exists("CampaignPlan.ini")) {
+    if((mod == "Tornie" || mod == "Jericho" || mod == "ArcaKev") && pFileManager->exists("CampaignPlan.ini")) {
         INIFile plan(pFileManager->openFile("CampaignPlan.ini").get());
         for(int house = 0; house < NUM_HOUSES; ++house) {
             const auto name = getHouseNameByNumber(static_cast<HOUSETYPE>(house));

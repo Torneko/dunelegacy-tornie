@@ -4,7 +4,7 @@
     "id": "Tornie",
     "displayName": "Tornie",
     "version": "1.0.524-2",
-    "gameVersion": "1.0.540",
+    "gameVersion": "1.0.541",
     "author": "Tornie_Panther"
   },
   "source": {
@@ -16,7 +16,7 @@
     "displayName": "Corruptique",
     "scenarioLetter": "C",
     "regionPrefix": "COR",
-    "paletteIndex": 192,
+    "paletteIndex": 224,
     "fallbackHouse": 2,
     "role": "legacy slot adapter for the named faction; retained for old profiles"
   },
