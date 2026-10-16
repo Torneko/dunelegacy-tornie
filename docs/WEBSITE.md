@@ -1,8 +1,17 @@
-# Préparation 1.0.541 — 2026-10-16
+# Publication 1.0.541 — 2026-10-16
 
-Site récupéré depuis `origin/gh-pages` : `fabd49f7a7c92e915c9624e7c0a914a71f3be238`, puis branche `site-1.0.541`. Les sept modes, l’ordre ArcaKev, les technologies corrigées, les pouvoirs des palais exportés du moteur, la coop à quatre et l’archonte à huit sont documentés en français et anglais. Les trois PNG du husky fourni sont conservés ; 124 PNG sont présents dans les deux archives de galerie. Les notes, guides et téléchargements doivent accompagner la release Linux/Windows 1.0.541 et le ZIP hors ligne par la CI existante. Publication en attente des contrôles finaux.
+La [release Linux/Windows 1.0.541](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.541) est publiée. Source immuable : `1ebb5ec34c5ffd791b0fdde6fce951627d09bcc1`. Site français/anglais : `f835c84832e67a23afa5f06eef1ffa56029e3336`, récupéré depuis le site 1.0.540 `fabd49f` avant modification. Le paquet `DuneLegacyTornie-Site-Local-1.0.541.zip` reprend exactement les 252 fichiers du site publié, avec les paquets Linux/Windows et les sources de cette release.
 
-Prepared from the freshly fetched published site, with FR/EN seven-mode routes, Palace powers from engine exports, ArcaKev house order, updated technology and co-op, original husky PNGs and matching 124-image archives. Final CI/source links and publication verification will be recorded below once available.
+- Linux, tests moteur/réseau, deux AppImages et menus FR/EN avec PulseAudio : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38928318200 — succès.
+- Windows, moteur/réseau, 1 606 scénarios et hauts faits dans les deux langues du dossier installé, menus FR/EN : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38928313974 — succès.
+- Déploiement Pages : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38932048127 — succès.
+- Site hors ligne, sources, rapports, sommes de contrôle et 72 parcours réels dans un navigateur, publics/hors ligne, FR/EN et ordinateur/mobile : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38932158226 — succès.
+- Contrôles locaux : 130 cas moteur / 10 138 assertions, CTest 2/2, 1 606 scénarios par langue sur le code final et 28 contextes de fonctionnalités du site. Le réseau UDP réel vérifie huit participants aux communications directes entre invités bloquées, les identités et cycles de commandes, le lobby et le démarrage via l’hôte.
+- Les 5 467 fichiers de mods correspondent exactement aux sources dans le ZIP Windows et les deux AppImages ; les PNG du husky et la bannière orange sont conservés. Les sept paquets/sources intégrés au site local ont les mêmes SHA-256 que la release. Les 15 entrées du manifeste correspondent aux empreintes GitHub ; 16 fichiers sont publics.
+
+Le site documente les sept modes, l’ordre ArcaKev, les campagnes et technologies, la coop à quatre factions et l’archonte à huit contrôleurs, les pouvoirs et recharges des palais, le husky fourni, les 67 hauts faits et les 124 PNG. Les guides d’installation, du mode facile et de la coop sont synchronisés en français/anglais. Tous les participants doivent utiliser 1.0.541 / protocole 11 et le même mod ; nouvelles sauvegardes 9832, anciennes sauvegardes lisibles. Mint 22.3/noyau 6.17 et une partie humaine sur des accès Internet indépendants restent à confirmer.
+
+Linux and Windows 1.0.541, both website languages and the matching offline package are published. All four CI runs above succeeded; 72 offline/live browser routes, 28 local feature contexts, exact package payloads and all 15 manifest digests were verified. The supplied animated Kleshmersh husky is included. Native Mint and human Internet playtesting remain pending. Recover this `origin/gh-pages` revision or the 1.0.541 offline archive for the next update on either PC. Reports are attached to the release and retained under `release_notes/`.
 
 # Windows 1.0.540 published — 2026-10-15
 
