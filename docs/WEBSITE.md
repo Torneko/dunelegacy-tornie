@@ -2,7 +2,20 @@
 
 Correctifs de même version demandés par Tornie : capital initial de l’hôte pour chaque faction alliée active, bonus facile appliqué ensuite une fois, Rebels gris foncé et Corruptique jaune dans ArcaKev sans modifier les bannières. Protocole 12, sauvegardes 9832. Retélécharger les paquets sur tous les postes ; les chargements conservent les soldes enregistrés.
 
-Le site courant a été récupéré depuis `origin/gh-pages` à `f835c84832e67a23afa5f06eef1ffa56029e3336`. Préparer les pages FR/EN et le paquet hors ligne à partir de cette révision. La CI permet de construire les deux plateformes sans publication (`source_ref`, `publish_packages=false`), puis de joindre ensemble les artefacts des deux runs réussis (`replace_packages=true`, IDs vérifiés) après mise à jour du tag existant. Aucun numéro 1.0.542 n’est créé. Les rapports de validation et de publication préciseront la révision et les résultats finaux.
+La **1.0.541 a été remplacée**, sans créer de 542. Source du jeu et tag existant : `78866fc137383badd4412aded3bc18d6c2f5037c`. Site FR/EN : `0e91f751a1d2946e97e4a22d937fd9fec63a50d1`, préparé depuis le site publié `f835c84832e67a23afa5f06eef1ffa56029e3336`.
+
+- Linux : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38943059028 — succès, moteur/réseau, cinq paquets, menus FR/EN et repli logiciel.
+- Windows : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38943055269 — succès, moteur/réseau, sept mods et 1 606 scénarios dans le dossier installé en FR/EN, hauts faits et menus.
+- Publication des artefacts vérifiés des deux plateformes : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38945710872 — succès. Le run automatique redondant déclenché par le déplacement du tag a été annulé pour préserver ces paquets et leur provenance.
+- Pages : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38945923716 — succès.
+- Site hors ligne, sources, rapports et 72 parcours navigateur publics/hors ligne FR/EN, ordinateur/mobile : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38946075656 — succès.
+- PR source : https://github.com/Torneko/dunelegacy-tornie/pull/14 ; le run complet https://github.com/Torneko/dunelegacy-tornie/actions/runs/38943143490 a réussi, y compris le job Linux avec la dépendance miniupnpc système et la compilation Windows.
+
+Les 5 467 fichiers de mods correspondent aux sources dans les deux AppImages et le ZIP Windows. Les bannières et PNG du husky sont inchangés. L’AppImage Mint publiée passe aussi les départs coop étendus dans les sept mods. Les 15 empreintes du manifeste correspondent aux digests GitHub des 16 fichiers publics ; les 257 fichiers du site et les sept paquets/sources intégrés au ZIP local sont identiques au site publié et à la release. Voir [l’audit final](../release_notes/Final-Publication-Audit-1.0.541.json). Les rapports de la publication initiale sont conservés avec le suffixe `-initial`.
+
+Les contrôles locaux passent dans les deux langues : CTest 2/2, 130 cas / 10 138 assertions, 1 606 scénarios par langue, crédits normaux/faciles des quatre alliés, budgets optionnels à zéro ou absents, validation et sérialisation du lobby, sauvegardes, couleurs et rechargement de l’éditeur. Le site garde les sept modes, les 67 hauts faits et les 124 PNG ; 36 parcours et 28 contextes de fonctionnalités sont vérifiés localement. Mint natif 22.3/noyau 6.17 et une partie humaine sur plusieurs accès Internet restent à confirmer.
+
+Linux and Windows replacement 1.0.541, both website languages and the matching offline package are published. Every CI run linked above succeeded. Download the replacement on every computer (protocol 12); saves retain recorded balances. Recover the published `origin/gh-pages` revision `0e91f75` or the replaced 1.0.541 offline archive for the next update.
 
 Le compte rendu ci-dessous décrit la publication initiale de 1.0.541 (protocole 11), avant ce remplacement.
 

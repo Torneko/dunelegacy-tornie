@@ -1,15 +1,15 @@
 {
   "passed": true,
   "version": "1.0.541",
-  "source": "1ebb5ec34c5ffd791b0fdde6fce951627d09bcc1",
-  "website": "f835c84832e67a23afa5f06eef1ffa56029e3336",
-  "linuxRun": 38928318200,
-  "windowsRun": 38928313974,
-  "pagesRun": 38932048127,
-  "documentationRun": 38932158226,
+  "replacement": true,
+  "protocol": 12,
+  "source": "78866fc137383badd4412aded3bc18d6c2f5037c",
+  "website": "0e91f751a1d2946e97e4a22d937fd9fec63a50d1",
+  "linuxRun": 38943059028,
+  "windowsRun": 38943055269,
   "publicAssets": 16,
   "manifestEntriesVerifiedAgainstGitHub": 15,
-  "offlineSiteFilesByteIdenticalToPublishedSource": 252,
+  "offlineSiteFilesByteIdenticalToPublishedSource": 257,
   "embeddedPackagesByteIdenticalToRelease": [
     "DuneLegacyTornie-1.0.541-Linux-Mint-Compatible.AppImage",
     "DuneLegacyTornie-1.0.541-Linux-x64.deb",
@@ -22,5 +22,10 @@
   "offlineAndLiveBrowserRoutes": 72,
   "localFeatureContexts": 28,
   "nativeMintTested": false,
-  "humanInternetPlaytest": "pending"
+  "humanInternetPlaytest": "pending",
+  "pagesRun": 38945923716,
+  "documentationRun": 38946075656,
+  "replacementRun": 38945710872,
+  "allPublicationRunsPassed": true,
+  "publishedMintExpandedCoopPassed": true
 }
