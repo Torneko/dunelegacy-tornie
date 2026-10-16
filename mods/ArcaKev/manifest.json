@@ -16,7 +16,7 @@
     "displayName": "Corruptique",
     "scenarioLetter": "C",
     "regionPrefix": "COR",
-    "paletteIndex": 224,
+    "paletteIndex": 192,
     "fallbackHouse": 2,
     "role": "legacy slot adapter for the named faction; retained for old profiles"
   },

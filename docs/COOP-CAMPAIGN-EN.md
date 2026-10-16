@@ -2,7 +2,9 @@
 
 [Guide français](COOP-CAMPAIGN.md)
 
-Every participant needs **1.0.541 / protocol 11**, the same mod and a distinct name. LAN or Internet play uses the host relay when guests cannot communicate directly, without a VPN. The host must remain reachable and connected.
+Every participant needs **1.0.541 / protocol 12**, the same mod and a distinct name. LAN or Internet play uses the host relay when guests cannot communicate directly, without a VPN. The host must remain reachable and connected.
+
+At every new mission start, all active allied factions receive **the same initial budget as the host**, including zero or missing optional-player credit fields. Easy Mode then adds 500 credits once per faction. Loading a save preserves recorded balances. This fix replaces 1.0.541: all participants must download it again (protocol 12).
 
 ## Players and factions
 

@@ -153,7 +153,7 @@ bool isTornieRebelsColorSlot(int colorSlot) {
     if(!ModManager::instance().isInitialized()) return colorSlot == HOUSE_REBELS;
     const std::string activeMod = ModManager::instance().getActiveModName();
     return (activeMod == "Tornie" && colorSlot == HOUSE_REBELS)
-        || (activeMod == "Jericho" && colorSlot == HOUSE_REBELS);
+        || ((activeMod == "Jericho" || activeMod == "ArcaKev") && colorSlot == HOUSE_REBELS);
 }
 
 bool isVanillaRebelsColorSlot(int colorSlot) {
@@ -239,7 +239,8 @@ SDL_Color getHouseColorSDL(int colorSlot, int shadeOffset) {
     if(colorSlot == HOUSECOLOR_KLESH_MERCENARY) return campaignTurquoise[shadeOffset];
 
     if(isVanillaRebelsColorSlot(colorSlot)
-       || (colorSlot == HOUSE_REBELS && ModManager::instance().getActiveModName() == "Jericho")) {
+       || (colorSlot == HOUSE_REBELS && (ModManager::instance().getActiveModName() == "Jericho"
+           || ModManager::instance().getActiveModName() == "ArcaKev"))) {
         return darkGreyRamp[shadeOffset];
     }
 

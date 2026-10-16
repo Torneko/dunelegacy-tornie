@@ -34,6 +34,22 @@ inline void verifyEditorHouseColors(const std::string& output, const std::string
             require(yellow.r>220 && yellow.g>220 && yellow.b<120,"Jericho Corruptique must retain yellow");
         }
 
+        if(mod=="ArcaKev" && house==HOUSE_REBELS) {
+            constexpr int grey[8]={82,72,62,52,42,34,27,20};
+            for(int shade=0;shade<8;++shade) {
+                const auto actual=getHouseColorSDL(expected,shade);
+                require(actual.r==grey[shade] && actual.g==grey[shade] && actual.b==grey[shade],
+                    "ArcaKev Rebels must use the dark grey ramp");
+            }
+        }
+
+        if(mod=="ArcaKev" && house==HOUSE_CUSTOM) {
+            const auto yellow=getHouseColorSDL(expected,3);
+            require(getHousePaletteIndex(HOUSE_CUSTOM)==PALCOLOR_FREMEN
+                && yellow.r>190 && yellow.g>150 && yellow.b<90,
+                "ArcaKev Corruptique must use yellow, retaining its herald");
+        }
+
         auto* surface = pGFXManager->getUIGraphicSurface(UI_MapEditor_Windtrap, house);
         require(surface != nullptr, "missing editor building icon");
         if(surface->format->palette) {

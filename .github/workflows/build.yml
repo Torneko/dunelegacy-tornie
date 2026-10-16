@@ -16,6 +16,14 @@ on:
         description: Existing version tag (required for windows_only)
         type: string
         default: ''
+      source_ref:
+        description: Optional source revision to stage before replacing an existing release
+        type: string
+        default: ''
+      publish_packages:
+        description: Attach the verified Windows package to the release
+        type: boolean
+        default: true
 
 concurrency:
   group: build-${{ github.ref }}
@@ -31,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.windows_only && inputs.release_tag || github.ref }}
+          ref: ${{ inputs.source_ref || (inputs.windows_only && inputs.release_tag) || github.ref }}
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -76,6 +84,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             libsdl2-dev libsdl2-mixer-dev libsdl2-ttf-dev \
+            libminiupnpc-dev \
             libcurl4-openssl-dev \
             catch2
 
@@ -109,7 +118,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.windows_only && inputs.release_tag || github.ref }}
+          ref: ${{ inputs.source_ref || (inputs.windows_only && inputs.release_tag) || github.ref }}
 
       - name: Install gettext tools
         run: |
@@ -130,7 +139,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.windows_only && inputs.release_tag || github.ref }}
+          ref: ${{ inputs.source_ref || (inputs.windows_only && inputs.release_tag) || github.ref }}
 
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@v11
@@ -224,7 +233,7 @@ jobs:
 
   release-windows:
     needs: [verify-version, validate-french-locale, build-windows]
-    if: always() && inputs.windows_only && needs.verify-version.result == 'success' && needs.validate-french-locale.result == 'success' && needs.build-windows.result == 'success'
+    if: always() && inputs.windows_only && inputs.publish_packages && needs.verify-version.result == 'success' && needs.validate-french-locale.result == 'success' && needs.build-windows.result == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: write
