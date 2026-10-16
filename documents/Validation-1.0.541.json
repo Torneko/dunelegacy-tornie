@@ -1,13 +1,85 @@
 {
   "version": "1.0.541",
-  "protocol": 11,
+  "replacement": true,
+  "protocol": 12,
   "saveVersion": 9832,
+  "source": "78866fc137383badd4412aded3bc18d6c2f5037c",
+  "startingFunds": {
+    "allActiveAlliesUseHostBudget": true,
+    "easyBonusOnce": 500,
+    "zeroAndMissingOptionalBudgetsTested": true,
+    "normalAndEasy": true,
+    "fourLocalPerspectives": true,
+    "stages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "modes": 7,
+    "saveLoadPreservesBalances": true,
+    "closedAlliesDoNotSpawn": true
+  },
+  "arcaKevColours": {
+    "rebels": "#343434",
+    "corruptique": "#d6b620",
+    "editorPaletteRoundtripPassed": true,
+    "bannersChanged": false,
+    "existingManagedProfileReseedPassed": true
+  },
   "localEngine": {
     "passed": true,
+    "ctestTests": 2,
     "cases": 130,
-    "assertions": 10138,
-    "finalCTestPassed": true,
-    "ctestTests": 2
+    "assertions": 10138
+  },
+  "network": {
+    "passed": true,
+    "players": 8,
+    "transport": "real UDP loopback",
+    "guestLinksBlocked": true,
+    "relayThroughHost": true,
+    "humanInternetPlaytest": "pending"
+  },
+  "modPayloads": {
+    "passed": true,
+    "files": 5467
+  },
+  "website": {
+    "recoveredFrom": "f835c84832e67a23afa5f06eef1ffa56029e3336",
+    "localRoutes": 36,
+    "featureContexts": 28,
+    "languages": [
+      "fr",
+      "en"
+    ],
+    "preservedOriginalImages": 134
+  },
+  "nativeMintTested": false,
+  "ci": {
+    "linuxBuild": 38943059028,
+    "windowsBuild": 38943055269,
+    "status": "packages-published-website-ready",
+    "linuxPassed": true,
+    "systemLinuxEngineRun": 38943143490,
+    "systemLinuxEnginePassed": true,
+    "windowsPassed": true,
+    "fullPullRequestChecksPassed": true,
+    "windowsInstalledRuntimeLanguages": [
+      "fr",
+      "en"
+    ],
+    "windowsMenuStartupLanguages": [
+      "fr",
+      "en"
+    ],
+    "replacementRun": 38945710872,
+    "replacementPassed": true
   },
   "localFullRuntime": {
     "passed": true,
@@ -17,154 +89,19 @@
     ],
     "scenariosPerLanguage": 1606,
     "achievementsPassed": true,
-    "note": "Both full language checks passed against the final source, including all seven modes, 1606 campaign scenarios per language, achievements, final 541 rules and expanded co-op fixtures.",
-    "finalSourceEnglishPassed": true,
-    "source": "1ebb5ec34c5ffd791b0fdde6fce951627d09bcc1",
-    "finalSourceFrenchPassed": true
+    "sevenModesPassed": true
   },
-  "finalRules": {
+  "upnpCompatibility": {
+    "api17SyntaxPassed": true,
+    "api18BuildPassed": true,
+    "systemLinuxCIEngineTestsPassed": true
+  },
+  "packages": {
     "passed": true,
-    "modes": [
-      "vanilla",
-      "Tornie",
-      "TornieLite",
-      "Jericho",
-      "JerichoLite",
-      "ArcaKev",
-      "ArcaKevLite"
-    ],
-    "realScoutpostUpgradesAndMissiles": true,
-    "range": 7,
-    "flamepostDamage": 12,
-    "borrowedKleshmershWORTrooperPrice": 200,
-    "vanillaNoFire": true,
-    "finalCampaignAndSkirmishTech": 9,
-    "customTurretZooms": [
-      1,
-      2,
-      3
-    ],
-    "editorTeams": 12,
-    "editorAnonymousArcaKevOwnershipRoundtrip": true
-  },
-  "expandedCoop": {
-    "passed": true,
-    "modes": 7,
-    "stages": 9,
-    "alliedFactions": 4,
-    "archonControllers": 8,
-    "allEightInOneFaction": true,
-    "closedSlotsDoNotSpawn": true,
-    "optionalMCVsDeploy": true,
-    "easyCreditsEveryMission": true,
-    "extraEnemyForces": [
-      5,
-      10,
-      15
-    ],
-    "saveReloadAndLobbyAssignments": true
-  },
-  "network": {
-    "passed": true,
-    "transport": "real UDP loopback",
-    "players": 8,
-    "guestLinksBlocked": true,
-    "relayThroughHost": true,
-    "lobbyAssignmentsAndStart": true,
-    "commandCyclesPerSender": 20,
-    "identityEpochParametersAndNoDuplicates": true,
-    "directRelayReconnectAndHostLoss": true,
-    "humanInternetPlaytest": "pending"
-  },
-  "campaignTemplates": {
-    "mods": 7,
-    "legacyMapsUnchanged": 63,
-    "originalCampaigns": 63,
-    "originalMaps": 1386,
-    "nearbyMCV": true,
-    "maximumMCVDistance": 4,
-    "terrainAndPlayer1AndEnemyOrdersPreserved": true,
-    "optionalAlliedSlots": 4,
-    "scenarioVariantsPerCampaign": 22,
-    "protectedSoloFilesUnchanged": 2342,
-    "canonicalCorrectionMaps": 156,
-    "canonicalCorrectionRecords": 624,
-    "wildlifeMaps": 548,
-    "wildlifeOrders": 1119,
-    "historicalOutsideCropOrders": 146,
-    "maximumParticipants": 7
-  },
-  "localWebsite": {
-    "passed": true,
-    "routes": 36,
-    "featureContexts": 28,
-    "languages": [
-      "fr",
-      "en"
-    ],
-    "desktopAndMobile": true,
-    "modes": 7,
-    "originalPNGs": 124,
-    "palacePowersFromEngine": true
-  },
-  "husky": {
-    "source": "Kleshmersh-Mentat-Husky.zip supplied by Tornie",
-    "modes": [
-      "vanilla",
-      "Tornie",
-      "Jericho",
-      "ArcaKev"
-    ],
-    "frames": 5,
-    "nativePNGsUnchanged": true,
-    "actualBriefingAndSpeechVerified": true,
-    "sha256": {
-      "MentatHusky_Kleshmersh_Mouth.png": "84c17a042aa12c9bab6216ea749ac63fc9c7c4d06b25063613d65b91b7237375",
-      "MentatHusky_Kleshmersh_Eyes.png": "bddd93705463ea6e4d1130d44ac2d78ca24925984717fdc6b8095901b627e2c5",
-      "MentatHusky_Kleshmersh.png": "b88e49fc115e611036958fe71f46345417352793da7048ea375cceb33e48fb40"
-    }
-  },
-  "startup": {
-    "englishSoftwareMenuPassed": true,
-    "vanillaOrangeHeraldColdStartupPassed": true,
-    "jerichoHeraldColdStartupPassed": true,
-    "modCheckboxPersistencePassed": true
-  },
-  "nativeMint": {
-    "version": "22.3",
-    "kernel": "6.17",
-    "tested": false
-  },
-  "ciProvenance": {
-    "linux": "Linux-Build-1.0.541.json",
-    "windows": "Windows-Build-1.0.541.json",
-    "publication": "Publication-Validation-1.0.541.json",
-    "note": "The release assets record immutable source, CI run IDs and package hashes.",
-    "linuxRun": 38928318200,
-    "linuxPassed": true,
-    "linuxURL": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/38928318200",
-    "windowsRun": 38928313974,
-    "windowsURL": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/38928313974",
-    "windowsBuildtreeRuntimePassed": true,
-    "windowsPassed": true,
-    "windowsInstalledFullRuntimePassed": true,
-    "windowsInstalledScenariosPerLanguage": 1606,
-    "windowsInstalledMenuStartupPassed": true,
-    "windowsEngineAndNetworkPassed": true
-  },
-  "source": "1ebb5ec34c5ffd791b0fdde6fce951627d09bcc1",
-  "linuxPackageAudit": {
-    "passed": true,
-    "images": 2,
-    "exactModFilesPerImage": 5467,
-    "originalHuskyAndOrangeHeraldExact": true,
-    "report": "Linux-Package-Audit-1.0.541.json"
-  },
-  "packageAudit": {
-    "passed": true,
-    "source": "1ebb5ec34c5ffd791b0fdde6fce951627d09bcc1",
-    "exactModFilesPerPlatform": 5467,
-    "windowsOriginalHuskyAndHeraldExact": true,
-    "report": "Package-Audit-1.0.541.json"
+    "exactModFilesPerPackage": 5467,
+    "bothAppImagesAndWindowsCompared": true,
+    "bannersUnchanged": true,
+    "huskyPreserved": true,
+    "publishedMintExpandedCoopPassed": true
   }
 }

@@ -2,7 +2,9 @@
 
 [English guide](COOP-CAMPAIGN-EN.md)
 
-Tous les participants doivent installer **1.0.541 / protocole 11**, activer le même mod et utiliser des noms différents. La connexion LAN ou Internet utilise le relais par l’hôte lorsque les invités ne peuvent pas communiquer directement, sans VPN. L’hôte doit rester joignable et connecté.
+Tous les participants doivent installer **1.0.541 / protocole 12**, activer le même mod et utiliser des noms différents. La connexion LAN ou Internet utilise le relais par l’hôte lorsque les invités ne peuvent pas communiquer directement, sans VPN. L’hôte doit rester joignable et connecté.
+
+À chaque nouveau départ de mission, toutes les factions alliées actives reçoivent **le même capital initial que l’hôte**, même si leur champ de crédits est nul ou absent. Le mode facile ajoute ensuite 500 crédits par faction, une seule fois. Un chargement de sauvegarde conserve les soldes enregistrés. Cette correction remplace la 1.0.541 : tous les participants doivent la retélécharger (protocole 12).
 
 ## Joueurs et factions
 
