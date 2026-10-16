@@ -183,8 +183,8 @@ inline void runModRuntimeSmoke() {
             }
             SDL_Log("VANILLA LEGACY COLOR PASS: unchanged slot/ramp, optional palette=%d",customPaletteLoaded);
             auto* herald=pGFXManager->getUIGraphicSurface(UI_Herald_Colored,HOUSE_KLESHMERSH);
-            require(herald && herald->w==84 && herald->h==91,"brown attached banner sizing");
-            require(SDL_SaveBMP(herald,(std::filesystem::path(output)/"vanilla-kleshmersh-banner.bmp").string().c_str())==0,"brown banner output");
+            verifyJerichoHeralds(output,"vanilla-runtime");
+            require(SDL_SaveBMP(herald,(std::filesystem::path(output)/"vanilla-kleshmersh-banner.bmp").string().c_str())==0,"orange banner output");
             for(int mission=1;mission<=22;++mission) {
                 const auto name=GameInitSettings(HOUSE_KLESHMERSH,mission,effectiveGameOptions).getFilename();
                 auto file=pFileManager->openCampaignFile(name);
