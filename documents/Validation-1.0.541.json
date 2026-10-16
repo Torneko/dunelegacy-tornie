@@ -145,7 +145,12 @@
     "linuxURL": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/38928318200",
     "windowsRun": 38928313974,
     "windowsURL": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/38928313974",
-    "windowsBuildtreeRuntimePassed": true
+    "windowsBuildtreeRuntimePassed": true,
+    "windowsPassed": true,
+    "windowsInstalledFullRuntimePassed": true,
+    "windowsInstalledScenariosPerLanguage": 1606,
+    "windowsInstalledMenuStartupPassed": true,
+    "windowsEngineAndNetworkPassed": true
   },
   "source": "1ebb5ec34c5ffd791b0fdde6fce951627d09bcc1",
   "linuxPackageAudit": {
@@ -154,5 +159,12 @@
     "exactModFilesPerImage": 5467,
     "originalHuskyAndOrangeHeraldExact": true,
     "report": "Linux-Package-Audit-1.0.541.json"
+  },
+  "packageAudit": {
+    "passed": true,
+    "source": "1ebb5ec34c5ffd791b0fdde6fce951627d09bcc1",
+    "exactModFilesPerPlatform": 5467,
+    "windowsOriginalHuskyAndHeraldExact": true,
+    "report": "Package-Audit-1.0.541.json"
   }
 }
