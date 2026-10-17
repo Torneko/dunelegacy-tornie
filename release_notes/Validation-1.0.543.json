@@ -1,14 +1,15 @@
 {
-  "status": "PASS_LOCAL_PREPARATION",
+  "status": "validated",
   "version": "1.0.543",
-  "published": false,
-  "sourceCommit": "61baef969125d567cc790f0039a9396ffe974786",
+  "sourceCommit": "472538d7a6f84fd024f4950641bcbb60ee142d21",
   "networkProtocol": 15,
   "saveVersion": 9835,
   "engine": {
     "ctest": "2/2 PASS",
     "testCases": 136,
-    "assertions": 10314
+    "assertions": 10314,
+    "fullRuntimeFrenchScenarios": 1606,
+    "fullRuntimeFrenchAchievements": true
   },
   "runtime": {
     "rulesAndSelling": [
@@ -746,13 +747,57 @@
         }
       ]
     },
-    "publicDownloadsRemain": "1.0.542",
-    "draftCommit": "6b3b73ac2048e584ad0072a36fc20911adf6bbec"
+    "originalPngGifPreserved": 146,
+    "preparationSiteCommit": "6b3b73ac2048e584ad0072a36fc20911adf6bbec",
+    "currentDownloadsVersion": "1.0.543",
+    "releaseLocalBrowserRoutes": 36,
+    "releaseFeatureContexts": 28
   },
   "publication": {
-    "tagCreated": false,
-    "releaseCreated": false,
-    "pagesDeployed": false,
-    "linuxWindowsReleaseCI": "not dispatched for this draft"
+    "authorized": true,
+    "linuxRun": 39074154578,
+    "windowsRun": 39074156864,
+    "linuxPackageChecks": "success",
+    "windowsPackageChecks": "success",
+    "tag": "v1.0.543",
+    "linuxWorkflow": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39074154578",
+    "windowsWorkflow": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39074156864"
+  },
+  "source": "472538d7a6f84fd024f4950641bcbb60ee142d21",
+  "enginePreparationSourceCommit": "61baef969125d567cc790f0039a9396ffe974786",
+  "validationStage": "local-ci-and-delivered-packages",
+  "deliveredPackages": {
+    "version": "1.0.543",
+    "source": "472538d7a6f84fd024f4950641bcbb60ee142d21",
+    "passed": true,
+    "packages": [
+      {
+        "name": "DuneLegacyTornie-1.0.543-Windows-x64.zip",
+        "allModFilesMatchSource": true,
+        "modFileCount": 5497,
+        "suppliedOriginalPngCopies": 30,
+        "sha256": "b87541a1cdbad76bd69932fc95d3bf4ebc896ed0cdb589e7745f987bd04f9eae"
+      },
+      {
+        "name": "DuneLegacyTornie-1.0.543-Linux-Mint-Compatible.AppImage",
+        "allModFilesMatchSource": true,
+        "modFileCount": 5497,
+        "suppliedOriginalPngCopies": 30,
+        "sha256": "e5ba7558fd533c081d2eb384066483d9ac75ebb675691b0051998d1a5915235f"
+      },
+      {
+        "name": "DuneLegacyTornie-1.0.543-Linux-x86_64.AppImage",
+        "allModFilesMatchSource": true,
+        "modFileCount": 5497,
+        "suppliedOriginalPngCopies": 30,
+        "sha256": "30075e8e3e5ffab8df5f072de74a4cffc06d8fdc2c6fa04c20180c127ee99848"
+      }
+    ],
+    "downloadedMintStartup": {
+      "passed": true,
+      "language": "fr",
+      "renderer": "software",
+      "developmentLibraryPathRemoved": true
+    }
   }
 }

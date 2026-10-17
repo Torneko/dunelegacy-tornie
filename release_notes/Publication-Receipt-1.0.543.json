@@ -1,0 +1,14 @@
+{
+  "version": "1.0.543",
+  "source": "472538d7a6f84fd024f4950641bcbb60ee142d21",
+  "publicWebsite": "9ea28520c8fa97d519e2da79338cf476e2468c1e",
+  "linuxRun": 39074154578,
+  "windowsRun": 39074156864,
+  "packagePublicationRun": 39075471637,
+  "pagesRun": 39075645046,
+  "documentsRun": 39075681622,
+  "assetCount": 16,
+  "websiteBrowserRoutes": 72,
+  "latest": true,
+  "release": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.543"
+}
