@@ -1,0 +1,107 @@
+{
+  "version": "1.0.541",
+  "replacement": true,
+  "protocol": 12,
+  "saveVersion": 9832,
+  "source": "78866fc137383badd4412aded3bc18d6c2f5037c",
+  "startingFunds": {
+    "allActiveAlliesUseHostBudget": true,
+    "easyBonusOnce": 500,
+    "zeroAndMissingOptionalBudgetsTested": true,
+    "normalAndEasy": true,
+    "fourLocalPerspectives": true,
+    "stages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "modes": 7,
+    "saveLoadPreservesBalances": true,
+    "closedAlliesDoNotSpawn": true
+  },
+  "arcaKevColours": {
+    "rebels": "#343434",
+    "corruptique": "#d6b620",
+    "editorPaletteRoundtripPassed": true,
+    "bannersChanged": false,
+    "existingManagedProfileReseedPassed": true
+  },
+  "localEngine": {
+    "passed": true,
+    "ctestTests": 2,
+    "cases": 130,
+    "assertions": 10138
+  },
+  "network": {
+    "passed": true,
+    "players": 8,
+    "transport": "real UDP loopback",
+    "guestLinksBlocked": true,
+    "relayThroughHost": true,
+    "humanInternetPlaytest": "pending"
+  },
+  "modPayloads": {
+    "passed": true,
+    "files": 5467
+  },
+  "website": {
+    "recoveredFrom": "f835c84832e67a23afa5f06eef1ffa56029e3336",
+    "localRoutes": 36,
+    "featureContexts": 28,
+    "languages": [
+      "fr",
+      "en"
+    ],
+    "preservedOriginalImages": 134
+  },
+  "nativeMintTested": false,
+  "ci": {
+    "linuxBuild": 38943059028,
+    "windowsBuild": 38943055269,
+    "status": "packages-published-website-ready",
+    "linuxPassed": true,
+    "systemLinuxEngineRun": 38943143490,
+    "systemLinuxEnginePassed": true,
+    "windowsPassed": true,
+    "fullPullRequestChecksPassed": true,
+    "windowsInstalledRuntimeLanguages": [
+      "fr",
+      "en"
+    ],
+    "windowsMenuStartupLanguages": [
+      "fr",
+      "en"
+    ],
+    "replacementRun": 38945710872,
+    "replacementPassed": true
+  },
+  "localFullRuntime": {
+    "passed": true,
+    "languages": [
+      "fr",
+      "en"
+    ],
+    "scenariosPerLanguage": 1606,
+    "achievementsPassed": true,
+    "sevenModesPassed": true
+  },
+  "upnpCompatibility": {
+    "api17SyntaxPassed": true,
+    "api18BuildPassed": true,
+    "systemLinuxCIEngineTestsPassed": true
+  },
+  "packages": {
+    "passed": true,
+    "exactModFilesPerPackage": 5467,
+    "bothAppImagesAndWindowsCompared": true,
+    "bannersUnchanged": true,
+    "huskyPreserved": true,
+    "publishedMintExpandedCoopPassed": true
+  }
+}

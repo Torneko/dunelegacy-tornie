@@ -1,0 +1,190 @@
+{
+  "passed": true,
+  "count": 28,
+  "results": [
+    {
+      "mod": "Vanilla",
+      "language": "fr",
+      "width": 1440,
+      "cat": true,
+      "preview": "assets/mentats/vanilla-rebels.gif"
+    },
+    {
+      "mod": "Tornie",
+      "language": "fr",
+      "width": 1440,
+      "cat": true,
+      "preview": "assets/mentats/tornie-rebels.gif"
+    },
+    {
+      "mod": "TornieLite",
+      "language": "fr",
+      "width": 1440,
+      "cat": false
+    },
+    {
+      "mod": "Jericho",
+      "language": "fr",
+      "width": 1440,
+      "cat": true,
+      "preview": "assets/mentats/jericho-rebels.gif"
+    },
+    {
+      "mod": "JerichoLite",
+      "language": "fr",
+      "width": 1440,
+      "cat": false
+    },
+    {
+      "mod": "ArcaKev",
+      "language": "fr",
+      "width": 1440,
+      "cat": true,
+      "preview": "assets/mentats/arcakev-rebels.gif"
+    },
+    {
+      "mod": "ArcaKevLite",
+      "language": "fr",
+      "width": 1440,
+      "cat": false
+    },
+    {
+      "mod": "Vanilla",
+      "language": "en",
+      "width": 1440,
+      "cat": true,
+      "preview": "assets/mentats/vanilla-rebels.gif"
+    },
+    {
+      "mod": "Tornie",
+      "language": "en",
+      "width": 1440,
+      "cat": true,
+      "preview": "assets/mentats/tornie-rebels.gif"
+    },
+    {
+      "mod": "TornieLite",
+      "language": "en",
+      "width": 1440,
+      "cat": false
+    },
+    {
+      "mod": "Jericho",
+      "language": "en",
+      "width": 1440,
+      "cat": true,
+      "preview": "assets/mentats/jericho-rebels.gif"
+    },
+    {
+      "mod": "JerichoLite",
+      "language": "en",
+      "width": 1440,
+      "cat": false
+    },
+    {
+      "mod": "ArcaKev",
+      "language": "en",
+      "width": 1440,
+      "cat": true,
+      "preview": "assets/mentats/arcakev-rebels.gif"
+    },
+    {
+      "mod": "ArcaKevLite",
+      "language": "en",
+      "width": 1440,
+      "cat": false
+    },
+    {
+      "mod": "Vanilla",
+      "language": "fr",
+      "width": 390,
+      "cat": true,
+      "preview": "assets/mentats/vanilla-rebels.gif"
+    },
+    {
+      "mod": "Tornie",
+      "language": "fr",
+      "width": 390,
+      "cat": true,
+      "preview": "assets/mentats/tornie-rebels.gif"
+    },
+    {
+      "mod": "TornieLite",
+      "language": "fr",
+      "width": 390,
+      "cat": false
+    },
+    {
+      "mod": "Jericho",
+      "language": "fr",
+      "width": 390,
+      "cat": true,
+      "preview": "assets/mentats/jericho-rebels.gif"
+    },
+    {
+      "mod": "JerichoLite",
+      "language": "fr",
+      "width": 390,
+      "cat": false
+    },
+    {
+      "mod": "ArcaKev",
+      "language": "fr",
+      "width": 390,
+      "cat": true,
+      "preview": "assets/mentats/arcakev-rebels.gif"
+    },
+    {
+      "mod": "ArcaKevLite",
+      "language": "fr",
+      "width": 390,
+      "cat": false
+    },
+    {
+      "mod": "Vanilla",
+      "language": "en",
+      "width": 390,
+      "cat": true,
+      "preview": "assets/mentats/vanilla-rebels.gif"
+    },
+    {
+      "mod": "Tornie",
+      "language": "en",
+      "width": 390,
+      "cat": true,
+      "preview": "assets/mentats/tornie-rebels.gif"
+    },
+    {
+      "mod": "TornieLite",
+      "language": "en",
+      "width": 390,
+      "cat": false
+    },
+    {
+      "mod": "Jericho",
+      "language": "en",
+      "width": 390,
+      "cat": true,
+      "preview": "assets/mentats/jericho-rebels.gif"
+    },
+    {
+      "mod": "JerichoLite",
+      "language": "en",
+      "width": 390,
+      "cat": false
+    },
+    {
+      "mod": "ArcaKev",
+      "language": "en",
+      "width": 390,
+      "cat": true,
+      "preview": "assets/mentats/arcakev-rebels.gif"
+    },
+    {
+      "mod": "ArcaKevLite",
+      "language": "en",
+      "width": 390,
+      "cat": false
+    }
+  ]
+}

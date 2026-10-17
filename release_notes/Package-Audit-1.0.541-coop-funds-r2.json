@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "version": "1.0.541",
+  "replacement": true,
+  "source": "78866fc137383badd4412aded3bc18d6c2f5037c",
+  "linuxRun": 38943059028,
+  "windowsRun": 38943055269,
+  "packages": [
+    {
+      "package": "DuneLegacyTornie-1.0.541-Linux-Mint-Compatible.AppImage",
+      "sha256": "7394561f6f4cdf0d6eb293811c702daeb753bbd29cbeb81b681349df2117e092",
+      "exactModFiles": 5467,
+      "huskyAndKleshmershHeraldPreserved": true,
+      "launcherMatchesSource": true
+    },
+    {
+      "package": "DuneLegacyTornie-1.0.541-Linux-x86_64.AppImage",
+      "sha256": "fa4347b6617c88d92ee587f04bb7b752233ce7cd6372b4c2a5ebaadb071489d7",
+      "exactModFiles": 5467,
+      "huskyAndKleshmershHeraldPreserved": true,
+      "launcherMatchesSource": true
+    },
+    {
+      "package": "DuneLegacyTornie-1.0.541-Windows-x64.zip",
+      "sha256": "de21ded68c9f8880db6133c7faef3096901176bb69bea68bbd3d6d51b7abd0d6",
+      "exactModFiles": 5467,
+      "huskyAndKleshmershHeraldPreserved": true
+    }
+  ]
+}

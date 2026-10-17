@@ -353,6 +353,11 @@ bool Game::canPlayerControlHouse(const House* playerHouse, const House* owner) c
         && coop::canControlHouse(*coopContext, playerHouse->getHouseID(), owner->getHouseID())));
 }
 
+bool Game::canBuildOnAlliedLand(const House* builderHouse,int landHouse) const {
+    return builderHouse && coopContext
+        && coop::canBuildOnAlliedLand(*coopContext,builderHouse->getHouseID(),landHouse);
+}
+
 bool Game::canControlHouse(const House* owner) const {
     return canPlayerControlHouse(pLocalHouse, owner);
 }

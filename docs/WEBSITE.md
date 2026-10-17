@@ -1,3 +1,24 @@
+# Remplacement de la 1.0.541 — construction alliée, éditeur et chat Rebels
+
+La 1.0.541 a été remplacée, sans créer de 542. Elle ajoute l’option d’hôte **Construction sur terrain allié**, corrige la sélection du propriétaire dans l’éditeur par identifiant stable et donne à Rebels le chat animé existant de Wildspade/Jericho, teinté selon la faction du mod. Protocole **13**, sauvegardes **9833** ; anciennes sauvegardes lisibles, option désactivée si absente, soldes conservés. Les PNG originaux restent identiques et la teinte est appliquée par le moteur.
+
+Source figée du jeu et tag : `0bf497ede39d6ab48bb0ecc3bb6c84df98a7d319`. Site FR/EN : `f3c7e36b8cd4de20b843ea8ee0b8a66a00c8ffc0`, récupéré depuis le site publié `0e91f751a1d2946e97e4a22d937fd9fec63a50d1`. Récupérer cette nouvelle révision publiée ou son archive hors ligne avant la prochaine modification.
+
+- Linux : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38983299258 — succès, moteur/réseau, cinq paquets, menus FR/EN, repli logiciel et tests fonctionnels de l’AppImage Mint : coop étendue, propriétaires de l’éditeur et chat Rebels.
+- Windows : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38983297104 — succès, moteur/réseau, sept modes et 1 606 scénarios dans le dossier installé en FR/EN, hauts faits et menus.
+- Publication des deux plateformes vérifiées : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38985579833 — succès. Le run automatique redondant déclenché par le déplacement du tag a été annulé ; les artefacts validés sont publiés avec leur provenance.
+- Pages : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38985673832 — succès.
+- Site hors ligne, sources, rapports et 72 parcours navigateur publics/hors ligne FR/EN, ordinateur/mobile : https://github.com/Torneko/dunelegacy-tornie/actions/runs/38985742973 — succès.
+- Branche source : `fix/1.0.541-allied-building-editor-owner` ; les reçus sont ajoutés après la source figée, sans changement du moteur, puis proposés en PR vers `dunelegacy-tornie`.
+
+CTest 2/2, 132 cas / 10 166 assertions ; relais UDP réel à huit participants dont les invités sont isolés. Les suites locales FR/EN chargent chacune 1 606 scénarios et vérifient les hauts faits. La construction alliée est vérifiée depuis les quatre perspectives, en normal/facile et archonte : propriété, dépenses, terrain, ennemis, transitions, sauvegardes et lobby hôte/invité. L’éditeur vérifie les unités et bâtiments de toutes les maisons disponibles, les joueurs nommés/numérotés, les maisons inactives et le rechargement, dans les sept modes. Le chat Rebels est vérifié dans les vrais briefings des quatre modes : teinte, iris, transparence, décor, nez/épaule et cinq états ; Neutral et le husky restent couverts.
+
+Le site conserve les sept modes, les 67 hauts faits et les 124 PNG de galerie. Les 137 images préexistantes sont inchangées ; huit nouveaux aperçus viennent du rendu réel. Les 36 parcours, 28 contextes précédents et 28 contextes des nouvelles fonctions passent localement dans les deux langues, sur ordinateur/mobile. L’audit final compare les 16 fichiers publics et les 15 empreintes du manifeste, tous les fichiers source de l’archive, les 272 fichiers du site hors ligne et les sept paquets/sources intégrés. Les 5 467 fichiers de mods et sept PNG globaux correspondent à la source dans les deux AppImages et le ZIP Windows. Voir [l’audit final](../release_notes/Final-Publication-Audit-1.0.541.json). Les rapports du remplacement précédent sont conservés avec le suffixe `-coop-funds-r2` et ceux de la publication initiale avec `-initial`.
+
+Linux and Windows replacement 1.0.541, both website languages and the matching offline package are published. All linked CI runs succeeded. Download the replacement on every computer (protocol 13); older saves keep their recorded balances and default shared construction off. Native Mint 22.3/kernel 6.17 and a human match across independent Internet connections remain pending.
+
+Les comptes rendus suivants sont historiques et décrivent les remplacements précédents.
+
 # Remplacement de la 1.0.541 — crédits coop et couleurs ArcaKev
 
 Correctifs de même version demandés par Tornie : capital initial de l’hôte pour chaque faction alliée active, bonus facile appliqué ensuite une fois, Rebels gris foncé et Corruptique jaune dans ArcaKev sans modifier les bannières. Protocole 12, sauvegardes 9832. Retélécharger les paquets sur tous les postes ; les chargements conservent les soldes enregistrés.

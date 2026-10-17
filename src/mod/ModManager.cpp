@@ -205,6 +205,21 @@ const ModMentatInfo& ModManager::getActiveMentatInfo(int house) const {
         info.useBaseExtras = false;
         return info;
     }();
+    static const ModMentatInfo vanillaRebelsCat = [] {
+        ModMentatInfo info;
+        info.enabled=true;info.identityHouse=HOUSE_FREMEN;info.factionTint=true;
+        info.backgroundAsset="MentatCat_Wildspade.png";
+        info.eyesAsset="MentatCat_Wildspade_Eyes.png";info.mouthAsset="MentatCat_Wildspade_Mouth.png";
+        info.doubleEyes=info.doubleMouth=false;
+        info.eyesX=134;info.eyesY=137;info.eyesCropY=232;info.eyesCropHeight=234;info.eyesWidth=98;info.eyesHeight=32;
+        info.mouthX=175;info.mouthY=200;info.mouthCropY=298;info.mouthCropHeight=190;info.mouthWidth=40;info.mouthHeight=23;
+        info.restFromBackground=true;info.eyesBrightness=info.mouthBrightness=245;
+        ModMentatConfig::parsePatch("0,0,43,29;60,314,156,112;43,314,156,112;27,314,156,112;26,314,156,112;27,314,156,112",info.eyesPatches);
+        ModMentatConfig::parsePatch("64,2,31,25;274,320,146,105;252,320,146,105;235,320,146,105;227,320,146,105;250,320,146,105",info.eyesPatches);
+        ModMentatConfig::parsePatch("0,0,40,23;167,393,146,95;167,393,146,95;167,393,146,95;167,393,146,95;167,393,146,95",info.mouthPatches);
+        ModMentatConfig::parsePolygon("248,268,256,279,265,294,274,311,281,330,285,350,290,370,294,389,297,400,248,400",info.foregroundPolygon);
+        return info;
+    }();
     static const ModMentatInfo vanillaKleshmershHusky = [] {
         ModMentatInfo info = vanillaChani;
         info.backgroundAsset = "MentatHusky_Kleshmersh.png";
@@ -225,7 +240,8 @@ const ModMentatInfo& ModManager::getActiveMentatInfo(int house) const {
     }
     if(initialized && activeMod == VANILLA_MOD_NAME
        && (house == HOUSE_NEUTRAL || house == HOUSE_REBELS || house == HOUSE_KLESHMERSH)) {
-        return house == HOUSE_KLESHMERSH ? vanillaKleshmershHusky : vanillaChani;
+        return house == HOUSE_KLESHMERSH ? vanillaKleshmershHusky
+            : house == HOUSE_REBELS ? vanillaRebelsCat : vanillaChani;
     }
     if(!initialized || house < 0 || static_cast<std::size_t>(house) >= activeMentats.size()) {
         return noOverride;
@@ -1266,6 +1282,7 @@ ModInfo ModManager::readModIni(const std::string& modPath) const {
             else if(mentatKey == "Eyes Brightness") parseIntegerField(mentat.eyesBrightness);
             else if(mentatKey == "Mouth Brightness") parseIntegerField(mentat.mouthBrightness);
             else if(mentatKey == "Rest From Background") parseBooleanField(mentat.restFromBackground);
+            else if(mentatKey == "Faction Tint") parseBooleanField(mentat.factionTint);
             else if(mentatKey == "Eyes Patch") {
                 if(!ModMentatConfig::parsePatch(mentatValue, mentat.eyesPatches)) mentatFieldsValid[mentatHouse] = false;
             }

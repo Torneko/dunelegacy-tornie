@@ -1335,6 +1335,7 @@ int main(int argc, char *argv[]) {
                         if(const char* output=std::getenv("DUNELEGACY_SMOKE_DIR")) {
                             verifyJerichoHeralds(output,"cold-start");
                             verifyKleshmershMentat(output,ModManager::instance().getActiveModName());
+                            verifyRebelsMentat(output,ModManager::instance().getActiveModName());
                         }
                         ModOptionsUIFixture::verify();
                         if(const char* output=std::getenv("DUNELEGACY_SMOKE_DIR"))
@@ -1353,7 +1354,7 @@ int main(int argc, char *argv[]) {
                         for(const std::string mod:{"Tornie","TornieLite","Jericho","JerichoLite","ArcaKev","ArcaKevLite","vanilla"}) {
                             if(!ModManager::instance().setActiveMod(mod)) throw std::runtime_error("Release rules mod activation");
                             effectiveGameOptions=ModManager::instance().loadEffectiveGameOptions(settings.gameOptions);
-                            verifyRelease541Rules(output,mod);verifyCustomUnitZooms(output,mod);verifyKleshmershMentat(output,mod);
+                            EditorOwnershipFixture::verify(output,mod);verifyRelease541Rules(output,mod);verifyCustomUnitZooms(output,mod);verifyKleshmershMentat(output,mod);verifyRebelsMentat(output,mod);
                         }
                     }
                     else if(bVerifyExpandedCoop) {

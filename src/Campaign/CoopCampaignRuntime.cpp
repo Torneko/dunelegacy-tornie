@@ -111,7 +111,7 @@ bool sameParticipants(const Context& first, const Context& second) {
         || first.roster != second.roster || first.stage != second.stage
         || first.completedMask != second.completedMask
         || first.chaosEligible != second.chaosEligible
-        || first.alliedControl != second.alliedControl
+        || first.alliedControl != second.alliedControl || first.alliedBuilding != second.alliedBuilding
         || first.easyMode != second.easyMode || first.extraEnemyForces != second.extraEnemyForces
         || first.extraHardEnemyForces!=second.extraHardEnemyForces || first.archon!=second.archon
         || first.alliedCapacity!=second.alliedCapacity || first.randomVariants!=second.randomVariants

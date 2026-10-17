@@ -143,6 +143,9 @@ public:
 
     friend class INIMapEditorLoader; ///< loading INI Maps is done with a INIMapEditorLoader helper object
     friend struct DoublefineryEditorFixture;
+#ifdef DUNELEGACY_RUNTIME_TESTS
+    friend struct EditorOwnershipFixture;
+#endif
 
     void RunEditor();
 

@@ -2,21 +2,28 @@
   "passed": true,
   "version": "1.0.541",
   "replacement": true,
-  "source": "78866fc137383badd4412aded3bc18d6c2f5037c",
-  "linuxRun": 38943059028,
+  "source": "0bf497ede39d6ab48bb0ecc3bb6c84df98a7d319",
+  "linuxRun": 38983299258,
+  "packagedRuntimeChecks": [
+    "expanded-coop",
+    "editor-owners",
+    "rebels-mentat"
+  ],
   "images": [
     {
       "package": "DuneLegacyTornie-1.0.541-Linux-Mint-Compatible.AppImage",
-      "sha256": "7394561f6f4cdf0d6eb293811c702daeb753bbd29cbeb81b681349df2117e092",
+      "sha256": "d0faaffb786ce9cd99647b7df8621035ea761f58ded25b825966f73d7a65a792",
       "exactModFiles": 5467,
       "huskyAndKleshmershHeraldPreserved": true,
+      "originalRebelsCatAssetsExact": true,
       "launcherMatchesSource": true
     },
     {
       "package": "DuneLegacyTornie-1.0.541-Linux-x86_64.AppImage",
-      "sha256": "fa4347b6617c88d92ee587f04bb7b752233ce7cd6372b4c2a5ebaadb071489d7",
+      "sha256": "58b7cacaef94aa278275e0cd3b7c10258f6f34e8f50bf6ba8b92df5ffa613d25",
       "exactModFiles": 5467,
       "huskyAndKleshmershHeraldPreserved": true,
+      "originalRebelsCatAssetsExact": true,
       "launcherMatchesSource": true
     }
   ]

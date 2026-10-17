@@ -1,0 +1,202 @@
+{
+  "passed": true,
+  "count": 28,
+  "results": [
+    {
+      "width": 1440,
+      "language": "fr",
+      "mod": "Vanilla",
+      "houseOrder": "HAOFSMNRK",
+      "palaceRows": 9
+    },
+    {
+      "width": 1440,
+      "language": "fr",
+      "mod": "Tornie",
+      "houseOrder": "HAOFSMNRCWKT",
+      "palaceRows": 12
+    },
+    {
+      "width": 1440,
+      "language": "fr",
+      "mod": "TornieLite",
+      "houseOrder": "HAOFSM",
+      "palaceRows": 6
+    },
+    {
+      "width": 1440,
+      "language": "fr",
+      "mod": "Jericho",
+      "houseOrder": "HAOFSMWKTNRC",
+      "palaceRows": 12
+    },
+    {
+      "width": 1440,
+      "language": "fr",
+      "mod": "JerichoLite",
+      "houseOrder": "HAOFSM",
+      "palaceRows": 6
+    },
+    {
+      "width": 1440,
+      "language": "fr",
+      "mod": "ArcaKev",
+      "houseOrder": "HAOFSMKWRNTC",
+      "palaceRows": 12
+    },
+    {
+      "width": 1440,
+      "language": "fr",
+      "mod": "ArcaKevLite",
+      "houseOrder": "HAOFSM",
+      "palaceRows": 6
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "mod": "Vanilla",
+      "houseOrder": "HAOFSMNRK",
+      "palaceRows": 9
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "mod": "Tornie",
+      "houseOrder": "HAOFSMNRCWKT",
+      "palaceRows": 12
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "mod": "TornieLite",
+      "houseOrder": "HAOFSM",
+      "palaceRows": 6
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "mod": "Jericho",
+      "houseOrder": "HAOFSMWKTNRC",
+      "palaceRows": 12
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "mod": "JerichoLite",
+      "houseOrder": "HAOFSM",
+      "palaceRows": 6
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "mod": "ArcaKev",
+      "houseOrder": "HAOFSMKWRNTC",
+      "palaceRows": 12
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "mod": "ArcaKevLite",
+      "houseOrder": "HAOFSM",
+      "palaceRows": 6
+    },
+    {
+      "width": 390,
+      "language": "fr",
+      "mod": "Vanilla",
+      "houseOrder": "HAOFSMNRK",
+      "palaceRows": 9
+    },
+    {
+      "width": 390,
+      "language": "fr",
+      "mod": "Tornie",
+      "houseOrder": "HAOFSMNRCWKT",
+      "palaceRows": 12
+    },
+    {
+      "width": 390,
+      "language": "fr",
+      "mod": "TornieLite",
+      "houseOrder": "HAOFSM",
+      "palaceRows": 6
+    },
+    {
+      "width": 390,
+      "language": "fr",
+      "mod": "Jericho",
+      "houseOrder": "HAOFSMWKTNRC",
+      "palaceRows": 12
+    },
+    {
+      "width": 390,
+      "language": "fr",
+      "mod": "JerichoLite",
+      "houseOrder": "HAOFSM",
+      "palaceRows": 6
+    },
+    {
+      "width": 390,
+      "language": "fr",
+      "mod": "ArcaKev",
+      "houseOrder": "HAOFSMKWRNTC",
+      "palaceRows": 12
+    },
+    {
+      "width": 390,
+      "language": "fr",
+      "mod": "ArcaKevLite",
+      "houseOrder": "HAOFSM",
+      "palaceRows": 6
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "mod": "Vanilla",
+      "houseOrder": "HAOFSMNRK",
+      "palaceRows": 9
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "mod": "Tornie",
+      "houseOrder": "HAOFSMNRCWKT",
+      "palaceRows": 12
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "mod": "TornieLite",
+      "houseOrder": "HAOFSM",
+      "palaceRows": 6
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "mod": "Jericho",
+      "houseOrder": "HAOFSMWKTNRC",
+      "palaceRows": 12
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "mod": "JerichoLite",
+      "houseOrder": "HAOFSM",
+      "palaceRows": 6
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "mod": "ArcaKev",
+      "houseOrder": "HAOFSMKWRNTC",
+      "palaceRows": 12
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "mod": "ArcaKevLite",
+      "houseOrder": "HAOFSM",
+      "palaceRows": 6
+    }
+  ]
+}

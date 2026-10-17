@@ -123,6 +123,7 @@ inline void runModRuntimeSmoke() {
         verifyFremenConfirmation(output, "switch");
         verifyWildspadeTechnology(output, mod);
         verifyWildspadeMentat(output, mod);
+        verifyRebelsMentat(output,mod);
         verifyKleshmershMentat(output,mod);
         verifyChaosMode(output, mod);
         verifyCampaignContinuation(output, mod);

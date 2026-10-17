@@ -404,7 +404,8 @@ bool Map::isWithinBuildRange(int x, int y, const House* pHouse) const {
         for (auto j = y - BUILDRANGE; j <= y + BUILDRANGE; j++) {
             const auto tile = getTile_internal(i, j);
 
-            if (tile && tile->getOwner() == pHouse->getHouseID())
+            if (tile && (tile->getOwner() == pHouse->getHouseID()
+                || (currentGame && currentGame->canBuildOnAlliedLand(pHouse,tile->getOwner()))))
                 return true;
         }
     }

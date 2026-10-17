@@ -1,6 +1,7 @@
 #pragma once
 
 #include <MapEditor/MapEditor.h>
+#include "EditorOwnershipSmoke.h"
 
 // Exercise the same UI resources and map serializer used by the editor, with
 // both a cold mod startup and colors left behind by a custom game.
@@ -90,6 +91,7 @@ inline void verifyEditorHouseColorRoundtrip(const std::string& output, const std
     // A custom game can assign any team color. Entering the editor must restore
     // the default faction colors before its first sidebar/icon is constructed.
     for(int i = 0; i < NUM_HOUSES; ++i) setHouseVisualHouse(static_cast<HOUSETYPE>(i), HOUSE_HARKONNEN);
+    EditorOwnershipFixture::verify(output,mod);
     MapEditor editor;
     verifyEditorHouseColors(output, mod, "after-custom-game");
     editor.setMap(MapData(64, 32, Terrain_Rock), MapInfo());

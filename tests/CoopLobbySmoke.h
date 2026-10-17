@@ -11,6 +11,7 @@
 #include <misc/SaveGameLobbySetup.h>
 #include <misc/FileSystem.h>
 #include <misc/OMemoryStream.h>
+#include <misc/IMemoryStream.h>
 #include <array>
 
 inline void verifyCoopLobby(const std::string& output, const std::string& mod) {
@@ -43,6 +44,25 @@ inline void verifyCoopLobby(const std::string& output, const std::string& mod) {
     {
         CoopCampaignMenu menu(true);
         capture(menu, "setup");
+    }
+    {
+        auto owned=std::make_unique<CustomGamePlayers>(init,true);
+        auto& lobby=*owned;
+        require(lobby.alliedBuildingCheckbox.isEnabled() && !lobby.alliedBuildingCheckbox.isChecked(),"host shared-building option must default off");
+        ChangeEventList guestEdit;
+        guestEdit.changeEventList.emplace_back(ChangeEventList::ChangeEvent::EventType::ChangeAlliedBuilding,0,1);
+        lobby.onReceiveChangeEventList(guestEdit);
+        require(!lobby.alliedBuildingCheckbox.isChecked(),"guest changed the host construction rule");
+        auto& box=lobby.alliedBuildingCheckbox;
+        box.handleMouseLeft(5,5,true);box.handleMouseLeft(5,5,false);
+        require(box.isChecked() && lobby.coopSession->context().alliedBuilding,"host checkbox click did not apply");
+        OMemoryStream wire;lobby.getChangeEventList().save(wire);
+        IMemoryStream incoming(wire.getData(),wire.getDataLength());ChangeEventList snapshot(incoming);
+        auto guest=std::make_unique<CustomGamePlayers>(init,false);
+        require(!guest->alliedBuildingCheckbox.isEnabled(),"guest can edit shared construction");
+        guest->onReceiveChangeEventList(snapshot);
+        require(guest->alliedBuildingCheckbox.isChecked() && guest->coopSession->context().alliedBuilding,"serialized host rule did not reach guest");
+        capture(lobby,"allied-building");
     }
     for(const bool pendingSource : {true, false}) {
         auto probe = init;
@@ -91,6 +111,7 @@ inline void verifyCoopLobby(const std::string& output, const std::string& mod) {
         choices.changeEventList.emplace_back(ChangeEventList::ChangeEvent::EventType::ChangePlayer, 2, ally);
         choices.changeEventList.emplace_back(ChangeEventList::ChangeEvent::EventType::ChangePlayer, 4, enemy);
         choices.changeEventList.emplace_back(ChangeEventList::ChangeEvent::EventType::ChangeAlliedControl, 0, 1);
+        choices.changeEventList.emplace_back(ChangeEventList::ChangeEvent::EventType::ChangeAlliedBuilding,0,1);
         choices.changeEventList.emplace_back(ChangeEventList::ChangeEvent::EventType::ChangeCoopEasyMode, 0, 1);
         choices.changeEventList.emplace_back(ChangeEventList::ChangeEvent::EventType::ChangeExtraEnemyForces, 0, 1);
         choices.changeEventList.emplace_back(ChangeEventList::ChangeEvent::EventType::ChangeColor, 0, HOUSECOLOR_CUSTOM_FUCHSIA);
@@ -98,7 +119,7 @@ inline void verifyCoopLobby(const std::string& output, const std::string& mod) {
         lobby.onReceiveChangeEventList(choices);
         lobby.addAllPlayersToGameInitSettings();
         const auto context = coop::readContext(lobby.gameInitSettings.getFiledata());
-        require(context && context->alliedControl && context->slots[1].playerClass == "qBotMedium"
+        require(context && context->alliedControl && context->alliedBuilding && context->slots[1].playerClass == "qBotMedium"
             && context->slots[2].playerClass == "mentatEasy", "AI/control choices lost during lobby commit");
         require(context->easyMode && context->extraEnemyForces && context->stage == 2 && context->completedMask == 1,
             "lobby options or Easy Mode mission-two start lost");
@@ -195,6 +216,8 @@ inline void verifyCoopLobby(const std::string& output, const std::string& mod) {
         require(lobby.coopSession && lobby.numHouses == static_cast<int>(context->slots.size()), "saved co-op lobby is not recognized");
         require(!lobby.loadCoopSaveButton.isVisible() && !lobby.loadCoopSaveButton.isEnabled(),
             "a guest can choose a host save");
+        require(!lobby.alliedBuildingCheckbox.isEnabled()
+            && lobby.alliedBuildingCheckbox.isChecked()==context->alliedBuilding,"saved shared-building rule was not restored/locked");
         for(int i = 0; i < lobby.numHouses; ++i) {
             require(lobby.houseInfo[i].houseDropDown.getSelectedEntryIntData() == context->slots[i].house,
                 "checkpoint ownership slots changed in the lobby");

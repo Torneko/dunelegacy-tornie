@@ -1,4 +1,5 @@
 #pragma once
+#include "RebelsMentatSmoke.h"
 #include <FileClasses/LoadSavePNG.h>
 #include <Menu/BriefingMenu.h>
 

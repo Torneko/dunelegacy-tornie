@@ -26,6 +26,7 @@ inline void verifyExpandedCoop(const std::string& output,const std::string& mod)
     for(int mode=0;mode<3;++mode) {
         auto session=create(mode==2);
         session.setEasyMode(true);
+        session.setAlliedBuilding(mode!=0);
         if(mode==1) {
             session.configureAlly(2,roster[2],HUMANPLAYERCLASS,names[2]);
             session.configureAlly(3,roster[3],HUMANPLAYERCLASS,names[3]);
@@ -37,6 +38,7 @@ inline void verifyExpandedCoop(const std::string& output,const std::string& mod)
             auto init=coop::makeGameSettings(session,options,"Expanded runtime check");
             session=coop::CoopCampaignSession::fromMapData(init.getFiledata());
             const auto context=session.context();
+            require(context.alliedBuilding==(mode!=0),"shared construction lost on mission transition");
             auto data=sdl2::RWops_ptr{SDL_RWFromConstMem(init.getFiledata().data(),init.getFiledata().size())};
             INIFile map(data.get());
             auto game=std::make_unique<Game>();currentGame=game.get();game->initGame(init);
@@ -79,6 +81,7 @@ inline void verifyExpandedCoop(const std::string& output,const std::string& mod)
                 game->initGame(load);
                 const auto restored=coop::readContext(game->getGameInitSettings().getFiledata());
                 require(restored && restored->humanNames()==context.humanNames(),"saved controller roster");
+                require(restored->alliedBuilding==context.alliedBuilding,"saved shared construction option");
                 for(const auto& balance:savedCredits) require(game->getHouse(balance.first)
                     && game->getHouse(balance.first)->getCredits()==balance.second,"saved allied starting funds");
                 for(const auto& name:context.humanNames()) require(game->getPlayerByName(name)!=nullptr,"saved controller object");
@@ -148,6 +151,7 @@ inline void verifyExpandedCoop(const std::string& output,const std::string& mod)
             const auto indices=session.context().alliedSlots();
             for(int ordinal=0;ordinal<4;++ordinal) lobby->setPlayer2Slot(names[ordinal],indices[ordinal]*2);
             lobby->coopEasyModeCheckbox.setChecked(easy);
+            lobby->alliedBuildingCheckbox.setChecked(true);
             lobby->addAllPlayersToGameInitSettings();
             lobby->addAllPlayersToGameInitSettings();
             committed=lobby->gameInitSettings;
@@ -156,7 +160,7 @@ inline void verifyExpandedCoop(const std::string& output,const std::string& mod)
         IMemoryStream incoming(wire.getData(),wire.getDataLength());
         GameInitSettings received(incoming);
         const auto context=coop::readContext(received.getFiledata());
-        require(context && context->humanNames().size()==4,"starting funds lobby roster");
+        require(context && context->humanNames().size()==4 && context->alliedBuilding,"starting funds/building lobby roster");
         auto data=sdl2::RWops_ptr{SDL_RWFromConstMem(received.getFiledata().data(),received.getFiledata().size())};
         INIFile map(data.get());
         const int expected=map.getIntValue("Player1","Credits",-1)+(easy ? 500 : 0);
@@ -176,9 +180,55 @@ inline void verifyExpandedCoop(const std::string& output,const std::string& mod)
             require(player && pLocalHouse==player->getHouse(),"starting funds guest local ownership");
             require(pLocalHouse->getCredits()==expected,"starting funds guest "+std::to_string(ordinal+1)
                 +" expected "+std::to_string(expected)+" got "+std::to_string(pLocalHouse->getCredits()));
+            // Test the same placement predicate used by building previews and
+            // mouse placement, from each human's runtime house (including 3/4).
+            Coord target(INVALID,INVALID);
+            for(int y=4;y<currentGameMap->getSizeY()-6 && !target.isValid();++y)
+                for(int x=4;x<currentGameMap->getSizeX()-6 && !target.isValid();++x) {
+                    bool clear=true;
+                    for(int dy=0;dy<4;++dy) for(int dx=0;dx<4;++dx)
+                        clear &= !currentGameMap->getTile(x+dx,y+dy)->isBlocked();
+                    if(clear) target=Coord(x,y);
+                }
+            require(target.isValid(),"no placement fixture area");
+            for(int y=target.y-BUILDRANGE;y<=target.y+3+BUILDRANGE;++y)
+                for(int x=target.x-BUILDRANGE;x<=target.x+3+BUILDRANGE;++x)
+                    currentGameMap->getTile(x,y)->setOwner(HOUSE_INVALID);
+            for(int dy=0;dy<4;++dy) for(int dx=0;dx<4;++dx)
+                currentGameMap->getTile(target.x+dx,target.y+dy)->setType(Terrain_Rock);
+            auto* anchor=currentGameMap->getTile(target.x-1,target.y);
+            anchor->setType(Terrain_Slab);
+            auto disabled=received.getFiledata();
+            const auto flag=disabled.find("AlliedBuilding=1");
+            require(flag!=std::string::npos,"shared construction not serialized");
+            disabled.replace(flag,16,"AlliedBuilding=0");
+            for(const int index:indices) {
+                const int owner=context->slots[index].house;
+                anchor->setOwner(owner);
+                game->updateCoopParticipants(received.getFiledata(),received.getHouseInfoList());
+                require(currentGameMap->okayToPlaceStructure(target.x,target.y,2,2,false,pLocalHouse),"enabled shared placement rejected ally");
+                require(!game->canControlHouse(game->getHouse(owner)) || owner==pLocalHouse->getHouseID(),"shared terrain enabled allied commands");
+                game->updateCoopParticipants(disabled,received.getHouseInfoList());
+                require(currentGameMap->okayToPlaceStructure(target.x,target.y,2,2,false,pLocalHouse)
+                    ==(owner==pLocalHouse->getHouseID()),"disabled shared placement accepted another house");
+            }
+            game->updateCoopParticipants(received.getFiledata(),received.getHouseInfoList());
+            anchor->setOwner(context->slots[2].house);
+            require(!currentGameMap->isWithinBuildRange(target.x,target.y,pLocalHouse),"enemy terrain grants build range");
+            anchor->setOwner(context->slots[indices[(ordinal+1)%4]].house);
+            currentGameMap->getTile(target.x,target.y)->setType(Terrain_Sand);
+            require(!currentGameMap->okayToPlaceStructure(target.x,target.y,2,2,false,pLocalHouse),"shared range permits sand");
+            currentGameMap->getTile(target.x,target.y)->setType(Terrain_Rock);
+            require(!currentGameMap->okayToPlaceStructure(target.x,target.y,2,2,true,pLocalHouse),"concrete requirement bypassed");
+            const int neighbourCredits=game->getHouse(anchor->getOwner())->getCredits();
+            auto* building=pLocalHouse->placeStructure(NONE_ID,Structure_WindTrap,target.x,target.y,true);
+            require(building && building->getOwner()==pLocalHouse,"building on allied land changed owner");
+            require(game->getHouse(anchor->getOwner())->getCredits()==neighbourCredits,"building changed allied funds");
+            require(!currentGameMap->okayToPlaceStructure(target.x,target.y,2,2,false,pLocalHouse),"occupied allied land accepted");
+
             game.reset();currentGame=nullptr;pLocalHouse=nullptr;pLocalPlayer=nullptr;
         }
         settings.general.playerName=host;
     }
-    SDL_Log("EXPANDED COOP PASS: %s, stages 1-9, closed/four/eight controllers, Easy credits, save/load and lobby assignments",mod.c_str());
+    SDL_Log("EXPANDED COOP PASS: %s, stages 1-9, closed/four/eight controllers, Easy credits, shared construction, save/load and lobby assignments",mod.c_str());
 }

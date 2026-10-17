@@ -551,3 +551,39 @@ TEST_CASE("Co-op selects an existing scenario branch once per new mission", "[co
     for(int stage=1;stage<=9;++stage)
         REQUIRE(choices[stage].size()==static_cast<std::size_t>(coop::missionVariantCount(stage)));
 }
+
+TEST_CASE("Shared allied construction is optional, independent of control and excludes enemies", "[coop][building]") {
+    auto value=session();
+    value.enableExpandedAllies(true);
+    value.configureAlly(2,2,"HumanPlayer","Third");
+    value.configureAlly(3,3,"qBotMedium","Fourth");
+    const auto allies=value.context().alliedSlots();
+    const int host=value.context().slots[allies[0]].house;
+    const int guest=value.context().slots[allies[2]].house;
+    REQUIRE_FALSE(coop::canBuildOnAlliedLand(value.context(),host,guest));
+    value.setAlliedControl(true);
+    REQUIRE_FALSE(coop::canBuildOnAlliedLand(value.context(),host,guest));
+    value.setAlliedControl(false);value.setAlliedBuilding(true);
+    for(const int a:allies) for(const int b:allies)
+        REQUIRE(coop::canBuildOnAlliedLand(value.context(),value.context().slots[a].house,value.context().slots[b].house));
+    REQUIRE_FALSE(coop::canControlHouse(value.context(),host,guest));
+    const int enemy=value.context().slots[2].house;
+    REQUIRE_FALSE(coop::canBuildOnAlliedLand(value.context(),host,enemy));
+    REQUIRE_FALSE(coop::canBuildOnAlliedLand(value.context(),enemy,host));
+    REQUIRE_FALSE(coop::canBuildOnAlliedLand(value.context(),host,-1));
+    value.configureAlly(2,2,"Closed","Third");
+    REQUIRE_FALSE(coop::canBuildOnAlliedLand(value.context(),host,value.context().slots[allies[2]].house));
+}
+
+TEST_CASE("Shared construction survives progression, reconfiguration and progress files", "[coop][building]") {
+    auto value=session();value.setAlliedBuilding(true);
+    auto map=value.prepareMap(mapTemplate(1));
+    REQUIRE(coop::readContext(map)->alliedBuilding);
+    value=coop::CoopCampaignSession::fromMapData(map);
+    value.completeMission(true);value.reconfigurePlayers({3,3},{"Host","Guest"});
+    REQUIRE(value.context().alliedBuilding);
+    TemporaryDirectory dir;value.saveProgress((dir.path/"coop.ini").string());
+    REQUIRE(coop::CoopCampaignSession::loadProgress((dir.path/"coop.ini").string()).context().alliedBuilding);
+    replace(map,"AlliedBuilding=1\n","");
+    REQUIRE_FALSE(coop::readContext(map)->alliedBuilding);
+}

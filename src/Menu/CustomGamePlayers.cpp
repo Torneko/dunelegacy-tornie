@@ -561,6 +561,15 @@ CustomGamePlayers::CustomGamePlayers(const GameInitSettings& newGameInitSettings
             if(pNetworkManager) pNetworkManager->sendChangeEventList(events);
         });
         leftVBox.addWidget(&alliedControlCheckbox, 0.0);
+        alliedBuildingCheckbox.setText(settings.general.language=="fr" ? "Construction sur terrain allié" : "Build on allied land");
+        alliedBuildingCheckbox.setChecked(coopSession->context().alliedBuilding);
+        alliedBuildingCheckbox.setOnClick([this] {
+            coopSession->setAlliedBuilding(alliedBuildingCheckbox.isChecked());
+            ChangeEventList events;
+            events.changeEventList.emplace_back(ChangeEventList::ChangeEvent::EventType::ChangeAlliedBuilding,0,alliedBuildingCheckbox.isChecked() ? 1 : 0);
+            if(pNetworkManager) pNetworkManager->sendChangeEventList(events);
+        });
+        leftVBox.addWidget(&alliedBuildingCheckbox,0.0);
         coopEasyModeCheckbox.setText(settings.general.language == "fr" ? "Mode facile (coop)" : "Easy Mode (co-op)");
         coopEasyModeCheckbox.setChecked(coopSession->context().easyMode);
         coopEasyModeCheckbox.setOnClick([this] {
@@ -903,6 +912,12 @@ void CustomGamePlayers::onReceiveChangeEventList(const ChangeEventList& changeEv
                     extraHardEnemyForcesCheckbox.setChecked(changeEvent.newValue!=0);
                 }
             } break;
+            case ChangeEventList::ChangeEvent::EventType::ChangeAlliedBuilding: {
+                if(coopSession && !bServer && changeEvent.newValue<=1 && gameInitSettings.getGameType()!=GameType::LoadMultiplayer) {
+                    coopSession->setAlliedBuilding(changeEvent.newValue!=0);
+                    alliedBuildingCheckbox.setChecked(changeEvent.newValue!=0);
+                }
+            } break;
             case ChangeEventList::ChangeEvent::EventType::ChangeAlliedControl: {
                 if(coopSession && changeEvent.newValue <= 1) {
                     coopSession->setAlliedControl(changeEvent.newValue != 0);
@@ -931,6 +946,8 @@ void CustomGamePlayers::onReceiveChangeEventList(const ChangeEventList& changeEv
 ChangeEventList CustomGamePlayers::getChangeEventList()
 {
     ChangeEventList changeEventList;
+    if(coopSession) changeEventList.changeEventList.emplace_back(
+        ChangeEventList::ChangeEvent::EventType::ChangeAlliedBuilding,0,alliedBuildingCheckbox.isChecked() ? 1 : 0);
     if(coopSession) changeEventList.changeEventList.emplace_back(
         ChangeEventList::ChangeEvent::EventType::ChangeAlliedControl, 0,
         alliedControlCheckbox.isChecked() ? 1 : 0);
@@ -1619,6 +1636,7 @@ void CustomGamePlayers::addAllPlayersToGameInitSettings()
             coopSession->setPlayerColor(i, color);
         }
         coopSession->setAlliedControl(alliedControlCheckbox.isChecked());
+        coopSession->setAlliedBuilding(alliedBuildingCheckbox.isChecked());
         coopSession->setEasyMode(coopEasyModeCheckbox.isChecked());
         coopSession->setExtraEnemyForces(extraEnemyForcesCheckbox.isChecked());
         coopSession->skipIntroForEasyMode();
@@ -2380,6 +2398,7 @@ void CustomGamePlayers::configureCoopLobby() {
     const auto& context = coopSession->context();
     const bool loading = gameInitSettings.getGameType() == GameType::LoadMultiplayer;
     const bool editable = bServer && !loading && startGameTime == 0 && !bWaitingForModAcks;
+    alliedBuildingCheckbox.setEnabled(editable);
     coopEasyModeCheckbox.setEnabled(editable);
     extraEnemyForcesCheckbox.setEnabled(editable);
     extraHardEnemyForcesCheckbox.setEnabled(editable);
@@ -2442,6 +2461,8 @@ void CustomGamePlayers::configureCoopLobby() {
 void CustomGamePlayers::enforceCoopLobby() {
     if(expandedCoop()) { enforceExpandedCoopLobby();return; }
     loadCoopSaveButton.setEnabled(bServer && startGameTime == 0 && !bWaitingForModAcks);
+    alliedBuildingCheckbox.setEnabled(bServer && gameInitSettings.getGameType()!=GameType::LoadMultiplayer
+        && startGameTime==0 && !bWaitingForModAcks);
     alliedControlCheckbox.setEnabled(bServer && gameInitSettings.getGameType() != GameType::LoadMultiplayer
         && startGameTime == 0 && !bWaitingForModAcks);
     const bool loading = gameInitSettings.getGameType() == GameType::LoadMultiplayer;
@@ -2672,7 +2693,7 @@ void CustomGamePlayers::enforceExpandedCoopLobby() {
     const bool editable=startGameTime==0 && !bWaitingForModAcks;
     const bool host=bServer && editable;
     loadCoopSaveButton.setEnabled(host);
-    for(Checkbox* box:{&alliedControlCheckbox,&coopEasyModeCheckbox,&extraEnemyForcesCheckbox,&extraHardEnemyForcesCheckbox}) box->setEnabled(host && !loading);
+    for(Checkbox* box:{&alliedControlCheckbox,&alliedBuildingCheckbox,&coopEasyModeCheckbox,&extraEnemyForcesCheckbox,&extraHardEnemyForcesCheckbox}) box->setEnabled(host && !loading);
     const auto allies=context.alliedSlots();
     for(int i=0;i<numHouses;++i) {
         auto& row=houseInfo[i];
@@ -2751,7 +2772,7 @@ void CustomGamePlayers::commitExpandedCoop() {
         coopSession->enableExpandedAllies(previous.archon);
     }
     coopSession->reconfigureAllies(allies);
-    coopSession->setAlliedControl(alliedControlCheckbox.isChecked());coopSession->setEasyMode(coopEasyModeCheckbox.isChecked());
+    coopSession->setAlliedControl(alliedControlCheckbox.isChecked());coopSession->setAlliedBuilding(alliedBuildingCheckbox.isChecked());coopSession->setEasyMode(coopEasyModeCheckbox.isChecked());
     coopSession->setExtraEnemyForces(extraEnemyForcesCheckbox.isChecked());coopSession->setExtraHardEnemyForces(extraHardEnemyForcesCheckbox.isChecked());
     coopSession->skipIntroForEasyMode();
     for(std::size_t i=0;i<previous.enemyPresent.size();++i) {
