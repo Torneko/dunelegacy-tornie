@@ -10,7 +10,7 @@ for(const [mod,description] of Object.entries(E.modeDescriptions))D.modeInfo[mod
 D.buildingLabels=E.buildingLabels;
 D.modLabels.Commun='Shared';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const footer=()=>`<footer class="footer-note"><span>Dune Legacy Tornie · ${D.version}</span><span>Dune Legacy · Tornie / Tornie Panther · Dune II / Westwood Studios</span></footer>`;
+const footer=()=>`<section class="notice"><h2>1.0.542 — unpublished preparation</h2><p>These draft tables include provisional 1.0.542 changes. Spice: Jericho/Lite red and blue; Tornie/Lite green and purple; ArcaKev/Lite green and blue. Rebels Windtrap outside Vanilla: 150 credits, technology 7 + IX, double power and green animation. Wildspade: standard Trike at level 2, no Raider later. Public downloads remain 1.0.541.</p><img src="assets/mentats/rebels-windtrap-blue-green.gif" width="240" height="128" alt="Blue original / green upgraded Rebels Windtrap" style="max-width:100%;height:auto"><a href="documents/Notes-1.0.542-EN.md">Provisional notes</a></section><footer class="footer-note"><span>Dune Legacy Tornie · ${D.version}</span><span>Dune Legacy · Tornie / Tornie Panther · Dune II / Westwood Studios</span></footer>`;
 const title=(n,t,p)=>`<div class="page-heading"><span class="eyebrow">${n} / DOCUMENTATION</span><h1>${t}</h1><p>${p}</p></div>`;
 const dialog=document.querySelector('#detail-dialog');
 let current={route:'accueil',mod:'Tornie',house:'A',category:'all'};
