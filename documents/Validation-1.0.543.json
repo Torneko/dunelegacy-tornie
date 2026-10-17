@@ -1,0 +1,766 @@
+{
+  "status": "validated",
+  "version": "1.0.543",
+  "sourceCommit": "472538d7a6f84fd024f4950641bcbb60ee142d21",
+  "networkProtocol": 15,
+  "saveVersion": 9835,
+  "engine": {
+    "ctest": "2/2 PASS",
+    "testCases": 136,
+    "assertions": 10314,
+    "fullRuntimeFrenchScenarios": 1606,
+    "fullRuntimeFrenchAchievements": true
+  },
+  "runtime": {
+    "rulesAndSelling": [
+      "Tornie",
+      "TornieLite",
+      "Jericho",
+      "JerichoLite",
+      "ArcaKev",
+      "ArcaKevLite",
+      "vanilla"
+    ],
+    "normalMultiplayerAlliances": [
+      "Tornie",
+      "TornieLite",
+      "Jericho",
+      "JerichoLite",
+      "ArcaKev",
+      "ArcaKevLite",
+      "vanilla"
+    ],
+    "newUnits": [
+      "Tornie",
+      "TornieLite",
+      "Jericho",
+      "JerichoLite",
+      "ArcaKev",
+      "ArcaKevLite"
+    ],
+    "vanillaNewProductionDisabled": true,
+    "legacy541SavesLoaded": 7,
+    "refineryHarvesterEvacuation": true,
+    "refundWithoutStorage": true,
+    "duplicateSellCommandNoDoubleRefund": true,
+    "alliedRefundGoesToBuildingOwner": true,
+    "hostOnlyLobbyOptionsAndWireSynchronization": true,
+    "gasHealCommandOnDifferentAlliedHouse": true,
+    "gasEnemyWeapon": "Bullet_DRocket (existing Deviator effect)",
+    "flameTrooperCapturePreserved": true,
+    "ixAndLevelGates": true,
+    "newUnitSaveReload": true
+  },
+  "flameQuad": {
+    "price": 300,
+    "quadPrice": 200,
+    "damagePerShot": 12,
+    "quadDamagePerShot": 7,
+    "flameEffect": true
+  },
+  "artwork": {
+    "status": "PASS",
+    "archive": "Images.tar.gz",
+    "originalFilesPreserved": true,
+    "files": [
+      {
+        "file": "FlameQuadIcon.png",
+        "size": [
+          91,
+          55
+        ],
+        "sha256": "f995f882a45f3538bdecd4733651a194e759aa0f27326f15239243878e4b5d59",
+        "sourceOpaqueMagenta": 0,
+        "identicalCopies": [
+          "Tornie",
+          "TornieLite",
+          "Jericho",
+          "JerichoLite",
+          "ArcaKev",
+          "ArcaKevLite"
+        ]
+      },
+      {
+        "file": "FlameQuadTiles.png",
+        "size": [
+          88,
+          58
+        ],
+        "sha256": "4bc35bdb13118bc350def4c8788a87e1e53e12839044c9baf579f9c7bd478531",
+        "sourceOpaqueMagenta": 0,
+        "identicalCopies": [
+          "Tornie",
+          "TornieLite",
+          "Jericho",
+          "JerichoLite",
+          "ArcaKev",
+          "ArcaKevLite"
+        ]
+      },
+      {
+        "file": "Gaz_Infantry_sprites.png",
+        "size": [
+          101,
+          42
+        ],
+        "sha256": "bf1638b7ef4b4aa146a396bc0ba3b6744c459d410c32518b905f770c5f39de8f",
+        "sourceOpaqueMagenta": 2397,
+        "identicalCopies": [
+          "Tornie",
+          "TornieLite",
+          "Jericho",
+          "JerichoLite",
+          "ArcaKev",
+          "ArcaKevLite"
+        ]
+      },
+      {
+        "file": "ProductionTrooperFlames.png",
+        "size": [
+          91,
+          55
+        ],
+        "sha256": "aec900d2e8f0b101047e803be9a1dffbb1daa46e9d1298bd0a9126deaa084cfc",
+        "sourceOpaqueMagenta": 0,
+        "identicalCopies": [
+          "Tornie",
+          "TornieLite",
+          "Jericho",
+          "JerichoLite",
+          "ArcaKev",
+          "ArcaKevLite"
+        ]
+      },
+      {
+        "file": "ProductionTrooperGazInfantry.png",
+        "size": [
+          91,
+          55
+        ],
+        "sha256": "f0634d9178918764ba10d65ed95f5e2ccc265d9c0eb23f966d055d4bd1386f73",
+        "sourceOpaqueMagenta": 0,
+        "identicalCopies": [
+          "Tornie",
+          "TornieLite",
+          "Jericho",
+          "JerichoLite",
+          "ArcaKev",
+          "ArcaKevLite"
+        ]
+      }
+    ]
+  },
+  "nativeMagentaChecks": [
+    {
+      "file": "ArcaKev-111-zoom1.png",
+      "size": [
+        144,
+        18
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "c1c38544b4fa604a9732beb162f9e8ea801ea60e8aa21cb1afdfbb604a8264ac"
+    },
+    {
+      "file": "ArcaKev-111-zoom2.png",
+      "size": [
+        288,
+        36
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "1dd232072634ef8b530ba37c8d99c851a16fe9623d680e0740ade6f6e17c390f"
+    },
+    {
+      "file": "ArcaKev-111-zoom3.png",
+      "size": [
+        432,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "f9e47fa00ae79ba52971a3aecf446e01b71569514aca3ab2b1c76db0b20d06c9"
+    },
+    {
+      "file": "ArcaKev-112-zoom1.png",
+      "size": [
+        36,
+        27
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "89c497e264880afab5c73cd189a7b8887b4b82bb16b5917c62d314c69ca7034a"
+    },
+    {
+      "file": "ArcaKev-112-zoom2.png",
+      "size": [
+        72,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "2e7194e96224053ddb702103e162af6e97b946eefa35ac25c0a4528160cb51cb"
+    },
+    {
+      "file": "ArcaKev-112-zoom3.png",
+      "size": [
+        108,
+        81
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "0e1378e0c31d9b69c1395bca9b83b864871c1fb84fbae85a09f126d71789440f"
+    },
+    {
+      "file": "ArcaKevLite-111-zoom1.png",
+      "size": [
+        144,
+        18
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "c1c38544b4fa604a9732beb162f9e8ea801ea60e8aa21cb1afdfbb604a8264ac"
+    },
+    {
+      "file": "ArcaKevLite-111-zoom2.png",
+      "size": [
+        288,
+        36
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "1dd232072634ef8b530ba37c8d99c851a16fe9623d680e0740ade6f6e17c390f"
+    },
+    {
+      "file": "ArcaKevLite-111-zoom3.png",
+      "size": [
+        432,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "f9e47fa00ae79ba52971a3aecf446e01b71569514aca3ab2b1c76db0b20d06c9"
+    },
+    {
+      "file": "ArcaKevLite-112-zoom1.png",
+      "size": [
+        36,
+        27
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "89c497e264880afab5c73cd189a7b8887b4b82bb16b5917c62d314c69ca7034a"
+    },
+    {
+      "file": "ArcaKevLite-112-zoom2.png",
+      "size": [
+        72,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "2e7194e96224053ddb702103e162af6e97b946eefa35ac25c0a4528160cb51cb"
+    },
+    {
+      "file": "ArcaKevLite-112-zoom3.png",
+      "size": [
+        108,
+        81
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "0e1378e0c31d9b69c1395bca9b83b864871c1fb84fbae85a09f126d71789440f"
+    },
+    {
+      "file": "Jericho-111-zoom1.png",
+      "size": [
+        144,
+        18
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "c1c38544b4fa604a9732beb162f9e8ea801ea60e8aa21cb1afdfbb604a8264ac"
+    },
+    {
+      "file": "Jericho-111-zoom2.png",
+      "size": [
+        288,
+        36
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "1dd232072634ef8b530ba37c8d99c851a16fe9623d680e0740ade6f6e17c390f"
+    },
+    {
+      "file": "Jericho-111-zoom3.png",
+      "size": [
+        432,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "f9e47fa00ae79ba52971a3aecf446e01b71569514aca3ab2b1c76db0b20d06c9"
+    },
+    {
+      "file": "Jericho-112-zoom1.png",
+      "size": [
+        36,
+        27
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "89c497e264880afab5c73cd189a7b8887b4b82bb16b5917c62d314c69ca7034a"
+    },
+    {
+      "file": "Jericho-112-zoom2.png",
+      "size": [
+        72,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "2e7194e96224053ddb702103e162af6e97b946eefa35ac25c0a4528160cb51cb"
+    },
+    {
+      "file": "Jericho-112-zoom3.png",
+      "size": [
+        108,
+        81
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "0e1378e0c31d9b69c1395bca9b83b864871c1fb84fbae85a09f126d71789440f"
+    },
+    {
+      "file": "JerichoLite-111-zoom1.png",
+      "size": [
+        144,
+        18
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "c1c38544b4fa604a9732beb162f9e8ea801ea60e8aa21cb1afdfbb604a8264ac"
+    },
+    {
+      "file": "JerichoLite-111-zoom2.png",
+      "size": [
+        288,
+        36
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "1dd232072634ef8b530ba37c8d99c851a16fe9623d680e0740ade6f6e17c390f"
+    },
+    {
+      "file": "JerichoLite-111-zoom3.png",
+      "size": [
+        432,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "f9e47fa00ae79ba52971a3aecf446e01b71569514aca3ab2b1c76db0b20d06c9"
+    },
+    {
+      "file": "JerichoLite-112-zoom1.png",
+      "size": [
+        36,
+        27
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "89c497e264880afab5c73cd189a7b8887b4b82bb16b5917c62d314c69ca7034a"
+    },
+    {
+      "file": "JerichoLite-112-zoom2.png",
+      "size": [
+        72,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "2e7194e96224053ddb702103e162af6e97b946eefa35ac25c0a4528160cb51cb"
+    },
+    {
+      "file": "JerichoLite-112-zoom3.png",
+      "size": [
+        108,
+        81
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "0e1378e0c31d9b69c1395bca9b83b864871c1fb84fbae85a09f126d71789440f"
+    },
+    {
+      "file": "Tornie-111-zoom1.png",
+      "size": [
+        144,
+        18
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "c1c38544b4fa604a9732beb162f9e8ea801ea60e8aa21cb1afdfbb604a8264ac"
+    },
+    {
+      "file": "Tornie-111-zoom2.png",
+      "size": [
+        288,
+        36
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "1dd232072634ef8b530ba37c8d99c851a16fe9623d680e0740ade6f6e17c390f"
+    },
+    {
+      "file": "Tornie-111-zoom3.png",
+      "size": [
+        432,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "f9e47fa00ae79ba52971a3aecf446e01b71569514aca3ab2b1c76db0b20d06c9"
+    },
+    {
+      "file": "Tornie-112-zoom1.png",
+      "size": [
+        36,
+        27
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "89c497e264880afab5c73cd189a7b8887b4b82bb16b5917c62d314c69ca7034a"
+    },
+    {
+      "file": "Tornie-112-zoom2.png",
+      "size": [
+        72,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "2e7194e96224053ddb702103e162af6e97b946eefa35ac25c0a4528160cb51cb"
+    },
+    {
+      "file": "Tornie-112-zoom3.png",
+      "size": [
+        108,
+        81
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "0e1378e0c31d9b69c1395bca9b83b864871c1fb84fbae85a09f126d71789440f"
+    },
+    {
+      "file": "TornieLite-111-zoom1.png",
+      "size": [
+        144,
+        18
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "c1c38544b4fa604a9732beb162f9e8ea801ea60e8aa21cb1afdfbb604a8264ac"
+    },
+    {
+      "file": "TornieLite-111-zoom2.png",
+      "size": [
+        288,
+        36
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "1dd232072634ef8b530ba37c8d99c851a16fe9623d680e0740ade6f6e17c390f"
+    },
+    {
+      "file": "TornieLite-111-zoom3.png",
+      "size": [
+        432,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "f9e47fa00ae79ba52971a3aecf446e01b71569514aca3ab2b1c76db0b20d06c9"
+    },
+    {
+      "file": "TornieLite-112-zoom1.png",
+      "size": [
+        36,
+        27
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "89c497e264880afab5c73cd189a7b8887b4b82bb16b5917c62d314c69ca7034a"
+    },
+    {
+      "file": "TornieLite-112-zoom2.png",
+      "size": [
+        72,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "2e7194e96224053ddb702103e162af6e97b946eefa35ac25c0a4528160cb51cb"
+    },
+    {
+      "file": "TornieLite-112-zoom3.png",
+      "size": [
+        108,
+        81
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "0e1378e0c31d9b69c1395bca9b83b864871c1fb84fbae85a09f126d71789440f"
+    }
+  ],
+  "website": {
+    "base": "33b9edb2631edcf77efe1d5d5b976fadaf2b4cb6",
+    "routes": {
+      "pass": true,
+      "checks": 36,
+      "results": [
+        {
+          "width": 1280,
+          "lang": "fr",
+          "hash": "accueil",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "fr",
+          "hash": "unites",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "fr",
+          "hash": "batiments",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "fr",
+          "hash": "technologies",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "fr",
+          "hash": "factions",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "fr",
+          "hash": "hauts-faits",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "fr",
+          "hash": "guide",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "fr",
+          "hash": "galerie",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "fr",
+          "hash": "projet",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "en",
+          "hash": "accueil",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "en",
+          "hash": "unites",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "en",
+          "hash": "batiments",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "en",
+          "hash": "technologies",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "en",
+          "hash": "factions",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "en",
+          "hash": "hauts-faits",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "en",
+          "hash": "guide",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "en",
+          "hash": "galerie",
+          "pass": true
+        },
+        {
+          "width": 1280,
+          "lang": "en",
+          "hash": "projet",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "fr",
+          "hash": "accueil",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "fr",
+          "hash": "unites",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "fr",
+          "hash": "batiments",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "fr",
+          "hash": "technologies",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "fr",
+          "hash": "factions",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "fr",
+          "hash": "hauts-faits",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "fr",
+          "hash": "guide",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "fr",
+          "hash": "galerie",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "fr",
+          "hash": "projet",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "en",
+          "hash": "accueil",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "en",
+          "hash": "unites",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "en",
+          "hash": "batiments",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "en",
+          "hash": "technologies",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "en",
+          "hash": "factions",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "en",
+          "hash": "hauts-faits",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "en",
+          "hash": "guide",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "en",
+          "hash": "galerie",
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "en",
+          "hash": "projet",
+          "pass": true
+        }
+      ]
+    },
+    "newUnitDetails": {
+      "pass": true,
+      "results": [
+        {
+          "lang": "fr",
+          "mod": "Tornie",
+          "house": "K",
+          "id": "flame-quad",
+          "pass": true
+        },
+        {
+          "lang": "fr",
+          "mod": "ArcaKev",
+          "house": "H",
+          "id": "flame-trooper",
+          "pass": true
+        },
+        {
+          "lang": "fr",
+          "mod": "Jericho",
+          "house": "O",
+          "id": "gas-infantry",
+          "pass": true
+        },
+        {
+          "lang": "en",
+          "mod": "Tornie",
+          "house": "K",
+          "id": "flame-quad",
+          "pass": true
+        },
+        {
+          "lang": "en",
+          "mod": "ArcaKev",
+          "house": "H",
+          "id": "flame-trooper",
+          "pass": true
+        },
+        {
+          "lang": "en",
+          "mod": "Jericho",
+          "house": "O",
+          "id": "gas-infantry",
+          "pass": true
+        }
+      ]
+    },
+    "originalPngGifPreserved": 146,
+    "preparationSiteCommit": "6b3b73ac2048e584ad0072a36fc20911adf6bbec",
+    "currentDownloadsVersion": "1.0.543",
+    "releaseLocalBrowserRoutes": 36,
+    "releaseFeatureContexts": 28
+  },
+  "publication": {
+    "authorized": true,
+    "linuxRun": 39074154578,
+    "windowsRun": 39074156864,
+    "linuxPackageChecks": "success",
+    "windowsPackageChecks": "in progress"
+  },
+  "source": "472538d7a6f84fd024f4950641bcbb60ee142d21",
+  "enginePreparationSourceCommit": "61baef969125d567cc790f0039a9396ffe974786",
+  "validationStage": "release-candidate"
+}
