@@ -4386,10 +4386,27 @@ void GFXManager::reloadModDependentObjectGraphics() {
                     const int sx=gas?frame*9:starts[frame],sy=gas?0:21;
                     const int width=gas?9:(frame==2||frame==4?17:18),height=gas?9:17;
                     const bool flip=gas?col==2:(col>=3 && col<=5);
-                    for(int y=0;y<height;++y)for(int x=0;x<width;++x) {
+                    // The Quad contact sheet has unequal transparent margins per
+                    // direction. Centre the visible bounds, not the source cell,
+                    // before mirroring and generating the integer zooms.
+                    int left=0,top=0,right=width,bottom=height;
+                    if(!gas) {
+                        left=width;top=height;right=bottom=0;
+                        for(int y=0;y<height;++y)for(int x=0;x<width;++x) {
+                            Uint8 r,g,b,a;SDL_GetRGBA(getPixel(rgba.get(),sx+x,sy+y),rgba->format,&r,&g,&b,&a);
+                            if(a==0 || (r==255 && g==0 && b==255))continue;
+                            left=std::min(left,x);top=std::min(top,y);
+                            right=std::max(right,x+1);bottom=std::max(bottom,y+1);
+                        }
+                    }
+                    const int visibleWidth=right-left,visibleHeight=bottom-top;
+                    const int offsetX=gas?0:(cell-visibleWidth)/2;
+                    const int offsetY=gas?0:(cell-visibleHeight)/2;
+                    for(int y=top;y<bottom;++y)for(int x=left;x<right;++x) {
                         Uint8 r,g,b,a;SDL_GetRGBA(getPixel(rgba.get(),sx+x,sy+y),rgba->format,&r,&g,&b,&a);
                         if(a==0 || (r==255 && g==0 && b==255))continue;
-                        putPixel(atlas.get(),col*cell+(flip?width-1-x:x),row*cell+y,SDL_MapRGBA(atlas->format,r,g,b,a));
+                        const int dx=flip?visibleWidth-1-(x-left):x-left;
+                        putPixel(atlas.get(),col*cell+offsetX+dx,row*cell+offsetY+y-top,SDL_MapRGBA(atlas->format,r,g,b,a));
                     }
                 }
             }

@@ -186,6 +186,8 @@ TEST_CASE("Tornie custom house prefers its ObjectData IX vehicles",
     objectData[Unit_Ornithopter] = enabledIxVehicle;
     objectData[Unit_Devastator] = { true, ItemID_Invalid, true };
     objectData[Unit_Trooper] = enabledIxVehicle;
+    objectData[Unit_FlameTrooper] = enabledIxVehicle;
+    objectData[Unit_GasInfantry] = enabledIxVehicle;
     objectData[Unit_Harvester] = enabledIxVehicle;
     objectData[Unit_FlameTank] = { true, Structure_HeavyFactory, false };
 
@@ -210,6 +212,12 @@ TEST_CASE("Tornie custom house prefers its ObjectData IX vehicles",
         Unit_Trooper, objectData[Unit_Trooper]));
     REQUIRE_FALSE(isHouseSpecialVehicleCandidate(
         Unit_Harvester, objectData[Unit_Harvester]));
+    REQUIRE_FALSE(isHouseSpecialVehicleCandidate(
+        Unit_FlameTrooper, objectData[Unit_FlameTrooper]));
+    REQUIRE_FALSE(isHouseSpecialVehicleCandidate(
+        Unit_GasInfantry, objectData[Unit_GasInfantry]));
+    REQUIRE(std::find(tornieIxCandidates.begin(), tornieIxCandidates.end(), Unit_FlameTrooper) == tornieIxCandidates.end());
+    REQUIRE(std::find(tornieIxCandidates.begin(), tornieIxCandidates.end(), Unit_GasInfantry) == tornieIxCandidates.end());
 }
 
 TEST_CASE("House fallback follows the active faction plan when ObjectData has no candidates",

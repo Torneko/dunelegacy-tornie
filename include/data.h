@@ -242,7 +242,7 @@ inline bool isCarryallUnit(int itemID) {
     \param itemID   the ID of the item (e.g. Unit_Carryall)
     \return true if it is an infantry unit, false otherwise
 */
-inline bool isInfantryUnit(int itemID) { return (itemID == Unit_Soldier) || (itemID == Unit_Trooper) || (itemID == Unit_Infantry) || (itemID == Unit_Troopers) || (itemID == Unit_Troopers5) || (itemID == Unit_Infantry5) || (itemID == Unit_Saboteur); }
+inline bool isInfantryUnit(int itemID) { return (itemID == Unit_Soldier) || (itemID == Unit_Trooper) || (itemID == Unit_Infantry) || (itemID == Unit_Troopers) || (itemID == Unit_Troopers5) || (itemID == Unit_Infantry5) || (itemID == Unit_Saboteur) || (itemID == Unit_GasInfantry) || (itemID == Unit_FlameTrooper); }
 
 
 #endif // DATA_H

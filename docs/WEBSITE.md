@@ -1,3 +1,7 @@
+# Remplacement 1.0.543 — centrage et tirage Special
+
+Remplacement autorisé, sans créer de 1.0.544. Centrer les huit directions du Flame Quad dans les zooms natifs et l’éditeur ; exclure la nouvelle infanterie du tirage des véhicules Special en conservant la production Harkonnen niveau 7 + IX. Version 1.0.543, protocole 16, sauvegardes 9835. La publication précédente est archivée dans les rapports existants ; récupérer le site publié `9ea28520c8fa97d519e2da79338cf476e2468c1e` avant de préparer le remplacement.
+
 # 1.0.543 — publication autorisée, CI en cours
 
 Le site de préparation `docs/1.0.543-draft` est récupéré depuis la révision publiée 1.0.542 `33b9edb` (le ref distant récupéré pointait encore sur `f3c7e36`, plus ancien). Les pages de changements FR/EN décrivent la vente, les permissions alliées et le compteur optionnel ; les nouvelles unités et les cinq PNG reçus sont documentés avec leurs validations locales. Aucun déploiement Pages ni nouveau paquet hors ligne publié : conserver les liens publics 1.0.542 jusqu’à validation complète.

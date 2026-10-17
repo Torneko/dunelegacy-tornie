@@ -75,7 +75,7 @@
 // Version 5: Cooperative campaign result/readiness and stage transitions
 // Version 9: Doublefinery's deterministic footprint is five by two.
 // Version 10: Host relay fallback and authenticated logical peer identities.
-#define NETWORK_PROTOCOL_VERSION            15
+#define NETWORK_PROTOCOL_VERSION            16
 
 /**
  * Reject an incompatible config-hash handshake and dispatch its disconnect cause.

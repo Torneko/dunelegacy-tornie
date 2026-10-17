@@ -1,5 +1,6 @@
 #pragma once
 #include <units/GasInfantry.h>
+#include <SpecialVehicle.h>
 
 inline void verifyRelease543Units(const std::string& output,const std::string& mod) {
     auto require=[](bool ok,const char* message){if(!ok)throw std::runtime_error(std::string("Release 543 units: ")+message);};
@@ -14,6 +15,14 @@ inline void verifyRelease543Units(const std::string& output,const std::string& m
     game->techLevel=6;require(!available(wor,Unit_FlameTrooper),"flame infantry available before level seven");
     game->techLevel=7;require(available(wor,Unit_FlameTrooper)==(mod!="vanilla"),"Harkonnen flame infantry unlock");
     require(available(wor,Unit_Trooper),"ordinary Harkonnen Trooper was removed");
+    for(int house=0;house<NUM_HOUSES;++house) {
+        const auto pool=discoverHouseSpecialVehicleCandidates([&](int item) {
+            const auto& data=game->objectData.data[item][house];
+            return HouseSpecialVehicleCandidateData{data.enabled,data.builder,data.prerequisiteStructuresSet[Structure_IX]};
+        });
+        require(std::find(pool.begin(),pool.end(),Unit_FlameTrooper)==pool.end(),"flame infantry in Special spawn pool");
+        require(std::find(pool.begin(),pool.end(),Unit_GasInfantry)==pool.end(),"gas infantry in Special spawn pool");
+    }
     game.reset();currentGame=nullptr;pLocalHouse=nullptr;pLocalPlayer=nullptr;
     if(mod=="vanilla")return;
     if(!isLiteMod(mod)) {
@@ -86,6 +95,17 @@ inline void verifyRelease543Units(const std::string& output,const std::string& m
         }
         require(magenta==0 && background>0 && visible>0,"magenta visible or transparency missing in rendered atlas");
         if(graphic==ObjPic_GasInfantry)require(black>0,"opaque black was erased with magenta");
+        if(graphic==ObjPic_FlameQuad)for(int direction=0;direction<8;++direction) {
+            const int cell=w/8;int left=cell,top=h,right=0,bottom=0;
+            for(int y=0;y<h;++y)for(int x=0;x<cell;++x) {
+                Uint8 r,g,b,a;SDL_GetRGBA(getPixel(pixels.get(),direction*cell+x,y),pixels->format,&r,&g,&b,&a);
+                if(r==7 && g==11 && b==13)continue;
+                left=std::min(left,x);top=std::min(top,y);right=std::max(right,x+1);bottom=std::max(bottom,y+1);
+            }
+            require(right>left && bottom>top,"empty Flame Quad direction");
+            require(std::abs(left+right-cell)<=zoom+1 && std::abs(top+bottom-h)<=zoom+1,
+                "Flame Quad visible bounds are off centre");
+        }
         const auto preview=(std::filesystem::path(output)/(mod+"-"+std::to_string(graphic)+"-zoom"+std::to_string(zoom+1)+".png")).string();
         require(SavePNG(pixels.get(),preview.c_str())==0,"new unit rendered atlas preview");
 
