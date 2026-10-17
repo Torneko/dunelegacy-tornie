@@ -269,3 +269,8 @@ Utiliser 50 capacités de Palace au total.
 ## Commandement balistique
 
 Lancer 25 missiles de Palace au total.
+
+
+## Préparation 1.0.543 — Liquidités
+
+Vendre votre premier bâtiment. Succès cumulatif `StructuresSold`, seuil 1. Les statistiques ajoutent les bâtiments vendus et les crédits remboursés. Catalogue en préparation : 68 succès.

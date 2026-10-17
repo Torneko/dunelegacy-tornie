@@ -269,3 +269,8 @@ Use 50 palace abilities in total.
 ## Missile Command
 
 Launch 25 palace missiles in total.
+
+
+## 1.0.543 draft — Liquid assets
+
+Sell your first building. Lifetime statistic `StructuresSold`, target 1. Statistics also track buildings sold and refunded credits. Draft catalogue: 68 achievements.
