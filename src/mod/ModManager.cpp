@@ -1401,6 +1401,7 @@ ModInfo ModManager::readModIni(const std::string& modPath) const {
         c.purpleSpice = options.getBoolValue("Content Options", "Purple Spice", c.purpleSpice);
         c.blueSpice = options.getBoolValue("Content Options", "Blue Spice", c.blueSpice);
     }
+    info.content.restrictSpices(std::filesystem::path(modPath).filename().string());
     return info;
 }
 

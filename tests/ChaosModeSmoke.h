@@ -83,7 +83,7 @@ inline std::string chaosSmokeData(const ObjectData& data) {
 }
 
 inline void verifyWildspadeTechnology(const std::string& output, const std::string& mod) {
-    if(mod != "Tornie" && mod != "Jericho") return;
+    if(mod != "Tornie" && mod != "Jericho" && mod != "ArcaKev") return;
     auto require = [](bool value, const std::string& message) {
         if(!value) throw std::runtime_error("Wildspade technology check: " + message);
     };
@@ -95,7 +95,10 @@ inline void verifyWildspadeTechnology(const std::string& output, const std::stri
         auto place = [&](int item, int x, int y) { return house->placeStructure(NONE_ID, item, x, y, true, true); };
         auto* yard = dynamic_cast<BuilderBase*>(place(Structure_ConstructionYard, 1, 1));
         place(Structure_WindTrap, 5, 1); place(Structure_Radar, 9, 1);
-        place(Structure_LightFactory, 13, 1); place(Structure_Refinery, 17, 1);
+        auto* light=dynamic_cast<BuilderBase*>(place(Structure_LightFactory, 13, 1)); place(Structure_Refinery, 17, 1);
+        game->techLevel=2;light->updateBuildList();
+        require(light->isAvailableToBuild(Unit_Trike),"Wildspade standard Trike unavailable at level 2 without upgrades");
+        for(int level=2;level<=9;++level){game->techLevel=level;light->updateBuildList();require(!light->isAvailableToBuild(Unit_RaiderTrike),"Wildspade must not receive the fast Raider Trike later");}
         place(Structure_StarPort, 21, 1);
         auto* factory = dynamic_cast<BuilderBase*>(place(Structure_HighTechFactory, 5, 8));
         require(yard && factory, "production buildings missing");

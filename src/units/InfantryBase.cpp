@@ -19,6 +19,7 @@
 #include <Achievements/AchievementEvents.h>
 
 #include <globals.h>
+#include <structures/WindTrap.h>
 
 #include <House.h>
 #include <Game.h>
@@ -331,6 +332,9 @@ void InfantryBase::checkPos() {
                         AchievementEvents::lost(this);
                     }
 
+                    const auto* oldWindtrap=dynamic_cast<WindTrap*>(pCapturedStructure);
+                    const bool upgradedWindtrap=oldWindtrap && oldWindtrap->isPowerUpgraded();
+
                     // destroy captured structure ...
                     pCapturedStructure->setHealth(0);
                     delete pCapturedStructure;
@@ -340,6 +344,7 @@ void InfantryBase::checkPos() {
 
                     pNewStructure->setOriginalHouseID(origHouse);
                     pNewStructure->setHealth(oldHealth);
+                    if(auto* windtrap=dynamic_cast<WindTrap*>(pNewStructure))windtrap->inheritPowerUpgrade(upgradedWindtrap);
                     if(isSelected == true) {
                         pNewStructure->setSelected(true);
                         currentGame->getSelectedList().insert(pNewStructure->getObjectID());

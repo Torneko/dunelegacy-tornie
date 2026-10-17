@@ -32,6 +32,7 @@ public:
     bool unlock(const std::string& id);
     bool save();
     void checkpoint(const std::string& key);
+    bool completed() const;
     bool unlocked(const std::string& id) const;
     std::uint64_t statistic(const std::string& name) const;
     std::uint64_t progress(const Achievement& achievement) const;

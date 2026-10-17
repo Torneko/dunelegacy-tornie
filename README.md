@@ -1,3 +1,7 @@
+# Préparation 1.0.542 — non publiée
+
+Liste provisoire en cours de vérification : [notes françaises](release_notes/1.0.542-FR.md) / [English notes](release_notes/1.0.542-EN.md). Aucun tag ni release avant l’instruction explicite de publication. La version publique reste 1.0.541.
+
 # Dune Legacy Tornie
 
 Replacement **[1.0.541](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.541)** adds an optional **Build on allied land** co-op rule, fixes the editor’s owner dropdown across mod faction orders and gives Rebels an animated cat mentat tinted to its faction (dark grey in Vanilla/Jericho/ArcaKev, green in Tornie). All four allies retain matching starting funds and ArcaKev keeps its corrected Rebels/Corruptique colours. Download the replacement on every computer: protocol **13**, new saves **9833**, earlier saves readable with shared construction off unless recorded. The host sets the option before a new mission; allied buildings and funds retain their owners. All original 1.0.541 features remain included: seven modes, four allied factions, eight-player Archon, original-scenario draws, custom units, supplied Kleshmersh husky, balance/editor/zoom fixes and host relay. See [French notes](release_notes/1.0.541-FR.md), [English notes](release_notes/1.0.541-EN.md), the [co-op guide](docs/COOP-CAMPAIGN-EN.md) and [publication records](docs/WEBSITE.md).

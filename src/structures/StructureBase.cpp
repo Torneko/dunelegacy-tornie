@@ -194,7 +194,7 @@ void StructureBase::blitToScreen() {
     // Loading a map or switching mods invalidates GFXManager's texture cache.
     // Structures keep raw texture pointers, so refresh them before every draw.
     if(owner != nullptr) {
-        graphic = pGFXManager->getObjPic(graphicID, owner->getHouseID());
+        graphic = pGFXManager->getObjPic(graphicID, owner->getHouseID(),usesGreenPowerAnimation());
     }
 
     SDL_Texture* structureTexture = graphic[currentZoomlevel];

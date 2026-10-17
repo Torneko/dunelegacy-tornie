@@ -38,7 +38,7 @@ TEST_CASE("ArcaKev defaults keep normal green and blue spice with custom content
     }
     REQUIRE(isLiteMod("ArcaKevLite"));
     REQUIRE_FALSE(isLiteMod("ArcaKev"));
-    REQUIRE(ModContentOptions::legacy("Jericho").spiceMask() == 15);
+    REQUIRE(ModContentOptions::legacy("Jericho").spiceMask() == 10);
 }
 
 #include <misc/CampaignTechLevel.h>
@@ -49,4 +49,20 @@ TEST_CASE("Campaign and skirmish finale unlock technology nine", "[campaign][tec
     REQUIRE(campaignTechLevel(20)==8);
     REQUIRE(campaignTechLevel(21)==8);
     REQUIRE(campaignTechLevel(22)==9);
+}
+
+TEST_CASE("Mod spice palettes contain exactly their two declared colours", "[mods][spice]") {
+    for(const auto name:{"Tornie","TornieLite"}) REQUIRE(ModContentOptions::legacy(name).spiceMask()==5);
+    for(const auto name:{"Jericho","JerichoLite"}) REQUIRE(ModContentOptions::legacy(name).spiceMask()==10);
+    REQUIRE(ModContentOptions::legacy("vanilla").spiceMask()==0);
+}
+
+TEST_CASE("Old all-colour preferences cannot enable unsupported mod spices", "[mods][spice]") {
+    for(const std::string name:{"Tornie","TornieLite","Jericho","JerichoLite","ArcaKev","ArcaKevLite"}) {
+        ModContentOptions old;old.greenSpice=old.redSpice=old.purpleSpice=old.blueSpice=true;
+        old.customUnitsAndBuildings=false;old.restrictSpices(name);
+        REQUIRE(old.spiceMask()==ModContentOptions::legacy(name).spiceMask());
+        REQUIRE_FALSE(old.customUnitsAndBuildings);
+        old.greenSpice=old.redSpice=old.purpleSpice=old.blueSpice=false;old.restrictSpices(name);REQUIRE(old.spiceMask()==0);
+    }
 }

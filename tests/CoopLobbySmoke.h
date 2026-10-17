@@ -48,6 +48,13 @@ inline void verifyCoopLobby(const std::string& output, const std::string& mod) {
     {
         auto owned=std::make_unique<CustomGamePlayers>(init,true);
         auto& lobby=*owned;
+        const auto originalSize=lobby.lobbyViewport.getSize();
+        lobby.lobbyViewport.resize(480,420);
+        require(lobby.coopOptionsScroll.getParent()==&lobby.buttonHBox,"coop options must sit beside chat");
+        require(lobby.lobbyViewport.getMaximumOffset()>0,"small lobby must scroll horizontally");
+        lobby.lobbyViewport.scrollBy(10000);require(lobby.lobbyViewport.getScrollOffset()==lobby.lobbyViewport.getMaximumOffset(),"right scroll limit");
+        lobby.lobbyViewport.scrollBy(-10000);require(lobby.lobbyViewport.getScrollOffset()==0,"left scroll limit");
+        lobby.lobbyViewport.resize(originalSize);
         require(lobby.alliedBuildingCheckbox.isEnabled() && !lobby.alliedBuildingCheckbox.isChecked(),"host shared-building option must default off");
         ChangeEventList guestEdit;
         guestEdit.changeEventList.emplace_back(ChangeEventList::ChangeEvent::EventType::ChangeAlliedBuilding,0,1);

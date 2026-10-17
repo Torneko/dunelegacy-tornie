@@ -6,7 +6,7 @@ on:
       release_tag:
         description: Existing release tag to build
         required: true
-        default: v1.0.541
+        default: v1.0.542
         type: string
       documentation_only:
         description: Attach the matching bilingual offline site and supporting files after a successful Linux run
@@ -203,22 +203,23 @@ jobs:
           mkdir -p "$PROFILE/profile" "$PROFILE/results"
           IMAGE=$(find "$PWD/build" -maxdepth 1 -name '*Mint-Compatible.AppImage' -print -quit)
           test -n "$IMAGE"
-          for CHECK in --verify-coop-expanded --verify-release541; do
+          for CHECK in --verify-coop-expanded --verify-release542; do
             SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy SDL_RENDER_DRIVER=software \
               XDG_CONFIG_HOME="$PROFILE/profile" DUNELEGACY_PROFILE_DIR="$PROFILE/profile" \
               DUNELEGACY_SMOKE_DIR="$PROFILE/results" FUSE_APPIMAGE_EXTRACT_AND_RUN=1 \
               "$IMAGE" "$CHECK" --window > "$PROFILE/$CHECK.log" 2>&1
           done
           test "$(grep -c 'EXPANDED COOP PASS:' "$PROFILE/--verify-coop-expanded.log")" -eq 7
-          test "$(grep -c 'EDITOR OWNER PASS:' "$PROFILE/--verify-release541.log")" -eq 7
-          test "$(grep -c 'REBELS MENTAT PASS:' "$PROFILE/--verify-release541.log")" -eq 4
+          test "$(grep -c 'EDITOR OWNER PASS:' "$PROFILE/--verify-release542.log")" -eq 7
+          test "$(grep -c 'REBELS MENTAT PASS:' "$PROFILE/--verify-release542.log")" -eq 4
+          test "$(grep -c 'RELEASE 542 PASS:' "$PROFILE/--verify-release542.log")" -eq 7
 
       - name: Record the exact packaged source
         run: |
           VERSION="$(sed -n 's/^project(DuneLegacyTornie VERSION \([0-9]*\.[0-9]*\.[0-9]*\).*/\1/p' CMakeLists.txt)"
           SOURCE_COMMIT="$(git rev-parse HEAD)" RELEASE_VERSION="$VERSION" python3 - <<'PYTHON'
           import json, os, pathlib
-          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio'},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat']}
+          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio'},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat','rebels-windtrap-upgrade']}
           pathlib.Path('build/Linux-Build-'+report['version']+'.json').write_text(json.dumps(report,indent=2)+'\n')
           PYTHON
 

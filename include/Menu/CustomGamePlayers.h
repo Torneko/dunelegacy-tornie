@@ -33,6 +33,7 @@
 #include <GUI/TextView.h>
 #include <GUI/TextBox.h>
 #include <GUI/ScrollView.h>
+#include <GUI/HorizontalScrollView.h>
 
 #include <Network/ChangeEventList.h>
 
@@ -139,6 +140,9 @@ private:
 
     StaticContainer windowWidget;
     VBox            mainVBox;
+    HorizontalScrollView lobbyViewport;
+    VBox coopOptionsVBox;
+    ScrollView coopOptionsScroll;
 
     Label           captionLabel;
 

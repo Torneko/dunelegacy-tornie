@@ -36,12 +36,20 @@ public:
     bool update() override;
 
     void setHealth(FixPoint newHealth) override;
+    void save(OutputStream& stream) const override;
+    bool isPowerUpgraded() const { return powerUpgraded; }
+    bool isPowerUpgradeEligible() const;
+    void handlePowerUpgradeClick();
+    bool doPowerUpgrade();
+    void inheritPowerUpgrade(bool upgraded);
 
 protected:
     int getProducedPower() const;
+    bool usesGreenPowerAnimation() const override { return powerUpgraded; }
 
 private:
     void init();
+    bool powerUpgraded=false;
 };
 
 #endif //WINDTRAP_H

@@ -163,7 +163,8 @@ CustomGamePlayers::CustomGamePlayers(const GameInitSettings& newGameInitSettings
 
     setWindowWidget(&windowWidget);
 
-    windowWidget.addWidget(&mainVBox, Point(24,23), Point(getRendererWidth() - 48, getRendererHeight() - 32));
+    lobbyViewport.setContent(&mainVBox);
+    windowWidget.addWidget(&lobbyViewport, Point(24,23), Point(getRendererWidth() - 48, getRendererHeight() - 32));
 
     captionLabel.setText(getBasename(gameInitSettings.getFilename(), true));
     captionLabel.setAlignment(Alignment_HCenter);
@@ -178,6 +179,7 @@ CustomGamePlayers::CustomGamePlayers(const GameInitSettings& newGameInitSettings
     leftVBox.addWidget(Spacer::create(), 0.1);
     leftVBox.addWidget(&playerListHBox);
     playerListHBox.addWidget(Spacer::create(), 0.4);
+    playerListScroll.setPreserveContentWidth(true);
     playerListScroll.setContent(&playerListVBox);
     playerListHBox.addWidget(&playerListScroll, 1.0);
     playerListHBox.addWidget(Spacer::create(), 0.4);
@@ -286,6 +288,7 @@ CustomGamePlayers::CustomGamePlayers(const GameInitSettings& newGameInitSettings
     chatVBox.addWidget(&chatTextBox, 0.2);
     chatVBox.addWidget(Spacer::create(), 0.03);
     buttonHBox.addWidget(&chatVBox, 0.675);
+    if(coopSession)buttonHBox.addWidget(&coopOptionsScroll,280);
 
     if(gameInitSettings.getGameType() != GameType::CustomMultiplayer && gameInitSettings.getGameType() != GameType::LoadMultiplayer) {
         chatVBox.setVisible(false);
@@ -551,6 +554,8 @@ CustomGamePlayers::CustomGamePlayers(const GameInitSettings& newGameInitSettings
     }
 
     if(coopSession) {
+        coopOptionsScroll.setPreserveContentWidth(true);
+        coopOptionsScroll.setContent(&coopOptionsVBox);
         alliedControlCheckbox.setText(settings.general.language == "fr" ? "Contrôles alliés" : "Allied control");
         alliedControlCheckbox.setChecked(coopSession->context().alliedControl);
         alliedControlCheckbox.setOnClick([this] {
@@ -560,7 +565,7 @@ CustomGamePlayers::CustomGamePlayers(const GameInitSettings& newGameInitSettings
                 0, alliedControlCheckbox.isChecked() ? 1 : 0);
             if(pNetworkManager) pNetworkManager->sendChangeEventList(events);
         });
-        leftVBox.addWidget(&alliedControlCheckbox, 0.0);
+        coopOptionsVBox.addWidget(&alliedControlCheckbox, 0.0);
         alliedBuildingCheckbox.setText(settings.general.language=="fr" ? "Construction sur terrain allié" : "Build on allied land");
         alliedBuildingCheckbox.setChecked(coopSession->context().alliedBuilding);
         alliedBuildingCheckbox.setOnClick([this] {
@@ -569,7 +574,7 @@ CustomGamePlayers::CustomGamePlayers(const GameInitSettings& newGameInitSettings
             events.changeEventList.emplace_back(ChangeEventList::ChangeEvent::EventType::ChangeAlliedBuilding,0,alliedBuildingCheckbox.isChecked() ? 1 : 0);
             if(pNetworkManager) pNetworkManager->sendChangeEventList(events);
         });
-        leftVBox.addWidget(&alliedBuildingCheckbox,0.0);
+        coopOptionsVBox.addWidget(&alliedBuildingCheckbox,0.0);
         coopEasyModeCheckbox.setText(settings.general.language == "fr" ? "Mode facile (coop)" : "Easy Mode (co-op)");
         coopEasyModeCheckbox.setChecked(coopSession->context().easyMode);
         coopEasyModeCheckbox.setOnClick([this] {
@@ -579,7 +584,7 @@ CustomGamePlayers::CustomGamePlayers(const GameInitSettings& newGameInitSettings
                 0, coopEasyModeCheckbox.isChecked() ? 1 : 0);
             if(pNetworkManager) pNetworkManager->sendChangeEventList(events);
         });
-        leftVBox.addWidget(&coopEasyModeCheckbox, 0.0);
+        coopOptionsVBox.addWidget(&coopEasyModeCheckbox, 0.0);
         extraEnemyForcesCheckbox.setText(settings.general.language == "fr" ? "Forces ennemies +5" : "Enemy forces +5");
         extraEnemyForcesCheckbox.setChecked(coopSession->context().extraEnemyForces);
         extraEnemyForcesCheckbox.setOnClick([this] {
@@ -589,7 +594,7 @@ CustomGamePlayers::CustomGamePlayers(const GameInitSettings& newGameInitSettings
                 0, extraEnemyForcesCheckbox.isChecked() ? 1 : 0);
             if(pNetworkManager) pNetworkManager->sendChangeEventList(events);
         });
-        leftVBox.addWidget(&extraEnemyForcesCheckbox, 0.0);
+        coopOptionsVBox.addWidget(&extraEnemyForcesCheckbox, 0.0);
         extraHardEnemyForcesCheckbox.setText(settings.general.language=="fr" ? "Forces ennemies +10" : "Enemy forces +10");
         extraHardEnemyForcesCheckbox.setChecked(coopSession->context().extraHardEnemyForces);
         extraHardEnemyForcesCheckbox.setOnClick([this] {
@@ -598,7 +603,7 @@ CustomGamePlayers::CustomGamePlayers(const GameInitSettings& newGameInitSettings
             events.changeEventList.emplace_back(ChangeEventList::ChangeEvent::EventType::ChangeExtraHardEnemyForces,0,extraHardEnemyForcesCheckbox.isChecked() ? 1 : 0);
             if(pNetworkManager) pNetworkManager->sendChangeEventList(events);
         });
-        leftVBox.addWidget(&extraHardEnemyForcesCheckbox,0.0);
+        coopOptionsVBox.addWidget(&extraHardEnemyForcesCheckbox,0.0);
         configureCoopLobby();
     }
     onChangeHousesDropDownBoxes(false);

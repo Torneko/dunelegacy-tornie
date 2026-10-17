@@ -3754,6 +3754,7 @@ static sdl2::surface_ptr createCustomMapEditorStar(SDL_Surface* source) {
 // Clears objPicTex + objPic (NOT uiGraphic - preserves
 // mentat background and editor sidebar icons).
 void GFXManager::invalidateAllSpriteTextures() {
+    for(auto& house:greenWindtrapTex)for(auto& texture:house)texture.reset();
     SDL_Log("GFXManager::invalidateAllSpriteTextures(): clearing textures and derived house sprite caches");
     for(int id = 0; id < NUM_OBJPICS; id++) {
         for(int h = 0; h < NUM_HOUSE_COLOR_SLOTS; h++) {
@@ -5029,7 +5030,7 @@ SDL_Texture* GFXManager::getZoomedObjPic(unsigned int id, int house, unsigned in
     return objPicTex[id][house][z].get();
 }
 
-zoomable_texture GFXManager::getObjPic(unsigned int id, int house) {
+zoomable_texture GFXManager::getObjPic(unsigned int id, int house,bool greenWindtrap) {
     if(id >= NUM_OBJPICS) {
         THROW(std::invalid_argument, "GFXManager::getObjPic(): Unit Picture with ID %u is not available!", id);
     }
@@ -5046,6 +5047,14 @@ zoomable_texture GFXManager::getObjPic(unsigned int id, int house) {
             // getZoomedObjPic() performs the visual mapping exactly once.
             getZoomedObjPic(id, requestedHouse, z);
         }
+    }
+
+    if(greenWindtrap && id==ObjPic_Windtrap) {
+        for(int z=0;z<NUM_ZOOMLEVEL;++z)if(!greenWindtrapTex[visualHouse][z]) {
+            auto copy=copySurface(objPic[id][visualHouse][z].get());
+            greenWindtrapTex[visualHouse][z]=convertSurfaceToTexture(generateWindtrapAnimationFrames(copy.get(),true));
+        }
+        return zoomable_texture{greenWindtrapTex[visualHouse][0].get(),greenWindtrapTex[visualHouse][1].get(),greenWindtrapTex[visualHouse][2].get()};
     }
 
     return zoomable_texture{ objPicTex[id][visualHouse][0].get(), objPicTex[id][visualHouse][1].get(), objPicTex[id][visualHouse][2].get() };
@@ -5440,7 +5449,7 @@ std::unique_ptr<Animation> GFXManager::loadAnimationFromWsa(const std::string& f
     return animation;
 }
 
-sdl2::surface_ptr GFXManager::generateWindtrapAnimationFrames(SDL_Surface* windtrapPic) const {
+sdl2::surface_ptr GFXManager::generateWindtrapAnimationFrames(SDL_Surface* windtrapPic,bool green) const {
     int windtrapColorQuantizizer = 255/((NUM_WINDTRAP_ANIMATIONS/2)-2);
     int frameWidth = windtrapPic->w / objPicTiles[ObjPic_Windtrap].x;
     int frameHeight = windtrapPic->h;
@@ -5477,6 +5486,7 @@ sdl2::surface_ptr GFXManager::generateWindtrapAnimationFrames(SDL_Surface* windt
                 windtrapColor.b = static_cast<Uint8>(std::max(0, 255-val));
                 windtrapColor.a = 255;
             }
+            if(green)std::swap(windtrapColor.g,windtrapColor.b);
             SDL_SetPaletteColors(windtrapPic->format->palette, &windtrapColor, PALCOLOR_WINDTRAP_COLORCYCLE, 1);
         }
 

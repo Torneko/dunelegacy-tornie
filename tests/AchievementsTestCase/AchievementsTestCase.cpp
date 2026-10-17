@@ -337,3 +337,13 @@ TEST_CASE_METHOD(Fixture,"New cumulative thresholds reuse stored counters and re
     manager.checkpoint("new-counters"); manager.begin(info,"new-counters",true);
     REQUIRE(manager.statistic("EnemyUnitsDestroyed")==1000);
 }
+
+TEST_CASE_METHOD(Fixture,"Completion requires every current achievement and survives reload","[achievements][completion]") {
+    REQUIRE_FALSE(AchievementManager{}.completed());
+    REQUIRE_FALSE(manager.completed());
+    const auto definitions=manager.definitions();
+    for(std::size_t i=0;i+1<definitions.size();++i)manager.unlock(definitions[i].id);
+    REQUIRE_FALSE(manager.completed());
+    manager.unlock(definitions.back().id);REQUIRE(manager.completed());REQUIRE(manager.save());
+    AchievementManager restored;REQUIRE(restored.configure("",(dir/"achievements.ini").u8string()));REQUIRE(restored.completed());
+}

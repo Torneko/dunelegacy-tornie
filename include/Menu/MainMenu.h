@@ -22,6 +22,7 @@
 #include <GUI/StaticContainer.h>
 #include <GUI/VBox.h>
 #include <GUI/TextButton.h>
+#include <GUI/CompletionButton.h>
 #include <GUI/Spacer.h>
 #include <GUI/PictureLabel.h>
 #include <GUI/Label.h>
@@ -72,7 +73,7 @@ private:
     TextButton      howToPlayButton;
     TextButton      aboutButton;
     TextButton      quitButton;
-    TextButton      achievementsButton;
+    CompletionButton achievementsButton;
 
     PictureLabel    planetPicture;
     PictureLabel    duneLegacy;

@@ -18,6 +18,7 @@
 #include <Command.h>
 
 #include <globals.h>
+#include <structures/WindTrap.h>
 
 #include <Game.h>
 #include <House.h>
@@ -116,7 +117,7 @@ void Command::save(OutputStream& stream) const {
 
 void Command::executeCommand() const {
     const bool objectCommand = (commandID >= CMD_PLACE_STRUCTURE && commandID <= CMD_TURRET_ATTACKOBJECT)
-        || (commandID >= CMD_TECHCENTER_SPAWN && commandID <= CMD_SCOUTPOST_CHEMIPOST_UPGRADE);
+        || (commandID >= CMD_TECHCENTER_SPAWN && commandID <= CMD_WINDTRAP_POWER_UPGRADE);
     if(currentGame->isCoopCampaign() && objectCommand && !parameter.empty()) {
         auto* object = currentGame->getObjectManager().getObject(parameter[0]);
         auto* player = currentGame->getPlayerByID(playerID);
@@ -423,6 +424,13 @@ case CMD_INFANTRY_CAPTURE: {
                 return;
             }
             pScoutpost->doUpgradeToChemipost();
+        } break;
+
+        case CMD_WINDTRAP_POWER_UPGRADE: {
+            if(parameter.size()!=1)return;
+            auto* trap=dynamic_cast<WindTrap*>(currentGame->getObjectManager().getObject(parameter[0]));
+            auto* player=currentGame->getPlayerByID(playerID);
+            if(trap && player && currentGame->canPlayerControlHouse(player->getHouse(),trap->getOwner()))trap->doPowerUpgrade();
         } break;
 
         case CMD_PLAYER_PAUSE: {

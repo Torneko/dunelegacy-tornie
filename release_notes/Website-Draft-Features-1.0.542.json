@@ -1,0 +1,174 @@
+{
+  "passed": true,
+  "count": 28,
+  "results": [
+    {
+      "width": 1440,
+      "language": "fr",
+      "mod": "Vanilla",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "language": "fr",
+      "mod": "Tornie",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "language": "fr",
+      "mod": "TornieLite",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "language": "fr",
+      "mod": "Jericho",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "language": "fr",
+      "mod": "JerichoLite",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "language": "fr",
+      "mod": "ArcaKev",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "language": "fr",
+      "mod": "ArcaKevLite",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "mod": "Vanilla",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "mod": "Tornie",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "mod": "TornieLite",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "mod": "Jericho",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "mod": "JerichoLite",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "mod": "ArcaKev",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "mod": "ArcaKevLite",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "language": "fr",
+      "mod": "Vanilla",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "language": "fr",
+      "mod": "Tornie",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "language": "fr",
+      "mod": "TornieLite",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "language": "fr",
+      "mod": "Jericho",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "language": "fr",
+      "mod": "JerichoLite",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "language": "fr",
+      "mod": "ArcaKev",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "language": "fr",
+      "mod": "ArcaKevLite",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "mod": "Vanilla",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "mod": "Tornie",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "mod": "TornieLite",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "mod": "Jericho",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "mod": "JerichoLite",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "mod": "ArcaKev",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "mod": "ArcaKevLite",
+      "passed": true
+    }
+  ]
+}

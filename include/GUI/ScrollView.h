@@ -40,6 +40,8 @@ public:
         }
     }
 
+    void setPreserveContentWidth(bool value) { preserveWidth=value; }
+
     void setContent(Widget* newContent) {
         if(content == newContent) {
             return;
@@ -65,7 +67,9 @@ public:
     }
 
     Point getMinimumSize() const override {
-        return scrollbar.getMinimumSize();
+        auto size=scrollbar.getMinimumSize();
+        if(preserveWidth && content)size.x=std::max(size.x,content->getMinimumSize().x);
+        return size;
     }
 
     void resize(Point newSize) override {
@@ -171,6 +175,7 @@ public:
         SDL_RenderGetClipRect(renderer, &oldClip);
 
         SDL_Rect clip{ position.x, position.y, getContentWidth(), getSize().y };
+        if(oldClipEnabled == SDL_TRUE) SDL_IntersectRect(&oldClip,&clip,&clip);
         SDL_RenderSetClipRect(renderer, &clip);
         content->draw(position + Point(0, -scrollbar.getCurrentValue()));
 
@@ -206,6 +211,7 @@ private:
         return isScrollbarVisible() ? getScrollbarX() : getSize().x;
     }
 
+    bool preserveWidth=false;
     Widget* content = nullptr;
     ScrollBar scrollbar;
 };

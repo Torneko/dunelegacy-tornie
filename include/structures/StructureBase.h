@@ -111,6 +111,7 @@ public:
         \return true if this object still exists, false if it was destroyed
     */
     bool update() override;
+    virtual bool usesGreenPowerAnimation() const { return false; }
 
     /**
         Can this structure be captured by infantry units?

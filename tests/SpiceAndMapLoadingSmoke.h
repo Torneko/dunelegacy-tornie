@@ -12,7 +12,7 @@ inline void verifyEditorSpiceDefaults(const std::string& output, const std::stri
     const bool jericho = mod == "Jericho" || mod == "JerichoLite";
     const bool arcakev = isArcaKevMod(mod);
     const auto& mods = ModManager::instance();
-    require(mods.getActiveContentOptions().spiceMask() == (mod == "vanilla" ? 0u : arcakev ? 9u : 15u)
+    require(mods.getActiveContentOptions().spiceMask() == (mod == "vanilla" ? 0u : arcakev ? 9u : jericho ? 10u : 5u)
             && effectiveGameOptions.content == mods.getActiveContentOptions(),
             mod + " installed defaults or effective options dropped a spice family");
     if(mod == "JerichoLite") {

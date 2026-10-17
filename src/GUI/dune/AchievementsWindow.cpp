@@ -27,6 +27,7 @@ AchievementsWindow::AchievementsWindow()
 }
 void AchievementsWindow::showAchievements(){
     auto& manager=achievements::AchievementManager::instance();std::ostringstream out;unsigned count=0;
+    if(manager.completed()) out<<(french ? "JEU COMPLÉTÉ À 100 % — Tous les hauts faits obtenus !\n\n" : "GAME 100% COMPLETE — All achievements unlocked!\n\n");
     for(const auto& a:manager.definitions()){
         const bool unlocked=manager.unlocked(a.id);count+=unlocked;
         out<<(unlocked?"[OK] ":"[--] ")<<manager.displayName(a,french)<<"\n";

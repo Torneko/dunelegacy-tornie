@@ -21,11 +21,20 @@ struct ModContentOptions {
     std::string signature() const {
         return std::to_string(customUnitsAndBuildings) + ":" + std::to_string(spiceMask());
     }
+    void restrictSpices(const std::string& name) {
+        if(!isTornieFamilyMod(name))return;
+        const auto allowed=legacy(name);
+        greenSpice &= allowed.greenSpice;redSpice &= allowed.redSpice;
+        purpleSpice &= allowed.purpleSpice;blueSpice &= allowed.blueSpice;
+    }
     static ModContentOptions legacy(const std::string& name) {
         ModContentOptions options;
         const bool variants = isTornieFamilyMod(name);
-        options.greenSpice = options.blueSpice = variants;
-        options.redSpice = options.purpleSpice = variants && !isArcaKevMod(name);
+        const bool jericho = name == "Jericho" || name == "JerichoLite";
+        options.greenSpice = variants && !jericho;
+        options.redSpice = variants && jericho;
+        options.blueSpice = variants && (jericho || isArcaKevMod(name));
+        options.purpleSpice = variants && !jericho && !isArcaKevMod(name);
         return options;
     }
 };

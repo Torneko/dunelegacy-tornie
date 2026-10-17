@@ -623,7 +623,7 @@ public:
 
     SDL_Texture*     getZoomedObjPic(unsigned int id, int house, unsigned int z);
     SDL_Texture*     getZoomedObjPic(unsigned int id, unsigned int z) { return getZoomedObjPic(id, HOUSE_HARKONNEN, z); };
-    zoomable_texture getObjPic(unsigned int id, int house=HOUSE_HARKONNEN);
+    zoomable_texture getObjPic(unsigned int id, int house=HOUSE_HARKONNEN, bool greenWindtrap=false);
     bool             drawHDObjPic(unsigned int id, int house, unsigned int z,
                                   int col, int numCols, int row, int numRows,
                                   int x, int y);
@@ -655,7 +655,7 @@ public:
 
 private:
     std::unique_ptr<Animation>  loadAnimationFromWsa(const std::string& filename) const;
-    sdl2::surface_ptr           generateWindtrapAnimationFrames(SDL_Surface* windtrapPic) const;
+    sdl2::surface_ptr           generateWindtrapAnimationFrames(SDL_Surface* windtrapPic,bool green=false) const;
     sdl2::surface_ptr           generateMapChoiceArrowFrames(SDL_Surface* arrowPic, int house=HOUSE_HARKONNEN) const;
 
     std::unique_ptr<Shpfile>  loadShpfile(const std::string& filename) const;
@@ -703,6 +703,7 @@ private:
 
     // Textures
     std::array<std::array<std::array<sdl2::texture_ptr, NUM_ZOOMLEVEL>, NUM_HOUSE_COLOR_SLOTS>, NUM_OBJPICS> objPicTex;
+    std::array<std::array<sdl2::texture_ptr,NUM_ZOOMLEVEL>,NUM_HOUSE_COLOR_SLOTS> greenWindtrapTex;
     std::array<HDObjPicOverride, NUM_OBJPICS> hdObjPicOverrides;
     std::array<sdl2::texture_ptr, NUM_SMALLDETAILPICS> smallDetailPicTex;
     std::array<sdl2::texture_ptr, NUM_TINYPICTURE> tinyPictureTex;

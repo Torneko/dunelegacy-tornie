@@ -1,3 +1,9 @@
+# Préparation locale 1.0.542 — ne pas publier
+
+Le brouillon FR/EN est préparé depuis `origin/gh-pages` à `f3c7e36b8cd4de20b843ea8ee0b8a66a00c8ffc0`. Il conserve les liens publics 1.0.541 et signale explicitement les fonctions 1.0.542 comme provisoires. Aucun déploiement Pages ni paquet hors ligne publié avant la liste complète et l’instruction de Tornie. Inclure alors les palettes, le Trike Wildspade, les options du lobby, les succès à 100 % et l’amélioration Windtrap Rebels hors Vanilla ; voir les notes 1.0.542 FR/EN.
+
+Brouillon enregistré sur `docs/1.0.542-draft`, révision `2ea886b4689fbc3a72dea71e4f84e63146020c5c` : 36 parcours navigateur FR/EN et 28 contextes des nouvelles fonctions validés. Les 145 images préexistantes sont conservées. Les nouveaux réglages de partie s’appliquent aux nouvelles parties ; les sauvegardes conservent leurs règles enregistrées. Voir le rapport `release_notes/Validation-1.0.542-DRAFT.json`.
+
 # Remplacement de la 1.0.541 — construction alliée, éditeur et chat Rebels
 
 La 1.0.541 a été remplacée, sans créer de 542. Elle ajoute l’option d’hôte **Construction sur terrain allié**, corrige la sélection du propriétaire dans l’éditeur par identifiant stable et donne à Rebels le chat animé existant de Wildspade/Jericho, teinté selon la faction du mod. Protocole **13**, sauvegardes **9833** ; anciennes sauvegardes lisibles, option désactivée si absente, soldes conservés. Les PNG originaux restent identiques et la teinte est appliquée par le moteur.

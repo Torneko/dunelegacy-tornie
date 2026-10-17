@@ -22,6 +22,9 @@
 #include <FileClasses/GFXManager.h>
 #include <House.h>
 #include <Game.h>
+#include <mod/ModManager.h>
+#include <Command.h>
+#include <players/HumanPlayer.h>
 
 #include <GUI/ObjectInterfaces/WindTrapInterface.h>
 
@@ -32,6 +35,7 @@ WindTrap::WindTrap(House* newOwner) : StructureBase(newOwner) {
 }
 
 WindTrap::WindTrap(InputStream& stream) : StructureBase(stream) {
+    if(currentGame->getLoadedSavegameVersion()>=9834)powerUpgraded=stream.readBool();
     WindTrap::init();
 }
 
@@ -85,5 +89,28 @@ int WindTrap::getProducedPower() const {
     int windTrapProducedPower = abs(currentGame->objectData.data[Structure_WindTrap][originalHouseID].power);
 
     FixPoint ratio = getHealth() / getMaxHealth();
-    return lround(ratio * windTrapProducedPower);
+    return lround(ratio * windTrapProducedPower * (powerUpgraded ? 2 : 1));
+}
+
+void WindTrap::save(OutputStream& stream) const { StructureBase::save(stream);stream.writeBool(powerUpgraded); }
+
+bool WindTrap::isPowerUpgradeEligible() const {
+    return !powerUpgraded && currentGame && owner
+        && ModManager::instance().isTornieContentActive()
+        && isHouseFaction(static_cast<HOUSETYPE>(getTechnologyHouseID()),HOUSE_REBELS)
+        && currentGame->techLevel>=7 && owner->getNumItems(Structure_IX)>0;
+}
+void WindTrap::handlePowerUpgradeClick() {
+    if(currentGame && pLocalPlayer)currentGame->getCommandManager().addCommand(
+        Command(pLocalPlayer->getPlayerID(),CMD_WINDTRAP_POWER_UPGRADE,objectID));
+}
+bool WindTrap::doPowerUpgrade() {
+    if(!isPowerUpgradeEligible() || owner->getCredits()<150)return false;
+    owner->takeCredits(150);inheritPowerUpgrade(true);
+    return true;
+}
+
+void WindTrap::inheritPowerUpgrade(bool upgraded) {
+    const int before=getProducedPower();powerUpgraded=upgraded;
+    owner->setProducedPower(owner->getProducedPower()-before+getProducedPower());
 }

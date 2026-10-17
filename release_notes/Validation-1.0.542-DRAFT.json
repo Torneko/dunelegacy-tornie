@@ -1,0 +1,47 @@
+{
+  "version": "1.0.542",
+  "status": "prepared-unpublished-provisional",
+  "sourceBase": "d8726a38f9dc0a9879de567edf1547b3d9b47318",
+  "networkProtocol": 14,
+  "savegameVersion": 9834,
+  "validation": {
+    "ctest": {
+      "passed": 2,
+      "total": 2
+    },
+    "engine": {
+      "cases": 135,
+      "assertions": 10197
+    },
+    "campaignScenariosFrench": 1606,
+    "achievementsSmoke": true,
+    "coopEnglishMods": 7,
+    "release542RulesMods": 7,
+    "legacy541SaveMods": 7,
+    "legacyWindtrapsPerMod": 2,
+    "lobbyFrenchResolution": "640x480",
+    "coopEnglishResolution": "800x600",
+    "websiteRoutes": 36,
+    "websiteFeatureContexts": 28,
+    "preexistingWebsiteImagesPreserved": 145,
+    "workflowYamlAndBashSyntax": true
+  },
+  "preview": {
+    "frames": 66,
+    "fps": 16,
+    "sha256": "ae098870944c6574db93799d00503100e9ff2ed9bdc4f043833037132efdce2e"
+  },
+  "websiteDraftCommit": "2ea886b4689fbc3a72dea71e4f84e63146020c5c",
+  "publication": {
+    "tagCreated": false,
+    "releaseCreated": false,
+    "pagesDeployed": false,
+    "publicRelease": "1.0.541",
+    "publicPagesCommit": "f3c7e36b8cd4de20b843ea8ee0b8a66a00c8ffc0"
+  },
+  "pending": [
+    "Complete user request list and explicit publication instruction",
+    "Release CI builds including Windows",
+    "Native Mint 22.3/kernel 6.17 validation"
+  ]
+}

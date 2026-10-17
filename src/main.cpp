@@ -821,6 +821,7 @@ int main(int argc, char *argv[]) {
         bool bVerifyStartup = false;
         bool bVerifyExpandedCoop = false;
         bool bVerifyRelease541 = false;
+        bool bVerifyWindtrapPreview = false;
         bool bVerifyAchievements = false;
         bool bVerifyRelease538 = false;
         bool bVerifyPortraits = false;
@@ -838,7 +839,8 @@ int main(int argc, char *argv[]) {
                 SDL_Quit();
                 return EXIT_SUCCESS;
             }
-            if(parameter == "--verify-release541") { bVerifyMods=true;bVerifyRelease541=true;continue; }
+            if(parameter == "--verify-windtrap-preview") { bVerifyMods=true;bVerifyWindtrapPreview=true;continue; }
+            if(parameter == "--verify-release541" || parameter == "--verify-release542") { bVerifyMods=true;bVerifyRelease541=true;continue; }
             if(parameter == "--verify-coop-expanded") { bVerifyMods=true;bVerifyExpandedCoop=true;continue; }
             if(parameter == "--verify-startup") { bVerifyMods = true; bVerifyStartup = true; continue; }
             if(parameter == "--verify-mods") { bVerifyMods = true; continue; }
@@ -1347,6 +1349,13 @@ int main(int argc, char *argv[]) {
                         SDL_RendererInfo info{};
                         SDL_GetRendererInfo(renderer, &info);
                         SDL_Log("STARTUP CHECK PASSED: menu drawn, renderer=%s, language=%s", info.name, settings.general.language.c_str());
+                    }
+                    else if(bVerifyWindtrapPreview) {
+                        const char* output=std::getenv("DUNELEGACY_SMOKE_DIR");
+                        if(!output)throw std::runtime_error("Windtrap preview needs output directory");
+                        if(!ModManager::instance().setActiveMod("ArcaKev"))throw std::runtime_error("Preview mod activation");
+                        exportRebelsWindtrapPreview(output,getRuntimeHouseForIdentity(HOUSE_REBELS));
+                        SDL_Log("WINDTRAP PREVIEW PASS: original blue and upgraded green, native rendered cycle");
                     }
                     else if(bVerifyRelease541) {
                         const char* output=std::getenv("DUNELEGACY_SMOKE_DIR");

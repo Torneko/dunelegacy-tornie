@@ -122,6 +122,13 @@ void ModEditorMenu::loadModInfo() {
     redSpiceCheckbox.setChecked(info.content.redSpice);
     purpleSpiceCheckbox.setChecked(info.content.purpleSpice);
     blueSpiceCheckbox.setChecked(info.content.blueSpice);
+    const auto allowed=ModContentOptions::legacy(modName);
+    if(isTornieFamilyMod(modName)) {
+        greenSpiceCheckbox.setEnabled(allowed.greenSpice);
+        redSpiceCheckbox.setEnabled(allowed.redSpice);
+        purpleSpiceCheckbox.setEnabled(allowed.purpleSpice);
+        blueSpiceCheckbox.setEnabled(allowed.blueSpice);
+    }
     modified = false;
 }
 

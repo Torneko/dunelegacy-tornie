@@ -25,6 +25,7 @@
 
 #include <House.h>
 #include <structures/Scoutpost.h>
+#include <structures/WindTrap.h>
 
 #include <GUI/Label.h>
 #include <GUI/TextButton.h>
@@ -68,6 +69,12 @@ protected:
         textVBox.addWidget(&chemipostUpgradeButton, (Sint32)26);
 
 
+        powerUpgradeButton.setText(settings.general.language=="fr" ? "Énergie x2 (150)" : "Power x2 (150)");
+        powerUpgradeButton.setTextColor(color);powerUpgradeButton.setVisible(false);
+        powerUpgradeButton.setOnClick([this] {
+            if(auto* trap=dynamic_cast<WindTrap*>(currentGame->getObjectManager().getObject(this->objectID)))trap->handlePowerUpgradeClick();
+        });
+        textVBox.addWidget(&powerUpgradeButton,26);
         textVBox.addWidget(Spacer::create(),0.99);
     }
 
@@ -88,6 +95,9 @@ protected:
         requiredEnergyLabel.setText(" " + _("Required") + ": " + std::to_string(pOwner->getPowerRequirement()));
         producedEnergyLabel.setText(" " + _("Produced") + ": " + std::to_string(pOwner->getProducedPower()));
 
+        auto* windtrap=dynamic_cast<WindTrap*>(pObject);
+        powerUpgradeButton.setVisible(windtrap && windtrap->isPowerUpgradeEligible());
+        powerUpgradeButton.setEnabled(windtrap && windtrap->isPowerUpgradeEligible() && pOwner->getCredits()>=150);
         Scoutpost* pScoutpost = dynamic_cast<Scoutpost*>(pObject);
         const bool showFlamepostUpgrade = pScoutpost != nullptr
             && pScoutpost->isFlamepostUpgradeEligible()
@@ -134,6 +144,7 @@ private:
 
     Label      requiredEnergyLabel;
     Label      producedEnergyLabel;
+    TextButton powerUpgradeButton;
     TextButton flamepostUpgradeButton;
     TextButton chemipostUpgradeButton;
 

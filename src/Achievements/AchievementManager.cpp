@@ -292,3 +292,7 @@ bool AchievementManager::save() {
     }catch(const std::exception& e){lastError=e.what();return false;}
 }
 }
+
+bool achievements::AchievementManager::completed() const {
+    return !catalog.empty() && std::all_of(catalog.begin(),catalog.end(),[this](const Achievement& a){return unlocked(a.id);});
+}

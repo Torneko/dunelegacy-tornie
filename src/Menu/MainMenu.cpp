@@ -17,6 +17,7 @@
 
 #include <Menu/MainMenu.h>
 #include <Achievements/AchievementEvents.h>
+#include <Achievements/AchievementManager.h>
 #include <Menu/MainMenuButtonColor.h>
 
 #include <globals.h>
@@ -136,6 +137,7 @@ MainMenu::MainMenu()
 
     achievementsButton.setText(settings.general.language == "fr" ? "HAUTS FAITS" : "ACHIEVEMENTS");
     MainMenuButtonColor::apply(achievementsButton);
+    achievementsButton.setCompleted(achievements::AchievementManager::instance().completed());
     achievementsButton.setOnClick(std::bind(&MainMenu::onAchievements, this));
     windowWidget.addWidget(&achievementsButton,
         Point(getRendererWidth() - 200, getRendererHeight() - 72), Point(182,26));
@@ -256,6 +258,7 @@ void MainMenu::update()
     // CustomGamePlayers); refresh the watermark on every tick so it
     // tracks the live ModManager state when control returns here.
     refreshModVersionLabel();
+    achievementsButton.setCompleted(achievements::AchievementManager::instance().completed());
 
     // Process version check results
     if(pVersionChecker) {
