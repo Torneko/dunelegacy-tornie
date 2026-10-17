@@ -1,0 +1,119 @@
+{
+  "version": "1.0.542",
+  "source": "a514293f98ecffef57def43e1fc6a587f191910f",
+  "status": "validated",
+  "protocol": 14,
+  "saveVersion": 9834,
+  "local": {
+    "ctestPassed": 2,
+    "engineCases": 135,
+    "engineAssertions": 10197,
+    "campaignScenariosFrench": 1606,
+    "achievementSmoke": true,
+    "releaseRulesMods": 7,
+    "expandedCoopEnglishMods": 7,
+    "legacy541SaveMods": 7,
+    "legacyWindtrapsPerMod": 2,
+    "smallLobbyResolution": "640x480",
+    "websiteDesktopMobileRoutes": 36,
+    "websiteFeatureContexts": 28,
+    "modPayloadsVerified": 5467,
+    "harvesterHud": {
+      "nativeDrawVerified": true,
+      "standardPlusRebels": {
+        "standard": 3,
+        "rebels": 2,
+        "displayed": 5
+      },
+      "zeroDisplayed": 0,
+      "visibleWithWatermarkHidden": true,
+      "frenchCaptionVerified": true
+    }
+  },
+  "changes": {
+    "harvesterOverlay": {
+      "localHouseOnly": true,
+      "includes": [
+        "Harvester",
+        "Rebel Harvester"
+      ],
+      "position": "bottom-left-beside-watermark",
+      "independentWatermarkVisibility": true,
+      "archonSharedHouse": true
+    },
+    "palettes": {
+      "Jericho": [
+        "normal",
+        "red",
+        "blue"
+      ],
+      "JerichoLite": [
+        "normal",
+        "red",
+        "blue"
+      ],
+      "Tornie": [
+        "normal",
+        "green",
+        "purple"
+      ],
+      "TornieLite": [
+        "normal",
+        "green",
+        "purple"
+      ],
+      "ArcaKev": [
+        "normal",
+        "green",
+        "blue"
+      ],
+      "ArcaKevLite": [
+        "normal",
+        "green",
+        "blue"
+      ]
+    },
+    "windtrapUpgrade": {
+      "faction": "Rebels",
+      "vanilla": false,
+      "price": 150,
+      "technology": 7,
+      "prerequisite": "IX",
+      "powerMultiplier": 2,
+      "oncePerBuilding": true,
+      "animation": "green"
+    }
+  },
+  "ci": {
+    "linux": {
+      "run": 39057204417,
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39057204417",
+      "status": "success",
+      "packagedLanguages": [
+        "fr",
+        "en"
+      ],
+      "formats": [
+        "DEB",
+        "RPM",
+        "TAR.GZ",
+        "AppImage",
+        "Mint-compatible AppImage"
+      ]
+    },
+    "windows": {
+      "run": 39057206612,
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39057206612",
+      "status": "success",
+      "installedLanguages": [
+        "fr",
+        "en"
+      ],
+      "campaignScenariosPerLanguage": 1606
+    }
+  },
+  "limitations": [
+    "Native Mint 22.3/kernel 6.17 confirmation on the affected PC remains pending",
+    "Human Internet match across independent connections remains pending; automated isolated UDP relay passed"
+  ]
+}
