@@ -11,4 +11,6 @@ Non publiée. Aucun tag ni release avant la liste complète et l’instruction d
 - Windtrap standard Rebels hors Vanilla : amélioration propre à chaque bâtiment, une seule fois, pour 150 crédits ; niveau 7 et IX requis. Production doublée, toujours proportionnelle à la santé ; cycle animé vert remplaçant le bleu. Les Windtraps avancées et Vanilla sont exclues.
 - Préparation du protocole 14 et des sauvegardes 9834 pour l’état individuel des Windtraps ; anciennes sauvegardes lisibles avec amélioration désactivée en l’absence du champ.
 
+Les nouvelles palettes et valeurs par défaut visent les nouvelles parties. Les anciennes sauvegardes conservent leurs règles enregistrées ; leurs Windtraps sont non améliorées si le champ était absent.
+
 Périmètre confirmé : Trike standard, pas de Raider ultérieur ; « Need power » est l’option, pas le coût de construction ; aucune amélioration Rebels en Vanilla. D’autres demandes peuvent encore modifier cette liste. Les résultats de vérification sont consignés séparément avant toute publication.

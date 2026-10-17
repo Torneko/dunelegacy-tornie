@@ -11,4 +11,6 @@ Unpublished. No tag or release until Tornie supplies the complete list and autho
 - Standard Rebels Windtrap outside Vanilla: one independent upgrade per building for 150 credits, requiring technology 7 and an IX. Double production, still scaled by health; green animation cycle replaces blue. Advanced Windtraps and Vanilla excluded.
 - Protocol 14 and save format 9834 prepared for the individual Windtrap state; old saves remain readable with the missing upgrade flag off.
 
+The new palettes and defaults apply to new games. Older saves retain their recorded rules; their Windtraps are not upgraded when the flag was absent.
+
 Confirmed scope: standard Trike without a later Raider; Need power means the game option; no Rebels Windtrap upgrade in Vanilla. Further requests may amend this list. Validation results are recorded separately before publication.
