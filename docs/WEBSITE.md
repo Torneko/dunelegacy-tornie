@@ -1,6 +1,8 @@
 # 1.0.543 — brouillon uniquement
 
-Le site de préparation `docs/1.0.543-draft` est récupéré depuis la révision publiée 1.0.542 `33b9edb` (le ref distant récupéré pointait encore sur `f3c7e36`, plus ancien). Les pages de changements FR/EN décrivent la vente, les permissions alliées et le compteur optionnel ; les nouvelles unités et les cinq PNG reçus sont documentés comme en cours de validation. Aucun déploiement Pages ni nouveau paquet hors ligne publié : conserver les liens publics 1.0.542 jusqu’à validation complète.
+Le site de préparation `docs/1.0.543-draft` est récupéré depuis la révision publiée 1.0.542 `33b9edb` (le ref distant récupéré pointait encore sur `f3c7e36`, plus ancien). Les pages de changements FR/EN décrivent la vente, les permissions alliées et le compteur optionnel ; les nouvelles unités et les cinq PNG reçus sont documentés avec leurs validations locales. Aucun déploiement Pages ni nouveau paquet hors ligne publié : conserver les liens publics 1.0.542 jusqu’à validation complète.
+
+Source du jeu vérifiée : `61baef969125d567cc790f0039a9396ffe974786`. Brouillon FR/EN : `6b3b73ac2048e584ad0072a36fc20911adf6bbec`. Tests locaux : 136 cas / 10 314 assertions, CTest 2/2, sept modes, sept reprises de sauvegardes 1.0.541, six configurations de nouvelles unités, 36 rendus sans fond magenta et 42 parcours/fiches navigateur. Le Flame Quad coûte 300 contre 200 et inflige 12 dégâts par tir contre 7 pour le Quad, avec son effet de flamme. Voir [le rapport de préparation](../release_notes/Validation-1.0.543.json). Aucune CI de publication Linux/Windows déclenchée pour cette préparation.
 
 # 1.0.542 — publication Linux, Windows et site FR/EN
 
