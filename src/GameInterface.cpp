@@ -127,7 +127,7 @@ GameInterface::GameInterface() : Window(0,0,0,0) {
     // add chat manager
     windowWidget.addWidget(&chatManager, Point(20, 60), Point(getRendererWidth() - sideBar.getSize().x, 360));
 
-    // Bottom-right watermark: <active mod display name> over v<VERSION>.
+    // Bottom-left watermark: <active mod display name> over v<VERSION>.
     // Mirrors the main menu so the active mod is visible mid-game too.
     {
         std::string modDisplayName = "Vanilla";
@@ -154,6 +154,14 @@ GameInterface::GameInterface() : Window(0,0,0,0) {
                                Point(marginX,
                                      getRendererHeight() - labelHeight - marginY),
                                Point(labelWidth, labelHeight));
+
+        harvesterCountLabel.setTextFontSize(14);
+        harvesterCountLabel.setTextColor(COLOR_WHITE, COLOR_BLACK);
+        harvesterCountLabel.setAlignment(static_cast<Alignment_Enum>(Alignment_Left | Alignment_VCenter));
+        windowWidget.addWidget(&harvesterCountLabel,
+                               Point(marginX + labelWidth + 8,
+                                     getRendererHeight() - labelHeight - marginY),
+                               Point(180, labelHeight));
 
         if (!settings.video.showWatermark) {
             modVersionLabel.setVisible(false);
@@ -183,6 +191,12 @@ GameInterface::~GameInterface() {
 }
 
 void GameInterface::draw(Point position) {
+    const int harvesterCount = pLocalHouse != nullptr ? (pLocalHouse->getNumItems(Unit_Harvester) + pLocalHouse->getNumItems(Unit_RebelHarvester)) : 0;
+    if (harvesterCount != displayedHarvesterCount) {
+        displayedHarvesterCount = harvesterCount;
+        const char* caption = settings.general.language == "fr" ? "Moissonneuses : " : "Harvesters: ";
+        harvesterCountLabel.setText(std::string(caption) + std::to_string(harvesterCount));
+    }
     Window::draw(position);
 
     // draw Power Indicator and Spice indicator

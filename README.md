@@ -1,6 +1,6 @@
-# Préparation 1.0.542 — non publiée
+# Publication 1.0.542 en cours de vérification CI
 
-Liste provisoire en cours de vérification : [notes françaises](release_notes/1.0.542-FR.md) / [English notes](release_notes/1.0.542-EN.md). Aucun tag ni release avant l’instruction explicite de publication. La version publique reste 1.0.541.
+Modifications et vérifications : [notes françaises](release_notes/1.0.542-FR.md) / [English notes](release_notes/1.0.542-EN.md). Publication autorisée après ajout du compteur de moissonneuses. Les paquets Linux et Windows sont vérifiés avant publication ; la version publique reste 1.0.541 jusqu’à leur validation.
 
 # Dune Legacy Tornie
 

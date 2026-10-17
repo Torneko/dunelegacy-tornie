@@ -128,7 +128,9 @@ private:
     TextButton          ornithopterSelectButton;///< Button that selects all owned ornithopters
     TextButton          chemicalCarryallSelectButton;///< Button that selects all owned chemical carryalls
 
-    Label               modVersionLabel;        ///< Bottom-right "<active mod>\nv<VERSION>" watermark, mirrors the main menu.
+    Label               harvesterCountLabel;    ///< Local house count, independent of watermark visibility.
+    int                 displayedHarvesterCount = -1;
+    Label               modVersionLabel;        ///< Bottom-left "<active mod>\nv<VERSION>" watermark, mirrors the main menu.
 
 };
     #endif // GAMEINTERFACE_H
