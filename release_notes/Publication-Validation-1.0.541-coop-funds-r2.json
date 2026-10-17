@@ -1,0 +1,69 @@
+{
+  "version": "1.0.541",
+  "source": "78866fc137383badd4412aded3bc18d6c2f5037c",
+  "website": "0e91f751a1d2946e97e4a22d937fd9fec63a50d1",
+  "linuxRun": 38943059028,
+  "assets": [
+    {
+      "name": "DuneLegacyTornie-1.0.541-Linux-Mint-Compatible.AppImage",
+      "size": 37173752,
+      "sha256": "7394561f6f4cdf0d6eb293811c702daeb753bbd29cbeb81b681349df2117e092"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.541-Linux-x64.deb",
+      "size": 48936114,
+      "sha256": "fdfde9ec50b085473b2a943f0c496a993ab9abaebfdcf99ffbd5bac32aa08fff"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.541-Linux-x64.rpm",
+      "size": 49030379,
+      "sha256": "f28a3523412efdc4515628c36444a09af27842f8f443d8aae3d8c211b6903c32"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.541-Linux-x64.tar.gz",
+      "size": 49484411,
+      "sha256": "9033a0259feae7e80bd5d905e227882232210047974fb22732e4895958c293d5"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.541-Linux-x86_64.AppImage",
+      "size": 37173752,
+      "sha256": "fa4347b6617c88d92ee587f04bb7b752233ce7cd6372b4c2a5ebaadb071489d7"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.541-Sources.zip",
+      "size": 60776447,
+      "sha256": "d5fab700f193f5b45cc98f4f2b1229319051f5bf43363a789203e7eeb8da6f00"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.541-Windows-x64.zip",
+      "size": 61711998,
+      "sha256": "de21ded68c9f8880db6133c7faef3096901176bb69bea68bbd3d6d51b7abd0d6"
+    },
+    {
+      "name": "Linux-Build-1.0.541.json",
+      "size": 419,
+      "sha256": "12afb42df704997bfd576248c5aa7fd9fdd2eec0c5a7872fa0bcd81250015b9a"
+    },
+    {
+      "name": "Release-Notes-1.0.541-EN.md",
+      "size": 4327,
+      "sha256": "5463ee511c9905947a78866d0b6ea9531bc7054a420d711ae6d3df72472fa2bf"
+    },
+    {
+      "name": "Release-Notes-1.0.541-FR.md",
+      "size": 4925,
+      "sha256": "1a7446e48618a0e259f0f872edd8e065b4a46432a2004b9172ef5d4f3f6feb70"
+    },
+    {
+      "name": "Validation-1.0.541.json",
+      "size": 2414,
+      "sha256": "b46a0125c0d865a5f573ad3451bde23f5b1bc15dfcd8a9b1feac9bd408b25a82"
+    },
+    {
+      "name": "Windows-Build-1.0.541.json",
+      "size": 459,
+      "sha256": "5d49c41fc172a8c2d4ede4f275a314719062d844b7ed366bc68c9127c5ce09ae"
+    }
+  ],
+  "windowsRun": 38943055269
+}

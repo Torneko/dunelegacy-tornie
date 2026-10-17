@@ -1,0 +1,20 @@
+{
+  "version": "1.0.541",
+  "source": "78866fc137383badd4412aded3bc18d6c2f5037c",
+  "workflowSource": "78866fc137383badd4412aded3bc18d6c2f5037c",
+  "run": 38943059028,
+  "graphicalStartup": {
+    "passed": true,
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "images": [
+      "standard",
+      "Mint-compatible"
+    ],
+    "audio": "PulseAudio"
+  },
+  "softwareFallback": true,
+  "engineAndNetworkTests": true
+}
