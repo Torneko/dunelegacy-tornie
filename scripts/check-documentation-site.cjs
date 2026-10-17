@@ -2,8 +2,8 @@ const {chromium}=require('playwright'),fs=require('fs');
 (async()=>{
  const browser=await chromium.launch({executablePath:process.env.SITE_BROWSER||'/usr/bin/chromium',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
  const results=[],errors=[];
- const expected=process.env.RELEASE_VERSION||'1.0.542';
- const protocol=process.env.NETWORK_PROTOCOL||'14';
+ const expected=process.env.RELEASE_VERSION||'1.0.543';
+ const protocol=process.env.NETWORK_PROTOCOL||'15';
  const routes=['accueil','unites','batiments','technologies','factions','hauts-faits','guide','galerie','projet'];
  const bases=process.argv.slice(2);if(!bases.length)throw Error('Provide the offline file URL and/or published site URL');
  for(const base of bases)for(const width of [1440,390])for(const lang of ['fr','en']){
@@ -16,7 +16,7 @@ const {chromium}=require('playwright'),fs=require('fs');
    if(process.env.REQUIRE_WINDOWS_VERSION&&['accueil','guide','projet'].includes(route)&&!r.links.some(h=>h.includes('DuneLegacyTornie-'+process.env.REQUIRE_WINDOWS_VERSION+'-Windows-x64.zip')))throw Error('current Windows download missing');
    results.push({base,width,lang,route,heading:r.heading});
   }
-  // Search and filter retain the 67-entry catalogue.
+  // Search and filter retain the 68-entry catalogue.
   await page.goto(base+(lang==='en'?'index-en.html':'index.html')+'#hauts-faits');await page.waitForSelector('#achievement-search');
   await page.locator('#achievement-search').fill('chaos');
   const visible=await page.locator('[data-achievement]:visible').count();if(visible<1)throw Error('achievement search failed');

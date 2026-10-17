@@ -1,4 +1,4 @@
-# 1.0.543 — brouillon uniquement
+# 1.0.543 — publication autorisée, CI en cours
 
 Le site de préparation `docs/1.0.543-draft` est récupéré depuis la révision publiée 1.0.542 `33b9edb` (le ref distant récupéré pointait encore sur `f3c7e36`, plus ancien). Les pages de changements FR/EN décrivent la vente, les permissions alliées et le compteur optionnel ; les nouvelles unités et les cinq PNG reçus sont documentés avec leurs validations locales. Aucun déploiement Pages ni nouveau paquet hors ligne publié : conserver les liens publics 1.0.542 jusqu’à validation complète.
 
