@@ -1,8 +1,8 @@
 # 1.0.542 — spices, interface and Rebels power
 
-Publication authorized by Tornie after the harvester overlay is added and verified. Based on the latest published 1.0.541, including the fixes from PR #15.
+Linux and Windows update. Every network participant must use the same version: protocol 14, save format 9834; earlier saves remain readable.
 
-- Small “Harvesters: N” overlay at the bottom left beside the watermark: local player house only, updated during play and visible even with the watermark hidden. Archon controllers sharing a house see the same count.
+- Small “Harvesters: N” overlay at the bottom left beside the watermark: standard and Rebels harvesters belonging to the local player’s house only, updated during play and visible even with the watermark hidden. Archon controllers sharing a house see the same count.
 - Keep ordinary spice and exactly two custom spices per mod: Jericho/Jericho Lite red and blue; Tornie/Tornie Lite green and purple; ArcaKev/ArcaKev Lite green and blue unchanged. Old checkbox settings cannot enable another palette's colours.
 - Jericho and Jericho Lite: no global Harvester cap (`0`); sandworm respawn off by default. New-match options remain editable.
 - ArcaKev and ArcaKev Lite: Rocket-Turrets Need Power off by default.
@@ -10,8 +10,6 @@ Publication authorized by Tornie after the harvester overlay is added and verifi
 - Co-op options beside the chat on its right. Left/right scrolling when custom/co-op lobby content exceeds the window; vertical list scrolling retained.
 - Unlocking every current achievement adds a yellow star to its menu button and a special “Game 100% complete” message. Partial progress and reloaded profiles are considered.
 - Standard Rebels Windtrap outside Vanilla: one independent upgrade per building for 150 credits, requiring technology 7 and an IX. Double production, still scaled by health; green animation cycle replaces blue. Advanced Windtraps and Vanilla excluded.
-- Protocol 14 and save format 9834 prepared for the individual Windtrap state; old saves remain readable with the missing upgrade flag off.
+- Protocol 14 and save format 9834 for the individual Windtrap state; old saves remain readable with the missing upgrade flag off.
 
 The new palettes and defaults apply to new games. Older saves retain their recorded rules; their Windtraps are not upgraded when the flag was absent.
-
-Confirmed scope: standard Trike without a later Raider; Need power means the game option; no Rebels Windtrap upgrade in Vanilla. Further requests may amend this list. Validation results are recorded separately before publication.

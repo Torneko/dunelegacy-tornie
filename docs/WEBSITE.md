@@ -1,8 +1,20 @@
-# Préparation locale 1.0.542 — ne pas publier
+# 1.0.542 — publication Linux, Windows et site FR/EN
 
-Le brouillon FR/EN est préparé depuis `origin/gh-pages` à `f3c7e36b8cd4de20b843ea8ee0b8a66a00c8ffc0`. Il conserve les liens publics 1.0.541 et signale explicitement les fonctions 1.0.542 comme provisoires. Aucun déploiement Pages ni paquet hors ligne publié avant la liste complète et l’instruction de Tornie. Inclure alors les palettes, le Trike Wildspade, les options du lobby, les succès à 100 % et l’amélioration Windtrap Rebels hors Vanilla ; voir les notes 1.0.542 FR/EN.
+La publication a été autorisée par Tornie après l’ajout du compteur de moissonneuses. Source figée et tag `v1.0.542` : `a514293f98ecffef57def43e1fc6a587f191910f`. Le site FR/EN publié est `33b9edb2631edcf77efe1d5d5b976fadaf2b4cb6` ; récupérer cette révision ou l’archive hors ligne avant la prochaine modification. Les 145 PNG/GIF préexistants sont inchangés, avec un aperçu Windtrap animé supplémentaire.
 
-Brouillon enregistré sur `docs/1.0.542-draft`, révision `2ea886b4689fbc3a72dea71e4f84e63146020c5c` : 36 parcours navigateur FR/EN et 28 contextes des nouvelles fonctions validés. Les 145 images préexistantes sont conservées. Les nouveaux réglages de partie s’appliquent aux nouvelles parties ; les sauvegardes conservent leurs règles enregistrées. Voir le rapport `release_notes/Validation-1.0.542-DRAFT.json`.
+- Linux : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39057204417 — succès, moteur/réseau, cinq paquets, démarrage FR/EN des deux AppImages avec PulseAudio, repli logiciel et fonctions coop/éditeur/Windtrap dans l’AppImage Mint.
+- Windows : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39057206612 — succès, moteur/réseau, sept modes et 1 606 scénarios dans le dossier installé en FR/EN, succès et démarrage des menus.
+- Envoi des deux plateformes vérifiées : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39059517108 — succès.
+- Pages : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39059647062 — succès.
+- Site hors ligne, sources, notes, empreintes et contrôle navigateur : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39059723542 — succès : 72 parcours navigateur publics/hors ligne FR/EN, ordinateur/mobile.
+
+Les tests locaux passent : CTest 2/2, 135 cas / 10 197 assertions, 1 606 scénarios FR et succès, sept modes coop EN, sept modes pour les règles 1.0.542 et les vraies sauvegardes 1.0.541. Le compteur a été vérifié dans le rendu natif : 3 moissonneuses standard + 2 Rebels donnent 5, le total revient à 0 et reste visible si le watermark est masqué. Il lit seulement la maison locale ; les contrôleurs archontes d’une maison partagent ce total. Protocole 14, sauvegardes 9834, anciennes sauvegardes lisibles ; nouvelles palettes et valeurs par défaut pour les nouvelles parties, règles des anciennes sauvegardes conservées. La confirmation native sur Mint 22.3 / noyau 6.17 et la partie humaine entre connexions Internet indépendantes restent à effectuer.
+
+L’audit final confirme les 16 fichiers publics, les empreintes SHA-256, la même source pour Windows/Linux et le tag, et la révision du site déployée.
+
+Voir [la validation](../release_notes/Validation-1.0.542.json) et [l’audit des fichiers publiés](../release_notes/Final-Publication-Audit-1.0.542.json). La source du jeu reste figée ; les reçus de publication sont enregistrés ensuite sur la branche de préparation.
+
+Les comptes rendus suivants sont historiques.
 
 # Remplacement de la 1.0.541 — construction alliée, éditeur et chat Rebels
 
