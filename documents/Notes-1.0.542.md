@@ -1,7 +1,8 @@
-# 1.0.542 — préparation, liste provisoire
+# 1.0.542 — épices, interface et énergie Rebels
 
-Non publiée. Aucun tag ni release avant la liste complète et l’instruction de Tornie. Base : dernière 1.0.541 publiée, y compris la PR #15 (sans la fusionner).
+Publication autorisée par Tornie après ajout du compteur de moissonneuses. Base : dernière 1.0.541 publiée, y compris les correctifs de la PR #15.
 
+- Petit compteur « Moissonneuses : N » en bas à gauche, à côté du watermark : unités de la maison du joueur local uniquement, actualisé en partie et visible même si le watermark est masqué. En archonte, les contrôleurs de la même maison partagent ce compteur.
 - Épice normale conservée ; deux épices personnalisées par mod : Jericho/Jericho Lite rouge et bleue ; Tornie/Tornie Lite verte et mauve ; ArcaKev/ArcaKev Lite verte et bleue inchangées. Les autres couleurs ne peuvent plus être activées par une ancienne configuration des cases de mods.
 - Jericho et Jericho Lite : moissonneuses sans limite globale (`0`), réapparition des vers désactivée par défaut. Options modifiables pour une nouvelle partie.
 - ArcaKev et ArcaKev Lite : option « Rocket-Turrets Need Power » désactivée par défaut.
@@ -13,4 +14,4 @@ Non publiée. Aucun tag ni release avant la liste complète et l’instruction d
 
 Les nouvelles palettes et valeurs par défaut visent les nouvelles parties. Les anciennes sauvegardes conservent leurs règles enregistrées ; leurs Windtraps sont non améliorées si le champ était absent.
 
-Périmètre confirmé : Trike standard, pas de Raider ultérieur ; « Need power » est l’option, pas le coût de construction ; aucune amélioration Rebels en Vanilla. D’autres demandes peuvent encore modifier cette liste. Les résultats de vérification sont consignés séparément avant toute publication.
+Périmètre confirmé : Trike standard, pas de Raider ultérieur ; « Need power » est l’option, pas le coût de construction ; aucune amélioration Rebels en Vanilla. Les résultats de vérification et les constructions CI sont consignés séparément. Tous les participants doivent utiliser la même version (protocole 14).

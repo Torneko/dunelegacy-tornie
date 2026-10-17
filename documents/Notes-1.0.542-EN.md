@@ -1,7 +1,8 @@
-# 1.0.542 — preparation, provisional list
+# 1.0.542 — spices, interface and Rebels power
 
-Unpublished. No tag or release until Tornie supplies the complete list and authorizes publication. Based on the latest published 1.0.541, including PR #15 without merging it.
+Publication authorized by Tornie after the harvester overlay is added and verified. Based on the latest published 1.0.541, including the fixes from PR #15.
 
+- Small “Harvesters: N” overlay at the bottom left beside the watermark: local player house only, updated during play and visible even with the watermark hidden. Archon controllers sharing a house see the same count.
 - Keep ordinary spice and exactly two custom spices per mod: Jericho/Jericho Lite red and blue; Tornie/Tornie Lite green and purple; ArcaKev/ArcaKev Lite green and blue unchanged. Old checkbox settings cannot enable another palette's colours.
 - Jericho and Jericho Lite: no global Harvester cap (`0`); sandworm respawn off by default. New-match options remain editable.
 - ArcaKev and ArcaKev Lite: Rocket-Turrets Need Power off by default.
