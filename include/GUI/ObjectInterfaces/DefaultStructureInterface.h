@@ -19,6 +19,7 @@
 #define DEFAULTSTRUCTUREINTERFACE_H
 
 #include "DefaultObjectInterface.h"
+#include <GUI/SellButton.h>
 
 #include <globals.h>
 
@@ -46,9 +47,22 @@ protected:
         repairButton.setTooltipText(_("Repair this structure (Hotkey: R)"));
         repairButton.setOnClick(std::bind(&DefaultStructureInterface::OnRepair, this));
 
-        topBox.addWidget(&repairButton, Point(2,2), getTextureSize(pUIRepair));
+        const auto buttonSize=getTextureSize(pUIRepair);
+        topBox.addWidget(&repairButton,Point(2,2),buttonSize);
+        sellButton.setVisible(currentGame->getGameInitSettings().getGameOptions().sellingBuildings);
+        sellButton.setOnClick([this] {
+            auto* structure=dynamic_cast<StructureBase*>(currentGame->getObjectManager().getObject(this->objectID));
+            if(structure)structure->handleSellClick();
+        });
+        topBox.addWidget(&sellButton,Point(4+buttonSize.x,2),buttonSize);
     }
 
+    void updateSellButton(StructureBase* structure) {
+        sellButton.setVisible(currentGame->getGameInitSettings().getGameOptions().sellingBuildings);
+        sellButton.setEnabled(structure->canSell() && currentGame->canControlHouse(structure->getOwner()));
+        sellButton.setTooltipText((settings.general.language=="fr" ? "Vendre : " : "Sell: ")
+            +std::to_string(structure->getSaleRefund())+(settings.general.language=="fr" ? " crédits (50 %)" : " credits (50%)"));
+    }
     void OnRepair() {
         ObjectBase* pObject = currentGame->getObjectManager().getObject(objectID);
         StructureBase* pStructure = dynamic_cast<StructureBase*>(pObject);
@@ -71,6 +85,7 @@ protected:
 
         StructureBase* pStructure = dynamic_cast<StructureBase*>(pObject);
         if(pStructure != nullptr) {
+            updateSellButton(pStructure);
             if(pStructure->getHealth() >= pStructure->getMaxHealth()) {
                 repairButton.setVisible(false);
             } else {
@@ -82,6 +97,7 @@ protected:
         return true;
     }
 
+    SellButton      sellButton;
     PictureButton   repairButton;
 };
 

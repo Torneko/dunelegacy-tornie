@@ -5,6 +5,9 @@
 // Keep scenario forces and objectives when custom content is switched off.
 inline int neutralVanillaMapItem(int item) {
     switch(item) {
+        case Unit_FlameQuad: return Unit_Quad;
+        case Unit_GasInfantry:
+        case Unit_FlameTrooper: return Unit_Trooper;
         case Unit_Infantry5: return Unit_Infantry;
         case Unit_Troopers5: return Unit_Troopers;
         case Unit_RocketTrike:

@@ -42,8 +42,8 @@ void AchievementsWindow::showAchievements(){
 }
 void AchievementsWindow::showStatistics(){
     auto& manager=achievements::AchievementManager::instance();std::ostringstream out;
-    const char* keys[]={"GamesWon","GamesLost","SpiceHarvested","UnitsBuilt","UnitsLost","EnemyUnitsDestroyed","EnemyStructuresDestroyed","StructuresBuilt","StructuresCaptured","SandwormsKilled","InfantryCrushed","SpiceBloomsTriggered","PalaceAbilitiesUsed","FlameTankKills"};
-    const char* labels[]={"Victoires","Défaites","Crédits d’épice raffinés","Unités produites","Unités perdues","Unités ennemies détruites","Bâtiments ennemis détruits","Structures construites","Structures capturées","Vers des sables tués","Fantassins écrasés","Éclosions d’épice déclenchées","Pouvoirs de palais utilisés","Éliminations avec des chars lance-flammes"};
+    const char* keys[]={"GamesWon","GamesLost","SpiceHarvested","UnitsBuilt","UnitsLost","EnemyUnitsDestroyed","EnemyStructuresDestroyed","StructuresBuilt","StructuresSold","CreditsFromSales","StructuresCaptured","SandwormsKilled","InfantryCrushed","SpiceBloomsTriggered","PalaceAbilitiesUsed","FlameTankKills"};
+    const char* labels[]={"Victoires","Défaites","Crédits d’épice raffinés","Unités produites","Unités perdues","Unités ennemies détruites","Bâtiments ennemis détruits","Structures construites","Bâtiments vendus","Crédits récupérés (ventes)","Structures capturées","Vers des sables tués","Fantassins écrasés","Éclosions d’épice déclenchées","Pouvoirs de palais utilisés","Éliminations avec des chars lance-flammes"};
     for(unsigned i=0;i<sizeof(keys)/sizeof(*keys);++i)out<<(french?labels[i]:keys[i])<<" : "<<manager.statistic(keys[i])<<"\n";
     out<<"\n"<<(french?"Victoires par faction":"Victories by faction")<<"\n\n";
     const char* houses[]={"Atreides","Harkonnen","Ordos","Fremen","Sardaukar","Mercenary","Neutral","Rebels","Corruptique","Wildspade","Kleshmersh","Tharpique"};

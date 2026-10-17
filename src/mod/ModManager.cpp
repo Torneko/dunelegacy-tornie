@@ -27,6 +27,7 @@
 #include <misc/exceptions.h>
 #include <Definitions.h>
 #include <globals.h>
+#include <main.h>
 #include <config.h>
 
 #include <SDL.h>
@@ -445,6 +446,14 @@ SettingsClass::GameOptionsClass ModManager::loadEffectiveGameOptions(
     // Start with base options
     SettingsClass::GameOptionsClass result = baseOptions;
     result.content = activeContent;
+    if(initialized){result.sellingBuildings=false;result.showHarvesterCount=true;}
+    const auto applyUserRules=[&] {
+        if(!initialized)return;
+        INIFile preferences(getConfigFilepath());
+        const std::string section="Mod Game Rules "+activeMod;
+        result.sellingBuildings=preferences.getBoolValue(section,"Selling Buildings",result.sellingBuildings);
+        result.showHarvesterCount=preferences.getBoolValue(section,"Show Harvester Count",result.showHarvesterCount);
+    };
 
     // Random spice blooms are enabled by default in the Tornie-family mods.
     // The in-game Game Options window can still override this per match.
@@ -455,6 +464,7 @@ SettingsClass::GameOptionsClass ModManager::loadEffectiveGameOptions(
     // If vanilla mod or no mod system, just return base options
     if (!initialized || activeMod == VANILLA_MOD_NAME) {
         result.chaosMode = false;
+        applyUserRules();
         return result;
     }
 
@@ -504,6 +514,8 @@ SettingsClass::GameOptionsClass ModManager::loadEffectiveGameOptions(
             else if (key == "Instant Build") result.instantBuild = parseBool(value);
             else if (key == "Only One Palace") result.onlyOnePalace = parseBool(value);
             else if (key == "Rocket-Turrets Need Power") result.rocketTurretsNeedPower = parseBool(value);
+            else if (key == "Selling Buildings") result.sellingBuildings = parseBool(value);
+            else if (key == "Show Harvester Count") result.showHarvesterCount = parseBool(value);
             else if (key == "Sandworms Respawn") result.sandwormsRespawn = parseBool(value);
             else if (key == "Killed Sandworms Drop Spice") result.killedSandwormsDropSpice = parseBool(value);
             else if (key == "Chaos Mode") result.chaosMode = parseBool(value);
@@ -522,6 +534,7 @@ SettingsClass::GameOptionsClass ModManager::loadEffectiveGameOptions(
         SDL_Log("ModManager: Warning - failed to load game options from mod: %s", e.what());
     }
 
+    applyUserRules();
     return result;
 }
 

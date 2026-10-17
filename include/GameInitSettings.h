@@ -193,6 +193,7 @@ public:
     inline bool isMultiplePlayersPerHouse() const { return multiplePlayersPerHouse; };
     inline void setMultiplePlayersPerHouse(bool multiplePlayersPerHouse) { this->multiplePlayersPerHouse = multiplePlayersPerHouse; };
     inline const SettingsClass::GameOptionsClass& getGameOptions() const { return gameOptions; };
+    void setAllianceOptions(bool control, bool building) { gameOptions.alliedControl=control;gameOptions.alliedBuilding=building; }
     bool isChaosModeEnabled() const { return gameOptions.chaosMode && modName != "vanilla"; }
     bool isEasyModeEnabled() const;
     bool isEasyModeHouse(int ownerHouse) const;

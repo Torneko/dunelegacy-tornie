@@ -269,7 +269,7 @@ bool UnitBase::attack() {
                     currentGame->combatStats.launcherRocketsSpawned++;
                 }
 
-                if(getItemID() == Unit_Trooper && currentBulletType == Bullet_Flame)
+                if((getItemID() == Unit_Trooper || getItemID() == Unit_FlameTrooper) && currentBulletType == Bullet_Flame)
                     currentWeaponDamage = static_cast<Trooper*>(this)->flameWeaponDamage(currentWeaponDamage);
 
                 bulletList.push_back( new Bullet( objectID, &centerPoint, &targetCenterPoint, currentBulletType, currentWeaponDamage, bAirBullet, pObject) );

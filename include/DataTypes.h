@@ -237,6 +237,10 @@ public:
                     && (chaosMode == goc.chaosMode)
                     && (easyMode == goc.easyMode)
                     && (content == goc.content)
+                    && (sellingBuildings == goc.sellingBuildings)
+                    && (alliedControl == goc.alliedControl)
+                    && (alliedBuilding == goc.alliedBuilding)
+                    && (showHarvesterCount == goc.showHarvesterCount)
                     && (manualCarryallDrops == goc.manualCarryallDrops)
                     && (maximumNumberOfUnitsOverride == goc.maximumNumberOfUnitsOverride)
                     && (maximumNumberOfHarvestersOverride == goc.maximumNumberOfHarvestersOverride)
@@ -270,6 +274,9 @@ public:
             optStr += std::to_string(maximumNumberOfHarvestersOverride);
             // Note: immortalHumanPlayer is intentionally excluded as it's a per-player setting
 
+            if(sellingBuildings) optStr += "|SellingBuildings=1";
+            if(alliedControl) optStr += "|AlliedControl=1";
+            if(alliedBuilding) optStr += "|AlliedBuilding=1";
             if(chaosMode) optStr += "|ChaosMode=1";
             if(easyMode) optStr += "|EasyMode=1";
             if(!content.customUnitsAndBuildings || content.spiceMask()) optStr += "|Content=" + content.signature();
@@ -301,6 +308,10 @@ public:
         bool        chaosMode;
         bool        easyMode;
         ModContentOptions content;
+        bool        sellingBuildings = false;
+        bool        alliedControl = false;
+        bool        alliedBuilding = false;
+        bool        showHarvesterCount = true;
         bool        manualCarryallDrops;
         int         maximumNumberOfUnitsOverride;
         int         maximumNumberOfHarvestersOverride;

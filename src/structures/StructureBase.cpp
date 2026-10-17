@@ -16,6 +16,10 @@
  */
 
 #include <structures/StructureBase.h>
+#include <structures/Refinery.h>
+#include <structures/RepairYard.h>
+#include <structures/StarPort.h>
+#include <Achievements/AchievementEvents.h>
 
 #include <globals.h>
 
@@ -123,7 +127,7 @@ StructureBase::~StructureBase() {
         }
         currentGame->getObjectManager().removeObject(getObjectID());
         structureList.remove(this);
-        owner->decrementStructures(itemID, location);
+        owner->decrementStructures(itemID, location, !selling);
 
         removeFromSelectionLists();
 
@@ -414,6 +418,47 @@ void StructureBase::handleActionClick(int xPos, int yPos) {
     } else {
         currentGame->getCommandManager().addCommand(Command(pLocalPlayer->getPlayerID(), CMD_STRUCTURE_SETDEPLOYPOSITION,objectID, (Uint32) NONE_ID, (Uint32) NONE_ID));
     }
+}
+
+bool StructureBase::canSell() const {
+    if(!currentGame || !owner || getHealth()<=0 || !currentGame->getGameInitSettings().getGameOptions().sellingBuildings)return false;
+    if(itemID==Structure_Slab1 || itemID==Structure_Slab4)return false;
+    // A dispatched delivery belongs to this port; wait for its units to deploy.
+    const auto* port=dynamic_cast<const StarPort*>(this);
+    return !port || port->okToOrder();
+}
+
+int StructureBase::getSaleRefund() const {
+    const int value=currentGame->getGameInitSettings().campaignPurchasePrice(
+        currentGame->objectData.data[itemID][originalHouseID].price,owner->getHouseID());
+    return std::max(0,value)/2;
+}
+
+void StructureBase::handleSellClick() {
+    if(canSell() && currentGame->canControlHouse(owner) && pLocalPlayer)
+        currentGame->getCommandManager().addCommand(Command(pLocalPlayer->getPlayerID(),CMD_STRUCTURE_SELL,objectID));
+}
+
+void StructureBase::doSell() {
+    if(!canSell())return;
+    const int refund=getSaleRefund();
+    if(auto* refinery=dynamic_cast<Refinery*>(this)) {
+        while(!refinery->getContainedHarvesters().empty())refinery->deployHarvester();
+    }
+    if(auto* yard=dynamic_cast<RepairYard*>(this)) {
+        if(yard->getRepairUnit())yard->deployRepairUnit();
+    }
+    if(auto* port=dynamic_cast<StarPort*>(this))port->doCancelOrder();
+    else if(auto* builder=dynamic_cast<BuilderBase*>(this)) {
+        // Only paid progress is returned; unstarted queued items have cost nothing.
+        if(builder->getProductionQueueSize()>0)owner->addUnstoredCredits(builder->getProductionProgress());
+        if(builder->isUpgrading())owner->addUnstoredCredits(builder->getUpgradeProgress());
+    }
+    owner->recordBuildingSale(refund);
+    AchievementEvents::sold(owner,refund);
+    selling=true;
+    setHealth(0); // Remove health-scaled power before virtual destruction.
+    delete this; // No explosions, random survivor infantry, enemy kills or structure loss.
 }
 
 void StructureBase::handleRepairClick() {

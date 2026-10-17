@@ -92,6 +92,10 @@ public:
         This method is called when the user clicks on the repair button for this building
     */
     virtual void handleRepairClick();
+    bool canSell() const;
+    int getSaleRefund() const;
+    void handleSellClick();
+    void doSell();
 
     /**
         Set the deploy position of this structure. Units produced in this structure will move directly to
@@ -175,6 +179,7 @@ protected:
     Coord   structureSize;      ///< The size of this structure in tile coordinates (e.g. (3,2) for a refinery)
 
     // structure state
+    bool    selling = false;     ///< Transient deletion reason, never serialized.
     bool    repairing;          ///< currently repairing?
     int     degradeTimer;       ///< after which time of insufficient power should we degrade this building again
 

@@ -117,6 +117,7 @@ void lost(UnitBase* unit){
     if(unit->getHealth()>0&&!unit->isVisible()&&(unit->getItemID()==Unit_Frigate||isCarryallUnit(unit->getItemID())))return;
     manager().unitLost(unit->getObjectID());
 }
+void sold(House* owner,int refund){if(local(owner))manager().sold(static_cast<std::uint64_t>(std::max(0,refund)));}
 void built(House* house,ObjectBase* object){
     if(object&&object->getItemID()==Unit_FlameTank)manager().flameSource(object->getObjectID());
     if(!local(house)||!object)return;

@@ -29,14 +29,14 @@
 #include <misc/exceptions.h>
 #include <misc/OutputStream.h>
 
-Trooper::Trooper(House* newOwner) : InfantryBase(newOwner) {
-    Trooper::init();
+Trooper::Trooper(House* newOwner, int product) : InfantryBase(newOwner) {
+    Trooper::init(product);
 
     setHealth(getMaxHealth());
 }
 
-Trooper::Trooper(InputStream& stream) : InfantryBase(stream) {
-    Trooper::init();
+Trooper::Trooper(InputStream& stream, int product) : InfantryBase(stream) {
+    Trooper::init(product);
     if(currentGame->getLoadedSavegameVersion() >= 9832) {
         flameDamageRemainder = stream.readUint8();
         if(flameDamageRemainder >= 5) THROW(std::runtime_error, "Invalid flame damage remainder");
@@ -52,8 +52,8 @@ Sint32 Trooper::flameWeaponDamage(Sint32 base) {
     return flameDamageWithBonus(base, flameDamageRemainder);
 }
 
-void Trooper::init() {
-    itemID = Unit_Trooper;
+void Trooper::init(int product) {
+    itemID = product;
     owner->incrementUnits(itemID);
 
     numWeapons = 1;
@@ -73,7 +73,7 @@ void Trooper::setProductionHouseID(int houseID) {
     const bool kleshmershTrooper = ModManager::instance().isTornieContentActive()
         && currentGame->getGameInitSettings().getGameOptions().content.customUnitsAndBuildings
         && isHouseFaction(static_cast<HOUSETYPE>(getProductionHouseID()), HOUSE_KLESHMERSH);
-    bulletType = kleshmershTrooper ? Bullet_Flame : Bullet_SmallRocket;
+    bulletType = (itemID == Unit_FlameTrooper || kleshmershTrooper) ? Bullet_Flame : Bullet_SmallRocket;
 }
 
 bool Trooper::canAttack(const ObjectBase* object) const {

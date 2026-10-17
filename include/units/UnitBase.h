@@ -261,7 +261,7 @@ public:
 
     inline ATTACKMODE getAttackMode() const { return attackMode; }
 
-    bool canCaptureStructures() const { return itemID == Unit_Soldier || itemID == Unit_Trooper; }
+    bool canCaptureStructures() const { return itemID == Unit_Soldier || itemID == Unit_Trooper || itemID == Unit_FlameTrooper; }
 
     inline const Coord& getGuardPoint() const { return guardPoint; }
 

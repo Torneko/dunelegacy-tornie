@@ -44,7 +44,8 @@
 // 9832: expanded co-op controllers and new deterministic unit rules.
 // 9833: optional shared allied construction range must not load in older engines.
 // 9834: each standard Windtrap persists its one-time Rebels power upgrade.
-#define SAVEGAMEVERSION     9834
+// 9835: per-house building sale statistics; MOD6 adds sell/alliance/HUD rules.
+#define SAVEGAMEVERSION     9835
 
 // v1.0.0–v1.0.7 shipped SAVEGAMEVERSION 9810 with Num_ItemID=48.
 // v1.0.8–v1.0.10 also used 9810 but with Num_ItemID=52 (4 items added

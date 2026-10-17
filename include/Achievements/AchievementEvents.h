@@ -16,6 +16,7 @@ void damage(ObjectBase* victim,std::uint32_t attackerID,House* attacker,bool let
 void lost(UnitBase* unit);
 void wormDefeated(UnitBase* unit);
 void built(House* house,ObjectBase* object);
+void sold(House* owner, int refund);
 void captured(House* captor,House* previousOwner);
 void crushed(ObjectBase* victim,ObjectBase* vehicle);
 void refined(House* house,std::uint64_t total);

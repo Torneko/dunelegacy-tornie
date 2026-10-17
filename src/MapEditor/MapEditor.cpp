@@ -1908,6 +1908,9 @@ void MapEditor::drawMap(ScreenBorder* pScreenborder, bool bCompleteMap) {
             case Unit_Infantry:         objectPicBase = ObjPic_Infantry;         framesX = 4;    framesY = 4;                                                   break;
             case Unit_Troopers5:
             case Unit_Troopers:         objectPicBase = ObjPic_Troopers;         framesX = 4;    framesY = 4;                                                   break;
+            case Unit_FlameQuad: objectPicBase=ObjPic_FlameQuad; break;
+            case Unit_GasInfantry: objectPicBase=ObjPic_GasInfantry;framesX=4;framesY=3;break;
+            case Unit_FlameTrooper: objectPicBase=ObjPic_Trooper;framesX=4;framesY=3;break;
             case Unit_RocketTrike:      objectPicBase = ObjPic_RocketTrike;                                                                                       break;
             case Unit_SonicTrike:       objectPicBase = ObjPic_SonicTrike;                                                                                        break;
             case Unit_FlameTank:        objectPicBase = ObjPic_Tank_Base;       objectPicGun = tornieActive ? ObjPic_FlameTankGunTornie : ObjPic_Launcher_Gun; objectPicGunHouse = tornieActive ? HOUSE_HARKONNEN : unit.house; gunOffset = launcherTurretOffset; break;

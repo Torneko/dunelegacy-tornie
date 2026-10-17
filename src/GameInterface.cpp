@@ -197,6 +197,7 @@ void GameInterface::draw(Point position) {
         const char* caption = settings.general.language == "fr" ? "Moissonneuses : " : "Harvesters: ";
         harvesterCountLabel.setText(std::string(caption) + std::to_string(harvesterCount));
     }
+    harvesterCountLabel.setVisible(currentGame->getGameInitSettings().getGameOptions().showHarvesterCount);
     Window::draw(position);
 
     // draw Power Indicator and Spice indicator

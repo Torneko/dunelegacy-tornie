@@ -1,3 +1,7 @@
+# 1.0.543 — brouillon uniquement
+
+Le site de préparation `docs/1.0.543-draft` est récupéré depuis la révision publiée 1.0.542 `33b9edb` (le ref distant récupéré pointait encore sur `f3c7e36`, plus ancien). Les pages de changements FR/EN décrivent la vente, les permissions alliées et le compteur optionnel ; les nouvelles unités et les cinq PNG reçus sont documentés comme en cours de validation. Aucun déploiement Pages ni nouveau paquet hors ligne publié : conserver les liens publics 1.0.542 jusqu’à validation complète.
+
 # 1.0.542 — publication Linux, Windows et site FR/EN
 
 La publication a été autorisée par Tornie après l’ajout du compteur de moissonneuses. Source figée et tag `v1.0.542` : `a514293f98ecffef57def43e1fc6a587f191910f`. Le site FR/EN publié est `33b9edb2631edcf77efe1d5d5b976fadaf2b4cb6` ; récupérer cette révision ou l’archive hors ligne avant la prochaine modification. Les 145 PNG/GIF préexistants sont inchangés, avec un aperçu Windtrap animé supplémentaire.

@@ -23,9 +23,9 @@
 class Trooper final : public InfantryBase
 {
 public:
-    explicit Trooper(House* newOwner);
-    explicit Trooper(InputStream& stream);
-    void init();
+    explicit Trooper(House* newOwner, int product = Unit_Trooper);
+    explicit Trooper(InputStream& stream, int product = Unit_Trooper);
+    void init(int product);
     virtual ~Trooper();
 
     bool canAttack(const ObjectBase* object) const override;

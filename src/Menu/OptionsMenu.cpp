@@ -495,6 +495,11 @@ void OptionsMenu::saveConfiguration2File() {
     myINIFile.setBoolValue("Game Options","Instant Build",settings.gameOptions.instantBuild);
     myINIFile.setBoolValue("Game Options","Only One Palace",settings.gameOptions.onlyOnePalace);
     myINIFile.setBoolValue("Game Options","Rocket-Turrets Need Power",settings.gameOptions.rocketTurretsNeedPower);
+    const std::string modRulesSection="Mod Game Rules "+ModManager::instance().getActiveModName();
+    myINIFile.setBoolValue(modRulesSection,"Selling Buildings",settings.gameOptions.sellingBuildings);
+    myINIFile.setBoolValue(modRulesSection,"Show Harvester Count",settings.gameOptions.showHarvesterCount);
+    myINIFile.setBoolValue("Game Options","Selling Buildings",settings.gameOptions.sellingBuildings);
+    myINIFile.setBoolValue("Game Options","Show Harvester Count",settings.gameOptions.showHarvesterCount);
     myINIFile.setBoolValue("Game Options","Sandworms Respawn",settings.gameOptions.sandwormsRespawn);
     myINIFile.setBoolValue("Game Options","Killed Sandworms Drop Spice",settings.gameOptions.killedSandwormsDropSpice);
     myINIFile.setBoolValue("Game Options","Random Spice Blooms",settings.gameOptions.randomSpiceBlooms);

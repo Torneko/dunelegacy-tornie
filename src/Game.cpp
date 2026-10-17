@@ -349,13 +349,19 @@ void Game::logPerformance(const char* format, ...) {
 
 
 bool Game::canPlayerControlHouse(const House* playerHouse, const House* owner) const {
-    return playerHouse && owner && (playerHouse == owner || (coopContext
-        && coop::canControlHouse(*coopContext, playerHouse->getHouseID(), owner->getHouseID())));
+    if(!playerHouse || !owner)return false;
+    if(playerHouse==owner)return true;
+    if(coopContext)return coop::canControlHouse(*coopContext,playerHouse->getHouseID(),owner->getHouseID());
+    return gameType==GameType::CustomMultiplayer && gameInitSettings.getGameOptions().alliedControl
+        && playerHouse->getTeamID()==owner->getTeamID();
 }
 
 bool Game::canBuildOnAlliedLand(const House* builderHouse,int landHouse) const {
-    return builderHouse && coopContext
-        && coop::canBuildOnAlliedLand(*coopContext,builderHouse->getHouseID(),landHouse);
+    if(!builderHouse || landHouse<0 || landHouse>=NUM_HOUSES)return false;
+    if(coopContext)return coop::canBuildOnAlliedLand(*coopContext,builderHouse->getHouseID(),landHouse);
+    const auto* landOwner=getHouse(landHouse);
+    return gameType==GameType::CustomMultiplayer && gameInitSettings.getGameOptions().alliedBuilding
+        && landOwner && builderHouse->getTeamID()==landOwner->getTeamID();
 }
 
 bool Game::canControlHouse(const House* owner) const {

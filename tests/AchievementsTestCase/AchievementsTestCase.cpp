@@ -141,7 +141,7 @@ TEST_CASE_METHOD(Fixture,"A damaged or newer profile is preserved rather than ov
     std::ifstream in(path);const std::string text(std::istreambuf_iterator<char>(in),{});REQUIRE(text.find("Protected=original")!=std::string::npos);
 }
 TEST_CASE_METHOD(Fixture,"Catalog ships every proposed achievement and notifications fire once","[achievements]"){
-    REQUIRE(manager.definitions().size()==67);REQUIRE(manager.unlock("PACIFISM"));REQUIRE_FALSE(manager.unlock("PACIFISM"));
+    REQUIRE(manager.definitions().size()==68);REQUIRE(manager.unlock("PACIFISM"));REQUIRE_FALSE(manager.unlock("PACIFISM"));
     REQUIRE(manager.takeNotification()=="PACIFISM");REQUIRE(manager.takeNotification().empty());REQUIRE_FALSE(manager.unlock("UNKNOWN"));
 }
 TEST_CASE_METHOD(Fixture,"Extra factions complete a campaign without replacing the eight required houses","[achievements]"){
@@ -346,4 +346,21 @@ TEST_CASE_METHOD(Fixture,"Completion requires every current achievement and surv
     REQUIRE_FALSE(manager.completed());
     manager.unlock(definitions.back().id);REQUIRE(manager.completed());REQUIRE(manager.save());
     AchievementManager restored;REQUIRE(restored.configure("",(dir/"achievements.ini").u8string()));REQUIRE(restored.completed());
+}
+
+TEST_CASE_METHOD(Fixture,"Building sales unlock once and retain replay-safe lifetime proceeds","[achievements][selling]") {
+    manager.sold(250);
+    REQUIRE(manager.unlocked("SELL_FIRST_BUILDING"));
+    REQUIRE(manager.statistic("StructuresSold")==1);
+    REQUIRE(manager.statistic("CreditsFromSales")==250);
+    manager.checkpoint("before-second-sale");
+    manager.sold(400);manager.save();
+    AchievementManager resumed;
+    REQUIRE(resumed.configure("",(dir/"achievements.ini").u8string()));
+    resumed.begin(info,"before-second-sale",true);resumed.sold(400);
+    REQUIRE(resumed.statistic("StructuresSold")==2);
+    REQUIRE(resumed.statistic("CreditsFromSales")==650);
+    REQUIRE(resumed.unlocked("SELL_FIRST_BUILDING"));
+    info.enabled=false;resumed.begin(info);resumed.sold(1000);
+    REQUIRE(resumed.statistic("StructuresSold")==2);
 }

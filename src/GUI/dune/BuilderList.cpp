@@ -256,6 +256,10 @@ void BuilderList::draw(Point position) {
 
                 const auto portrait = productionPortraits.find(buildItem.itemID);
                 if(portrait != productionPortraits.end()) pTexture = portrait->second.get();
+                if(currentGame->getGameInitSettings().getGameOptions().content.customUnitsAndBuildings
+                   && (buildItem.itemID==Unit_Trooper || buildItem.itemID==Unit_Troopers || buildItem.itemID==Unit_Troopers5)
+                   && isHouseFaction(static_cast<HOUSETYPE>(pBuilder->getTechnologyHouseID()),HOUSE_KLESHMERSH))
+                    pTexture=pGFXManager->getSmallDetailPic(Picture_FlameTrooper);
                 const SDL_Rect dest = {position.x + getButtonPosition(i - currentListPos).x,
                     position.y + getButtonPosition(i - currentListPos).y, BUILDERBTN_WIDTH, BUILDERBTN_HEIGHT};
 

@@ -75,6 +75,7 @@ private:
     // bottom row of buttons
     HBox            buttonHBox;
     Label           timeLabel;
+    TextButton      salesStatsButton;
     TextButton      okButton;
 };
 

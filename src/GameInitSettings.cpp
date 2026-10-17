@@ -32,6 +32,7 @@
 #include <sand.h>
 
 namespace {
+constexpr Uint32 GAMEINIT_MOD6_MARKER = 0x4D4F4436; // Selling, alliances and HUD options
 constexpr Uint32 GAMEINIT_MOD_MARKER = 0x4D4F4421;   // "MOD!"
 constexpr Uint32 GAMEINIT_MOD3_MARKER = 0x4D4F4433;  // "MOD3"
 constexpr Uint32 GAMEINIT_MOD5_MARKER = 0x4D4F4435;  // "MOD5": campaign options and provenance
@@ -197,11 +198,11 @@ GameInitSettings::GameInitSettings(InputStream& stream, bool hasModMetadata) {
     // Use marker to detect presence for backward compatibility
     try {
         Uint32 modMarker = stream.readUint32();
-        if (modMarker == GAMEINIT_MOD_MARKER || modMarker == GAMEINIT_MOD2_MARKER || modMarker == GAMEINIT_MOD3_MARKER || modMarker == GAMEINIT_MOD4_MARKER || modMarker == GAMEINIT_MOD5_MARKER) {
+        if (modMarker == GAMEINIT_MOD_MARKER || modMarker == GAMEINIT_MOD2_MARKER || modMarker == GAMEINIT_MOD3_MARKER || modMarker == GAMEINIT_MOD4_MARKER || modMarker == GAMEINIT_MOD5_MARKER || modMarker == GAMEINIT_MOD6_MARKER) {
             modName = stream.readString();
             modChecksum = stream.readString();
 
-            if(modMarker == GAMEINIT_MOD2_MARKER || modMarker == GAMEINIT_MOD3_MARKER || modMarker == GAMEINIT_MOD4_MARKER || modMarker == GAMEINIT_MOD5_MARKER) {
+            if(modMarker == GAMEINIT_MOD2_MARKER || modMarker == GAMEINIT_MOD3_MARKER || modMarker == GAMEINIT_MOD4_MARKER || modMarker == GAMEINIT_MOD5_MARKER || modMarker == GAMEINIT_MOD6_MARKER) {
                 Uint32 numHouseColors = stream.readUint32();
                 for(Uint32 i = 0; i < numHouseColors; i++) {
                     const int colorOfHouse = stream.readSint32();
@@ -211,12 +212,12 @@ GameInitSettings::GameInitSettings(InputStream& stream, bool hasModMetadata) {
                 }
             }
 
-            if(modMarker == GAMEINIT_MOD3_MARKER || modMarker == GAMEINIT_MOD4_MARKER || modMarker == GAMEINIT_MOD5_MARKER) {
+            if(modMarker == GAMEINIT_MOD3_MARKER || modMarker == GAMEINIT_MOD4_MARKER || modMarker == GAMEINIT_MOD5_MARKER || modMarker == GAMEINIT_MOD6_MARKER) {
                 gameOptions.randomSpiceBlooms = stream.readBool();
             }
-            if(modMarker == GAMEINIT_MOD4_MARKER || modMarker == GAMEINIT_MOD5_MARKER) gameOptions.chaosMode = stream.readBool();
+            if(modMarker == GAMEINIT_MOD4_MARKER || modMarker == GAMEINIT_MOD5_MARKER || modMarker == GAMEINIT_MOD6_MARKER) gameOptions.chaosMode = stream.readBool();
             gameOptions.content = ModContentOptions::legacy(modName);
-            if(modMarker == GAMEINIT_MOD5_MARKER) {
+            if(modMarker == GAMEINIT_MOD5_MARKER || modMarker == GAMEINIT_MOD6_MARKER) {
                 gameOptions.easyMode = stream.readBool();
                 chaosCampaignEligible = stream.readBool();
                 gameOptions.content.customUnitsAndBuildings = stream.readBool();
@@ -224,6 +225,14 @@ GameInitSettings::GameInitSettings(InputStream& stream, bool hasModMetadata) {
                 gameOptions.content.redSpice = stream.readBool();
                 gameOptions.content.purpleSpice = stream.readBool();
                 gameOptions.content.blueSpice = stream.readBool();
+            }
+            if(modMarker == GAMEINIT_MOD6_MARKER) {
+                gameOptions.sellingBuildings=stream.readBool();
+                gameOptions.alliedControl=stream.readBool();
+                gameOptions.alliedBuilding=stream.readBool();
+                gameOptions.showHarvesterCount=stream.readBool();
+            } else {
+                gameOptions.showHarvesterCount=modName!="Tornie" && modName!="TornieLite";
             }
             if(modName == "vanilla") gameOptions.chaosMode = false;
         }
@@ -271,7 +280,7 @@ void GameInitSettings::save(OutputStream& stream) const {
     }
 
     // Write mod info with marker for forward compatibility
-    stream.writeUint32(GAMEINIT_MOD5_MARKER);
+    stream.writeUint32(GAMEINIT_MOD6_MARKER);
     stream.writeString(modName);
     stream.writeString(modChecksum);
 
@@ -288,6 +297,10 @@ void GameInitSettings::save(OutputStream& stream) const {
     stream.writeBool(gameOptions.content.redSpice);
     stream.writeBool(gameOptions.content.purpleSpice);
     stream.writeBool(gameOptions.content.blueSpice);
+    stream.writeBool(gameOptions.sellingBuildings);
+    stream.writeBool(gameOptions.alliedControl);
+    stream.writeBool(gameOptions.alliedBuilding);
+    stream.writeBool(gameOptions.showHarvesterCount);
 }
 
 

@@ -657,5 +657,14 @@ DescriptionFr=Lancer 25 missiles de Palace au total.
 Rule=Lifetime
 Statistic=PalaceMissilesLaunched
 Target=25
+
+[SELL_FIRST_BUILDING]
+Name=Liquid assets
+NameFr=Liquidités
+Description=Sell your first building.
+DescriptionFr=Vendre votre premier bâtiment.
+Rule=Lifetime
+Statistic=StructuresSold
+Target=1
 )ACHIEVEMENTS";
 }

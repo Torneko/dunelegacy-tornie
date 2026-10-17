@@ -65,6 +65,7 @@ typedef enum {
 
     CMD_WINDTRAP_POWER_UPGRADE,         ///< WINDTRAP_POWER_UPGRADE(OBJECT_ID)
 
+    CMD_STRUCTURE_SELL,                ///< STRUCTURE_SELL(OBJECT_ID)
     CMD_MAX
 } CMDTYPE;
 

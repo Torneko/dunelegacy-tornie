@@ -131,6 +131,12 @@ GameOptionsWindow::GameOptionsWindow(SettingsClass::GameOptionsClass& initialGam
     vboxRight.addWidget(&instantBuildCheckbox);
     vboxRight.addWidget(VSpacer::create(6));
 
+    sellingBuildingsCheckbox.setText(settings.general.language=="fr" ? "Vente des bâtiments (50 %)" : "Sell buildings (50%)");
+    sellingBuildingsCheckbox.setChecked(gameOptions.sellingBuildings);
+    vboxRight.addWidget(&sellingBuildingsCheckbox);
+    showHarvesterCountCheckbox.setText(settings.general.language=="fr" ? "Compteur de moissonneuses" : "Show harvester count");
+    showHarvesterCountCheckbox.setChecked(gameOptions.showHarvesterCount);
+    vboxRight.addWidget(&showHarvesterCountCheckbox);
     rocketTurretsNeedPowerCheckbox.setText(_("Rocket-Turrets Need Power"));
     rocketTurretsNeedPowerCheckbox.setTooltipText(_("If checked rocket turrets are dysfunctional on power shortage."));
     rocketTurretsNeedPowerCheckbox.setChecked(gameOptions.rocketTurretsNeedPower);
@@ -205,6 +211,8 @@ void GameOptionsWindow::onOK() {
     gameOptions.onlyOnePalace = onlyOnePalaceCheckbox.isChecked();
     gameOptions.chaosMode = chaosModeCheckbox.isEnabled() && chaosModeCheckbox.isChecked();
     gameOptions.easyMode = easyModeCheckbox.isChecked();
+    gameOptions.sellingBuildings = sellingBuildingsCheckbox.isChecked();
+    gameOptions.showHarvesterCount = showHarvesterCountCheckbox.isChecked();
     gameOptions.rocketTurretsNeedPower = rocketTurretsNeedPowerCheckbox.isChecked();
     gameOptions.sandwormsRespawn = sandwormsRespawnCheckbox.isChecked();
     gameOptions.killedSandwormsDropSpice = killedSandwormsDropSpiceCheckbox.isChecked();

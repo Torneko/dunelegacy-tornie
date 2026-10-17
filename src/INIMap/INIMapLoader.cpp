@@ -48,6 +48,9 @@ bool isVanillaModActive() {
 
 bool isTornieMapObject(int itemID) {
     switch(itemID) {
+        case Unit_FlameQuad:
+        case Unit_GasInfantry:
+        case Unit_FlameTrooper:
         case Unit_Infantry5:
         case Unit_Troopers5:
         case Unit_RocketTrike:

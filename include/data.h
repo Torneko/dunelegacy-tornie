@@ -159,7 +159,10 @@ typedef enum {
 
     Structure_Doublefinery = 76,       ///< Five-by-two, two independent unloading bays
 
-    ItemID_LastID = 76,
+    Unit_FlameQuad = 77,
+    Unit_GasInfantry = 78,
+    Unit_FlameTrooper = 79,
+    ItemID_LastID = 79,
 
     Num_ItemID
 } ItemID_enum;
@@ -212,7 +215,7 @@ typedef enum {
     \param itemID   the ID of the item (e.g. Unit_Harvester)
     \return true if it is an unit, false otherwise
 */
-inline bool isUnit(int itemID) { return (itemID >= Unit_FirstID && itemID <= Unit_LastID) || (itemID >= Unit_RocketTrike && itemID <= Unit_ExtLastID) || itemID == Unit_RebelHarvester || itemID == Unit_SonicTrike || itemID == Unit_ChemicalSiegeTank || itemID == Unit_ChemicalCarryall || itemID == Unit_Troopers5 || itemID == Unit_Infantry5; }
+inline bool isUnit(int itemID) { return (itemID >= Unit_FirstID && itemID <= Unit_LastID) || (itemID >= Unit_RocketTrike && itemID <= Unit_ExtLastID) || itemID == Unit_RebelHarvester || itemID == Unit_SonicTrike || itemID == Unit_ChemicalSiegeTank || itemID == Unit_ChemicalCarryall || itemID == Unit_Troopers5 || itemID == Unit_Infantry5 || itemID == Unit_FlameQuad || itemID == Unit_GasInfantry || itemID == Unit_FlameTrooper; }
 
 /**
     This function determines if the specified itemID is a structure or not.

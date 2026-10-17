@@ -20,6 +20,7 @@ public:
     void unitLost(std::uint32_t object);
     void built(bool structure, const std::string& exclusiveUnit = {});
     void captured();
+    void sold(std::uint64_t refund);
     void crushed(std::uint32_t victim, std::uint32_t vehicle, std::uint64_t cycle);
     void refinedSpice(std::uint64_t total);
     void harvestedType(unsigned type);

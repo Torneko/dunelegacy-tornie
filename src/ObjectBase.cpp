@@ -82,6 +82,8 @@
 #include <units/Trike.h>
 #include <units/Trooper.h>
 #include <units/RocketTrike.h>
+#include <units/FlameQuad.h>
+#include <units/GasInfantry.h>
 #include <units/SonicTrike.h>
 #include <units/FlameTank.h>
 #include <units/EliteLauncher.h>
@@ -882,6 +884,9 @@ ObjectBase* ObjectBase::createObject(int itemID, House* Owner, bool byScenario, 
         case Unit_RaiderTrike:              newObject = new RaiderTrike(Owner); break;
         case Unit_Trooper:                  newObject = new Trooper(Owner); break;
         case Unit_RocketTrike:              newObject = new RocketTrike(Owner); break;
+        case Unit_FlameQuad: newObject = new FlameQuad(Owner); break;
+        case Unit_GasInfantry: newObject = new GasInfantry(Owner); break;
+        case Unit_FlameTrooper: newObject = new Trooper(Owner, Unit_FlameTrooper); break;
         case Unit_SonicTrike:               newObject = new SonicTrike(Owner); break;
         case Unit_FlameTank:                newObject = new FlameTank(Owner); break;
         case Unit_EliteLauncher:            newObject = new EliteLauncher(Owner); break;
@@ -1002,6 +1007,9 @@ ObjectBase* ObjectBase::loadObject(InputStream& stream, int itemID, Uint32 objec
         case Unit_RaiderTrike:              newObject = new RaiderTrike(stream); break;
         case Unit_Trooper:                  newObject = new Trooper(stream); break;
         case Unit_RocketTrike:              newObject = new RocketTrike(stream); break;
+        case Unit_FlameQuad: newObject = new FlameQuad(stream); break;
+        case Unit_GasInfantry: newObject = new GasInfantry(stream); break;
+        case Unit_FlameTrooper: newObject = new Trooper(stream, Unit_FlameTrooper); break;
         case Unit_SonicTrike:               newObject = new SonicTrike(stream); break;
         case Unit_FlameTank:                newObject = new FlameTank(stream); break;
         case Unit_EliteLauncher:            newObject = new EliteLauncher(stream); break;

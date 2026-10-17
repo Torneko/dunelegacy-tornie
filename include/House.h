@@ -190,7 +190,11 @@ public:
     void incrementUnits(int itemID);
     void decrementUnits(int itemID);
     void incrementStructures(int itemID);
-    void decrementStructures(int itemID, const Coord& location);
+    void decrementStructures(int itemID, const Coord& location, bool lost = true);
+    void addUnstoredCredits(FixPoint amount);
+    void recordBuildingSale(int refund);
+    Uint32 getStructuresSold() const { return structuresSold; }
+    Uint32 getSaleCredits() const { return saleCredits; }
     void transformStructure(int oldItemID, int newItemID);
 
     /**
@@ -240,6 +244,7 @@ protected:
     int numUnits;               ///< How many units does this player have?
     int numItem[Num_ItemID];    ///< This array contains the number of structures/units of a certain type this player has
     int numItemBuilt[Num_ItemID];  /// Number of items built by player
+    Uint32 structuresSold = 0, saleCredits = 0;
     int numItemKills[Num_ItemID]; /// Number of items killed by player
     int numItemLosses [Num_ItemID]; /// Number of items lost by player
     Sint32 numItemDamageInflicted[Num_ItemID]; /// Amount of damage inflicted by a specific unit type owned by the player

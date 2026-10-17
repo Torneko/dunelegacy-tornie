@@ -9,12 +9,14 @@
 #include <misc/OFileStream.h>
 #include "EditorTeamsSmoke.h"
 #include "Release542RuntimeSmoke.h"
+#include "Release543RuntimeSmoke.h"
 
 inline void verifyRelease541Rules(const std::string& output,const std::string& mod) {
     auto require=[](bool ok,const std::string& message) {
         if(!ok) throw std::runtime_error("Release 541 rules: "+message);
     };
     verifyRelease542Rules(output,mod);
+    verifyRelease543Rules(output,mod);
     Release541EditorFixture::verify(output,mod);
     const auto roster=getFactionSelectionOrder();
     auto options=effectiveGameOptions;options.chaosMode=false;options.instantBuild=true;

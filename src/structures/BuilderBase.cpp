@@ -49,7 +49,7 @@ const int BuilderBase::itemOrder[] = { Unit_Troopers5, Unit_Infantry5, Unit_Chem
                                            Unit_Launcher, Unit_SiegeTank, Unit_Tank, Unit_MCV,
                                            Unit_RebelHarvester, Unit_Harvester,
                                            Unit_Ornithopter, Unit_Carryall, Unit_Quad, Unit_RocketTrike, Unit_SonicTrike, Unit_RaiderTrike,
-                                           Unit_Trike, Unit_Troopers, Unit_Trooper, Unit_Infantry, Unit_Soldier,
+                                           Unit_Trike, Unit_FlameQuad, Unit_GasInfantry, Unit_FlameTrooper, Unit_Troopers, Unit_Trooper, Unit_Infantry, Unit_Soldier,
                                            Unit_Frigate, Unit_Sandworm, Unit_Saboteur, ItemID_Invalid };
 
 namespace {
@@ -413,6 +413,8 @@ void BuilderBase::updateBuildList()
             : configuredTechLevel;
         const bool producedHere = objData.builder == static_cast<int>(itemID)
                                || isAlternateTornieBuilder(itemID, itemID2Add)
+                               || (itemID == Structure_Worfinery && objData.builder == Structure_WOR
+                                   && (itemID2Add == Unit_GasInfantry || itemID2Add == Unit_FlameTrooper))
                                || specialChemicalCarryall;
         const bool directWorfineryProduct = itemID == Structure_Worfinery
                                           && isWorfineryDirectProduct(itemID2Add);

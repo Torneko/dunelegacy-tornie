@@ -27,6 +27,7 @@
 
 #include <Game.h>
 #include <House.h>
+#include <GUI/MsgBox.h>
 #include <sand.h>
 
 #include <algorithm>
@@ -175,7 +176,15 @@ CustomGameStatsMenu::CustomGameStatsMenu() : MenuBase()
     buttonHBox.addWidget(&timeLabel, 0.2);
 
     buttonHBox.addWidget(Spacer::create(), 0.0625);
-    buttonHBox.addWidget(Spacer::create(), 0.475);
+    salesStatsButton.setText(settings.general.language=="fr" ? "Ventes" : "Building sales");
+    salesStatsButton.setOnClick([this] {
+        const bool french=settings.general.language=="fr";
+        std::string report=french ? "Bâtiments vendus / crédits récupérés\n\n" : "Buildings sold / credits returned\n\n";
+        for(int i=0;i<NUM_HOUSES;++i)if(auto* house=currentGame->getHouse(i))
+            report+=getHouseDisplayNameByNumber(static_cast<HOUSETYPE>(i))+" : "+std::to_string(house->getStructuresSold())+" / $"+std::to_string(house->getSaleCredits())+"\n";
+        openWindow(MsgBox::create(report));
+    });
+    buttonHBox.addWidget(&salesStatsButton,0.475);
     buttonHBox.addWidget(Spacer::create(), 0.0625);
 
     okButton.setText(_("OK"));

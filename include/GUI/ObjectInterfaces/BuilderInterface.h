@@ -55,8 +55,8 @@ protected:
         upgradeProgressBar.setText(_("Upgrade"));
         upgradeProgressBar.setTextColor(color);
         upgradeProgressBar.setVisible(false);
-        topBox.addWidget(&upgradeButton,Point(18,2),Point(83,18));
-        topBox.addWidget(&upgradeProgressBar,Point(18,2),Point(83,18));
+        topBox.addWidget(&upgradeButton,Point(44,2),Point(75,18));
+        topBox.addWidget(&upgradeProgressBar,Point(44,2),Point(75,18));
 
         mainHBox.addWidget(Spacer::create());
 
@@ -123,6 +123,7 @@ protected:
             upgradeButton.setVisible(!pBuilder->isUpgrading());
             upgradeButton.setEnabled(!pBuilder->isUpgrading());
 
+            updateSellButton(pBuilder);
             if(pBuilder->isUpgrading()) {
                 upgradeProgressBar.setProgress( ((pBuilder->getUpgradeProgress() * 100)/pBuilder->getUpgradeCost()).toDouble() );
             }

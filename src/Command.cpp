@@ -117,8 +117,8 @@ void Command::save(OutputStream& stream) const {
 
 void Command::executeCommand() const {
     const bool objectCommand = (commandID >= CMD_PLACE_STRUCTURE && commandID <= CMD_TURRET_ATTACKOBJECT)
-        || (commandID >= CMD_TECHCENTER_SPAWN && commandID <= CMD_WINDTRAP_POWER_UPGRADE);
-    if(currentGame->isCoopCampaign() && objectCommand && !parameter.empty()) {
+        || (commandID >= CMD_TECHCENTER_SPAWN && commandID <= CMD_STRUCTURE_SELL);
+    if(objectCommand && !parameter.empty()) {
         auto* object = currentGame->getObjectManager().getObject(parameter[0]);
         auto* player = currentGame->getPlayerByID(playerID);
         if(object && (!player || !currentGame->canPlayerControlHouse(player->getHouse(), object->getOwner())))
@@ -426,6 +426,12 @@ case CMD_INFANTRY_CAPTURE: {
             pScoutpost->doUpgradeToChemipost();
         } break;
 
+        case CMD_STRUCTURE_SELL: {
+            if(parameter.size()!=1)return;
+            auto* structure=dynamic_cast<StructureBase*>(currentGame->getObjectManager().getObject(parameter[0]));
+            auto* player=currentGame->getPlayerByID(playerID);
+            if(structure && player && currentGame->canPlayerControlHouse(player->getHouse(),structure->getOwner()))structure->doSell();
+        } break;
         case CMD_WINDTRAP_POWER_UPGRADE: {
             if(parameter.size()!=1)return;
             auto* trap=dynamic_cast<WindTrap*>(currentGame->getObjectManager().getObject(parameter[0]));

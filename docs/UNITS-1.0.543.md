@@ -1,0 +1,24 @@
+# Unités personnalisées — spécifications en préparation / pending specification
+
+Ces demandes sont prévues après la 1.0.542. Le code et les ressources sont intégrés sur la branche de préparation ; les validations locales passent. Aucun tag ni aucune publication de la prochaine version n'est autorisé par ce document.
+
+## Français
+
+- Les Troopers lance-flammes sont les Troopers par défaut de Kleshmersh hors Vanilla. En Chaos, leur effet doit suivre la technologie de production tirée au hasard, même pour une autre maison, ainsi que leur prix et leur icône dédiée.
+- Harkonnen : conserver les Troopers ordinaires et ajouter une production distincte de Troopers lance-flammes à partir du niveau 7, avec une IX comme prérequis. Extension hors Vanilla, dans les versions complètes et Lite où Harkonnen est disponible. Cette unité séparée ne doit pas remplacer les Troopers ordinaires ni imposer le niveau 7 aux Troopers de Kleshmersh.
+- Kleshmersh : Rocket Trike au niveau 3, amélioration 1 de l'usine légère ; Flame Quad au niveau 5, amélioration 2 de l'usine légère ; pas de Sonic Trike dans sa production normale.
+- Infanterie à gaz : Ordos et Tharpique ; production dans la WOR et la Worfinery, débloquée par l'IX. Le gaz soigne les alliés et produit l'effet du Deviator sur les ennemis. Hors Vanilla ; Ordos également dans les versions Lite, Tharpique uniquement dans les mods où cette maison existe.
+- Fichiers annoncés : `FlameQuadIcon.png`, `FlameQuadTiles.png`, `Gaz_Infantry_sprites.png`, `ProductionTrooperFlames.png`, `ProductionTrooperGazInfantry.png`.
+- Les cinq PNG ont été reçus dans `Images.tar.gz` et conservés intacts dans les six mods, avec manifestes SHA-256. Portraits : 91×55 ; Quad : 88×58 ; gaz : 101×42. Le moteur utilise les cinq vues du Quad et les neuf poses individuelles de la première rangée à gaz, puis reconstruit les orientations comme les unités de base. Le fond magenta opaque du gaz devient transparent au chargement ; le noir opaque est conservé. Les trois zooms sont des multiples exacts de la même base.
+- Équilibrage initial, modifiable par ObjectData : Flame Quad 300 crédits, 130 PV, deux tirs de dégâts 12, portée 4 ; infanterie à gaz 250 crédits, 45 PV, portée 5, gaz ennemi identique au Deviator, soin 15 par missile ; Trooper lance-flammes Harkonnen 200 crédits et statistiques du Trooper Kleshmersh, avec son bonus de dégâts de feu existant.
+
+## English
+
+Code and assets are integrated on the preparation branch; local validation passes. This is not a publication report.
+
+- Outside Vanilla, Kleshmersh's default Troopers use flamethrowers. In Chaos mode, the weapon, price and dedicated production portrait must follow the randomly inherited production technology rather than the receiving faction.
+- Harkonnen keeps ordinary Troopers and gains a separate flamethrower Trooper product at level 7, requiring an IX. Apply outside Vanilla, including Lite rosters containing Harkonnen. Do not replace ordinary Troopers or impose this unlock on Kleshmersh's default Troopers.
+- Kleshmersh: Rocket Trike at level 3 / Light Factory upgrade 1; Flame Quad at level 5 / upgrade 2; remove Sonic Trike from its normal production.
+- Gas Infantry: Ordos and Tharpique, produced by WOR and Worfinery, requiring an IX. Heal allies and apply the Deviator effect to enemies. Outside Vanilla; Ordos is included in Lite, Tharpique only where that faction exists.
+- All five original PNG files were received in `Images.tar.gz`, preserved unchanged in the six mods and added to SHA-256 manifests. Portraits are 91×55, Quad 88×58, gas 101×42. Five Quad views and the first nine individual gas poses are normalized into standard orientation/animation atlases in memory. Magenta becomes transparent, opaque black remains visible, and all three zooms use exact integer scales.
+- Initial balance is configurable in ObjectData: Flame Quad 300 credits / 130 HP / two 12-damage shots / range 4; Gas Infantry 250 credits / 45 HP / range 5 / Deviator enemy gas / 15 healing per missile; Harkonnen flame Trooper 200 credits using the Kleshmersh Trooper values and existing flame damage bonus.

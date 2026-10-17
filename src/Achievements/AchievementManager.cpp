@@ -117,6 +117,7 @@ void AchievementManager::built(bool structure,const std::string& exclusive) {
     increment(structure?"StructuresBuilt":"UnitsBuilt");
     if(!structure&&!exclusive.empty())active.arsenal.insert(exclusive);evaluate();
 }
+void AchievementManager::sold(std::uint64_t refund){if(running&&!active.completed){increment("StructuresSold");increment("CreditsFromSales",refund);evaluate();}}
 void AchievementManager::captured(){if(running&&!active.completed){increment("StructuresCaptured");evaluate();}}
 void AchievementManager::crushed(std::uint32_t victim,std::uint32_t vehicle,std::uint64_t cycle) {
     if(!running||active.completed||active.destroyed.count(victim))return;

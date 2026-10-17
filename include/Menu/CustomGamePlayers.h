@@ -70,6 +70,7 @@ private:
 #ifdef DUNELEGACY_RUNTIME_TESTS
     friend void verifyCoopLobby(const std::string&, const std::string&);
     friend void verifyExpandedCoop(const std::string&, const std::string&);
+    friend void verifyRelease543Alliances(const std::string&, const std::string&);
 #endif
     ChangeEventList getChangeEventList();
 

@@ -167,7 +167,7 @@ public:
         \param  houseID the id of the house to return
         \return the house with id houseID
     */
-    House* getHouse(int houseID) {
+    House* getHouse(int houseID) const {
         return house[houseID].get();
     }
 

@@ -153,6 +153,9 @@ House::House(InputStream& stream) : choam(this) {
             addPlayer(pPlayerData->load(stream,this));
         }
     }
+    if(currentGame && currentGame->getLoadedSavegameVersion()>=9835) {
+        structuresSold=stream.readUint32();saleCredits=stream.readUint32();
+    }
 }
 
 
@@ -232,6 +235,7 @@ void House::save(OutputStream& stream) const {
         stream.writeString(pPlayer->getPlayerclass());
         pPlayer->save(stream);
     }
+    stream.writeUint32(structuresSold);stream.writeUint32(saleCredits);
 }
 
 
@@ -512,10 +516,20 @@ void House::incrementStructures(int itemID) {
 
 
 
-void House::decrementStructures(int itemID, const Coord& location) {
+void House::addUnstoredCredits(FixPoint amount) {
+    if(amount>0)startingCredits+=amount;
+}
+
+void House::recordBuildingSale(int refund) {
+    addUnstoredCredits(refund); // Same protected balance as initial funds; never occupies silos.
+    if(structuresSold<0xffffffffu)++structuresSold;
+    saleCredits=static_cast<Uint32>(std::min<std::uint64_t>(0xffffffffu,static_cast<std::uint64_t>(saleCredits)+refund));
+}
+
+void House::decrementStructures(int itemID, const Coord& location, bool lost) {
     numStructures--;
     numItem[itemID]--;
-    numItemLosses[itemID]++;
+    if(lost)numItemLosses[itemID]++;
 
     // change power requirements
     int currentItemPower = currentGame->objectData.data[itemID][getFactionID()].power;
@@ -966,7 +980,7 @@ UnitBase* House::placeUnit(int itemID, int xPos, int yPos, bool byScenario) {
     if(currentGameMap->tileExists(xPos, yPos) == true) {
         Tile* pTile = currentGameMap->getTile(xPos,yPos);
 
-        if(itemID == Unit_Saboteur || itemID == Unit_Soldier || itemID == Unit_Trooper) {
+        if(itemID == Unit_Saboteur || itemID == Unit_Soldier || itemID == Unit_Trooper || itemID == Unit_GasInfantry || itemID == Unit_FlameTrooper) {
             if((pTile->hasANonInfantryGroundObject() == true) || (pTile->infantryNotFull() == false)) {
                 // infantry units can not placed on non-infantry units or structures (or the tile is already full of infantry units)
                 return nullptr;

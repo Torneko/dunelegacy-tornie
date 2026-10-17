@@ -19,10 +19,10 @@
 #define TEST_NETWORKPACKET_SENDGAMEINFO         1
 #define TEST_NETWORKPACKET_CLIENTSTATS          13
 #define TEST_NETWORKPACKET_KEEPALIVE            19
-#define TEST_NETWORK_PROTOCOL_VERSION           14
+#define TEST_NETWORK_PROTOCOL_VERSION           15
 
-TEST_CASE("NetworkManager: Rebels power upgrade requires protocol 14", "[network][protocol]") {
-    REQUIRE(NETWORK_PROTOCOL_VERSION == 14);
+TEST_CASE("NetworkManager: selling and alliance commands require protocol 15", "[network][protocol]") {
+    REQUIRE(NETWORK_PROTOCOL_VERSION == 15);
     REQUIRE(TEST_NETWORK_PROTOCOL_VERSION != 4);
     REQUIRE(NETWORKPACKET_COOP_READY == 20);
     REQUIRE(NETWORKPACKET_COOP_ADVANCE == 21);

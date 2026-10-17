@@ -840,7 +840,7 @@ int main(int argc, char *argv[]) {
                 return EXIT_SUCCESS;
             }
             if(parameter == "--verify-windtrap-preview") { bVerifyMods=true;bVerifyWindtrapPreview=true;continue; }
-            if(parameter == "--verify-release541" || parameter == "--verify-release542") { bVerifyMods=true;bVerifyRelease541=true;continue; }
+            if(parameter == "--verify-release541" || parameter == "--verify-release542" || parameter == "--verify-release543") { bVerifyMods=true;bVerifyRelease541=true;continue; }
             if(parameter == "--verify-coop-expanded") { bVerifyMods=true;bVerifyExpandedCoop=true;continue; }
             if(parameter == "--verify-startup") { bVerifyMods = true; bVerifyStartup = true; continue; }
             if(parameter == "--verify-mods") { bVerifyMods = true; continue; }
@@ -1018,6 +1018,8 @@ int main(int argc, char *argv[]) {
             settings.gameOptions.instantBuild = myINIFile.getBoolValue("Game Options","Instant Build",false);
             settings.gameOptions.onlyOnePalace = myINIFile.getBoolValue("Game Options","Only One Palace",false);
             settings.gameOptions.rocketTurretsNeedPower = myINIFile.getBoolValue("Game Options","Rocket-Turrets Need Power",false);
+            settings.gameOptions.sellingBuildings = myINIFile.getBoolValue("Game Options","Selling Buildings",false);
+            settings.gameOptions.showHarvesterCount = myINIFile.getBoolValue("Game Options","Show Harvester Count",true);
             settings.gameOptions.sandwormsRespawn = myINIFile.getBoolValue("Game Options","Sandworms Respawn",false);
             settings.gameOptions.killedSandwormsDropSpice = myINIFile.getBoolValue("Game Options","Killed Sandworms Drop Spice",false);
             settings.gameOptions.chaosMode = myINIFile.getBoolValue("Game Options","Chaos Mode",false);

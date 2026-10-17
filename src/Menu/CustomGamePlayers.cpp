@@ -206,6 +206,7 @@ CustomGamePlayers::CustomGamePlayers(const GameInitSettings& newGameInitSettings
     } else if(gameInitSettings.getGameType() == GameType::LoadMultiplayer) {
         auto saved = readSaveGameLobbySetup(gameInitSettings.getFiledata());
         const auto& tmpGameInitSettings = saved.settings;
+        gameInitSettings.setAllianceOptions(tmpGameInitSettings.getGameOptions().alliedControl,tmpGameInitSettings.getGameOptions().alliedBuilding);
         if(coop::readContext(tmpGameInitSettings.getFiledata())) {
             coopSession = coop::CoopCampaignSession::fromMapData(tmpGameInitSettings.getFiledata());
             coopGameOptions = tmpGameInitSettings.getGameOptions();
@@ -288,7 +289,7 @@ CustomGamePlayers::CustomGamePlayers(const GameInitSettings& newGameInitSettings
     chatVBox.addWidget(&chatTextBox, 0.2);
     chatVBox.addWidget(Spacer::create(), 0.03);
     buttonHBox.addWidget(&chatVBox, 0.675);
-    if(coopSession)buttonHBox.addWidget(&coopOptionsScroll,280);
+    if(coopSession || gameInitSettings.getGameType()==GameType::CustomMultiplayer || gameInitSettings.getGameType()==GameType::LoadMultiplayer)buttonHBox.addWidget(&coopOptionsScroll,280);
 
     if(gameInitSettings.getGameType() != GameType::CustomMultiplayer && gameInitSettings.getGameType() != GameType::LoadMultiplayer) {
         chatVBox.setVisible(false);
@@ -553,13 +554,14 @@ CustomGamePlayers::CustomGamePlayers(const GameInitSettings& newGameInitSettings
         }
     }
 
-    if(coopSession) {
+    if(coopSession || gameInitSettings.getGameType()==GameType::CustomMultiplayer || gameInitSettings.getGameType()==GameType::LoadMultiplayer) {
         coopOptionsScroll.setPreserveContentWidth(true);
         coopOptionsScroll.setContent(&coopOptionsVBox);
         alliedControlCheckbox.setText(settings.general.language == "fr" ? "Contrôles alliés" : "Allied control");
-        alliedControlCheckbox.setChecked(coopSession->context().alliedControl);
+        alliedControlCheckbox.setChecked(coopSession ? coopSession->context().alliedControl : gameInitSettings.getGameOptions().alliedControl);
         alliedControlCheckbox.setOnClick([this] {
-            coopSession->setAlliedControl(alliedControlCheckbox.isChecked());
+            if(coopSession)coopSession->setAlliedControl(alliedControlCheckbox.isChecked());
+            else gameInitSettings.setAllianceOptions(alliedControlCheckbox.isChecked(),alliedBuildingCheckbox.isChecked());
             ChangeEventList events;
             events.changeEventList.emplace_back(ChangeEventList::ChangeEvent::EventType::ChangeAlliedControl,
                 0, alliedControlCheckbox.isChecked() ? 1 : 0);
@@ -567,14 +569,19 @@ CustomGamePlayers::CustomGamePlayers(const GameInitSettings& newGameInitSettings
         });
         coopOptionsVBox.addWidget(&alliedControlCheckbox, 0.0);
         alliedBuildingCheckbox.setText(settings.general.language=="fr" ? "Construction sur terrain allié" : "Build on allied land");
-        alliedBuildingCheckbox.setChecked(coopSession->context().alliedBuilding);
+        alliedBuildingCheckbox.setChecked(coopSession ? coopSession->context().alliedBuilding : gameInitSettings.getGameOptions().alliedBuilding);
         alliedBuildingCheckbox.setOnClick([this] {
-            coopSession->setAlliedBuilding(alliedBuildingCheckbox.isChecked());
+            if(coopSession)coopSession->setAlliedBuilding(alliedBuildingCheckbox.isChecked());
+            else gameInitSettings.setAllianceOptions(alliedControlCheckbox.isChecked(),alliedBuildingCheckbox.isChecked());
             ChangeEventList events;
             events.changeEventList.emplace_back(ChangeEventList::ChangeEvent::EventType::ChangeAlliedBuilding,0,alliedBuildingCheckbox.isChecked() ? 1 : 0);
             if(pNetworkManager) pNetworkManager->sendChangeEventList(events);
         });
         coopOptionsVBox.addWidget(&alliedBuildingCheckbox,0.0);
+        const bool editable=bServer && gameInitSettings.getGameType()!=GameType::LoadMultiplayer;
+        alliedControlCheckbox.setEnabled(editable);alliedBuildingCheckbox.setEnabled(editable);
+    }
+    if(coopSession) {
         coopEasyModeCheckbox.setText(settings.general.language == "fr" ? "Mode facile (coop)" : "Easy Mode (co-op)");
         coopEasyModeCheckbox.setChecked(coopSession->context().easyMode);
         coopEasyModeCheckbox.setOnClick([this] {
@@ -737,6 +744,8 @@ void CustomGamePlayers::onChildWindowClose(Window* child) {
 }
 
 void CustomGamePlayers::update() {
+    const bool allianceEditable=bServer && gameInitSettings.getGameType()!=GameType::LoadMultiplayer && startGameTime==0 && !bWaitingForModAcks;
+    alliedControlCheckbox.setEnabled(allianceEditable);alliedBuildingCheckbox.setEnabled(allianceEditable);
     if(startGameTime > 0) {
         if(coopSession && !isCoopLobbyReady()) {
             startGameTime = 0;
@@ -918,14 +927,16 @@ void CustomGamePlayers::onReceiveChangeEventList(const ChangeEventList& changeEv
                 }
             } break;
             case ChangeEventList::ChangeEvent::EventType::ChangeAlliedBuilding: {
-                if(coopSession && !bServer && changeEvent.newValue<=1 && gameInitSettings.getGameType()!=GameType::LoadMultiplayer) {
-                    coopSession->setAlliedBuilding(changeEvent.newValue!=0);
+                if(!bServer && changeEvent.newValue<=1 && gameInitSettings.getGameType()!=GameType::LoadMultiplayer) {
+                    if(coopSession)coopSession->setAlliedBuilding(changeEvent.newValue!=0);
+                    else gameInitSettings.setAllianceOptions(gameInitSettings.getGameOptions().alliedControl,changeEvent.newValue!=0);
                     alliedBuildingCheckbox.setChecked(changeEvent.newValue!=0);
                 }
             } break;
             case ChangeEventList::ChangeEvent::EventType::ChangeAlliedControl: {
-                if(coopSession && changeEvent.newValue <= 1) {
-                    coopSession->setAlliedControl(changeEvent.newValue != 0);
+                if(!bServer && changeEvent.newValue <= 1 && gameInitSettings.getGameType()!=GameType::LoadMultiplayer) {
+                    if(coopSession)coopSession->setAlliedControl(changeEvent.newValue != 0);
+                    else gameInitSettings.setAllianceOptions(changeEvent.newValue!=0,gameInitSettings.getGameOptions().alliedBuilding);
                     alliedControlCheckbox.setChecked(changeEvent.newValue != 0);
                 }
             } break;
@@ -951,9 +962,9 @@ void CustomGamePlayers::onReceiveChangeEventList(const ChangeEventList& changeEv
 ChangeEventList CustomGamePlayers::getChangeEventList()
 {
     ChangeEventList changeEventList;
-    if(coopSession) changeEventList.changeEventList.emplace_back(
+    changeEventList.changeEventList.emplace_back(
         ChangeEventList::ChangeEvent::EventType::ChangeAlliedBuilding,0,alliedBuildingCheckbox.isChecked() ? 1 : 0);
-    if(coopSession) changeEventList.changeEventList.emplace_back(
+    changeEventList.changeEventList.emplace_back(
         ChangeEventList::ChangeEvent::EventType::ChangeAlliedControl, 0,
         alliedControlCheckbox.isChecked() ? 1 : 0);
 
@@ -1654,6 +1665,7 @@ void CustomGamePlayers::addAllPlayersToGameInitSettings()
         coopSession = coop::CoopCampaignSession::fromMapData(gameInitSettings.getFiledata());
         return;
     }
+    gameInitSettings.setAllianceOptions(alliedControlCheckbox.isChecked(),alliedBuildingCheckbox.isChecked());
     gameInitSettings.clearHouseInfo();
 
     for(int i=0;i<numHouses;i++) {

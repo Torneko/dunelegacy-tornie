@@ -51,6 +51,9 @@ SDL_Texture* resolveItemPicture(int itemID, HOUSETYPE house) {
     int newPicID;
 
     switch(itemID) {
+        case Unit_FlameQuad: newPicID = Picture_FlameQuad; break;
+        case Unit_GasInfantry: newPicID = Picture_GasInfantry; break;
+        case Unit_FlameTrooper: newPicID = Picture_FlameTrooper; break;
         case Structure_Barracks:            newPicID = Picture_Barracks;            break;
         case Structure_ConstructionYard:    newPicID = Picture_ConstructionYard;    break;
         case Structure_GunTurret:           newPicID = Picture_GunTurret;           break;
@@ -135,6 +138,10 @@ SDL_Texture* resolveItemPicture(int itemID, HOUSETYPE house) {
         break;
     }
 
+    if((itemID==Unit_Trooper || itemID==Unit_Troopers || itemID==Unit_Troopers5)
+       && currentGame && ModManager::instance().isTornieContentActive()
+       && currentGame->getGameInitSettings().getGameOptions().content.customUnitsAndBuildings
+       && isHouseFaction(house,HOUSE_KLESHMERSH))newPicID=Picture_FlameTrooper;
     return pGFXManager->getSmallDetailPic(newPicID, house);
 }
 
@@ -308,6 +315,9 @@ Uint32  getItemIDByName(const std::string& name) {
     else if(lowerName == "infantry")                                            return Unit_Infantry;
     else if(lowerName == "troopers5")                                           return Unit_Troopers5;
     else if(lowerName == "troopers")                                            return Unit_Troopers;
+    else if(lowerName == "flame quad") return Unit_FlameQuad;
+    else if(lowerName == "gas infantry") return Unit_GasInfantry;
+    else if(lowerName == "flame trooper") return Unit_FlameTrooper;
     else if(lowerName == "rocket trike")                                        return Unit_RocketTrike;
     else if(lowerName == "sonic trike")                                         return Unit_SonicTrike;
     else if(lowerName == "flame tank")                                          return Unit_FlameTank;
@@ -385,6 +395,9 @@ std::string getItemNameByID(Uint32 itemID) {
         case Unit_Infantry:                 return "Infantry";          break;
         case Unit_Troopers5:                return "Troopers5";         break;
         case Unit_Troopers:                 return "Troopers";          break;
+        case Unit_FlameQuad: return "Flame Quad";
+        case Unit_GasInfantry: return "Gas Infantry";
+        case Unit_FlameTrooper: return "Flame Trooper";
         case Unit_RocketTrike:              return "Rocket Trike";      break;
         case Unit_SonicTrike:               return "Sonic Trike";       break;
         case Unit_FlameTank:                return "Flame Tank";        break;
@@ -466,6 +479,9 @@ std::string resolveItemName(int itemID) {
         case Unit_Infantry:                 return _("@DUNE.ENG|199#Infantry");            break;
         case Unit_Troopers5:                return _("Super Heavy Trooper Squad");                     break;
         case Unit_Troopers:                 return _("@DUNE.ENG|201#Troopers");            break;
+        case Unit_FlameQuad: return settings.general.language == "fr" ? "Quad lance-flammes" : "Flame Quad";
+        case Unit_GasInfantry: return settings.general.language == "fr" ? "Infanterie à gaz" : "Gas Infantry";
+        case Unit_FlameTrooper: return settings.general.language == "fr" ? "Trooper lance-flammes" : "Flame Trooper";
         case Unit_RocketTrike:              return _("Rocket Trike");                      break;
         case Unit_SonicTrike:               return _("Sonic Trike");                       break;
         case Unit_FlameTank:                return _("Flame Tank");                        break;

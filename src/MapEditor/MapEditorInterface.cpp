@@ -636,7 +636,7 @@ MapEditorInterface::MapEditorInterface(MapEditor* pMapEditor)
         editorModeStructs_VBox.addWidget(&editorModeStructs_AdvancedLayout, 11*cellSize);
     }
 
-    for(auto* button : {&editorModeUnits_Soldier, &editorModeUnits_Trooper, &editorModeUnits_Harvester, &editorModeUnits_RebelHarvester, &editorModeUnits_Infantry, &editorModeUnits_Troopers, &editorModeUnits_MCV, &editorModeUnits_Trike, &editorModeUnits_Raider, &editorModeUnits_Quad, &editorModeUnits_RocketTrike, &editorModeUnits_SonicTrike, &editorModeUnits_FlameTank, &editorModeUnits_EliteLauncher, &editorModeUnits_EliteSiegeTank, &editorModeUnits_ChemicalSiegeTank, &editorModeUnits_ChemicalCarryall, &editorModeUnits_Tank, &editorModeUnits_SiegeTank, &editorModeUnits_Launcher, &editorModeUnits_Devastator, &editorModeUnits_SonicTank, &editorModeUnits_Deviator, &editorModeUnits_Saboteur, &editorModeUnits_Sandworm, &editorModeUnits_SpecialUnit, &editorModeUnits_Carryall, &editorModeUnits_Ornithopter, &editorModeUnits_Infantry5, &editorModeUnits_Troopers5})
+    for(auto* button : {&editorModeUnits_Soldier, &editorModeUnits_Trooper, &editorModeUnits_Harvester, &editorModeUnits_RebelHarvester, &editorModeUnits_Infantry, &editorModeUnits_Troopers, &editorModeUnits_MCV, &editorModeUnits_Trike, &editorModeUnits_Raider, &editorModeUnits_Quad, &editorModeUnits_FlameQuad, &editorModeUnits_GasInfantry, &editorModeUnits_FlameTrooper, &editorModeUnits_RocketTrike, &editorModeUnits_SonicTrike, &editorModeUnits_FlameTank, &editorModeUnits_EliteLauncher, &editorModeUnits_EliteSiegeTank, &editorModeUnits_ChemicalSiegeTank, &editorModeUnits_ChemicalCarryall, &editorModeUnits_Tank, &editorModeUnits_SiegeTank, &editorModeUnits_Launcher, &editorModeUnits_Devastator, &editorModeUnits_SonicTank, &editorModeUnits_Deviator, &editorModeUnits_Saboteur, &editorModeUnits_Sandworm, &editorModeUnits_SpecialUnit, &editorModeUnits_Carryall, &editorModeUnits_Ornithopter, &editorModeUnits_Infantry5, &editorModeUnits_Troopers5})
         button->setSymbolPadding(3);
 
     // setup units mode
@@ -715,6 +715,15 @@ MapEditorInterface::MapEditorInterface(MapEditor* pMapEditor)
     editorModeUnits_Quad.setOnClick(std::bind(&MapEditorInterface::onUnitButton, this, Unit_Quad));
     editorModeUnits_HBox3.addWidget(&editorModeUnits_Quad, 2*D2_TILESIZE + 4);
 
+    editorModeUnits_FlameQuad.setToggleButton(true);
+    editorModeUnits_FlameQuad.setTooltipText(resolveItemName(Unit_FlameQuad));
+    editorModeUnits_FlameQuad.setOnClick(std::bind(&MapEditorInterface::onUnitButton,this,Unit_FlameQuad));
+    editorModeUnits_GasInfantry.setToggleButton(true);
+    editorModeUnits_GasInfantry.setTooltipText(resolveItemName(Unit_GasInfantry));
+    editorModeUnits_GasInfantry.setOnClick(std::bind(&MapEditorInterface::onUnitButton,this,Unit_GasInfantry));
+    editorModeUnits_FlameTrooper.setToggleButton(true);
+    editorModeUnits_FlameTrooper.setTooltipText(resolveItemName(Unit_FlameTrooper));
+    editorModeUnits_FlameTrooper.setOnClick(std::bind(&MapEditorInterface::onUnitButton,this,Unit_FlameTrooper));
     editorModeUnits_RocketTrike.setToggleButton(true);
     editorModeUnits_RocketTrike.setTooltipText(resolveItemName(Unit_RocketTrike));
     editorModeUnits_RocketTrike.setOnClick(std::bind(&MapEditorInterface::onUnitButton, this, Unit_RocketTrike));
@@ -867,6 +876,14 @@ MapEditorInterface::MapEditorInterface(MapEditor* pMapEditor)
         editorModeUnits_HBoxTornieChemical.addWidget(&editorModeUnits_ChemicalCarryall, 2*D2_TILESIZE + 4);
         editorModeUnits_HBoxTornieChemical.addWidget(HSpacer::create(2));
         editorModeUnits_HBoxTornieChemical.addWidget(Spacer::create());
+        editorModeUnits_VBox.addWidget(VSpacer::create(2));
+        editorModeUnits_VBox.addWidget(&editorModeUnits_HBoxNew543,2*D2_TILESIZE+4);
+        editorModeUnits_HBoxNew543.addWidget(&editorModeUnits_FlameQuad,2*D2_TILESIZE+4);
+        editorModeUnits_HBoxNew543.addWidget(HSpacer::create(2));
+        editorModeUnits_HBoxNew543.addWidget(&editorModeUnits_GasInfantry,2*D2_TILESIZE+4);
+        editorModeUnits_HBoxNew543.addWidget(HSpacer::create(2));
+        editorModeUnits_HBoxNew543.addWidget(&editorModeUnits_FlameTrooper,2*D2_TILESIZE+4);
+
     }
 
 
@@ -1339,6 +1356,9 @@ void MapEditorInterface::onUnitButton(int unitType) {
     editorModeUnits_Trike.setToggleState( (unitType == Unit_Trike) );
     editorModeUnits_Raider.setToggleState( (unitType == Unit_RaiderTrike) );
     editorModeUnits_Quad.setToggleState( (unitType == Unit_Quad) );
+    editorModeUnits_FlameQuad.setToggleState(unitType==Unit_FlameQuad);
+    editorModeUnits_GasInfantry.setToggleState(unitType==Unit_GasInfantry);
+    editorModeUnits_FlameTrooper.setToggleState(unitType==Unit_FlameTrooper);
     editorModeUnits_RocketTrike.setToggleState( (unitType == Unit_RocketTrike) );
     editorModeUnits_SonicTrike.setToggleState( (unitType == Unit_SonicTrike) );
     editorModeUnits_FlameTank.setToggleState( (unitType == Unit_FlameTank) );
@@ -1628,6 +1648,9 @@ void MapEditorInterface::changeInterfaceColor(HOUSETYPE newHouse) {
     editorModeUnits_Trike.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_Trike, newHouse));
     editorModeUnits_Raider.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_Raider, newHouse));
     editorModeUnits_Quad.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_Quad, newHouse));
+    editorModeUnits_FlameQuad.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_FlameQuad,newHouse));
+    editorModeUnits_GasInfantry.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_GasInfantry,newHouse));
+    editorModeUnits_FlameTrooper.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_FlameTrooper,newHouse));
     editorModeUnits_RocketTrike.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_RocketTrike, newHouse));
     editorModeUnits_SonicTrike.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_SonicTrike, newHouse));
     editorModeUnits_FlameTank.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_FlameTank, newHouse));

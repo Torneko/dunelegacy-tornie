@@ -303,6 +303,8 @@ target_sources(dunelegacy
         units/Tank.cpp
         units/Trike.cpp
         units/Trooper.cpp
+        units/FlameQuad.cpp
+        units/GasInfantry.cpp
         units/RocketTrike.cpp
         units/SonicTrike.cpp
         units/FlameTank.cpp

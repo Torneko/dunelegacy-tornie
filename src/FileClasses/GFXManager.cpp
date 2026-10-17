@@ -184,6 +184,8 @@ static const Coord objPicTiles[] {
     { 4, 1 },   // ObjPic_Chemipost
     { 4, 1 },   // ObjPic_ChaosFactory
     { 10, 1 },  // ObjPic_Doublefinery
+    { 8, 1 },   // ObjPic_FlameQuad
+    { 4, 3 },   // ObjPic_GasInfantry
 };
 static_assert(sizeof(objPicTiles) / sizeof(objPicTiles[0]) == NUM_OBJPICS,
               "objPicTiles must have one entry per ObjPic enum value");
@@ -2414,6 +2416,14 @@ GFXManager::GFXManager() {
     };
 
     for(int colorSlot = 0; colorSlot < NUM_HOUSE_COLOR_SLOTS; ++colorSlot) {
+        for(const auto& custom : {std::pair<unsigned int,unsigned int>{UI_MapEditor_FlameQuad,ObjPic_FlameQuad},
+                                  {UI_MapEditor_GasInfantry,ObjPic_GasInfantry},
+                                  {UI_MapEditor_FlameTrooper,ObjPic_Trooper}}) {
+            const bool infantry=custom.first!=UI_MapEditor_FlameQuad;
+            auto frame=getColoredEditorFrame(custom.second,colorSlot,0,0,infantry?4:8,infantry?3:1);
+            uiGraphicTex[custom.first][colorSlot].reset();
+            uiGraphic[custom.first][colorSlot]=decorateEditorVehicle(std::move(frame),true);
+        }
         const int fixedTornieGunSlot = tornieGraphicsVisible ? HOUSE_HARKONNEN : colorSlot;
 
         for(const unsigned int squadID : {UI_MapEditor_Infantry5, UI_MapEditor_Troopers5}) {
@@ -4355,6 +4365,51 @@ void GFXManager::reloadModDependentObjectGraphics() {
                 scaleSurfaceNearest(objPic[ObjPic_ChemicalCarryall][colorSlot][0].get(), 3);
         }
     }
+    // Supplied 543 sprites: preserve the PNG files; normalize their contact-sheet
+    // layouts in memory. The gas sheet's first nine cells are single Troopers;
+    // later rows contain squad arrangements, not extra walking frames.
+    auto installSuppliedAtlas=[&](int id,int fallback,const char* name,bool gas) {
+        sdl2::surface_ptr atlas;
+        if(tornieGraphicsVisible) {
+            auto asset=openTornieAsset(name,"unit");auto raw=asset?LoadPNG_RW(asset.get()):nullptr;
+            if(raw) {
+                const bool valid=gas?(raw->w==101 && raw->h==42):(raw->w==88 && raw->h==58);
+                if(!valid)throw std::runtime_error(std::string("Unexpected supplied unit atlas dimensions: ")+name);
+                auto rgba=sdl2::surface_ptr{SDL_ConvertSurfaceFormat(raw.get(),SDL_PIXELFORMAT_RGBA32,0)};
+                const int cell=gas?9:18,columns=gas?4:8,rows=gas?3:1;
+                atlas=sdl2::surface_ptr{SDL_CreateRGBSurfaceWithFormat(0,columns*cell,rows*cell,32,SDL_PIXELFORMAT_RGBA32)};
+                SDL_FillRect(atlas.get(),nullptr,0);
+                constexpr int views[]={2,1,0,1,2,3,4,3};
+                constexpr int starts[]={0,18,36,53,71};
+                for(int row=0;row<rows;++row)for(int col=0;col<columns;++col) {
+                    const int frame=gas?(col==0?3+row:col==1?row:col==2?3+row:6+row):views[col];
+                    const int sx=gas?frame*9:starts[frame],sy=gas?0:21;
+                    const int width=gas?9:(frame==2||frame==4?17:18),height=gas?9:17;
+                    const bool flip=gas?col==2:(col>=3 && col<=5);
+                    for(int y=0;y<height;++y)for(int x=0;x<width;++x) {
+                        Uint8 r,g,b,a;SDL_GetRGBA(getPixel(rgba.get(),sx+x,sy+y),rgba->format,&r,&g,&b,&a);
+                        if(a==0 || (r==255 && g==0 && b==255))continue;
+                        putPixel(atlas.get(),col*cell+(flip?width-1-x:x),row*cell+y,SDL_MapRGBA(atlas->format,r,g,b,a));
+                    }
+                }
+            }
+        }
+        for(int slot=0;slot<NUM_HOUSE_COLOR_SLOTS;++slot) {
+            auto* fallbackSource=objPic[fallback][slot][0].get();
+            if(!fallbackSource)fallbackSource=objPic[fallback][HOUSE_HARKONNEN][0].get();
+            auto source=atlas?remapTruecolorHouseColorRange(atlas.get(),slot):sdl2::surface_ptr{};
+            if(!source && fallbackSource)source=copySurface(fallbackSource);
+            objPic[id][slot][0]=std::move(source);
+            for(int zoom=1;zoom<NUM_ZOOMLEVEL;++zoom)objPic[id][slot][zoom]=scaleSurfaceNearest(objPic[id][slot][0].get(),zoom+1);
+            for(int zoom=0;zoom<NUM_ZOOMLEVEL;++zoom) {
+                objPicTex[id][slot][zoom].reset();
+                if(objPic[id][slot][zoom])SDL_SetSurfaceBlendMode(objPic[id][slot][zoom].get(),SDL_BLENDMODE_BLEND);
+            }
+        }
+    };
+    installSuppliedAtlas(ObjPic_FlameQuad,ObjPic_Quad,"FlameQuadTiles.png",false);
+    installSuppliedAtlas(ObjPic_GasInfantry,ObjPic_Trooper,"Gaz_Infantry_sprites.png",true);
+
 }
 
 void GFXManager::reloadRuntimeModPortraits() {
@@ -4395,6 +4450,9 @@ void GFXManager::reloadRuntimeModPortraits() {
         : std::string();
     const bool tornieGraphicsVisible = isTornieGraphicsVisible();
 
+    loadPortrait(Picture_FlameQuad,"FlameQuadIcon.png","QUAD.WSA",tornieGraphicsVisible);
+    loadPortrait(Picture_GasInfantry,"ProductionTrooperGazInfantry.png","HYINFY.WSA",tornieGraphicsVisible);
+    loadPortrait(Picture_FlameTrooper,"ProductionTrooperFlames.png","HYINFY.WSA",tornieGraphicsVisible);
     loadPortrait(Picture_RocketTrike, "RocketTrikeIcon.png", "TRIKE.WSA", tornieGraphicsVisible);
     loadPortrait(Picture_SonicTrike, "SonicTrikeIcon.png", "TRIKE.WSA", tornieGraphicsVisible);
     loadPortrait(Picture_FlameTank, "FlameTankIcon.png", "HTANK.WSA", tornieGraphicsVisible);
@@ -4563,6 +4621,14 @@ void GFXManager::rebuildModDependentEditorGraphics() {
             uiGraphic[uiID][colorSlot].reset();
         }
 
+        for(const auto& custom : {std::pair<unsigned int,unsigned int>{UI_MapEditor_FlameQuad,ObjPic_FlameQuad},
+                                  {UI_MapEditor_GasInfantry,ObjPic_GasInfantry},
+                                  {UI_MapEditor_FlameTrooper,ObjPic_Trooper}}) {
+            const bool infantry=custom.first!=UI_MapEditor_FlameQuad;
+            auto frame=getRuntimeEditorFrame(custom.second,colorSlot,0,0,infantry?4:8,infantry?3:1);
+            uiGraphicTex[custom.first][colorSlot].reset();
+            uiGraphic[custom.first][colorSlot]=decorateRuntimeEditorVehicle(std::move(frame),true);
+        }
         const int fixedTornieGunSlot = tornieGraphicsVisible ? HOUSE_HARKONNEN : colorSlot;
         for(const unsigned int squadID : {UI_MapEditor_Infantry5, UI_MapEditor_Troopers5}) {
             const unsigned int sprite = squadID == UI_MapEditor_Infantry5 ? ObjPic_Infantry : ObjPic_Troopers;
