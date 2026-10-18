@@ -185,6 +185,7 @@ jobs:
       - name: Verify the packaged graphical startup and software fallback
         run: |
           set -euo pipefail
+          trap 'status=$?; if [[ "$status" != 0 && -n "${PROFILE:-}" ]]; then tail -n 120 "$PROFILE/startup.log" 2>/dev/null || true; tail -n 80 "$PROFILE/fallback.log" 2>/dev/null || true; fi; exit "$status"' EXIT
           pulseaudio --start --exit-idle-time=-1
           pactl load-module module-null-sink sink_name=dune_startup
           for IMAGE in "$PWD"/build/DuneLegacyTornie-*.AppImage; do

@@ -159,15 +159,22 @@ jobs:
       - name: Run engine and bundled mod checks
         run: |
           ctest --test-dir build -C Release --output-on-failure
+          if ($LASTEXITCODE -ne 0) { throw "Engine/network CTest failed." }
           $env:DUNELEGACY_USER_DIR = Join-Path $env:RUNNER_TEMP "dunelegacy-smoke-profile"
           New-Item -ItemType Directory -Force -Path $env:DUNELEGACY_USER_DIR | Out-Null
           $env:DUNELEGACY_SMOKE_DIR = $env:DUNELEGACY_USER_DIR
           $env:SDL_VIDEODRIVER = "dummy"
           $env:SDL_AUDIODRIVER = "dummy"
           $env:SDL_RENDER_DRIVER = "software"
+          # Run the shorter legacy integration suite first and keep its full
+          # exception context if it fails before the 1606-scenario pass.
+          $legacyLog = Join-Path $env:RUNNER_TEMP "dunelegacy-legacy-integration.log"
+          $legacy = Start-Process -FilePath "build/bin/Release/dunelegacy.exe" -ArgumentList "--verify-release-538", "--showlog", "--window" -WindowStyle Hidden -Wait -PassThru -RedirectStandardError $legacyLog
+          if ($legacy.ExitCode -ne 0) { Get-Content -LiteralPath $legacyLog -Tail 120; throw "Legacy integration failed." }
           $log = Join-Path $env:RUNNER_TEMP "dunelegacy-mod-smoke.log"
           $process = Start-Process -FilePath "build/bin/Release/dunelegacy.exe" -ArgumentList "--verify-achievements", "--showlog", "--window" -WindowStyle Hidden -Wait -PassThru -RedirectStandardError $log
           Get-Content -LiteralPath $log | Select-String "MOD SMOKE|ACHIEVEMENT SMOKE|unhandled exception|runtime check:"
+          if ($process.ExitCode -ne 0) { Get-Content -LiteralPath $log -Tail 120 }
           if ($process.ExitCode -ne 0 -or -not (Select-String -LiteralPath $log -Pattern "MOD SMOKE COMPLETE:")) { throw "Bundled mod runtime checks failed." }
           if (-not (Select-String -LiteralPath $log -Pattern "ACHIEVEMENT SMOKE COMPLETE:")) { throw "Achievement runtime checks failed." }
 
@@ -194,6 +201,7 @@ jobs:
             $log = Join-Path $env:RUNNER_TEMP "dunelegacy-installed-$language.log"
             $process = Start-Process -FilePath "install/dunelegacy.exe" -ArgumentList "--verify-achievements", "--showlog", "--window" -WindowStyle Hidden -Wait -PassThru -RedirectStandardError $log
             Get-Content -LiteralPath $log | Select-String "MOD SMOKE|ACHIEVEMENT SMOKE|unhandled exception|runtime check:"
+            if ($process.ExitCode -ne 0) { Get-Content -LiteralPath $log -Tail 120 }
             if ($process.ExitCode -ne 0 -or -not (Select-String -LiteralPath $log -Pattern "MOD SMOKE COMPLETE:")) { throw "Installed $language mod runtime checks failed." }
             if (-not (Select-String -LiteralPath $log -Pattern "ACHIEVEMENT SMOKE COMPLETE:")) { throw "Installed $language achievement checks failed." }
             foreach ($check in @(@("RELEASE 543 PASS:", 7), @("RELEASE 543 ALLIANCES PASS:", 7), @("RELEASE 543 UNITS PASS:", 6), @("RELEASE 543 GRAPHICS PASS:", 6), @("RELEASE 543 NEUTRAL SABOTEUR PASS:", 3))) {
@@ -203,6 +211,7 @@ jobs:
               $startupLog = Join-Path $env:RUNNER_TEMP "dunelegacy-startup-$language.log"
               $process = Start-Process -FilePath "install/dunelegacy.exe" -ArgumentList "--verify-video", "--showlog", "--window" -WindowStyle Hidden -Wait -PassThru -RedirectStandardError $startupLog
               Get-Content -LiteralPath $startupLog | Select-String "STARTUP CHECK|VIDEO CHECK|unhandled exception"
+              if ($process.ExitCode -ne 0) { Get-Content -LiteralPath $startupLog -Tail 120 }
               if ($process.ExitCode -ne 0 -or -not (Select-String -LiteralPath $startupLog -Pattern "STARTUP CHECK PASSED:.*language=$language")) { throw "Installed $language menu startup failed." }
               if (-not (Select-String -LiteralPath $startupLog -Pattern "VIDEO CHECK PASSED:")) { throw "Installed $language video options check failed." }
             }
