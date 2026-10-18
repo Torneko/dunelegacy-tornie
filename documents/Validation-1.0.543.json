@@ -1,15 +1,15 @@
 {
   "status": "validated",
   "version": "1.0.543",
-  "sourceCommit": "472538d7a6f84fd024f4950641bcbb60ee142d21",
-  "networkProtocol": 15,
+  "sourceCommit": "f956080b98bf4ba8fcb1ebca6e74df0332212984",
+  "networkProtocol": 16,
   "saveVersion": 9835,
   "engine": {
     "ctest": "2/2 PASS",
     "testCases": 136,
-    "assertions": 10314,
+    "assertions": 10318,
     "fullRuntimeFrenchScenarios": 1606,
-    "fullRuntimeFrenchAchievements": true
+    "fullRuntimeFrenchComplete": true
   },
   "runtime": {
     "rulesAndSelling": [
@@ -158,7 +158,7 @@
         18
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "c1c38544b4fa604a9732beb162f9e8ea801ea60e8aa21cb1afdfbb604a8264ac"
+      "sha256": "3ebf3143a106d157f397b4b391dccb18ab72002ee93dcd98a947784764c2be2d"
     },
     {
       "file": "ArcaKev-111-zoom2.png",
@@ -167,7 +167,7 @@
         36
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "1dd232072634ef8b530ba37c8d99c851a16fe9623d680e0740ade6f6e17c390f"
+      "sha256": "7b13c3573d8eb896efb32a9af62605ca212319dabdf37cbd88f5fc63399abca1"
     },
     {
       "file": "ArcaKev-111-zoom3.png",
@@ -176,7 +176,7 @@
         54
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "f9e47fa00ae79ba52971a3aecf446e01b71569514aca3ab2b1c76db0b20d06c9"
+      "sha256": "9b153b12225e5688d7e9e99f555ed6dfb6357e98d147a5ea7941cdc18e2ae3cb"
     },
     {
       "file": "ArcaKev-112-zoom1.png",
@@ -185,7 +185,7 @@
         27
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "89c497e264880afab5c73cd189a7b8887b4b82bb16b5917c62d314c69ca7034a"
+      "sha256": "363eafd7f48f9fd8e20117e8b59b341ab6f15d96b0069d40ba2ce2c88a62b6dd"
     },
     {
       "file": "ArcaKev-112-zoom2.png",
@@ -194,7 +194,7 @@
         54
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "2e7194e96224053ddb702103e162af6e97b946eefa35ac25c0a4528160cb51cb"
+      "sha256": "78d552856d124d7988574fb20cc3c7fa7492acecd4b086094b824e55c961cac4"
     },
     {
       "file": "ArcaKev-112-zoom3.png",
@@ -203,7 +203,7 @@
         81
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "0e1378e0c31d9b69c1395bca9b83b864871c1fb84fbae85a09f126d71789440f"
+      "sha256": "a8164880e0252e3d9073fab6defbb2a4b38260b9330b509bd2360d4f7b01690d"
     },
     {
       "file": "ArcaKevLite-111-zoom1.png",
@@ -212,7 +212,7 @@
         18
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "c1c38544b4fa604a9732beb162f9e8ea801ea60e8aa21cb1afdfbb604a8264ac"
+      "sha256": "3ebf3143a106d157f397b4b391dccb18ab72002ee93dcd98a947784764c2be2d"
     },
     {
       "file": "ArcaKevLite-111-zoom2.png",
@@ -221,7 +221,7 @@
         36
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "1dd232072634ef8b530ba37c8d99c851a16fe9623d680e0740ade6f6e17c390f"
+      "sha256": "7b13c3573d8eb896efb32a9af62605ca212319dabdf37cbd88f5fc63399abca1"
     },
     {
       "file": "ArcaKevLite-111-zoom3.png",
@@ -230,7 +230,7 @@
         54
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "f9e47fa00ae79ba52971a3aecf446e01b71569514aca3ab2b1c76db0b20d06c9"
+      "sha256": "9b153b12225e5688d7e9e99f555ed6dfb6357e98d147a5ea7941cdc18e2ae3cb"
     },
     {
       "file": "ArcaKevLite-112-zoom1.png",
@@ -239,7 +239,7 @@
         27
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "89c497e264880afab5c73cd189a7b8887b4b82bb16b5917c62d314c69ca7034a"
+      "sha256": "363eafd7f48f9fd8e20117e8b59b341ab6f15d96b0069d40ba2ce2c88a62b6dd"
     },
     {
       "file": "ArcaKevLite-112-zoom2.png",
@@ -248,7 +248,7 @@
         54
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "2e7194e96224053ddb702103e162af6e97b946eefa35ac25c0a4528160cb51cb"
+      "sha256": "78d552856d124d7988574fb20cc3c7fa7492acecd4b086094b824e55c961cac4"
     },
     {
       "file": "ArcaKevLite-112-zoom3.png",
@@ -257,7 +257,7 @@
         81
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "0e1378e0c31d9b69c1395bca9b83b864871c1fb84fbae85a09f126d71789440f"
+      "sha256": "a8164880e0252e3d9073fab6defbb2a4b38260b9330b509bd2360d4f7b01690d"
     },
     {
       "file": "Jericho-111-zoom1.png",
@@ -266,7 +266,7 @@
         18
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "c1c38544b4fa604a9732beb162f9e8ea801ea60e8aa21cb1afdfbb604a8264ac"
+      "sha256": "3ebf3143a106d157f397b4b391dccb18ab72002ee93dcd98a947784764c2be2d"
     },
     {
       "file": "Jericho-111-zoom2.png",
@@ -275,7 +275,7 @@
         36
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "1dd232072634ef8b530ba37c8d99c851a16fe9623d680e0740ade6f6e17c390f"
+      "sha256": "7b13c3573d8eb896efb32a9af62605ca212319dabdf37cbd88f5fc63399abca1"
     },
     {
       "file": "Jericho-111-zoom3.png",
@@ -284,7 +284,7 @@
         54
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "f9e47fa00ae79ba52971a3aecf446e01b71569514aca3ab2b1c76db0b20d06c9"
+      "sha256": "9b153b12225e5688d7e9e99f555ed6dfb6357e98d147a5ea7941cdc18e2ae3cb"
     },
     {
       "file": "Jericho-112-zoom1.png",
@@ -293,7 +293,7 @@
         27
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "89c497e264880afab5c73cd189a7b8887b4b82bb16b5917c62d314c69ca7034a"
+      "sha256": "363eafd7f48f9fd8e20117e8b59b341ab6f15d96b0069d40ba2ce2c88a62b6dd"
     },
     {
       "file": "Jericho-112-zoom2.png",
@@ -302,7 +302,7 @@
         54
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "2e7194e96224053ddb702103e162af6e97b946eefa35ac25c0a4528160cb51cb"
+      "sha256": "78d552856d124d7988574fb20cc3c7fa7492acecd4b086094b824e55c961cac4"
     },
     {
       "file": "Jericho-112-zoom3.png",
@@ -311,7 +311,7 @@
         81
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "0e1378e0c31d9b69c1395bca9b83b864871c1fb84fbae85a09f126d71789440f"
+      "sha256": "a8164880e0252e3d9073fab6defbb2a4b38260b9330b509bd2360d4f7b01690d"
     },
     {
       "file": "JerichoLite-111-zoom1.png",
@@ -320,7 +320,7 @@
         18
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "c1c38544b4fa604a9732beb162f9e8ea801ea60e8aa21cb1afdfbb604a8264ac"
+      "sha256": "3ebf3143a106d157f397b4b391dccb18ab72002ee93dcd98a947784764c2be2d"
     },
     {
       "file": "JerichoLite-111-zoom2.png",
@@ -329,7 +329,7 @@
         36
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "1dd232072634ef8b530ba37c8d99c851a16fe9623d680e0740ade6f6e17c390f"
+      "sha256": "7b13c3573d8eb896efb32a9af62605ca212319dabdf37cbd88f5fc63399abca1"
     },
     {
       "file": "JerichoLite-111-zoom3.png",
@@ -338,7 +338,7 @@
         54
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "f9e47fa00ae79ba52971a3aecf446e01b71569514aca3ab2b1c76db0b20d06c9"
+      "sha256": "9b153b12225e5688d7e9e99f555ed6dfb6357e98d147a5ea7941cdc18e2ae3cb"
     },
     {
       "file": "JerichoLite-112-zoom1.png",
@@ -347,7 +347,7 @@
         27
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "89c497e264880afab5c73cd189a7b8887b4b82bb16b5917c62d314c69ca7034a"
+      "sha256": "363eafd7f48f9fd8e20117e8b59b341ab6f15d96b0069d40ba2ce2c88a62b6dd"
     },
     {
       "file": "JerichoLite-112-zoom2.png",
@@ -356,7 +356,7 @@
         54
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "2e7194e96224053ddb702103e162af6e97b946eefa35ac25c0a4528160cb51cb"
+      "sha256": "78d552856d124d7988574fb20cc3c7fa7492acecd4b086094b824e55c961cac4"
     },
     {
       "file": "JerichoLite-112-zoom3.png",
@@ -365,7 +365,7 @@
         81
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "0e1378e0c31d9b69c1395bca9b83b864871c1fb84fbae85a09f126d71789440f"
+      "sha256": "a8164880e0252e3d9073fab6defbb2a4b38260b9330b509bd2360d4f7b01690d"
     },
     {
       "file": "Tornie-111-zoom1.png",
@@ -374,7 +374,7 @@
         18
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "c1c38544b4fa604a9732beb162f9e8ea801ea60e8aa21cb1afdfbb604a8264ac"
+      "sha256": "3ebf3143a106d157f397b4b391dccb18ab72002ee93dcd98a947784764c2be2d"
     },
     {
       "file": "Tornie-111-zoom2.png",
@@ -383,7 +383,7 @@
         36
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "1dd232072634ef8b530ba37c8d99c851a16fe9623d680e0740ade6f6e17c390f"
+      "sha256": "7b13c3573d8eb896efb32a9af62605ca212319dabdf37cbd88f5fc63399abca1"
     },
     {
       "file": "Tornie-111-zoom3.png",
@@ -392,7 +392,7 @@
         54
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "f9e47fa00ae79ba52971a3aecf446e01b71569514aca3ab2b1c76db0b20d06c9"
+      "sha256": "9b153b12225e5688d7e9e99f555ed6dfb6357e98d147a5ea7941cdc18e2ae3cb"
     },
     {
       "file": "Tornie-112-zoom1.png",
@@ -401,7 +401,7 @@
         27
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "89c497e264880afab5c73cd189a7b8887b4b82bb16b5917c62d314c69ca7034a"
+      "sha256": "363eafd7f48f9fd8e20117e8b59b341ab6f15d96b0069d40ba2ce2c88a62b6dd"
     },
     {
       "file": "Tornie-112-zoom2.png",
@@ -410,7 +410,7 @@
         54
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "2e7194e96224053ddb702103e162af6e97b946eefa35ac25c0a4528160cb51cb"
+      "sha256": "78d552856d124d7988574fb20cc3c7fa7492acecd4b086094b824e55c961cac4"
     },
     {
       "file": "Tornie-112-zoom3.png",
@@ -419,7 +419,7 @@
         81
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "0e1378e0c31d9b69c1395bca9b83b864871c1fb84fbae85a09f126d71789440f"
+      "sha256": "a8164880e0252e3d9073fab6defbb2a4b38260b9330b509bd2360d4f7b01690d"
     },
     {
       "file": "TornieLite-111-zoom1.png",
@@ -428,7 +428,7 @@
         18
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "c1c38544b4fa604a9732beb162f9e8ea801ea60e8aa21cb1afdfbb604a8264ac"
+      "sha256": "3ebf3143a106d157f397b4b391dccb18ab72002ee93dcd98a947784764c2be2d"
     },
     {
       "file": "TornieLite-111-zoom2.png",
@@ -437,7 +437,7 @@
         36
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "1dd232072634ef8b530ba37c8d99c851a16fe9623d680e0740ade6f6e17c390f"
+      "sha256": "7b13c3573d8eb896efb32a9af62605ca212319dabdf37cbd88f5fc63399abca1"
     },
     {
       "file": "TornieLite-111-zoom3.png",
@@ -446,7 +446,7 @@
         54
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "f9e47fa00ae79ba52971a3aecf446e01b71569514aca3ab2b1c76db0b20d06c9"
+      "sha256": "9b153b12225e5688d7e9e99f555ed6dfb6357e98d147a5ea7941cdc18e2ae3cb"
     },
     {
       "file": "TornieLite-112-zoom1.png",
@@ -455,7 +455,7 @@
         27
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "89c497e264880afab5c73cd189a7b8887b4b82bb16b5917c62d314c69ca7034a"
+      "sha256": "363eafd7f48f9fd8e20117e8b59b341ab6f15d96b0069d40ba2ce2c88a62b6dd"
     },
     {
       "file": "TornieLite-112-zoom2.png",
@@ -464,7 +464,7 @@
         54
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "2e7194e96224053ddb702103e162af6e97b946eefa35ac25c0a4528160cb51cb"
+      "sha256": "78d552856d124d7988574fb20cc3c7fa7492acecd4b086094b824e55c961cac4"
     },
     {
       "file": "TornieLite-112-zoom3.png",
@@ -473,232 +473,269 @@
         81
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "0e1378e0c31d9b69c1395bca9b83b864871c1fb84fbae85a09f126d71789440f"
+      "sha256": "a8164880e0252e3d9073fab6defbb2a4b38260b9330b509bd2360d4f7b01690d"
     }
   ],
   "website": {
-    "base": "33b9edb2631edcf77efe1d5d5b976fadaf2b4cb6",
+    "base": "9ea28520c8fa97d519e2da79338cf476e2468c1e",
     "routes": {
-      "pass": true,
-      "checks": 36,
+      "passed": true,
+      "count": 36,
       "results": [
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "fr",
-          "hash": "accueil",
-          "pass": true
+          "route": "accueil",
+          "heading": "Conna\u00eetre ses unit\u00e9s.\nConstruire sa strat\u00e9gie."
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "fr",
-          "hash": "unites",
-          "pass": true
+          "route": "unites",
+          "heading": "Les unit\u00e9s"
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "fr",
-          "hash": "batiments",
-          "pass": true
+          "route": "batiments",
+          "heading": "Les b\u00e2timents"
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "fr",
-          "hash": "technologies",
-          "pass": true
+          "route": "technologies",
+          "heading": "Les technologies, niveau par niveau"
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "fr",
-          "hash": "factions",
-          "pass": true
+          "route": "factions",
+          "heading": "Factions & modes"
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "fr",
-          "hash": "hauts-faits",
-          "pass": true
+          "route": "hauts-faits",
+          "heading": "Les hauts faits"
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "fr",
-          "hash": "guide",
-          "pass": true
+          "route": "guide",
+          "heading": "Le guide du joueur"
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "fr",
-          "hash": "galerie",
-          "pass": true
+          "route": "galerie",
+          "heading": "Les PNG du jeu"
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "fr",
-          "hash": "projet",
-          "pass": true
+          "route": "projet",
+          "heading": "Dune Legacy Tornie"
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "en",
-          "hash": "accueil",
-          "pass": true
+          "route": "accueil",
+          "heading": "Know your units.\nBuild your strategy."
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "en",
-          "hash": "unites",
-          "pass": true
+          "route": "unites",
+          "heading": "Units"
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "en",
-          "hash": "batiments",
-          "pass": true
+          "route": "batiments",
+          "heading": "Buildings"
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "en",
-          "hash": "technologies",
-          "pass": true
+          "route": "technologies",
+          "heading": "Technologies, level by level"
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "en",
-          "hash": "factions",
-          "pass": true
+          "route": "factions",
+          "heading": "Factions & modes"
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "en",
-          "hash": "hauts-faits",
-          "pass": true
+          "route": "hauts-faits",
+          "heading": "Achievements"
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "en",
-          "hash": "guide",
-          "pass": true
+          "route": "guide",
+          "heading": "The player guide"
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "en",
-          "hash": "galerie",
-          "pass": true
+          "route": "galerie",
+          "heading": "Game PNGs"
         },
         {
-          "width": 1280,
+          "base": "http://127.0.0.1:8547/",
+          "width": 1440,
           "lang": "en",
-          "hash": "projet",
-          "pass": true
+          "route": "projet",
+          "heading": "Dune Legacy Tornie"
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "fr",
-          "hash": "accueil",
-          "pass": true
+          "route": "accueil",
+          "heading": "Conna\u00eetre ses unit\u00e9s.\nConstruire sa strat\u00e9gie."
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "fr",
-          "hash": "unites",
-          "pass": true
+          "route": "unites",
+          "heading": "Les unit\u00e9s"
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "fr",
-          "hash": "batiments",
-          "pass": true
+          "route": "batiments",
+          "heading": "Les b\u00e2timents"
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "fr",
-          "hash": "technologies",
-          "pass": true
+          "route": "technologies",
+          "heading": "Les technologies, niveau par niveau"
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "fr",
-          "hash": "factions",
-          "pass": true
+          "route": "factions",
+          "heading": "Factions & modes"
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "fr",
-          "hash": "hauts-faits",
-          "pass": true
+          "route": "hauts-faits",
+          "heading": "Les hauts faits"
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "fr",
-          "hash": "guide",
-          "pass": true
+          "route": "guide",
+          "heading": "Le guide du joueur"
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "fr",
-          "hash": "galerie",
-          "pass": true
+          "route": "galerie",
+          "heading": "Les PNG du jeu"
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "fr",
-          "hash": "projet",
-          "pass": true
+          "route": "projet",
+          "heading": "Dune Legacy Tornie"
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "en",
-          "hash": "accueil",
-          "pass": true
+          "route": "accueil",
+          "heading": "Know your units.\nBuild your strategy."
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "en",
-          "hash": "unites",
-          "pass": true
+          "route": "unites",
+          "heading": "Units"
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "en",
-          "hash": "batiments",
-          "pass": true
+          "route": "batiments",
+          "heading": "Buildings"
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "en",
-          "hash": "technologies",
-          "pass": true
+          "route": "technologies",
+          "heading": "Technologies, level by level"
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "en",
-          "hash": "factions",
-          "pass": true
+          "route": "factions",
+          "heading": "Factions & modes"
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "en",
-          "hash": "hauts-faits",
-          "pass": true
+          "route": "hauts-faits",
+          "heading": "Achievements"
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "en",
-          "hash": "guide",
-          "pass": true
+          "route": "guide",
+          "heading": "The player guide"
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "en",
-          "hash": "galerie",
-          "pass": true
+          "route": "galerie",
+          "heading": "Game PNGs"
         },
         {
+          "base": "http://127.0.0.1:8547/",
           "width": 390,
           "lang": "en",
-          "hash": "projet",
-          "pass": true
+          "route": "projet",
+          "heading": "Dune Legacy Tornie"
         }
-      ]
+      ],
+      "errors": []
     },
     "newUnitDetails": {
       "pass": true,
@@ -748,27 +785,101 @@
       ]
     },
     "originalPngGifPreserved": 146,
-    "preparationSiteCommit": "6b3b73ac2048e584ad0072a36fc20911adf6bbec",
     "currentDownloadsVersion": "1.0.543",
     "releaseLocalBrowserRoutes": 36,
-    "releaseFeatureContexts": 28
+    "releaseFeatureContexts": 28,
+    "saboteurDetails": {
+      "passed": true,
+      "count": 6,
+      "results": [
+        {
+          "lang": "fr",
+          "mod": "Tornie",
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "mod": "Jericho",
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "mod": "ArcaKev",
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "mod": "Tornie",
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "mod": "Jericho",
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "mod": "ArcaKev",
+          "passed": true
+        }
+      ]
+    }
   },
   "publication": {
     "authorized": true,
-    "linuxRun": 39074154578,
-    "windowsRun": 39074156864,
+    "linuxRun": 39091317138,
+    "windowsRun": 39091316992,
     "linuxPackageChecks": "success",
     "windowsPackageChecks": "success",
     "tag": "v1.0.543",
-    "linuxWorkflow": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39074154578",
-    "windowsWorkflow": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39074156864"
+    "linuxWorkflow": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39091317138",
+    "windowsWorkflow": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39091316992",
+    "packagePublicationRun": 39093202725
   },
-  "source": "472538d7a6f84fd024f4950641bcbb60ee142d21",
-  "enginePreparationSourceCommit": "61baef969125d567cc790f0039a9396ffe974786",
-  "validationStage": "local-ci-and-delivered-packages",
+  "source": "f956080b98bf4ba8fcb1ebca6e74df0332212984",
+  "validationStage": "local-ci-and-delivered-replacement-packages",
+  "previousPublicationSource": "472538d7a6f84fd024f4950641bcbb60ee142d21",
+  "replacement543": {
+    "flameQuadVisibleBoundsCentered": true,
+    "directions": 8,
+    "zooms": [
+      1,
+      2,
+      3
+    ],
+    "modesTested": 6,
+    "allHouseSpecialPoolsExcludeFlameAndGasInfantry": true,
+    "harkonnenProductionRetained": true,
+    "originalPngBytesUnchanged": true,
+    "oldNetworkProtocolRejected": 15,
+    "localRuntimeSuccessful": true,
+    "vgaTeamColourMasks": true,
+    "gasGreenPreserved": true,
+    "blueEditorStars": 3,
+    "editorIconPreviews": 54,
+    "bottomRightInfantryPortraitStars": true,
+    "neutralBrightWhiteMods": [
+      "Tornie",
+      "ArcaKev"
+    ],
+    "neutralSaboteur": {
+      "mods": [
+        "Tornie",
+        "Jericho",
+        "ArcaKev"
+      ],
+      "price": 500,
+      "builder": "Worfinery",
+      "techLevel": 7,
+      "prerequisite": "House IX",
+      "campaign": true,
+      "multiplayer": true
+    },
+    "troopersFiveOrderBadge": true
+  },
   "deliveredPackages": {
     "version": "1.0.543",
-    "source": "472538d7a6f84fd024f4950641bcbb60ee142d21",
+    "source": "f956080b98bf4ba8fcb1ebca6e74df0332212984",
     "passed": true,
     "packages": [
       {
@@ -776,21 +887,21 @@
         "allModFilesMatchSource": true,
         "modFileCount": 5497,
         "suppliedOriginalPngCopies": 30,
-        "sha256": "b87541a1cdbad76bd69932fc95d3bf4ebc896ed0cdb589e7745f987bd04f9eae"
+        "sha256": "50be5a1c29cfaded71b9a97faa49177dc4e82d5345a5d6a73360db7e934ec540"
       },
       {
         "name": "DuneLegacyTornie-1.0.543-Linux-Mint-Compatible.AppImage",
         "allModFilesMatchSource": true,
         "modFileCount": 5497,
         "suppliedOriginalPngCopies": 30,
-        "sha256": "e5ba7558fd533c081d2eb384066483d9ac75ebb675691b0051998d1a5915235f"
+        "sha256": "c2b0ff46425955b142291b3d544f9524de5a6aad4c50e1fadfd2aea3af8af712"
       },
       {
         "name": "DuneLegacyTornie-1.0.543-Linux-x86_64.AppImage",
         "allModFilesMatchSource": true,
         "modFileCount": 5497,
         "suppliedOriginalPngCopies": 30,
-        "sha256": "30075e8e3e5ffab8df5f072de74a4cffc06d8fdc2c6fa04c20180c127ee99848"
+        "sha256": "0a9091569f692cdf7958a80a7534f7d7c881cdd714071630f4e0912874e03aaf"
       }
     ],
     "downloadedMintStartup": {
