@@ -6,3 +6,5 @@ libxrender-dev
 libxcursor-dev
 libxfixes-dev
 libxi-dev
+libpulse-dev
+libasound2-dev

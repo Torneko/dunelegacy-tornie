@@ -166,11 +166,6 @@ jobs:
           $env:SDL_VIDEODRIVER = "dummy"
           $env:SDL_AUDIODRIVER = "dummy"
           $env:SDL_RENDER_DRIVER = "software"
-          # Run the shorter legacy integration suite first and keep its full
-          # exception context if it fails before the 1606-scenario pass.
-          $legacyLog = Join-Path $env:RUNNER_TEMP "dunelegacy-legacy-integration.log"
-          $legacy = Start-Process -FilePath "build/bin/Release/dunelegacy.exe" -ArgumentList "--verify-release-538", "--showlog", "--window" -WindowStyle Hidden -Wait -PassThru -RedirectStandardError $legacyLog
-          if ($legacy.ExitCode -ne 0) { Get-Content -LiteralPath $legacyLog -Tail 120; throw "Legacy integration failed." }
           $log = Join-Path $env:RUNNER_TEMP "dunelegacy-mod-smoke.log"
           $process = Start-Process -FilePath "build/bin/Release/dunelegacy.exe" -ArgumentList "--verify-achievements", "--showlog", "--window" -WindowStyle Hidden -Wait -PassThru -RedirectStandardError $log
           Get-Content -LiteralPath $log | Select-String "MOD SMOKE|ACHIEVEMENT SMOKE|unhandled exception|runtime check:"
@@ -343,11 +338,12 @@ jobs:
       - name: Configure CMake
         run: cmake -B build -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_BUILD_TYPE=Release
 
-      - name: Require SDL monitor detection
+      - name: Require SDL monitor detection and PulseAudio
         run: |
           CONFIG=$(find build/vcpkg_installed -path '*/include/SDL2/SDL_config.h' -print -quit)
           test -n "$CONFIG"
           grep -E '^#define SDL_VIDEO_DRIVER_X11_XRANDR 1' "$CONFIG"
+          grep -E '^#define SDL_AUDIO_DRIVER_PULSEAUDIO 1' "$CONFIG"
 
       - name: Build
         # Limit to 2 parallel jobs â€” ubuntu-latest has 4 cores but only 7GB

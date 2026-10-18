@@ -105,11 +105,12 @@ jobs:
       - name: Configure CMake
         run: cmake -B build -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_BUILD_TYPE=Release -DDUNELEGACY_BUILD_TESTS=ON -DVCPKG_MANIFEST_FEATURES=tests
 
-      - name: Require SDL monitor detection
+      - name: Require SDL monitor detection and PulseAudio
         run: |
           CONFIG=$(find build/vcpkg_installed -path '*/include/SDL2/SDL_config.h' -print -quit)
           test -n "$CONFIG"
           grep -E '^#define SDL_VIDEO_DRIVER_X11_XRANDR 1' "$CONFIG"
+          grep -E '^#define SDL_AUDIO_DRIVER_PULSEAUDIO 1' "$CONFIG"
 
       - name: Build
         # Limit to 2 parallel jobs — ubuntu-latest has 4 cores but only 7GB

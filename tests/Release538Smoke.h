@@ -140,9 +140,17 @@ inline void runRelease538Smoke() {
         auto info=manager.match().info;info.enabled=true;
         // This suite destroys buildings; the older capture suite requires a
         // fresh cumulative profile. Keep their real-event fixtures independent.
+        // Repeated CI runs must also start without an earlier missile award.
+        // begin() above has switched away from this test-only profile, so
+        // configure() cannot save old state back over the removed file.
+        const auto missileProfile = output/"achievements-538-missiles.ini";
+        std::error_code profileError;
+        std::filesystem::remove(missileProfile, profileError);
+        require(!profileError,"reset isolated missile profile");
         require(manager.configure(getDuneLegacyDataDir()+"/config/Achievements.ini",
-            (output/"achievements-538-missiles.ini").string()),"isolated missile profile");
+            missileProfile.string()),"isolated missile profile");
         manager.begin(info);
+        require(!manager.unlocked("FUEL_WASTE"),"missile fixture must start without an award");
         const auto fire=[&](House* owner,Coord destination) {
             const auto shooter=owner==local?launcher->getObjectID():enemy->placeStructure(NONE_ID,Structure_Palace,26,2,true,true)->getObjectID();
             auto* bullet=new Bullet(shooter,&destination,&destination,Bullet_LargeRocket,10000,false,nullptr);
