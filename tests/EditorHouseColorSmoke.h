@@ -56,7 +56,9 @@ inline void verifyEditorHouseColors(const std::string& output, const std::string
         if(surface->format->palette) {
             const int base = expected == HOUSE_CUSTOM || isCustomHouseColorSlot(expected)
                 || isTornieRebelsColorSlot(expected) || isVanillaRebelsColorSlot(expected)
-                || isJerichoHouseColorSlot(expected) ? PALCOLOR_HARKONNEN : getHouseColorPaletteIndexFromSlot(expected);
+                || isJerichoHouseColorSlot(expected)
+                || (expected==HOUSE_NEUTRAL && (mod=="Tornie" || mod=="ArcaKev"))
+                ? PALCOLOR_HARKONNEN : getHouseColorPaletteIndexFromSlot(expected);
             for(int shade = 0; shade < 8; ++shade) {
                 const SDL_Color actual = surface->format->palette->colors[base + shade];
                 const SDL_Color wanted = getHouseColorSDL(expected, shade);
