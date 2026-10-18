@@ -1,12 +1,25 @@
-# Remplacement 1.0.543 — centrage et tirage Special
+# Remplacement 1.0.543 — publié sur Linux, Windows et le site FR/EN
 
-Remplacement autorisé, sans créer de 1.0.544. Ajouts confirmés : teintes VGA des nouvelles unités, étoiles bleues dans l’éditeur/portraits, Neutral blanc dans Tornie et ArcaKev, Saboteur Neutral à 500 crédits dans la Worfinery (niveau 7 + IX), en campagne et multijoueur. Les nouvelles unités sans graphismes, le napalm, les ralentissements et le ver apprivoisé sont reportés. Centrer les huit directions du Flame Quad dans les zooms natifs et l’éditeur ; exclure la nouvelle infanterie du tirage des véhicules Special en conservant la production Harkonnen niveau 7 + IX. Version 1.0.543, protocole 16, sauvegardes 9835. La publication précédente est archivée dans les rapports existants ; récupérer le site publié `9ea28520c8fa97d519e2da79338cf476e2468c1e` avant de préparer le remplacement.
+Remplacement autorisé par Tornie, sans créer de 1.0.544. La release existante et ses liens sont conservés. Source du jeu et tag `v1.0.543` : `f956080b98bf4ba8fcb1ebca6e74df0332212984`. Site publié : `3bebd5a0db74b63c46e56d301c44f2f5d23123f0`, préparé depuis le site 1.0.543 précédent `9ea28520c8fa97d519e2da79338cf476e2468c1e`. Protocole **16**, sauvegardes **9835**, anciennes sauvegardes lisibles ; retélécharger les paquets sur tous les postes.
 
-# 1.0.543 — publication autorisée, CI en cours
+- Flame Quad centré dans ses huit directions aux zooms 1×/2×/3× ; nouvelle infanterie exclue du tirage des véhicules Special, sans retirer les Troopers lance-flammes Harkonnen niveau 7 + IX.
+- Teintes VGA du Flame Quad et de l’infanterie à gaz corrigées. Vert du gaz, détails bruns, noir opaque et cinq PNG originaux conservés. Étoiles bleues des trois unités dans l’éditeur avec marge ; marqueurs des portraits d’infanterie en bas à droite ; repère 5 sur la commande de cinq Troopers.
+- Neutral plus blanc dans Tornie et ArcaKev. Saboteur produit par Neutral uniquement, Worfinery, niveau 7 + IX, 500 crédits, campagne et multijoueur, dans les mods complets Tornie/Jericho/ArcaKev. Les pouvoirs de palais restent inchangés.
+- Les autres nouvelles unités, le napalm, les ralentissements et le ver apprivoisé sont reportés : [notes de suivi](ROADMAP-POST-1.0.543.md).
 
-Le site de préparation `docs/1.0.543-draft` est récupéré depuis la révision publiée 1.0.542 `33b9edb` (le ref distant récupéré pointait encore sur `f3c7e36`, plus ancien). Les pages de changements FR/EN décrivent la vente, les permissions alliées et le compteur optionnel ; les nouvelles unités et les cinq PNG reçus sont documentés avec leurs validations locales. Aucun déploiement Pages ni nouveau paquet hors ligne publié : conserver les liens publics 1.0.542 jusqu’à validation complète.
+Tests locaux : **136 cas / 10 318 assertions**, **CTest 2/2**, **1 606 scénarios FR**, sept modes de règles/alliances, six modes de nouvelles unités et de graphismes, trois configurations Neutral/Saboteur. Contrôles navigateur locaux : 36 parcours, 28 contextes et six fiches Saboteur. Les paquets publics Windows et les deux AppImages contiennent les **5 497 fichiers de mods exacts**, avec les 30 copies des cinq PNG fournis. L’AppImage Mint téléchargée démarre sans chemin de bibliothèques de développement.
 
-Source du jeu vérifiée : `61baef969125d567cc790f0039a9396ffe974786`. Brouillon FR/EN : `6b3b73ac2048e584ad0072a36fc20911adf6bbec`. Tests locaux : 136 cas / 10 314 assertions, CTest 2/2, sept modes, sept reprises de sauvegardes 1.0.541, six configurations de nouvelles unités, 36 rendus sans fond magenta et 42 parcours/fiches navigateur. Le Flame Quad coûte 300 contre 200 et inflige 12 dégâts par tir contre 7 pour le Quad, avec son effet de flamme. Voir [le rapport de préparation](../release_notes/Validation-1.0.543.json). Aucune CI de publication Linux/Windows déclenchée pour cette préparation.
+- Linux : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39091317138 — succès, moteur/réseau, cinq paquets, démarrages FR/EN, repli logiciel et vérifications natives des nouvelles fonctions dans le paquet Mint.
+- Windows : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39091316992 — succès, moteur/réseau, mods/succès, installations FR/EN et menus, teintes/étoiles et Saboteur.
+- Envoi des paquets vérifiés : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39093202725 — succès.
+- Pages : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39093279022 — succès.
+- Archive hors ligne, sources, notes et contrôles navigateur : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39093323184 — succès, **72 parcours FR/EN publics/hors ligne, ordinateur/mobile**.
+
+L’[audit final](../release_notes/Final-Publication-Audit-1.0.543.json) vérifie la même release existante, les 16 fichiers publics, leurs empreintes SHA-256, la source des deux plateformes et la révision du site déployé. La source du jeu reste figée ; les reçus sont enregistrés ensuite sur la branche de préparation, sans déplacer à nouveau le tag.
+
+## Publication initiale 1.0.543
+
+L’édition initiale utilisait `472538d7a6f84fd024f4950641bcbb60ee142d21`, le protocole 15 et le site `9ea28520c8fa97d519e2da79338cf476e2468c1e`. Ses [rapports originaux](../release_notes/initial-1.0.543/Final-Publication-Audit-1.0.543.json) sont conservés ; ses paquets ont été remplacés par l’édition ci-dessus. Aucun changement n’a été fusionné dans la branche principale pour ce remplacement.
 
 # 1.0.542 — publication Linux, Windows et site FR/EN
 
