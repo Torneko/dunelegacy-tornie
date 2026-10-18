@@ -1,8 +1,8 @@
 {
   "status": "validated",
   "version": "1.0.543",
-  "sourceCommit": "1741fbda449f585d28bef20672369dccf03b3369",
-  "networkProtocol": 16,
+  "sourceCommit": "8a7a9980110979ba619c746d952c243631104071",
+  "networkProtocol": 17,
   "saveVersion": 9835,
   "engine": {
     "ctest": "2/2 PASS",
@@ -50,7 +50,9 @@
     "gasEnemyWeapon": "Bullet_DRocket (existing Deviator effect)",
     "flameTrooperCapturePreserved": true,
     "ixAndLevelGates": true,
-    "newUnitSaveReload": true
+    "newUnitSaveReload": true,
+    "salesDestructionSoundVerified": true,
+    "salesConcreteSaveReloadVerified": true
   },
   "flameQuad": {
     "price": 300,
@@ -148,226 +150,48 @@
           "ArcaKev",
           "ArcaKevLite"
         ]
+      },
+      {
+        "file": "ProductionTroopersFlames3.png",
+        "size": [
+          91,
+          55
+        ],
+        "sha256": "97d43b2db4127bb75f470b24e027b293e23c5785816b187c11506caa7144133c",
+        "identicalCopies": [
+          "Tornie",
+          "TornieLite",
+          "Jericho",
+          "JerichoLite",
+          "ArcaKev",
+          "ArcaKevLite"
+        ],
+        "sourceOpaqueMagenta": 0
+      },
+      {
+        "file": "ProductionTroopersFlames5.png",
+        "size": [
+          91,
+          55
+        ],
+        "sha256": "d6507ab6468871c34271b2fc4d811a181e7786a78dc298a5d0e83d79e7a86f44",
+        "identicalCopies": [
+          "Tornie",
+          "TornieLite",
+          "Jericho",
+          "JerichoLite",
+          "ArcaKev",
+          "ArcaKevLite"
+        ],
+        "sourceOpaqueMagenta": 0
       }
+    ],
+    "archives": [
+      "Images.tar.gz",
+      "troopers_flames.tar.gz"
     ]
   },
   "nativeMagentaChecks": [
-    {
-      "file": "ArcaKev-111-zoom1.png",
-      "size": [
-        144,
-        18
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "3ebf3143a106d157f397b4b391dccb18ab72002ee93dcd98a947784764c2be2d"
-    },
-    {
-      "file": "ArcaKev-111-zoom2.png",
-      "size": [
-        288,
-        36
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "7b13c3573d8eb896efb32a9af62605ca212319dabdf37cbd88f5fc63399abca1"
-    },
-    {
-      "file": "ArcaKev-111-zoom3.png",
-      "size": [
-        432,
-        54
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "9b153b12225e5688d7e9e99f555ed6dfb6357e98d147a5ea7941cdc18e2ae3cb"
-    },
-    {
-      "file": "ArcaKev-112-zoom1.png",
-      "size": [
-        36,
-        27
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "363eafd7f48f9fd8e20117e8b59b341ab6f15d96b0069d40ba2ce2c88a62b6dd"
-    },
-    {
-      "file": "ArcaKev-112-zoom2.png",
-      "size": [
-        72,
-        54
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "78d552856d124d7988574fb20cc3c7fa7492acecd4b086094b824e55c961cac4"
-    },
-    {
-      "file": "ArcaKev-112-zoom3.png",
-      "size": [
-        108,
-        81
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "a8164880e0252e3d9073fab6defbb2a4b38260b9330b509bd2360d4f7b01690d"
-    },
-    {
-      "file": "ArcaKevLite-111-zoom1.png",
-      "size": [
-        144,
-        18
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "3ebf3143a106d157f397b4b391dccb18ab72002ee93dcd98a947784764c2be2d"
-    },
-    {
-      "file": "ArcaKevLite-111-zoom2.png",
-      "size": [
-        288,
-        36
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "7b13c3573d8eb896efb32a9af62605ca212319dabdf37cbd88f5fc63399abca1"
-    },
-    {
-      "file": "ArcaKevLite-111-zoom3.png",
-      "size": [
-        432,
-        54
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "9b153b12225e5688d7e9e99f555ed6dfb6357e98d147a5ea7941cdc18e2ae3cb"
-    },
-    {
-      "file": "ArcaKevLite-112-zoom1.png",
-      "size": [
-        36,
-        27
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "363eafd7f48f9fd8e20117e8b59b341ab6f15d96b0069d40ba2ce2c88a62b6dd"
-    },
-    {
-      "file": "ArcaKevLite-112-zoom2.png",
-      "size": [
-        72,
-        54
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "78d552856d124d7988574fb20cc3c7fa7492acecd4b086094b824e55c961cac4"
-    },
-    {
-      "file": "ArcaKevLite-112-zoom3.png",
-      "size": [
-        108,
-        81
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "a8164880e0252e3d9073fab6defbb2a4b38260b9330b509bd2360d4f7b01690d"
-    },
-    {
-      "file": "Jericho-111-zoom1.png",
-      "size": [
-        144,
-        18
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "3ebf3143a106d157f397b4b391dccb18ab72002ee93dcd98a947784764c2be2d"
-    },
-    {
-      "file": "Jericho-111-zoom2.png",
-      "size": [
-        288,
-        36
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "7b13c3573d8eb896efb32a9af62605ca212319dabdf37cbd88f5fc63399abca1"
-    },
-    {
-      "file": "Jericho-111-zoom3.png",
-      "size": [
-        432,
-        54
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "9b153b12225e5688d7e9e99f555ed6dfb6357e98d147a5ea7941cdc18e2ae3cb"
-    },
-    {
-      "file": "Jericho-112-zoom1.png",
-      "size": [
-        36,
-        27
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "363eafd7f48f9fd8e20117e8b59b341ab6f15d96b0069d40ba2ce2c88a62b6dd"
-    },
-    {
-      "file": "Jericho-112-zoom2.png",
-      "size": [
-        72,
-        54
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "78d552856d124d7988574fb20cc3c7fa7492acecd4b086094b824e55c961cac4"
-    },
-    {
-      "file": "Jericho-112-zoom3.png",
-      "size": [
-        108,
-        81
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "a8164880e0252e3d9073fab6defbb2a4b38260b9330b509bd2360d4f7b01690d"
-    },
-    {
-      "file": "JerichoLite-111-zoom1.png",
-      "size": [
-        144,
-        18
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "3ebf3143a106d157f397b4b391dccb18ab72002ee93dcd98a947784764c2be2d"
-    },
-    {
-      "file": "JerichoLite-111-zoom2.png",
-      "size": [
-        288,
-        36
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "7b13c3573d8eb896efb32a9af62605ca212319dabdf37cbd88f5fc63399abca1"
-    },
-    {
-      "file": "JerichoLite-111-zoom3.png",
-      "size": [
-        432,
-        54
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "9b153b12225e5688d7e9e99f555ed6dfb6357e98d147a5ea7941cdc18e2ae3cb"
-    },
-    {
-      "file": "JerichoLite-112-zoom1.png",
-      "size": [
-        36,
-        27
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "363eafd7f48f9fd8e20117e8b59b341ab6f15d96b0069d40ba2ce2c88a62b6dd"
-    },
-    {
-      "file": "JerichoLite-112-zoom2.png",
-      "size": [
-        72,
-        54
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "78d552856d124d7988574fb20cc3c7fa7492acecd4b086094b824e55c961cac4"
-    },
-    {
-      "file": "JerichoLite-112-zoom3.png",
-      "size": [
-        108,
-        81
-      ],
-      "visibleMagentaPixels": 0,
-      "sha256": "a8164880e0252e3d9073fab6defbb2a4b38260b9330b509bd2360d4f7b01690d"
-    },
     {
       "file": "Tornie-111-zoom1.png",
       "size": [
@@ -375,7 +199,7 @@
         18
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "3ebf3143a106d157f397b4b391dccb18ab72002ee93dcd98a947784764c2be2d"
+      "sha256": "a5f2d4f0afc982709342df12d4ab8dd3dcecebb53b8df1cfe3c9773958177bfe"
     },
     {
       "file": "Tornie-111-zoom2.png",
@@ -384,7 +208,7 @@
         36
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "7b13c3573d8eb896efb32a9af62605ca212319dabdf37cbd88f5fc63399abca1"
+      "sha256": "7a8d11042315f3249bc71d05a3c934a05f902e96dea27267560589d6a454d073"
     },
     {
       "file": "Tornie-111-zoom3.png",
@@ -393,7 +217,7 @@
         54
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "9b153b12225e5688d7e9e99f555ed6dfb6357e98d147a5ea7941cdc18e2ae3cb"
+      "sha256": "8bdc13a5baa608f3ebd37c856ca54cb18a2db0aa0b6d01b134657dae223f9aaa"
     },
     {
       "file": "Tornie-112-zoom1.png",
@@ -429,7 +253,7 @@
         18
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "3ebf3143a106d157f397b4b391dccb18ab72002ee93dcd98a947784764c2be2d"
+      "sha256": "a5f2d4f0afc982709342df12d4ab8dd3dcecebb53b8df1cfe3c9773958177bfe"
     },
     {
       "file": "TornieLite-111-zoom2.png",
@@ -438,7 +262,7 @@
         36
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "7b13c3573d8eb896efb32a9af62605ca212319dabdf37cbd88f5fc63399abca1"
+      "sha256": "7a8d11042315f3249bc71d05a3c934a05f902e96dea27267560589d6a454d073"
     },
     {
       "file": "TornieLite-111-zoom3.png",
@@ -447,7 +271,7 @@
         54
       ],
       "visibleMagentaPixels": 0,
-      "sha256": "9b153b12225e5688d7e9e99f555ed6dfb6357e98d147a5ea7941cdc18e2ae3cb"
+      "sha256": "8bdc13a5baa608f3ebd37c856ca54cb18a2db0aa0b6d01b134657dae223f9aaa"
     },
     {
       "file": "TornieLite-112-zoom1.png",
@@ -475,10 +299,226 @@
       ],
       "visibleMagentaPixels": 0,
       "sha256": "a8164880e0252e3d9073fab6defbb2a4b38260b9330b509bd2360d4f7b01690d"
+    },
+    {
+      "file": "Jericho-111-zoom1.png",
+      "size": [
+        144,
+        18
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "a5f2d4f0afc982709342df12d4ab8dd3dcecebb53b8df1cfe3c9773958177bfe"
+    },
+    {
+      "file": "Jericho-111-zoom2.png",
+      "size": [
+        288,
+        36
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "7a8d11042315f3249bc71d05a3c934a05f902e96dea27267560589d6a454d073"
+    },
+    {
+      "file": "Jericho-111-zoom3.png",
+      "size": [
+        432,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "8bdc13a5baa608f3ebd37c856ca54cb18a2db0aa0b6d01b134657dae223f9aaa"
+    },
+    {
+      "file": "Jericho-112-zoom1.png",
+      "size": [
+        36,
+        27
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "363eafd7f48f9fd8e20117e8b59b341ab6f15d96b0069d40ba2ce2c88a62b6dd"
+    },
+    {
+      "file": "Jericho-112-zoom2.png",
+      "size": [
+        72,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "78d552856d124d7988574fb20cc3c7fa7492acecd4b086094b824e55c961cac4"
+    },
+    {
+      "file": "Jericho-112-zoom3.png",
+      "size": [
+        108,
+        81
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "a8164880e0252e3d9073fab6defbb2a4b38260b9330b509bd2360d4f7b01690d"
+    },
+    {
+      "file": "JerichoLite-111-zoom1.png",
+      "size": [
+        144,
+        18
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "a5f2d4f0afc982709342df12d4ab8dd3dcecebb53b8df1cfe3c9773958177bfe"
+    },
+    {
+      "file": "JerichoLite-111-zoom2.png",
+      "size": [
+        288,
+        36
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "7a8d11042315f3249bc71d05a3c934a05f902e96dea27267560589d6a454d073"
+    },
+    {
+      "file": "JerichoLite-111-zoom3.png",
+      "size": [
+        432,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "8bdc13a5baa608f3ebd37c856ca54cb18a2db0aa0b6d01b134657dae223f9aaa"
+    },
+    {
+      "file": "JerichoLite-112-zoom1.png",
+      "size": [
+        36,
+        27
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "363eafd7f48f9fd8e20117e8b59b341ab6f15d96b0069d40ba2ce2c88a62b6dd"
+    },
+    {
+      "file": "JerichoLite-112-zoom2.png",
+      "size": [
+        72,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "78d552856d124d7988574fb20cc3c7fa7492acecd4b086094b824e55c961cac4"
+    },
+    {
+      "file": "JerichoLite-112-zoom3.png",
+      "size": [
+        108,
+        81
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "a8164880e0252e3d9073fab6defbb2a4b38260b9330b509bd2360d4f7b01690d"
+    },
+    {
+      "file": "ArcaKev-111-zoom1.png",
+      "size": [
+        144,
+        18
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "a5f2d4f0afc982709342df12d4ab8dd3dcecebb53b8df1cfe3c9773958177bfe"
+    },
+    {
+      "file": "ArcaKev-111-zoom2.png",
+      "size": [
+        288,
+        36
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "7a8d11042315f3249bc71d05a3c934a05f902e96dea27267560589d6a454d073"
+    },
+    {
+      "file": "ArcaKev-111-zoom3.png",
+      "size": [
+        432,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "8bdc13a5baa608f3ebd37c856ca54cb18a2db0aa0b6d01b134657dae223f9aaa"
+    },
+    {
+      "file": "ArcaKev-112-zoom1.png",
+      "size": [
+        36,
+        27
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "363eafd7f48f9fd8e20117e8b59b341ab6f15d96b0069d40ba2ce2c88a62b6dd"
+    },
+    {
+      "file": "ArcaKev-112-zoom2.png",
+      "size": [
+        72,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "78d552856d124d7988574fb20cc3c7fa7492acecd4b086094b824e55c961cac4"
+    },
+    {
+      "file": "ArcaKev-112-zoom3.png",
+      "size": [
+        108,
+        81
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "a8164880e0252e3d9073fab6defbb2a4b38260b9330b509bd2360d4f7b01690d"
+    },
+    {
+      "file": "ArcaKevLite-111-zoom1.png",
+      "size": [
+        144,
+        18
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "a5f2d4f0afc982709342df12d4ab8dd3dcecebb53b8df1cfe3c9773958177bfe"
+    },
+    {
+      "file": "ArcaKevLite-111-zoom2.png",
+      "size": [
+        288,
+        36
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "7a8d11042315f3249bc71d05a3c934a05f902e96dea27267560589d6a454d073"
+    },
+    {
+      "file": "ArcaKevLite-111-zoom3.png",
+      "size": [
+        432,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "8bdc13a5baa608f3ebd37c856ca54cb18a2db0aa0b6d01b134657dae223f9aaa"
+    },
+    {
+      "file": "ArcaKevLite-112-zoom1.png",
+      "size": [
+        36,
+        27
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "363eafd7f48f9fd8e20117e8b59b341ab6f15d96b0069d40ba2ce2c88a62b6dd"
+    },
+    {
+      "file": "ArcaKevLite-112-zoom2.png",
+      "size": [
+        72,
+        54
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "78d552856d124d7988574fb20cc3c7fa7492acecd4b086094b824e55c961cac4"
+    },
+    {
+      "file": "ArcaKevLite-112-zoom3.png",
+      "size": [
+        108,
+        81
+      ],
+      "visibleMagentaPixels": 0,
+      "sha256": "a8164880e0252e3d9073fab6defbb2a4b38260b9330b509bd2360d4f7b01690d"
     }
   ],
   "website": {
-    "base": "3bebd5a0db74b63c46e56d301c44f2f5d23123f0",
+    "base": "1206aa0e96bd0fc45a52fd28390973ab6e194435",
     "routes": {
       "passed": true,
       "count": 36,
@@ -785,7 +825,7 @@
         }
       ]
     },
-    "originalPngGifPreserved": 146,
+    "originalPngGifPreserved": 129,
     "currentDownloadsVersion": "1.0.543",
     "releaseLocalBrowserRoutes": 36,
     "releaseFeatureContexts": 28,
@@ -824,22 +864,197 @@
           "passed": true
         }
       ]
-    }
+    },
+    "featureContexts": {
+      "passed": true,
+      "count": 28,
+      "results": [
+        {
+          "width": 1440,
+          "lang": "fr",
+          "mod": "Vanilla",
+          "passed": true
+        },
+        {
+          "width": 1440,
+          "lang": "fr",
+          "mod": "Tornie",
+          "passed": true
+        },
+        {
+          "width": 1440,
+          "lang": "fr",
+          "mod": "TornieLite",
+          "passed": true
+        },
+        {
+          "width": 1440,
+          "lang": "fr",
+          "mod": "Jericho",
+          "passed": true
+        },
+        {
+          "width": 1440,
+          "lang": "fr",
+          "mod": "JerichoLite",
+          "passed": true
+        },
+        {
+          "width": 1440,
+          "lang": "fr",
+          "mod": "ArcaKev",
+          "passed": true
+        },
+        {
+          "width": 1440,
+          "lang": "fr",
+          "mod": "ArcaKevLite",
+          "passed": true
+        },
+        {
+          "width": 1440,
+          "lang": "en",
+          "mod": "Vanilla",
+          "passed": true
+        },
+        {
+          "width": 1440,
+          "lang": "en",
+          "mod": "Tornie",
+          "passed": true
+        },
+        {
+          "width": 1440,
+          "lang": "en",
+          "mod": "TornieLite",
+          "passed": true
+        },
+        {
+          "width": 1440,
+          "lang": "en",
+          "mod": "Jericho",
+          "passed": true
+        },
+        {
+          "width": 1440,
+          "lang": "en",
+          "mod": "JerichoLite",
+          "passed": true
+        },
+        {
+          "width": 1440,
+          "lang": "en",
+          "mod": "ArcaKev",
+          "passed": true
+        },
+        {
+          "width": 1440,
+          "lang": "en",
+          "mod": "ArcaKevLite",
+          "passed": true
+        },
+        {
+          "width": 390,
+          "lang": "fr",
+          "mod": "Vanilla",
+          "passed": true
+        },
+        {
+          "width": 390,
+          "lang": "fr",
+          "mod": "Tornie",
+          "passed": true
+        },
+        {
+          "width": 390,
+          "lang": "fr",
+          "mod": "TornieLite",
+          "passed": true
+        },
+        {
+          "width": 390,
+          "lang": "fr",
+          "mod": "Jericho",
+          "passed": true
+        },
+        {
+          "width": 390,
+          "lang": "fr",
+          "mod": "JerichoLite",
+          "passed": true
+        },
+        {
+          "width": 390,
+          "lang": "fr",
+          "mod": "ArcaKev",
+          "passed": true
+        },
+        {
+          "width": 390,
+          "lang": "fr",
+          "mod": "ArcaKevLite",
+          "passed": true
+        },
+        {
+          "width": 390,
+          "lang": "en",
+          "mod": "Vanilla",
+          "passed": true
+        },
+        {
+          "width": 390,
+          "lang": "en",
+          "mod": "Tornie",
+          "passed": true
+        },
+        {
+          "width": 390,
+          "lang": "en",
+          "mod": "TornieLite",
+          "passed": true
+        },
+        {
+          "width": 390,
+          "lang": "en",
+          "mod": "Jericho",
+          "passed": true
+        },
+        {
+          "width": 390,
+          "lang": "en",
+          "mod": "JerichoLite",
+          "passed": true
+        },
+        {
+          "width": 390,
+          "lang": "en",
+          "mod": "ArcaKev",
+          "passed": true
+        },
+        {
+          "width": 390,
+          "lang": "en",
+          "mod": "ArcaKevLite",
+          "passed": true
+        }
+      ]
+    },
+    "additionalOriginalFlameIcons": 2
   },
   "publication": {
     "authorized": true,
-    "linuxRun": 39129880567,
-    "windowsRun": 39129882688,
+    "linuxRun": 39136016151,
+    "windowsRun": 39136018362,
     "linuxPackageChecks": "success",
     "windowsPackageChecks": "success",
     "tag": "v1.0.543",
-    "linuxWorkflow": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39129880567",
-    "windowsWorkflow": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39129882688",
-    "packagePublicationRun": 39132350296
+    "linuxWorkflow": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39136016151",
+    "windowsWorkflow": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39136018362",
+    "packagePublicationRun": 39137724369
   },
-  "source": "1741fbda449f585d28bef20672369dccf03b3369",
-  "validationStage": "ci-and-downloaded-packages",
-  "previousPublicationSource": "f956080b98bf4ba8fcb1ebca6e74df0332212984",
+  "source": "8a7a9980110979ba619c746d952c243631104071",
+  "validationStage": "verified-ci-and-runtime",
+  "previousPublicationSource": "1741fbda449f585d28bef20672369dccf03b3369",
   "replacement543": {
     "flameQuadVisibleBoundsCentered": true,
     "directions": 8,
@@ -852,13 +1067,13 @@
     "allHouseSpecialPoolsExcludeFlameAndGasInfantry": true,
     "harkonnenProductionRetained": true,
     "originalPngBytesUnchanged": true,
-    "oldNetworkProtocolRejected": 15,
+    "oldNetworkProtocolRejected": 16,
     "localRuntimeSuccessful": true,
     "vgaTeamColourMasks": true,
     "gasGreenPreserved": true,
     "blueEditorStars": 3,
     "editorIconPreviews": 54,
-    "bottomRightInfantryPortraitStars": true,
+    "bottomRightInfantryPortraitStars": false,
     "neutralBrightWhiteMods": [
       "Tornie",
       "ArcaKev"
@@ -876,35 +1091,35 @@
       "campaign": true,
       "multiplayer": true
     },
-    "troopersFiveOrderBadge": true
+    "troopersFiveOrderBadge": false
   },
   "deliveredPackages": {
     "version": "1.0.543",
-    "source": "1741fbda449f585d28bef20672369dccf03b3369",
+    "source": "8a7a9980110979ba619c746d952c243631104071",
     "passed": true,
     "packages": [
       {
         "name": "DuneLegacyTornie-1.0.543-Windows-x64.zip",
         "allModFilesMatchSource": true,
-        "modFileCount": 5497,
-        "suppliedOriginalPngCopies": 30,
-        "sha256": "0ff1cc006dbafb47ae7a4af8c4e5e17b60d72ec2f335302e1bb8603fadac2a8d"
+        "modFileCount": 5509,
+        "suppliedOriginalPngCopies": 42,
+        "sha256": "60a000593b8587e08bed959a8ae560952fa7cfb40910d8098a1fac726bc76d23"
       },
       {
         "name": "DuneLegacyTornie-1.0.543-Linux-Mint-Compatible.AppImage",
         "allModFilesMatchSource": true,
-        "modFileCount": 5497,
-        "suppliedOriginalPngCopies": 30,
-        "sha256": "baae165d475379835943dde7096ca38dbe2a953b25a53ac0ef6d1b382c2ab650",
+        "modFileCount": 5509,
+        "suppliedOriginalPngCopies": 42,
+        "sha256": "19fe9522d12dca25c5d3bb7e308d9a01613cb42acc4b54f9b9e2a2745687052b",
         "xrandrCompiledAndBundled": true,
         "pulseAudioCompiled": true
       },
       {
         "name": "DuneLegacyTornie-1.0.543-Linux-x86_64.AppImage",
         "allModFilesMatchSource": true,
-        "modFileCount": 5497,
-        "suppliedOriginalPngCopies": 30,
-        "sha256": "ce65b43fd520bc489ee520582cf6a7c57224dd315e4a00bc3e0e78d36e3f8f3c",
+        "modFileCount": 5509,
+        "suppliedOriginalPngCopies": 42,
+        "sha256": "c9f884c5d72fb52c8adfb28120d85c9804519c107871096c582b36c10729f753",
         "xrandrCompiledAndBundled": true,
         "pulseAudioCompiled": true
       }
@@ -932,7 +1147,6 @@
       "800x600-on-1280x720"
     ],
     "xvfbNoReset": true,
-    "protocolUnchanged": 16,
     "saveVersionUnchanged": 9835,
     "localChecks": [
       {
@@ -1011,6 +1225,8 @@
       "RELEASE 543 ALLIANCES PASS:": 7,
       "RELEASE 543 UNITS PASS:": 6,
       "RELEASE 543 GRAPHICS PASS:": 6,
+      "RELEASE 543 EDITOR TERRAIN PASS:": 6,
+      "RELEASE 543 FLAME PORTRAITS PASS:": 3,
       "RELEASE 543 NEUTRAL SABOTEUR PASS:": 3
     },
     "pulseAudioBuildRequired": true,
@@ -1036,8 +1252,70 @@
     },
     "ciLinuxPassed": true,
     "ciWindowsPassed": true,
-    "packagedAppImageVideoCases": 12
+    "packagedAppImageVideoCases": 12,
+    "networkProtocol": 17,
+    "videoCodeUnchangedFrom": "1741fbda449f585d28bef20672369dccf03b3369"
   },
-  "linuxRun": 39129880567,
-  "windowsRun": 39129882688
+  "linuxRun": 39136016151,
+  "windowsRun": 39136018362,
+  "finalAdjustments543": {
+    "preciseCloseRangeFlameQuad": true,
+    "noPortraitStarOverlays": true,
+    "noSquadCountPortraitOverlay": true,
+    "threeEditorTerrainBlueStarsAtAllZooms": true,
+    "rightFacingQuadPixelBiasCorrected": true,
+    "saleDestructionEffectsAndSound": true,
+    "ownedConcreteWithoutRubbleAfterSale": true,
+    "saleButtonAfterUpgradeFitsExistingToolbar": true,
+    "bonusDarkGreenExactlyMatchesTornieRebels": [
+      "Jericho",
+      "JerichoLite",
+      "ArcaKev",
+      "ArcaKevLite"
+    ],
+    "defaultFactionColoursRetained": true,
+    "runtimeChecks": {
+      "RELEASE 543 PASS:": 7,
+      "RELEASE 543 ALLIANCES PASS:": 7,
+      "RELEASE 543 UNITS PASS:": 6,
+      "RELEASE 543 GRAPHICS PASS:": 6,
+      "RELEASE 543 EDITOR TERRAIN PASS:": 6,
+      "RELEASE 543 FLAME PORTRAITS PASS:": 3,
+      "RELEASE 543 NEUTRAL SABOTEUR PASS:": 3
+    },
+    "newOriginalArtwork": [
+      {
+        "file": "ProductionTroopersFlames3.png",
+        "size": [
+          91,
+          55
+        ],
+        "sha256": "97d43b2db4127bb75f470b24e027b293e23c5785816b187c11506caa7144133c",
+        "identicalCopies": [
+          "Tornie",
+          "TornieLite",
+          "Jericho",
+          "JerichoLite",
+          "ArcaKev",
+          "ArcaKevLite"
+        ]
+      },
+      {
+        "file": "ProductionTroopersFlames5.png",
+        "size": [
+          91,
+          55
+        ],
+        "sha256": "d6507ab6468871c34271b2fc4d811a181e7786a78dc298a5d0e83d79e7a86f44",
+        "identicalCopies": [
+          "Tornie",
+          "TornieLite",
+          "Jericho",
+          "JerichoLite",
+          "ArcaKev",
+          "ArcaKevLite"
+        ]
+      }
+    ]
+  }
 }
