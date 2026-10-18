@@ -1,55 +1,42 @@
-# 1.0.543 — Vente, coopération et nouvelles unités
+# 1.0.543 — Unités, alliances et vente
 
-Linux, AppImage Mint et Windows partagent la même source. Tous les participants doivent utiliser **1.0.543 / protocole 17** ; nouvelles sauvegardes **9835**, anciennes sauvegardes lisibles.
+Remplacement de la release existante, sans créer de 1.0.544. Linux, AppImage Mint et Windows utilisent la même source. Tous les participants doivent retélécharger **1.0.543 / protocole 18**. Nouvelles sauvegardes **9836** ; les anciennes restent lisibles, sans ajout rétroactif des nouvelles offres ou unités. Les règles des parties enregistrées sont conservées.
 
-## Derniers ajustements
+## Extension du remplacement 1.0.543
 
-- Icônes originales des Troopers lance-flammes de 3 et 5 fournies dans `troopers_flames.tar.gz`, conservées intactes dans les six mods et utilisées selon la technologie Kleshmersh, y compris en Chaos ; aucune étoile ni chiffre superposé.
-- Flame Quad : précision directe à courte portée, sans dispersion ni détonation retardée des missiles à longue portée. Correction du biais d’un pixel à gauche sur les vues de largeur impaire, dont la vue orientée vers la droite.
-- Vente : effet et son de destruction du bâtiment, puis dalles de béton sur toute son emprise, sans texture de ruine. Le propriétaire du béton, le remboursement de 50 %, l’évacuation des unités et les statistiques de vente sont conservés.
-- Bouton de vente après l’emplacement d’amélioration, sans chevauchement.
-- Jericho/Lite et ArcaKev/Lite : couleur bonus vert foncé identique aux Rebels de Tornie ; couleurs de faction par défaut conservées.
-- Protocole réseau 17 pour éviter de mélanger les anciennes trajectoires et ventes avec ces nouveaux comportements ; version 1.0.543 et sauvegardes 9835 conservées.
+- Vente activée par défaut dans **tous les mods hors Vanilla**. Remboursement de **50 %**, ou **75 % pour les maisons alliées du mode facile**, calculé sur le prix de construction après réduction ; aucun stockage nécessaire. Les règles enregistrées dans les sauvegardes restent conservées.
+- Option « Béton requis » déplacée à gauche des options générales. Contrôle des alliés et construction sur leurs terres disponibles séparément dans les lobbies personnalisés, multijoueurs et coop.
+- Flame Quad : nouvelle feuille complète **128×16**, huit cases de **16×16** alignées sur les huit repères du Quad vanilla, sans rééchantillonnage. Les PNG fournis restent intacts. Portée de l’infanterie à gaz : **8** (+3) ; vision **5**, comme le Deviator.
+- Neutral : éolienne verticale **2×3**, hors Vanilla, avec les prérequis existants de cette éolienne.
+- **Raider Quad** : Ordos/Sardaukar, usine légère niveau **4**, amélioration **1**, 300 crédits, vitesse +25 % par rapport au Quad.
+- **Tank longue portée** : Atreides/Fremen, usine lourde niveau **5**, amélioration **2**, comme le Launcher ; 450 crédits, portée 7, vision 5.
+- **Slowpost Neutral** et **Slow Tank Corruptique** : niveau **7 + IX**, respectivement chantier et usine lourde. Prix 450/750 crédits, portée 7. Le missile ralentit uniquement le déplacement, y compris les alliés touchés : vitesse −50 % pendant 4 s ; Rebels −75 % pendant 8 s ; Kleshmersh immunisé. Pas de dégâts directs.
+- Moissonneuse **rapide** : Atreides/Kleshmersh, vitesse +25 %. Moissonneuse **grande capacité** : Wildspade/Mercenary, **1 050** au lieu de 700. Toutes deux à **350 crédits, usine lourde niveau 7 + IX**. Le **Harvestank passe également au niveau 7 + IX**. Compteur, plafonds, transport, déchargement, interface et sauvegardes reconnaissent les variantes.
+- Palais Kleshmersh hors Vanilla : **missile au napalm**, délai Harkonnen **10 minutes**, dégâts directs réduits de moitié, traînée et zone d’impact incendiaires persistantes, conservées exactement après sauvegarde/reprise. Remplace l’ancien appel de Fremen.
+- **Ver apprivoisé** : mode Chaos uniquement, tirage déterministe unique à la création de chaque Worfinery, **10 %** de chance de proposer sa production à **950 crédits**. Le tirage et la file sont conservés à la reprise. Ver contrôlable, limité au sable, n’attaque pas les alliés et ne disparaît pas après trois repas.
+- **Ornithoptère élite Wildspade** : niveau **8**, **troisième amélioration de l’usine high-tech + IX**, 825 crédits, **32 PV et 56 dégâts** (environ +25 %, arrondis entiers), vitesse/portée normales.
+- Planches de remplacement complètes issues des graphismes vanilla, modifiables dans `graphics/fallbacks-543/` et chargées depuis les fichiers de chaque mod. Transparence et couleurs de maison conservées, zooms entiers 1×/2×/3×. Étoiles bleues dans les boutons et sur le terrain de l’éditeur ; aucun ajout sur les portraits.
+- Aide « How to Play » FR/EN actualisée pour les **sept modes**, la coop à quatre factions, l’archonte à huit, les épices et les règles d’alliance/vente. ArcaKev et Lite figurent dans les mentions des mods.
+- Succès **Maître d’ArcaKev** (12 campagnes) et **Maître d’ArcaKev Lite** (6 campagnes) : **70 succès** au total. L’arsenal personnalisé compte les nouvelles unités dans les trois familles de mods. Les invités coop 3 et 4 peuvent aussi valider la campagne coop. Les succès précédemment obtenus restent acquis ; le 100 % suit le catalogue complet.
+- Même numéro **1.0.543**, **protocole 18**, nouvelles sauvegardes **9836**. Tous les participants devront installer le même remplacement ; anciennes sauvegardes lisibles, unités/offres nouvelles non ajoutées rétroactivement.
 
-## Correction de l’affichage Linux
 
-- PulseAudio et XRandR sont compilés explicitement et contrôlés avant création des paquets ; le détail des erreurs audio est conservé.
-- Détection des moniteurs physiques par XRandR dans les paquets Linux ; bibliothèque incluse dans les deux AppImages.
-- Une fenêtre conserve la résolution choisie au lieu de passer au seul mode du bureau annoncé par Linux. Les anciennes dimensions dépassant le moniteur sont ramenées à cet écran.
-- Les résolutions plus petites sont de nouveau proposées dans les options, même quand Linux n’annonce que la résolution native. Plein écran limité au moniteur de la fenêtre.
-- Remplacement de la 1.0.543 uniquement ; sauvegardes 9835 conservées.
 
-## Remplacement de la 1.0.543
 
-- Teinte de maison du Flame Quad et de l’infanterie à gaz corrigée malgré la différence de conversion VGA ; le vert du gaz reste intact.
-- Étoiles bleues des trois nouvelles unités dans les boutons et sur le terrain de l’éditeur aux zooms 1×/2×/3×. Aucune étoile bleue ajoutée sur les portraits ; PNG sources conservés.
-- Neutral : blanc plus clair dans Tornie et ArcaKev.
-- Neutral produit le Saboteur à la Worfinery au niveau 7 avec IX, pour 500 crédits, en campagne et multijoueur (mods complets Tornie, Jericho et ArcaKev). Production réservée à Neutral ; pouvoir de palais existant conservé.
-- Aucun chiffre « 5 » superposé sur les portraits des super escouades.
-- Les autres nouvelles unités, le napalm, le ralentissement et le ver apprivoisé restent reportés, dans l’attente de leurs graphismes et spécifications.
+## Autres correctifs conservés
 
-- Flame Quad : chaque direction est centrée sur sa tuile à partir des pixels visibles, aux zooms 1×/2×/3×, en jeu et dans l’éditeur. PNG originaux inchangés.
-- Le Trooper lance-flammes Harkonnen est exclu du tirage de véhicule « Special » ; sa production niveau 7 + IX est conservée. L’infanterie à gaz est également classée comme infanterie.
-- Protocole réseau 16 : retélécharger les paquets sur tous les postes ; le contrôle réseau refuse les éditions précédentes de la 1.0.543 (protocoles 15 et 16). Sauvegardes 9835 conservées.
+- Vente : explosions et son de destruction, puis béton appartenant au propriétaire sur toute l’emprise, sans texture de ruine. Bouton `$` après l’emplacement d’amélioration, de la taille de Réparer. Évacuation des unités contenues, remboursement séparé des productions non livrées, succès « Liquidités » et statistiques conservés.
+- Troopers lance-flammes Kleshmersh par défaut ; technologies et prix suivent le donneur Chaos. Harkonnen conserve ses Troopers ordinaires et produit séparément la version lance-flammes au niveau 7 + IX. Cette infanterie ne compte pas comme véhicule Special.
+- Kleshmersh : Rocket Trike niveau 3 / usine légère amélioration 1 ; Flame Quad niveau 5 / amélioration 2, sans Sonic Trike. Flame Quad à 300 crédits, deux tirs de 12 dégâts, précision normale à courte portée et effet de feu ; Quad normal à 200 crédits et deux tirs de 7 dégâts.
+- Infanterie à gaz Ordos/Tharpique : WOR et Worfinery, IX, 250 crédits. Soigne les alliés (15 par missile), effet Deviator sur les ennemis ; portée 8, vision 5.
+- Les sept PNG fournis restent intacts dans les six mods, dont les portraits lance-flammes individuels/3/5. Magenta retiré au chargement, noir opaque conservé, teintes par maison et zooms entiers. Aucune étoile ni chiffre 5 ajouté aux portraits.
+- Neutral : blanc plus clair dans Tornie et ArcaKev ; Saboteur à la Worfinery, niveau 7 + IX, 500 crédits, campagne et multijoueur dans les mods complets. Les pouvoirs Saboteur des autres palais sont conservés.
+- Jericho/Lite et ArcaKev/Lite : couleur bonus vert foncé identique aux Rebels de Tornie. Les couleurs par défaut des factions sont conservées.
+- Compteur de moissonneuses local optionnel, désactivé par défaut dans Tornie/Lite ; inclut les nouvelles variantes.
+- Linux : prise en charge XRandR et PulseAudio contrôlée dans les AppImages ; dimensions limitées au moniteur de la fenêtre, résolutions plus petites rétablies, taille choisie conservée et repli logiciel disponible.
 
-## Modifications validées localement
+## Vérifications
 
-- Vente des bâtiments à 50 % de leur prix de construction, même endommagés, sans besoin de stockage pour le remboursement. Bouton `$` de la taille de Réparer, après l’emplacement d’amélioration. Activée par défaut dans Tornie, Tornie Lite, ArcaKev et ArcaKev Lite ; réglable dans les règles de partie.
-- Les unités contenues dans une raffinerie ou un centre de réparation sont évacuées avant la vente. Une livraison Starport en route doit se terminer avant la vente. La production prépayée non livrée est remboursée séparément du prix du bâtiment.
-- Premier bâtiment vendu : succès « Liquidités ». Nombre de ventes et crédits remboursés dans les statistiques, conservés en sauvegarde.
-- Hors coop multijoueur : contrôle allié et construction sur terrain allié sont deux permissions indépendantes de l'hôte, limitées aux membres d'une même équipe. Les fonds et bâtiments gardent leur propriétaire.
-- Option de compteur de moissonneuses, désactivée par défaut dans Tornie/Tornie Lite et activée dans les autres modes.
-- Protocole 17 et des sauvegardes 9835 ; conservation de la lecture des anciennes sauvegardes.
+Moteur et réseau : **CTest 2/2**, **141 cas / 10 646 assertions** en local. Les vérifications natives couvrent les sept modes, les productions et prérequis, les offres Chaos sauvegardées, le napalm et ses dégâts après reprise, les remboursements et les marqueurs de l’éditeur. Le site FR/EN et son archive hors ligne suivent cette même révision ; les reçus de publication indiquent les résultats CI et l’audit des paquets effectivement livrés.
 
-## Nouvelles unités intégrées et validées localement
-
-- Troopers lance-flammes Kleshmersh conservés et accessibles via les technologies tirées en Chaos ; icône dédiée selon le donneur technologique.
-- Harkonnen : Troopers lance-flammes séparés au niveau 7 avec IX, sans retirer les Troopers ordinaires ; hors Vanilla.
-- Kleshmersh : Rocket Trike niveau 3/amélioration 1 ; Flame Quad niveau 5/amélioration 2 ; plus de Sonic Trike en production normale.
-- Infanterie à gaz Ordos et Tharpique : WOR et Worfinery, IX ; soigne les alliés, gaz du Deviator sur les ennemis.
-- Cinq PNG reçus, conservés intacts dans les six mods. Magenta retiré au chargement du sprite à gaz, noir opaque préservé ; découpage natif et zooms entiers 1×/2×/3×.
-- Les nouvelles unités sont ajoutées à l’éditeur, aux renforts et aux tables de sauvegarde avec des identifiants ajoutés après les anciens.
-
-Voir les [spécifications et valeurs initiales](https://github.com/Torneko/dunelegacy-tornie/blob/v1.0.543/docs/UNITS-1.0.543.md). Le site FR/EN et son archive hors ligne accompagnent la release Linux/Windows 1.0.543.
-
-Flame Quad : **300 crédits et 12 dégâts par tir**, contre **200 crédits et 7 dégâts par tir** pour le Quad ; effet de flamme en plus. Les six configurations ont été contrôlées.
+[Spécifications complètes](https://github.com/Torneko/dunelegacy-tornie/blob/v1.0.543/docs/UNITS-1.0.543.md) · [Planches modifiables](https://torneko.github.io/dunelegacy-tornie/assets/downloads/Fallbacks-543.zip) · [Site FR/EN](https://torneko.github.io/dunelegacy-tornie/)
