@@ -42,6 +42,9 @@ public:
     virtual ~OptionsMenu();
 
 private:
+#ifdef DUNELEGACY_RUNTIME_TESTS
+    friend struct VideoOptionsFixture;
+#endif
     void    onChangeOption(bool bInteractive);
     void    onOptionsOK();
     void    onOptionsCancel();

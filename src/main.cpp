@@ -58,11 +58,13 @@
 #include <mmath.h>
 
 #include <CutScenes/Intro.h>
+#include <misc/VideoModes.h>
 #ifdef DUNELEGACY_RUNTIME_TESTS
 #include "../tests/ModRuntimeSmoke.h"
 #include "../tests/ExpandedCoopSmoke.h"
 #include "../tests/Release541RuntimeSmoke.h"
 #include "../tests/ModOptionsSmoke.h"
+#include "../tests/VideoOptionsSmoke.h"
 #include "../tests/AchievementRuntimeSmoke.h"
 #include "../tests/Release538Smoke.h"
 #include "../tests/SelectedPortraitSmoke.h"
@@ -149,38 +151,16 @@ void setVideoMode(int displayIndex)
         videoFlags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
     }
 
-    SDL_DisplayMode targetDisplayMode = { 0, settings.video.physicalWidth, settings.video.physicalHeight, 0, nullptr};
-    SDL_DisplayMode closestDisplayMode;
-
-    if(SDL_GetClosestDisplayMode(displayIndex, &targetDisplayMode, &closestDisplayMode) == nullptr) {
-        SDL_Log("Warning: Falling back to a display resolution of 640x480!");
-        settings.video.physicalWidth = 640;
-        settings.video.physicalHeight = 480;
-        int factor = getLogicalToPhysicalResolutionFactor(settings.video.physicalWidth, settings.video.physicalHeight);
-        // Prevent division by zero and ensure minimum dimensions
-        if(factor <= 0) {
-            factor = 1;
-        }
-        settings.video.width = settings.video.physicalWidth / factor;
-        settings.video.height = settings.video.physicalHeight / factor;
-        // Ensure minimum dimensions
-        if(settings.video.width < 640) settings.video.width = 640;
-        if(settings.video.height < 480) settings.video.height = 480;
-    } else {
-        settings.video.physicalWidth = closestDisplayMode.w;
-        settings.video.physicalHeight = closestDisplayMode.h;
-        int factor = getLogicalToPhysicalResolutionFactor(settings.video.physicalWidth, settings.video.physicalHeight);
-        // Prevent division by zero and ensure minimum dimensions
-        if(factor <= 0) {
-            factor = 1;
-        }
-        settings.video.width = settings.video.physicalWidth / factor;
-        settings.video.height = settings.video.physicalHeight / factor;
-
-        // Ensure minimum dimensions
-        if(settings.video.width < 640) settings.video.width = 640;
-        if(settings.video.height < 480) settings.video.height = 480;
-    }
+    const Coord bounds = VideoModes::displaySize(displayIndex, !settings.video.fullscreen);
+    const Coord selected = VideoModes::fit(Coord(settings.video.physicalWidth, settings.video.physicalHeight), bounds);
+    settings.video.physicalWidth = selected.x;
+    settings.video.physicalHeight = selected.y;
+    const int factor = getLogicalToPhysicalResolutionFactor(selected.x, selected.y);
+    settings.video.width = std::max(SCREEN_MIN_WIDTH, selected.x / factor);
+    settings.video.height = std::max(SCREEN_MIN_HEIGHT, selected.y / factor);
+    SDL_Log("Video display=%d bounds=%dx%d selected=%dx%d logical=%dx%d fullscreen=%s", displayIndex,
+            bounds.x, bounds.y, selected.x, selected.y, settings.video.width, settings.video.height,
+            settings.video.fullscreen ? "yes" : "no");
 
     // Prefer Direct3D on Windows, let SDL choose best renderer on other platforms
 #ifdef _WIN32
@@ -257,23 +237,17 @@ void toogleFullscreen()
     if(SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN_DESKTOP) {
         // switch to windowed mode
         SDL_Log("Switching to windowed mode.");
-        SDL_SetWindowFullscreen(window, (SDL_GetWindowFlags(window) ^ SDL_WINDOW_FULLSCREEN_DESKTOP));
-
-        SDL_SetWindowSize(window, settings.video.physicalWidth, settings.video.physicalHeight);
+        const int displayIndex = std::max(0, SDL_GetWindowDisplayIndex(window));
+        SDL_SetWindowFullscreen(window, 0);
+        const Coord size = VideoModes::fit(Coord(settings.video.physicalWidth, settings.video.physicalHeight),
+                                          VideoModes::displaySize(displayIndex, true));
+        SDL_SetWindowSize(window, size.x, size.y);
         SDL_RenderSetLogicalSize(renderer, settings.video.width, settings.video.height);
     } else {
         // switch to fullscreen mode
         SDL_Log("Switching to fullscreen mode.");
-        SDL_DisplayMode displayMode;
-        int displayIndex = SDL_GetWindowDisplayIndex(window);
-        if(displayIndex >= 0 && SDL_GetDesktopDisplayMode(displayIndex, &displayMode) == 0) {
-            SDL_SetWindowFullscreen(window, (SDL_GetWindowFlags(window) ^ SDL_WINDOW_FULLSCREEN_DESKTOP));
-            SDL_SetWindowSize(window, displayMode.w, displayMode.h);
-            SDL_RenderSetLogicalSize(renderer, settings.video.width, settings.video.height);
-        } else {
-            SDL_Log("Warning: Could not get desktop display mode, using current window size");
-            SDL_SetWindowFullscreen(window, (SDL_GetWindowFlags(window) ^ SDL_WINDOW_FULLSCREEN_DESKTOP));
-        }
+        SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+        SDL_RenderSetLogicalSize(renderer, settings.video.width, settings.video.height);
     }
 
     // we just need to flush all events; otherwise we might get them twice
@@ -819,6 +793,7 @@ int main(int argc, char *argv[]) {
 
         bool bVerifyMods = false;
         bool bVerifyStartup = false;
+        bool bVerifyVideo = false;
         bool bVerifyExpandedCoop = false;
         bool bVerifyRelease541 = false;
         bool bVerifyWindtrapPreview = false;
@@ -843,6 +818,7 @@ int main(int argc, char *argv[]) {
             if(parameter == "--verify-release541" || parameter == "--verify-release542" || parameter == "--verify-release543") { bVerifyMods=true;bVerifyRelease541=true;continue; }
             if(parameter == "--verify-coop-expanded") { bVerifyMods=true;bVerifyExpandedCoop=true;continue; }
             if(parameter == "--verify-startup") { bVerifyMods = true; bVerifyStartup = true; continue; }
+            if(parameter == "--verify-video") { bVerifyMods = true; bVerifyStartup = true; bVerifyVideo = true; continue; }
             if(parameter == "--verify-mods") { bVerifyMods = true; continue; }
             if(parameter == "--verify-achievements") { bVerifyMods = true; bVerifyAchievements = true; continue; }
             if(parameter == "--verify-release-538") { bVerifyMods = true; bVerifyRelease538 = true; continue; }
@@ -1105,14 +1081,12 @@ int main(int argc, char *argv[]) {
             }
 
             if(bFirstGamestart == true && bFirstInit == true) {
-                SDL_DisplayMode displayMode;
-                SDL_GetDesktopDisplayMode(currentDisplayIndex, &displayMode);
-
-                int factor = getLogicalToPhysicalResolutionFactor(displayMode.w, displayMode.h);
-                settings.video.physicalWidth = displayMode.w;
-                settings.video.physicalHeight = displayMode.h;
-                settings.video.width = displayMode.w / factor;
-                settings.video.height = displayMode.h / factor;
+                const Coord size = VideoModes::displaySize(currentDisplayIndex, !settings.video.fullscreen);
+                int factor = getLogicalToPhysicalResolutionFactor(size.x, size.y);
+                settings.video.physicalWidth = size.x;
+                settings.video.physicalHeight = size.y;
+                settings.video.width = std::max(SCREEN_MIN_WIDTH, size.x / factor);
+                settings.video.height = std::max(SCREEN_MIN_HEIGHT, size.y / factor);
                 settings.video.preferredZoomLevel = 1;
 
                 myINIFile.setIntValue("Video","Width",settings.video.width);
@@ -1336,14 +1310,17 @@ int main(int argc, char *argv[]) {
                 #ifdef DUNELEGACY_RUNTIME_TESTS
                 if(bVerifyMods) {
                     if(bVerifyStartup) {
-                        if(const char* output=std::getenv("DUNELEGACY_SMOKE_DIR")) {
-                            verifyJerichoHeralds(output,"cold-start");
-                            verifyKleshmershMentat(output,ModManager::instance().getActiveModName());
-                            verifyRebelsMentat(output,ModManager::instance().getActiveModName());
+                        if(bVerifyVideo) VideoOptionsFixture::verify();
+                        if(!bVerifyVideo) {
+                            if(const char* output=std::getenv("DUNELEGACY_SMOKE_DIR")) {
+                                verifyJerichoHeralds(output,"cold-start");
+                                verifyKleshmershMentat(output,ModManager::instance().getActiveModName());
+                                verifyRebelsMentat(output,ModManager::instance().getActiveModName());
+                            }
+                            ModOptionsUIFixture::verify();
+                            if(const char* output=std::getenv("DUNELEGACY_SMOKE_DIR"))
+                                verifyCustomUnitZooms(output,ModManager::instance().getActiveModName());
                         }
-                        ModOptionsUIFixture::verify();
-                        if(const char* output=std::getenv("DUNELEGACY_SMOKE_DIR"))
-                            verifyCustomUnitZooms(output,ModManager::instance().getActiveModName());
                         MainMenu menu;
                         SDL_RenderClear(renderer);
                         menu.draw();

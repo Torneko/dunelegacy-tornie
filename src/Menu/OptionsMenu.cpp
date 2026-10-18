@@ -39,6 +39,7 @@
 #include <misc/Scaler.h>
 #include <misc/FileSystem.h>
 #include <misc/format.h>
+#include <misc/VideoModes.h>
 
 #include <algorithm>
 
@@ -517,94 +518,16 @@ void OptionsMenu::saveConfiguration2File() {
 }
 
 void OptionsMenu::determineAvailableScreenResolutions() {
-    availScreenRes.clear();
-
-    // Safety check: ensure window exists before trying to get display index
-    if(window == nullptr) {
-        SDL_Log("Warning: Window not available, using fallback resolutions");
-        // Use fallback resolutions
-        availScreenRes.emplace_back(640, 480 );    // VGA (4:3)
-        availScreenRes.emplace_back(800, 600 );    // SVGA (4:3)
-        availScreenRes.emplace_back(1024, 768 );   // XGA (4:3)
-        availScreenRes.emplace_back(1280, 720 );   // WXGA (16:9)
-        availScreenRes.emplace_back(1280, 1024 );  // SXGA (5:4)
-        availScreenRes.emplace_back(1920, 1080 );  // 1080p (16:9)
-        return;
+    int displayIndex = window ? SDL_GetWindowDisplayIndex(window) : 0;
+    if(displayIndex < 0) displayIndex = 0;
+    std::vector<Coord> reported;
+    const int count = SDL_GetNumDisplayModes(displayIndex);
+    for(int i = 0; i < count; ++i) {
+        SDL_DisplayMode mode{};
+        if(SDL_GetDisplayMode(displayIndex, i, &mode) == 0) reported.emplace_back(mode.w, mode.h);
     }
-
-    SDL_DisplayMode displayMode;
-    int displayIndex = SDL_GetWindowDisplayIndex(window);
-
-    // Safety check: ensure display index is valid
-    if(displayIndex < 0) {
-        SDL_Log("Warning: Invalid display index, using fallback resolutions");
-        displayIndex = 0; // Use primary display
-    }
-
-    int numDisplayModes = SDL_GetNumDisplayModes(displayIndex);
-
-    // Safety check: ensure we have display modes
-    if(numDisplayModes <= 0) {
-        SDL_Log("Warning: No display modes available, using fallback resolutions");
-        availScreenRes.emplace_back(640, 480 );    // VGA (4:3)
-        availScreenRes.emplace_back(800, 600 );    // SVGA (4:3)
-        availScreenRes.emplace_back(1024, 768 );   // XGA (4:3)
-        availScreenRes.emplace_back(1280, 720 );   // WXGA (16:9)
-        availScreenRes.emplace_back(1280, 1024 );  // SXGA (5:4)
-        availScreenRes.emplace_back(1920, 1080 );  // 1080p (16:9)
-        return;
-    }
-
-    for(int i = numDisplayModes-1; i >=0; i--) {
-        if(SDL_GetDisplayMode(displayIndex, i, &displayMode) == 0) {
-            Coord screenRes(displayMode.w, displayMode.h);
-            if(screenRes.x >= SCREEN_MIN_WIDTH && screenRes.y >= SCREEN_MIN_HEIGHT) {
-                if(std::find(availScreenRes.begin(), availScreenRes.end(), screenRes) == availScreenRes.end()) {
-                    // not yet in the list (might happen if e.g. multiple refresh rates are reported)
-                    availScreenRes.push_back(screenRes);
-                }
-            }
-        }
-    }
-
-    if(availScreenRes.empty()) {
-        // Not possible or not available
-        // try some standard resolutions
-
-        availScreenRes.emplace_back(640, 480 );    // VGA (4:3)
-        availScreenRes.emplace_back(800, 480 );    // WVGA (5:3)
-        availScreenRes.emplace_back(800, 600 );    // SVGA (4:3)
-        availScreenRes.emplace_back(960, 540 );    // Quarter HD (16:9)
-        availScreenRes.emplace_back(960, 720 );    // ? (4:3)
-        availScreenRes.emplace_back(1024, 576 );   // WSVGA (16:9)
-        availScreenRes.emplace_back(1024, 640 );   // ? (16:10)
-        availScreenRes.emplace_back(1024, 768 );   // XGA (4:3)
-        availScreenRes.emplace_back(1152, 864 );   // XGA+ (4:3)
-        availScreenRes.emplace_back(1280, 720 );  // WXGA (16:9)
-        availScreenRes.emplace_back(1280, 768 );   // WXGA (5:3)
-        availScreenRes.emplace_back(1280, 800 );   // WXGA (16:10)
-        availScreenRes.emplace_back(1280, 960 );   // SXGA- (4:3)
-        availScreenRes.emplace_back(1280, 1024 );  // SXGA (5:4)
-        availScreenRes.emplace_back(1366, 768 );   // HDTV 720p (~16:9)
-        availScreenRes.emplace_back(1400, 1050 );  // SXGA+ (4:3)
-        availScreenRes.emplace_back(1440, 900 );   // WXGA+ (16:10)
-        availScreenRes.emplace_back(1440, 1080 );  // ? (4:3)
-        availScreenRes.emplace_back(1600, 900 );   // WSXGA (16:9)
-        availScreenRes.emplace_back(1600, 1200 );  // UXGA (4:3)
-        availScreenRes.emplace_back(1680, 1050 );  // WSXGA+ (16:10)
-        availScreenRes.emplace_back(1920, 1080 );  // 1080p (16:9)
-        availScreenRes.emplace_back(1920, 1200 );  // WUXGA (16:10)
-        availScreenRes.emplace_back(2560, 1440 );  // WQHD (16:9)
-        availScreenRes.emplace_back(2560, 1600 );  // WQXGA (16:10)
-        availScreenRes.emplace_back(3840, 2160 );  // 2160p (16:9)
-    }
-
-    Coord currentRes(settings.video.physicalWidth, settings.video.physicalHeight);
-
-    if(std::find(availScreenRes.begin(), availScreenRes.end(), currentRes) == availScreenRes.end()) {
-        // not yet in the list
-        availScreenRes.insert(availScreenRes.begin(), currentRes);
-    }
+    availScreenRes = VideoModes::choices(VideoModes::displaySize(displayIndex), reported,
+                                        Coord(settings.video.physicalWidth, settings.video.physicalHeight));
 }
 
 void OptionsMenu::onChildWindowClose(Window* pChildWindow) {

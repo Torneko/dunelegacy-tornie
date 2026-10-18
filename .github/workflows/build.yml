@@ -201,9 +201,10 @@ jobs:
             }
             if (Select-String -LiteralPath "../src/main.cpp" -Pattern 'parameter == "--verify-startup"') {
               $startupLog = Join-Path $env:RUNNER_TEMP "dunelegacy-startup-$language.log"
-              $process = Start-Process -FilePath "install/dunelegacy.exe" -ArgumentList "--verify-startup", "--showlog", "--window" -WindowStyle Hidden -Wait -PassThru -RedirectStandardError $startupLog
-              Get-Content -LiteralPath $startupLog | Select-String "STARTUP CHECK|unhandled exception"
+              $process = Start-Process -FilePath "install/dunelegacy.exe" -ArgumentList "--verify-video", "--showlog", "--window" -WindowStyle Hidden -Wait -PassThru -RedirectStandardError $startupLog
+              Get-Content -LiteralPath $startupLog | Select-String "STARTUP CHECK|VIDEO CHECK|unhandled exception"
               if ($process.ExitCode -ne 0 -or -not (Select-String -LiteralPath $startupLog -Pattern "STARTUP CHECK PASSED:.*language=$language")) { throw "Installed $language menu startup failed." }
+              if (-not (Select-String -LiteralPath $startupLog -Pattern "VIDEO CHECK PASSED:")) { throw "Installed $language video options check failed." }
             }
           }
           cpack -G ZIP -C Release
@@ -222,6 +223,7 @@ jobs:
             installedRuntimeChecks = @("fr", "en")
             release543Checks = @("building-sales", "normal-multiplayer-alliances", "flame-and-gas-units", "magenta-free-zooms", "house-colours-and-blue-stars", "neutral-saboteur-tier-seven")
             menuStartupChecks = @("fr", "en")
+            videoOptionsChecks = @("fr", "en")
             package = $package.Name
             sha256 = (Get-FileHash $package.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
           }
@@ -292,7 +294,7 @@ jobs:
       - name: Setup ccache
         uses: hendrikmuhs/ccache-action@v1
         with:
-          key: linux-${{ hashFiles('vcpkg.json') }}
+          key: linux-${{ hashFiles('vcpkg.json', 'packaging/linux/build-dependencies.txt') }}
 
       # vcpkg builds several autotools-based ports from source on Linux
       # (libxcrypt, sdl2-mixer's flac/opus/etc.) and needs the GNU build
@@ -307,15 +309,15 @@ jobs:
           sudo apt-get install -y \
             autoconf autoconf-archive automake libtool libltdl-dev \
             build-essential pkg-config bison flex \
-            libsystemd-dev libpulse-dev libasound2-dev
+            $(cat packaging/linux/build-dependencies.txt) libpulse-dev libasound2-dev
 
       - name: Cache vcpkg binary packages
         uses: actions/cache@v4
         with:
           path: ~/.cache/vcpkg/archives
-          key: vcpkg-linux-x64-${{ hashFiles('vcpkg.json') }}
-          restore-keys: |
-            vcpkg-linux-x64-
+          # X11 development headers change SDL capabilities without changing its
+          # vcpkg ABI. Never restore the older cache built without XRandR.
+          key: vcpkg-linux-x64-${{ hashFiles('vcpkg.json', 'packaging/linux/build-dependencies.txt') }}
 
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@v11
@@ -331,6 +333,12 @@ jobs:
 
       - name: Configure CMake
         run: cmake -B build -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_BUILD_TYPE=Release
+
+      - name: Require SDL monitor detection
+        run: |
+          CONFIG=$(find build/vcpkg_installed -path '*/include/SDL2/SDL_config.h' -print -quit)
+          test -n "$CONFIG"
+          grep -E '^#define SDL_VIDEO_DRIVER_X11_XRANDR 1' "$CONFIG"
 
       - name: Build
         # Limit to 2 parallel jobs â€” ubuntu-latest has 4 cores but only 7GB

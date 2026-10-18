@@ -1,0 +1,8 @@
+libsystemd-dev
+libx11-dev
+libxext-dev
+libxrandr-dev
+libxrender-dev
+libxcursor-dev
+libxfixes-dev
+libxi-dev

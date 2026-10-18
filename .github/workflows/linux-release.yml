@@ -65,7 +65,7 @@ jobs:
       - name: Setup ccache
         uses: hendrikmuhs/ccache-action@v1
         with:
-          key: linux-${{ hashFiles('vcpkg.json') }}
+          key: linux-${{ hashFiles('vcpkg.json', 'packaging/linux/build-dependencies.txt') }}
 
       # vcpkg builds several autotools-based ports from source on Linux
       # (libxcrypt, sdl2-mixer's flac/opus/etc.) and needs the GNU build
@@ -80,15 +80,15 @@ jobs:
           sudo apt-get install -y \
             autoconf autoconf-archive automake libtool libltdl-dev \
             build-essential pkg-config bison flex \
-            libsystemd-dev rpm xvfb xauth pulseaudio libpulse0
+            $(cat packaging/linux/build-dependencies.txt) rpm xvfb xauth pulseaudio libpulse0
 
       - name: Cache vcpkg binary packages
         uses: actions/cache@v4
         with:
           path: ~/.cache/vcpkg/archives
-          key: vcpkg-linux-x64-${{ hashFiles('vcpkg.json') }}
-          restore-keys: |
-            vcpkg-linux-x64-
+          # X11 development headers change SDL capabilities without changing its
+          # vcpkg ABI. Never restore the older cache built without XRandR.
+          key: vcpkg-linux-x64-${{ hashFiles('vcpkg.json', 'packaging/linux/build-dependencies.txt') }}
 
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@v11
@@ -104,6 +104,12 @@ jobs:
 
       - name: Configure CMake
         run: cmake -B build -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_BUILD_TYPE=Release -DDUNELEGACY_BUILD_TESTS=ON -DVCPKG_MANIFEST_FEATURES=tests
+
+      - name: Require SDL monitor detection
+        run: |
+          CONFIG=$(find build/vcpkg_installed -path '*/include/SDL2/SDL_config.h' -print -quit)
+          test -n "$CONFIG"
+          grep -E '^#define SDL_VIDEO_DRIVER_X11_XRANDR 1' "$CONFIG"
 
       - name: Build
         # Limit to 2 parallel jobs — ubuntu-latest has 4 cores but only 7GB
@@ -146,6 +152,7 @@ jobs:
             --appdir AppDir \
             --custom-apprun ../packaging/linux/AppRun \
             --library /usr/lib/x86_64-linux-gnu/libpulse.so.0 \
+            --library /usr/lib/x86_64-linux-gnu/libXrandr.so.2 \
             --executable AppDir/usr/bin/dunelegacy \
             --desktop-file AppDir/usr/share/applications/dunelegacy-tornie.desktop \
             --icon-file AppDir/usr/share/icons/hicolor/128x128/apps/dunelegacy-tornie.png \
@@ -182,13 +189,19 @@ jobs:
           pactl load-module module-null-sink sink_name=dune_startup
           for IMAGE in "$PWD"/build/DuneLegacyTornie-*.AppImage; do
             for LANGUAGE in en fr; do
-              PROFILE=$(mktemp -d)
-              mkdir -p "$PROFILE/DuneLegacyTornie"
-              printf '[General]\nLanguage=%s\nPlay Intro=false\n[Video]\nFullscreen=false\n' "$LANGUAGE" > "$PROFILE/DuneLegacyTornie/Dune Legacy.ini"
-              XDG_CONFIG_HOME="$PROFILE" DUNELEGACY_PROFILE_DIR="$PROFILE" \
-              SDL_AUDIODRIVER=pulseaudio \
-                timeout 60 xvfb-run -a "$IMAGE" --appimage-extract-and-run --verify-startup --window > "$PROFILE/startup.log" 2>&1
-              grep 'STARTUP CHECK PASSED' "$PROFILE/startup.log"
+              for CASE in window fullscreen stale; do
+                PROFILE=$(mktemp -d)
+                mkdir -p "$PROFILE/DuneLegacyTornie"
+                WIDTH=1280; HEIGHT=720; FULLSCREEN=false; EXPECTED=1280x720; MODE=--window
+                if [[ "$CASE" == fullscreen ]]; then FULLSCREEN=true; MODE=--fullscreen; fi
+                if [[ "$CASE" == stale ]]; then WIDTH=3840; HEIGHT=1080; EXPECTED=1920x1080; fi
+                printf '[General]\nLanguage=%s\nPlay Intro=false\n[Video]\nFullscreen=%s\nPhysical Width=%s\nPhysical Height=%s\n' "$LANGUAGE" "$FULLSCREEN" "$WIDTH" "$HEIGHT" > "$PROFILE/DuneLegacyTornie/Dune Legacy.ini"
+                XDG_CONFIG_HOME="$PROFILE" DUNELEGACY_PROFILE_DIR="$PROFILE" \
+                SDL_AUDIODRIVER=pulseaudio DUNELEGACY_EXPECT_VIDEO_SIZE="$EXPECTED" \
+                  timeout 60 xvfb-run -a -s '-screen 0 1920x1080x24 -noreset' "$IMAGE" --appimage-extract-and-run --verify-video "$MODE" > "$PROFILE/startup.log" 2>&1
+                grep 'STARTUP CHECK PASSED' "$PROFILE/startup.log"
+                grep 'VIDEO CHECK PASSED' "$PROFILE/startup.log"
+              done
             done
           done
           PROFILE=$(mktemp -d)
@@ -224,7 +237,7 @@ jobs:
           VERSION="$(sed -n 's/^project(DuneLegacyTornie VERSION \([0-9]*\.[0-9]*\.[0-9]*\).*/\1/p' CMakeLists.txt)"
           SOURCE_COMMIT="$(git rev-parse HEAD)" RELEASE_VERSION="$VERSION" python3 - <<'PYTHON'
           import json, os, pathlib
-          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio'},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat','rebels-windtrap-upgrade','building-sales','normal-multiplayer-alliances','flame-and-gas-units','magenta-free-zooms','house-colours-and-blue-stars','neutral-saboteur-tier-seven']}
+          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio','videoCases':['window','fullscreen','stale-combined-desktop'],'xrandr':True},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat','rebels-windtrap-upgrade','building-sales','normal-multiplayer-alliances','flame-and-gas-units','magenta-free-zooms','house-colours-and-blue-stars','neutral-saboteur-tier-seven']}
           pathlib.Path('build/Linux-Build-'+report['version']+'.json').write_text(json.dumps(report,indent=2)+'\n')
           PYTHON
 
