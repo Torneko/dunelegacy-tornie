@@ -317,17 +317,17 @@ Target=50
 Secret=false
 
 [TORNIE_ARSENAL]
-Name=Tornie Arsenal
-NameFr=Arsenal Tornie
-Description=Produce three different Tornie-exclusive unit types in one match.
-DescriptionFr=Produire trois types différents d’unités exclusives de Tornie dans une partie.
+Name=Custom Arsenal
+NameFr=Arsenal personnalisé
+Description=Produce three different custom unit types in one match in Tornie, Jericho or ArcaKev (including Lite).
+)ACHIEVEMENTS"
+R"ACHIEVEMENTS(DescriptionFr=Produire trois types d’unités personnalisées dans une partie de Tornie, Jericho ou ArcaKev (Lite compris).
 Rule=Arsenal
 Statistic=
 Target=3
 Secret=false
 
-)ACHIEVEMENTS"
-R"ACHIEVEMENTS([AGAINST_THE_ODDS]
+[AGAINST_THE_ODDS]
 Name=Against the Odds
 NameFr=Contre toute attente
 Description=Win a custom game against at least one Hard or Brutal enemy AI.
@@ -615,7 +615,8 @@ Target=10
 [CRUSHING_ADVANCE]
 Name=Crushing Advance
 NameFr=Avancée écrasante
-Description=Crush 100 enemy infantry in total.
+)ACHIEVEMENTS"
+R"ACHIEVEMENTS(Description=Crush 100 enemy infantry in total.
 DescriptionFr=Écraser 100 fantassins ennemis au total.
 Rule=Lifetime
 Statistic=InfantryCrushed
@@ -623,8 +624,7 @@ Target=100
 
 [SPICE_TYCOON]
 Name=Spice Tycoon
-)ACHIEVEMENTS"
-R"ACHIEVEMENTS(NameFr=Magnat de l’épice
+NameFr=Magnat de l’épice
 Description=Deposit 1,000,000 spice credits in refineries in total.
 DescriptionFr=Déposer 1 000 000 de crédits d’épice dans les raffineries au total.
 Rule=Lifetime
@@ -666,5 +666,25 @@ DescriptionFr=Vendre votre premier bâtiment.
 Rule=Lifetime
 Statistic=StructuresSold
 Target=1
+
+[ARCAKEV_MASTER]
+Name=Master of ArcaKev
+NameFr=Maître d’ArcaKev
+Description=Complete all twelve campaigns in ArcaKev.
+DescriptionFr=Terminer les douze campagnes dans ArcaKev.
+Rule=ModCampaignCount
+Statistic=ArcaKev
+Target=12
+Secret=false
+
+[ARCAKEV_LITE_MASTER]
+Name=Master of ArcaKev Lite
+NameFr=Maître d’ArcaKev Lite
+Description=Complete all six campaigns in ArcaKev Lite.
+DescriptionFr=Terminer les six campagnes dans ArcaKev Lite.
+Rule=ModCampaignCount
+Statistic=ArcaKevLite
+Target=6
+Secret=false
 )ACHIEVEMENTS";
 }

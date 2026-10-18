@@ -33,6 +33,8 @@ typedef enum {
     Bullet_Sandworm = 10,
     Bullet_Flame = 11,            ///< Tornie: launcher-like fire missile with flame area damage
     Bullet_SonicTrike = 12,        ///< Tornie: shorter and weaker Sonic Trike wave
+    Bullet_Slow = 14,
+    Bullet_Napalm = 15,
     Bullet_Heal = 13              ///< Jericho: Deviator-style healing missile with direct flight
 } BulletID_enum;
 
@@ -162,7 +164,15 @@ typedef enum {
     Unit_FlameQuad = 77,
     Unit_GasInfantry = 78,
     Unit_FlameTrooper = 79,
-    ItemID_LastID = 79,
+    Unit_EliteOrnithopter = 80,
+    Unit_RaiderQuad = 81,
+    Unit_RangedTank = 82,
+    Unit_SlowTank = 83,
+    Unit_CapacityHarvester = 85,
+    Unit_FastHarvester = 86,
+    Unit_TameSandworm = 87,
+    Structure_Slowpost = 84,
+    ItemID_LastID = 87,
 
     Num_ItemID
 } ItemID_enum;
@@ -215,14 +225,14 @@ typedef enum {
     \param itemID   the ID of the item (e.g. Unit_Harvester)
     \return true if it is an unit, false otherwise
 */
-inline bool isUnit(int itemID) { return (itemID >= Unit_FirstID && itemID <= Unit_LastID) || (itemID >= Unit_RocketTrike && itemID <= Unit_ExtLastID) || itemID == Unit_RebelHarvester || itemID == Unit_SonicTrike || itemID == Unit_ChemicalSiegeTank || itemID == Unit_ChemicalCarryall || itemID == Unit_Troopers5 || itemID == Unit_Infantry5 || itemID == Unit_FlameQuad || itemID == Unit_GasInfantry || itemID == Unit_FlameTrooper; }
+inline bool isUnit(int itemID) { return (itemID >= Unit_FirstID && itemID <= Unit_LastID) || (itemID >= Unit_RocketTrike && itemID <= Unit_ExtLastID) || itemID == Unit_RebelHarvester || itemID == Unit_SonicTrike || itemID == Unit_ChemicalSiegeTank || itemID == Unit_ChemicalCarryall || itemID == Unit_Troopers5 || itemID == Unit_Infantry5 || itemID == Unit_FlameQuad || itemID == Unit_GasInfantry || itemID == Unit_FlameTrooper || itemID == Unit_EliteOrnithopter || itemID == Unit_RaiderQuad || itemID == Unit_RangedTank || itemID == Unit_SlowTank || itemID == Unit_CapacityHarvester || itemID == Unit_FastHarvester || itemID == Unit_TameSandworm; }
 
 /**
     This function determines if the specified itemID is a structure or not.
     \param itemID   the ID of the item (e.g. Structure_ConstructionYard)
     \return true if it is a structure, false otherwise
 */
-inline bool isStructure(int itemID) { return (itemID >= Structure_FirstID && itemID <= Structure_LastID) || (itemID >= Structure_AdvancedWindTrap && itemID <= Structure_AdvancedWindTrapMK2) || itemID == Structure_TechCenter || itemID == Structure_AdvancedWindTrapMK3 || itemID == Structure_Scoutpost || itemID == Structure_LoveFactory || itemID == Structure_Flamepost || itemID == Structure_ChaosFactory || itemID == Structure_Chemipost || itemID == Structure_Doublefinery; }
+inline bool isStructure(int itemID) { return (itemID >= Structure_FirstID && itemID <= Structure_LastID) || (itemID >= Structure_AdvancedWindTrap && itemID <= Structure_AdvancedWindTrapMK2) || itemID == Structure_TechCenter || itemID == Structure_AdvancedWindTrapMK3 || itemID == Structure_Scoutpost || itemID == Structure_LoveFactory || itemID == Structure_Flamepost || itemID == Structure_ChaosFactory || itemID == Structure_Chemipost || itemID == Structure_Doublefinery || itemID == Structure_Slowpost; }
 
 
 
@@ -231,7 +241,11 @@ inline bool isStructure(int itemID) { return (itemID >= Structure_FirstID && ite
     \param itemID   the ID of the item (e.g. Unit_Carryall)
     \return true if it is a flying unit, false otherwise
 */
-inline bool isFlyingUnit(int itemID) { return (itemID == Unit_Carryall) || (itemID == Unit_ChemicalCarryall) || (itemID == Unit_Ornithopter) || (itemID == Unit_Frigate); }
+inline bool isSandwormUnit(int itemID) { return itemID==Unit_Sandworm || itemID==Unit_TameSandworm; }
+
+inline bool isOrnithopterUnit(int itemID) { return itemID == Unit_Ornithopter || itemID == Unit_EliteOrnithopter; }
+
+inline bool isFlyingUnit(int itemID) { return (itemID == Unit_Carryall) || (itemID == Unit_ChemicalCarryall) || (itemID == Unit_Ornithopter) || (itemID == Unit_EliteOrnithopter) || (itemID == Unit_Frigate); }
 inline bool isCarryallUnit(int itemID) {
     return (itemID == Unit_Carryall) || (itemID == Unit_ChemicalCarryall);
 }

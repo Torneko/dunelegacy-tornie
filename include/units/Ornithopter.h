@@ -23,9 +23,9 @@
 class Ornithopter final : public AirUnit
 {
 public:
-    explicit Ornithopter(House* newOwner);
-    explicit Ornithopter(InputStream& stream);
-    void init();
+    explicit Ornithopter(House* newOwner, int unitType = Unit_Ornithopter);
+    explicit Ornithopter(InputStream& stream, int unitType = Unit_Ornithopter);
+    void init(int unitType);
     virtual ~Ornithopter();
 
     void save(OutputStream& stream) const override;

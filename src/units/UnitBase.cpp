@@ -141,6 +141,8 @@ UnitBase::UnitBase(InputStream& stream) : ObjectBase(stream) {
         productionHouseID = static_cast<int>(savedProductionHouseID);
     }
 
+    if(currentGame->getLoadedSavegameVersion() >= 9836) slowTimer=std::max(0,stream.readSint32());
+
     if(findTargetTimer < 0) {
         findTargetTimer = 0;
     }
@@ -226,6 +228,7 @@ void UnitBase::save(OutputStream& stream) const {
 
     stream.writeSint32(deviationTimer);
     stream.writeUint32(productionHouseID);
+    stream.writeSint32(slowTimer);
 }
 
 bool UnitBase::attack() {
@@ -264,7 +267,7 @@ bool UnitBase::attack() {
             if(primaryWeaponTimer == 0) {
                 // MULTIPLAYER-SAFE: Track launcher unit firing at ornithopters
                 if((getItemID() == Unit_Launcher || getItemID() == Unit_Deviator) &&
-                   pObject && pObject->getItemID() == Unit_Ornithopter) {
+                   pObject && isOrnithopterUnit(pObject->getItemID())) {
                     currentGame->combatStats.launcherFiresOnOrni++;
                     currentGame->combatStats.launcherRocketsSpawned++;
                 }
@@ -297,7 +300,7 @@ bool UnitBase::attack() {
             if((numWeapons == 2) && (secondaryWeaponTimer == 0) && (isBadlyDamaged() == false)) {
                 // MULTIPLAYER-SAFE: Track launcher unit secondary weapon firing at ornithopters
                 if((getItemID() == Unit_Launcher || getItemID() == Unit_Deviator) &&
-                   pObject && pObject->getItemID() == Unit_Ornithopter) {
+                   pObject && isOrnithopterUnit(pObject->getItemID())) {
                     currentGame->combatStats.launcherFiresOnOrni++;
                     currentGame->combatStats.launcherRocketsSpawned++;
                 }
@@ -391,7 +394,7 @@ void UnitBase::deploy(const Coord& newLocation) {
             }
         }
 
-        if(isAGroundUnit() && (getItemID() != Unit_Sandworm)) {
+        if(isAGroundUnit() && (!isSandwormUnit(getItemID()))) {
             if(currentGameMap->getTile(location)->isSpiceBloom()) {
                 currentGameMap->getTile(location)->triggerSpiceBloom(getOwner());
 
@@ -466,7 +469,7 @@ void UnitBase::deviate(House* newOwner) {
     // Adding this in as a surrogate for damage inflicted upon deviation.. Still not sure what the best value
     // should be... going in with a 25% of the units value unless its a devastator which we can destruct or an ornithoper
     // which is likely to get killed
-    if(getItemID() == Unit_Devastator || getItemID() == Unit_Ornithopter){
+    if(getItemID() == Unit_Devastator || isOrnithopterUnit(getItemID())){
         newOwner->informHasDamaged(Unit_Deviator, currentGame->objectData.data[getItemID()][newOwner->getFactionID()].price);
     } else{
         newOwner->informHasDamaged(Unit_Deviator, currentGame->objectData.data[getItemID()][newOwner->getFactionID()].price / 10);
@@ -686,7 +689,7 @@ void UnitBase::move() {
                     spatialGrid->move(*this, getGridHandle(), oldLocation, location);
                 }
 
-                if(isAFlyingUnit() == false && itemID != Unit_Sandworm) {
+                if(isAFlyingUnit() == false && !isSandwormUnit(itemID)) {
                     currentGameMap->viewMap(owner->getHouseID(), location, getViewRange());
                 }
             }
@@ -1159,7 +1162,7 @@ bool UnitBase::isInGuardRange(const ObjectBase* pObject) const  {
         } break;
     }
 
-    if(getItemID() == Unit_Sandworm) {
+    if(isSandwormUnit(getItemID())) {
         checkRange = getViewRange();
     }
 
@@ -1205,7 +1208,7 @@ bool UnitBase::isInAttackRange(const ObjectBase* pObject) const {
         } break;
     }
 
-    if(getItemID() == Unit_Sandworm) {
+    if(isSandwormUnit(getItemID())) {
         checkRange = getViewRange() + 1;
     }
 
@@ -1332,12 +1335,24 @@ void UnitBase::setPickedUp(UnitBase* newCarrier) {
     clearPath();
 }
 
+FixPoint UnitBase::getMovementSpeedFactor() const {
+    if(slowTimer<=0 || isHouseFaction(static_cast<HOUSETYPE>(owner->getFactionID()),HOUSE_KLESHMERSH))return 1.0_fix;
+    return isHouseFaction(static_cast<HOUSETYPE>(owner->getFactionID()),HOUSE_REBELS)?0.25_fix:0.5_fix;
+}
+
+void UnitBase::applySlow() {
+    if(isHouseFaction(static_cast<HOUSETYPE>(owner->getFactionID()),HOUSE_KLESHMERSH))return;
+    const bool rebels=isHouseFaction(static_cast<HOUSETYPE>(owner->getFactionID()),HOUSE_REBELS);
+    slowTimer=std::max(slowTimer,MILLI2CYCLES(rebels?8000:4000));
+    if(currentGameMap->tileExists(location))setSpeeds();
+}
+
 FixPoint UnitBase::getMaxSpeed() const {
     return currentGame->objectData.data[itemID][getProductionHouseID()].maxspeed;
 }
 
 void UnitBase::setSpeeds() {
-    FixPoint speed = getMaxSpeed();
+    FixPoint speed = getMaxSpeed() * getMovementSpeedFactor();
 
     if(!isAFlyingUnit()) {
         const Tile* pTile = currentGameMap->getTile(location);
@@ -1434,7 +1449,7 @@ void UnitBase::targeting() {
             }
 
             // Acquire new target if we don't have one
-            if(!target && !attackPos && ((!moving && !justStoppedMoving) || getItemID() == Unit_Ornithopter) && !forced) {
+            if(!target && !attackPos && ((!moving && !justStoppedMoving) || isOrnithopterUnit(getItemID())) && !forced) {
                 const ObjectBase* pNewTarget = findTarget();
 
                 if(pNewTarget != nullptr) {
@@ -1457,11 +1472,11 @@ void UnitBase::targeting() {
                         doAttackObject(pNewTarget, forceAttack);
 
                         // Sandworms switch to HUNT after acquiring target
-                        if(getItemID() == Unit_Sandworm) {
+                        if(isSandwormUnit(getItemID())) {
                             doSetAttackMode(HUNT);
                         }
                     }
-                } else if(attackMode == HUNT && getItemID() != Unit_Ornithopter) {
+                } else if(attackMode == HUNT && !isOrnithopterUnit(getItemID())) {
                     // Ground units with no targets switch back to GUARD; aircraft keep patrolling.
                     setGuardPoint(location);
                     doSetAttackMode(GUARD);
@@ -1539,7 +1554,7 @@ void UnitBase::resolvePendingTargetRequest() {
             if(pNewTarget != nullptr) {
                 // MULTIPLAYER-SAFE: Track launcher units acquiring ornithopter targets
                 if((getItemID() == Unit_Launcher || getItemID() == Unit_Deviator) &&
-                   pNewTarget->getItemID() == Unit_Ornithopter) {
+                   isOrnithopterUnit(pNewTarget->getItemID())) {
                     currentGame->combatStats.launcherTargetsOrni++;
                 }
 
@@ -1548,7 +1563,7 @@ void UnitBase::resolvePendingTargetRequest() {
                 // For other modes, only attack if in guard range
                 bool shouldAttack = false;
 
-                if(getItemID() == Unit_Sandworm) {
+                if(isSandwormUnit(getItemID())) {
                     // Sandworms: Only hunt within view range, don't chase across map
                     shouldAttack = isInGuardRange(pNewTarget);
 
@@ -1564,7 +1579,7 @@ void UnitBase::resolvePendingTargetRequest() {
 
                 if(shouldAttack) {
                     // Switch from AMBUSH to HUNT when attacking (except sandworms - keep them less aggressive)
-                    if(attackMode == AMBUSH && getItemID() != Unit_Sandworm) {
+                    if(attackMode == AMBUSH && !isSandwormUnit(getItemID())) {
                         doSetAttackMode(HUNT);
                     }
                     // Saboteurs need forced=true to pathfind onto occupied tiles (structures/vehicles)
@@ -1794,6 +1809,7 @@ bool UnitBase::update() {
         return false;
     }
 
+    if(slowTimer>0 && --slowTimer==0 && currentGameMap->tileExists(location))setSpeeds();
     if(recalculatePathTimer > 0) recalculatePathTimer--;
     if(findTargetTimer > 0) findTargetTimer--;
     if(primaryWeaponTimer > 0) primaryWeaponTimer--;

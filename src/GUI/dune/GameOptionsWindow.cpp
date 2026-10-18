@@ -43,6 +43,13 @@ GameOptionsWindow::GameOptionsWindow(SettingsClass::GameOptionsClass& initialGam
     hbox.addWidget(Spacer::create());
     vboxLeft.addWidget(Spacer::create());
 
+    concreteRequiredCheckbox.setText(_("Concrete Required"));
+    /* xgettext:no-c-format */
+    concreteRequiredCheckbox.setTooltipText(_("If checked building on bare rock will result in 50% structure health penalty."));
+    concreteRequiredCheckbox.setChecked(gameOptions.concreteRequired);
+    vboxLeft.addWidget(&concreteRequiredCheckbox);
+    vboxLeft.addWidget(VSpacer::create(6));
+
     startWithExploredMapCheckbox.setText(_("Start with Explored Map"));
     startWithExploredMapCheckbox.setTooltipText(_("If checked the complete map is unhidden at the beginning of the game."));
     startWithExploredMapCheckbox.setChecked(gameOptions.startWithExploredMap);
@@ -112,13 +119,6 @@ GameOptionsWindow::GameOptionsWindow(SettingsClass::GameOptionsClass& initialGam
     vboxLeft.addWidget(VSpacer::create(14));
 
 
-    concreteRequiredCheckbox.setText(_("Concrete Required"));
-    /* xgettext:no-c-format */
-    concreteRequiredCheckbox.setTooltipText(_("If checked building on bare rock will result in 50% structure health penalty."));
-    concreteRequiredCheckbox.setChecked(gameOptions.concreteRequired);
-    vboxRight.addWidget(&concreteRequiredCheckbox);
-    vboxRight.addWidget(VSpacer::create(6));
-
     fogOfWarCheckbox.setText(_("Fog of War"));
     fogOfWarCheckbox.setTooltipText(_("If checked explored terrain will become foggy when no unit or structure is next to it."));
     fogOfWarCheckbox.setChecked(gameOptions.fogOfWar);
@@ -131,7 +131,8 @@ GameOptionsWindow::GameOptionsWindow(SettingsClass::GameOptionsClass& initialGam
     vboxRight.addWidget(&instantBuildCheckbox);
     vboxRight.addWidget(VSpacer::create(6));
 
-    sellingBuildingsCheckbox.setText(settings.general.language=="fr" ? "Vente des bâtiments (50 %)" : "Sell buildings (50%)");
+    sellingBuildingsCheckbox.setText(settings.general.language=="fr" ? "Vente des bâtiments" : "Sell buildings");
+    sellingBuildingsCheckbox.setTooltipText(settings.general.language=="fr" ? "Remboursement de 50 %, ou 75 % pour les alliés en mode facile. Sans limite de stockage." : "Refund 50%, or 75% for Easy Mode allies. No storage required.");
     sellingBuildingsCheckbox.setChecked(gameOptions.sellingBuildings);
     vboxRight.addWidget(&sellingBuildingsCheckbox);
     showHarvesterCountCheckbox.setText(settings.general.language=="fr" ? "Compteur de moissonneuses" : "Show harvester count");

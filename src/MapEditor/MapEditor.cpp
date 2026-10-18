@@ -120,6 +120,7 @@ unsigned int getMapEditorStructureUIGraphic(int itemID) noexcept {
         case Structure_TechCenter:          return UI_MapEditor_TechCenter;
         case Structure_Scoutpost:           return UI_MapEditor_Scoutpost;
         case Structure_Flamepost:           return UI_MapEditor_Flamepost;
+        case Structure_Slowpost: return NUM_UIGRAPHICS;
         case Structure_Chemipost:           return UI_MapEditor_Chemipost;
         case Structure_LoveFactory:         return UI_MapEditor_LoveFactory;
         case Structure_ChaosFactory:        return UI_MapEditor_ChaosFactory;
@@ -1731,6 +1732,7 @@ void MapEditor::drawMap(ScreenBorder* pScreenborder, bool bCompleteMap) {
                 case Structure_TechCenter:          objectPic = ObjPic_TechCenter;          break;
                 case Structure_Scoutpost:           objectPic = ObjPic_Scoutpost;           break;
                 case Structure_Flamepost:           objectPic = ObjPic_Flamepost;           break;
+                case Structure_Slowpost: objectPic=ObjPic_Slowpost;break;
                 case Structure_Chemipost:           objectPic = ObjPic_Chemipost;           break;
                 case Structure_LoveFactory:         objectPic = ObjPic_LoveFactory;         break;
                 case Structure_ChaosFactory:        objectPic = ObjPic_ChaosFactory;        break;
@@ -1773,6 +1775,11 @@ void MapEditor::drawMap(ScreenBorder* pScreenborder, bool bCompleteMap) {
                 SDL_RenderCopy(renderer, ObjectSprite, &source, &dest);
             }
 
+            if(structure.itemID==Structure_Slowpost) {
+                const int scale=currentZoomlevel+1,right=dest.x+dest.w-1,bottom=dest.y+dest.h-1;
+                renderDrawHLine(renderer,right-5*scale,bottom-3*scale,right,COLOR_RGB(0,0,170));
+                renderDrawVLine(renderer,right-3*scale,bottom-5*scale,bottom,COLOR_RGB(85,255,255));
+            }
             selectionDest = dest;
         }
 
@@ -1893,6 +1900,7 @@ void MapEditor::drawMap(ScreenBorder* pScreenborder, bool bCompleteMap) {
             case Unit_Soldier:          objectPicBase = ObjPic_Soldier;         framesX = 4;    framesY = 3;                                                    break;
             case Unit_Launcher:         objectPicBase = ObjPic_Tank_Base;       objectPicGun = ObjPic_Launcher_Gun;     gunOffset = launcherTurretOffset;       break;
             case Unit_MCV:              objectPicBase = ObjPic_MCV;                                                                                             break;
+            case Unit_EliteOrnithopter: objectPicBase=ObjPic_EliteOrnithopter;framesY=3;break;
             case Unit_Ornithopter:      objectPicBase = ObjPic_Ornithopter;     framesY = 3;                                                                    break;
             case Unit_Quad:             objectPicBase = ObjPic_Quad;                                                                                            break;
             case Unit_Saboteur:         objectPicBase = ObjPic_Saboteur;        framesX = 4;    framesY = 3;                                                    break;
@@ -1908,6 +1916,12 @@ void MapEditor::drawMap(ScreenBorder* pScreenborder, bool bCompleteMap) {
             case Unit_Infantry:         objectPicBase = ObjPic_Infantry;         framesX = 4;    framesY = 4;                                                   break;
             case Unit_Troopers5:
             case Unit_Troopers:         objectPicBase = ObjPic_Troopers;         framesX = 4;    framesY = 4;                                                   break;
+            case Unit_RaiderQuad: objectPicBase=ObjPic_RaiderQuad;framesX=8;framesY=1;break;
+            case Unit_RangedTank: objectPicBase=ObjPic_RangedTankBase;framesX=8;framesY=1;objectPicGun=ObjPic_RangedTankTurret;gunOffset=tankTurretOffset;break;
+            case Unit_SlowTank: objectPicBase=ObjPic_SlowTankBase;framesX=8;framesY=1;objectPicGun=ObjPic_SlowTankTurret;gunOffset=tankTurretOffset;break;
+            case Unit_CapacityHarvester: objectPicBase=ObjPic_CapacityHarvester;framesX=8;framesY=1;break;
+            case Unit_FastHarvester: objectPicBase=ObjPic_FastHarvester;framesX=8;framesY=1;break;
+            case Unit_TameSandworm: objectPicBase=ObjPic_TameSandworm;framesX=1;framesY=9;break;
             case Unit_FlameQuad: objectPicBase=ObjPic_FlameQuad; break;
             case Unit_GasInfantry: objectPicBase=ObjPic_GasInfantry;framesX=4;framesY=3;break;
             case Unit_FlameTrooper: objectPicBase=ObjPic_Trooper;framesX=4;framesY=3;break;
@@ -1923,7 +1937,7 @@ void MapEditor::drawMap(ScreenBorder* pScreenborder, bool bCompleteMap) {
 
         int angle = unit.angle / (NUM_ANGLES/framesX);
 
-        int frame = (unit.itemID == Unit_Sandworm) ? 5 : 0;
+        int frame = isSandwormUnit(unit.itemID) ? 5 : 0;
 
         SDL_Rect source = calcSpriteSourceRect(pObjectSprite, angle, framesX, frame, framesY);
         int frameSizeX = source.w;
@@ -1936,12 +1950,13 @@ void MapEditor::drawMap(ScreenBorder* pScreenborder, bool bCompleteMap) {
         SDL_RenderCopy(renderer, pObjectSprite, &source, &drawLocation);
 
         if(objectPicGun >= 0) {
+            const Coord turretOffset=gunOffset?gunOffset[unit.angle]:Coord(0,0);
             SDL_Texture* pGunSprite = pGFXManager->getZoomedObjPic(objectPicGun, objectPicGunHouse, currentZoomlevel);
 
             SDL_Rect source2 = calcSpriteSourceRect(pGunSprite, unit.angle, NUM_ANGLES);
             SDL_Rect drawLocation2 = calcSpriteDrawingRect( pGunSprite,
-                                                            pScreenborder->world2screenX((position.x*TILESIZE)+(TILESIZE/2)+gunOffset[unit.angle].x),
-                                                            pScreenborder->world2screenY((position.y*TILESIZE)+(TILESIZE/2)+gunOffset[unit.angle].y),
+                                                            pScreenborder->world2screenX((position.x*TILESIZE)+(TILESIZE/2)+turretOffset.x),
+                                                            pScreenborder->world2screenY((position.y*TILESIZE)+(TILESIZE/2)+turretOffset.y),
                                                             NUM_ANGLES, 1, HAlign::Center, VAlign::Center);
 
             SDL_RenderCopy(renderer, pGunSprite, &source2, &drawLocation2);
@@ -1951,7 +1966,7 @@ void MapEditor::drawMap(ScreenBorder* pScreenborder, bool bCompleteMap) {
                                        || unit.itemID == Unit_Deviator);
         const bool customStarMarker = (unit.itemID == Unit_Infantry5 || unit.itemID == Unit_Troopers5
                                        || unit.itemID == Unit_FlameQuad || unit.itemID == Unit_GasInfantry
-                                       || unit.itemID == Unit_FlameTrooper
+                                       || unit.itemID == Unit_RaiderQuad || unit.itemID == Unit_RangedTank || unit.itemID == Unit_SlowTank || unit.itemID == Unit_CapacityHarvester || unit.itemID == Unit_FastHarvester || unit.itemID == Unit_TameSandworm || unit.itemID == Unit_FlameTrooper || unit.itemID == Unit_EliteOrnithopter
                                        || unit.itemID == Unit_RocketTrike || unit.itemID == Unit_SonicTrike
                                        || unit.itemID == Unit_FlameTank || unit.itemID == Unit_EliteLauncher
                                        || unit.itemID == Unit_EliteSiegeTank || unit.itemID == Unit_ChemicalSiegeTank

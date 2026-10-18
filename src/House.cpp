@@ -450,7 +450,7 @@ void House::incrementUnits(int itemID) {
        && !isCarryallUnit(itemID)
        && itemID != Unit_MCV
        && itemID != Unit_Harvester
-       && itemID != Unit_RebelHarvester
+       && itemID != Unit_RebelHarvester && itemID != Unit_CapacityHarvester && itemID != Unit_FastHarvester
        && itemID != Unit_Sandworm) {
 
             militaryValue += currentGame->objectData.data[itemID][getFactionID()].price;
@@ -464,8 +464,8 @@ void House::decrementUnits(int itemID) {
     numUnits--;
     numItemLosses[itemID]++;
 
-    if(itemID == Unit_Harvester) {
-        decrementHarvesters();
+    if(itemID == Unit_Harvester || itemID == Unit_CapacityHarvester || itemID == Unit_FastHarvester) {
+        decrementHarvesters(itemID);
     } else {
         numItem[itemID]--;
     }
@@ -479,7 +479,7 @@ void House::decrementUnits(int itemID) {
        && !isCarryallUnit(itemID)
        && itemID != Unit_MCV
        && itemID != Unit_Harvester
-       && itemID != Unit_RebelHarvester
+       && itemID != Unit_RebelHarvester && itemID != Unit_CapacityHarvester && itemID != Unit_FastHarvester
        && itemID != Unit_Sandworm) {
 
             lossValue += currentGame->objectData.data[itemID][getFactionID()].price;
@@ -1089,11 +1089,10 @@ Coord House::getStrongestUnitPosition() const {
 
 
 
-void House::decrementHarvesters() {
-    numItem[Unit_Harvester]--;
+void House::decrementHarvesters(int itemID) {
+    numItem[itemID]=std::max(0,numItem[itemID]-1);
 
-    if(numItem[Unit_Harvester] <= 0) {
-        numItem[Unit_Harvester] = 0;
+    if(numItem[Unit_Harvester]+numItem[Unit_CapacityHarvester]+numItem[Unit_FastHarvester] <= 0) {
 
         if(hasRefinery()) {
             Coord   closestPos;

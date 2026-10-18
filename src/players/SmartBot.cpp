@@ -812,7 +812,7 @@ void SmartBot::attack() {
             && pUnit->getItemID() != Unit_Harvester
             && pUnit->getItemID() != Unit_MCV
             && pUnit->getItemID() != Unit_Carryall
-            && (pUnit->getItemID() != Unit_Ornithopter || getHouse()->getNumItems(Unit_Ornithopter) > 20)
+            && (!isOrnithopterUnit(pUnit->getItemID()) || getHouse()->getNumItems(Unit_Ornithopter) > 20)
             && pUnit->getAttackMode() != HUNT)
         {
             doSetAttackMode(pUnit, HUNT);

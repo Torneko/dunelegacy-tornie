@@ -19,10 +19,10 @@
 #define TEST_NETWORKPACKET_SENDGAMEINFO         1
 #define TEST_NETWORKPACKET_CLIENTSTATS          13
 #define TEST_NETWORKPACKET_KEEPALIVE            19
-#define TEST_NETWORK_PROTOCOL_VERSION           17
+#define TEST_NETWORK_PROTOCOL_VERSION           18
 
-TEST_CASE("NetworkManager: close-range Flame Quad trajectories and concrete building sales require protocol 17", "[network][protocol]") {
-    REQUIRE(NETWORK_PROTOCOL_VERSION == 17);
+TEST_CASE("NetworkManager: expanded unit rules and Easy Mode building sales require protocol 18", "[network][protocol]") {
+    REQUIRE(NETWORK_PROTOCOL_VERSION == 18);
     REQUIRE(TEST_NETWORK_PROTOCOL_VERSION != 4);
     REQUIRE(NETWORKPACKET_COOP_READY == 20);
     REQUIRE(NETWORKPACKET_COOP_ADVANCE == 21);

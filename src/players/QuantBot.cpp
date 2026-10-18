@@ -2755,7 +2755,7 @@ bool QuantBot::tryLaunchOrnithopterStrike(const QuantBotConfig::DifficultySettin
 
     for (const UnitBase* pUnit : getUnitList()) {
         if (pUnit->getOwner() != getHouse()
-            || pUnit->getItemID() != Unit_Ornithopter
+            || !isOrnithopterUnit(pUnit->getItemID())
             || !pUnit->isActive()
             || pUnit->isBadlyDamaged()
             || !pUnit->isRespondable()) {
@@ -2973,7 +2973,7 @@ void QuantBot::attack(int militaryValue) {
 			&& pUnit->getItemID() != Unit_Harvester
 			&& pUnit->getItemID() != Unit_MCV
 			&& pUnit->getItemID() != Unit_Carryall
-			&& pUnit->getItemID() != Unit_Ornithopter
+			&& !isOrnithopterUnit(pUnit->getItemID())
 			&& pUnit->getItemID() != Unit_Sandworm) {
 			attackSquadSize++;
 		}
@@ -3004,7 +3004,7 @@ void QuantBot::attack(int militaryValue) {
 			&& pUnit->getItemID() != Unit_Harvester
 			&& pUnit->getItemID() != Unit_MCV
 			&& pUnit->getItemID() != Unit_Carryall
-			&& pUnit->getItemID() != Unit_Ornithopter
+			&& !isOrnithopterUnit(pUnit->getItemID())
 			&& pUnit->getItemID() != Unit_Sandworm)
 
 		{
@@ -3641,7 +3641,7 @@ void QuantBot::retreatAllUnits() {
                             doSetAttackMode(pDevastator, HUNT);
                         }
                         /*
-                        else if (pUnit->getItemID() == Unit_Ornithopter) {
+                        else if (isOrnithopterUnit(pUnit->getItemID())) {
                             if (pUnit->getAttackMode() != HUNT) {
                                 doSetAttackMode(pUnit, HUNT);
                             }
@@ -3669,7 +3669,7 @@ void QuantBot::retreatAllUnits() {
                         && pUnit->hasATarget() && (difficulty != Difficulty::Easy)) {
 					// Special logic to keep launchers/deviators away from harm
 					const ObjectBase* pTarget = pUnit->getTarget();
-					if (pTarget != nullptr && pTarget->getItemID() != Unit_Ornithopter) {
+					if (pTarget != nullptr && !isOrnithopterUnit(pTarget->getItemID())) {
 						FixPoint distToTarget = blockDistance(pUnit->getLocation(), pTarget->getLocation());
 						int weaponRange = currentGame->objectData.data[pUnit->getItemID()][getHouse()->getHouseID()].weaponrange;
 
@@ -3681,7 +3681,7 @@ void QuantBot::retreatAllUnits() {
                         }
                     }
                     }
-                    else if (pUnit->getItemID() != Unit_Ornithopter && pUnit->getItemID() != Unit_Saboteur && pUnit->getAttackMode() != HUNT && !pUnit->hasATarget() && !pUnit->wasForced()) {
+                    else if (!isOrnithopterUnit(pUnit->getItemID()) && pUnit->getItemID() != Unit_Saboteur && pUnit->getAttackMode() != HUNT && !pUnit->hasATarget() && !pUnit->wasForced()) {
                         if (pUnit->getAttackMode() == AREAGUARD && squadCenterLocation.isValid() && (gameMode != GameMode::Campaign)) {
 							if (!pUnit->hasATarget()) {
                                 // Move to optimal position (closer of squad center or rally point, only if outside radius)

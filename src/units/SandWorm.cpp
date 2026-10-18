@@ -51,9 +51,9 @@ static_assert(warningWormSignMaskForHouse(HOUSE_CUSTOM) != 0,
 
 } // namespace
 
-Sandworm::Sandworm(House* newOwner) : GroundUnit(newOwner) {
+Sandworm::Sandworm(House* newOwner, int unitType) : GroundUnit(newOwner) {
 
-    Sandworm::init();
+    Sandworm::init(unitType);
 
     setHealth(getMaxHealth());
 
@@ -61,7 +61,7 @@ Sandworm::Sandworm(House* newOwner) : GroundUnit(newOwner) {
     attackFrameTimer = 0;
     sleepTimer = 0;
     warningWormSignPlayedFlags = 0;
-    respondable = false;
+    respondable = itemID == Unit_TameSandworm;
 
     for(int i = 0; i < SANDWORM_SEGMENTS; i++) {
         lastLocs[i].invalidate();
@@ -69,9 +69,9 @@ Sandworm::Sandworm(House* newOwner) : GroundUnit(newOwner) {
     shimmerOffsetIndex = -1;
 }
 
-Sandworm::Sandworm(InputStream& stream) : GroundUnit(stream) {
+Sandworm::Sandworm(InputStream& stream, int unitType) : GroundUnit(stream) {
 
-    Sandworm::init();
+    Sandworm::init(unitType);
 
     kills = stream.readSint32();
     attackFrameTimer = stream.readSint32();
@@ -84,13 +84,13 @@ Sandworm::Sandworm(InputStream& stream) : GroundUnit(stream) {
     }
 }
 
-void Sandworm::init() {
-    itemID = Unit_Sandworm;
+void Sandworm::init(int unitType) {
+    itemID = unitType;
     owner->incrementUnits(itemID);
 
     numWeapons = 0;
 
-    graphicID = ObjPic_Sandworm;
+    graphicID = itemID == Unit_TameSandworm ? ObjPic_TameSandworm : ObjPic_Sandworm;
     graphic = pGFXManager->getObjPic(graphicID,getOwner()->getHouseID());
 
     numImagesX = 1;
@@ -99,7 +99,7 @@ void Sandworm::init() {
     drawnFrame = INVALID;
 
     // Set to AMBUSH mode to limit pursuit range to view range
-    doSetAttackMode(AMBUSH);
+    doSetAttackMode(itemID == Unit_TameSandworm ? GUARD : AMBUSH);
 }
 
 Sandworm::~Sandworm() = default;
@@ -123,6 +123,7 @@ void Sandworm::save(OutputStream& stream) const {
 void Sandworm::assignToMap(const Coord& pos) {
     if(currentGameMap->tileExists(pos)) {
         currentGameMap->getTile(pos)->assignUndergroundUnit(getObjectID());
+        if(itemID==Unit_TameSandworm)currentGameMap->viewMap(owner->getHouseID(),location,getViewRange());
         // do not unhide map cause this would give Fremen players an advantage
         // currentGameMap->viewMap(owner->getHouseID(), location, getViewRange());
     }
@@ -162,7 +163,7 @@ bool Sandworm::attack() {
 void Sandworm::deploy(const Coord& newLocation) {
     UnitBase::deploy(newLocation);
 
-    respondable = false;
+    respondable = itemID == Unit_TameSandworm;
 }
 
 void Sandworm::blitToScreen() {
@@ -209,13 +210,13 @@ void Sandworm::blitToScreen() {
         }
     }
 
-    if(drawnFrame != INVALID) {
+    if(drawnFrame != INVALID || itemID==Unit_TameSandworm) {
         SDL_Rect dest = calcSpriteDrawingRect(  graphic[currentZoomlevel],
                                                 screenborder->world2screenX(realX),
                                                 screenborder->world2screenY(realY),
                                                 numImagesX, numImagesY,
                                                 HAlign::Center, VAlign::Center);
-        SDL_Rect source = calcSpriteSourceRect(graphic[currentZoomlevel], 0, numImagesX, drawnFrame, numImagesY);
+        SDL_Rect source = calcSpriteSourceRect(graphic[currentZoomlevel], 0, numImagesX, drawnFrame==INVALID?5:drawnFrame, numImagesY);
         SDL_RenderCopy(renderer, graphic[currentZoomlevel], &source, &dest);
     }
 }
@@ -311,6 +312,7 @@ void Sandworm::sleep() {
 }
 
 bool Sandworm::sleepOrDie() {
+    if(itemID==Unit_TameSandworm){destroy();return false;}
 
     // Make sand worms always drop spice, even if they don't die
     if(currentGame->getGameInitSettings().getGameOptions().killedSandwormsDropSpice) {
@@ -367,7 +369,7 @@ void Sandworm::handleDamage(int damage, Uint32 damagerID, House* damagerOwner) {
 }
 
 bool Sandworm::update() {
-    if(getHealth() <= getMaxHealth()/2) {
+    if(itemID != Unit_TameSandworm && getHealth() <= getMaxHealth()/2) {
         AchievementEvents::wormDefeated(this);
         if(sleepOrDie() == false) {
             return false;
@@ -398,7 +400,7 @@ bool Sandworm::update() {
                 drawnFrame++;
                 if(drawnFrame >= 9) {
                     drawnFrame = INVALID;
-                    if(kills >= 3) {
+                    if(itemID != Unit_TameSandworm && kills >= 3) {
                         if(sleepOrDie() == false) {
                             return false;
                         }
@@ -453,7 +455,8 @@ bool Sandworm::update() {
 bool Sandworm::canAttack(const ObjectBase* object) const {
     if((object != nullptr)
         && object->isAGroundUnit()
-        && (object->getItemID() != Unit_Sandworm)   //wont kill other sandworms
+        && (object->getItemID() != Unit_Sandworm && object->getItemID() != Unit_TameSandworm)
+        && (itemID != Unit_TameSandworm || object->getOwner()->getTeamID() != owner->getTeamID())   //wont kill other sandworms
         //&& object->isVisible(getOwner()->getTeamID())
         //&& (object->getOwner()->getTeamID() != owner->getTeamID())
         && currentGameMap->tileExists(object->getLocation())

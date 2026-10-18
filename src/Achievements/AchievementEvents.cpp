@@ -64,7 +64,8 @@ void begin(Game& game,const std::string& key,bool resumed,bool eligible){
     if(const auto context = coop::readContext(setup.getFiledata()); context && pLocalHouse) {
         const int slot = coop::mapSlotForHouse(*context, pLocalHouse->getHouseID());
         info.coopSession = context->sessionId;
-        info.coopCompletionEligible = slot >= 1 && slot <= 2 && context->stage == coop::StageCount
+        info.coopCompletionEligible = slot >= 1 && slot <= static_cast<int>(context->slots.size())
+            && context->isAlliedSlot(slot-1) && context->slots[slot-1].active() && context->stage == coop::StageCount
             && context->completedMask == (1u << (coop::StageCount - 1)) - 1u;
     }
     info.mission=setup.getMission();info.enabled=eligible&&pLocalHouse&&!std::getenv("DUNELEGACY_SMOKE_DIR");
@@ -126,6 +127,9 @@ void built(House* house,ObjectBase* object){
         case Unit_RocketTrike:special="RocketTrike";break;case Unit_SonicTrike:special="SonicTrike";break;
         case Unit_FlameTank:special="FlameTank";break;case Unit_EliteLauncher:special="EliteLauncher";break;
         case Unit_EliteSiegeTank:special="EliteSiegeTank";break;case Unit_ChemicalSiegeTank:special="ChemicalSiegeTank";break;
+        case Unit_RaiderQuad:special="RaiderQuad";break;case Unit_RangedTank:special="RangedTank";break;case Unit_SlowTank:special="SlowTank";break;case Unit_CapacityHarvester:special="CapacityHarvester";break;case Unit_FastHarvester:special="FastHarvester";break;case Unit_TameSandworm:special="TameSandworm";break;
+        case Unit_FlameQuad:special="FlameQuad";break;case Unit_GasInfantry:special="GasInfantry";break;
+        case Unit_FlameTrooper:special="FlameTrooper";break;case Unit_EliteOrnithopter:special="EliteOrnithopter";break;
         case Unit_ChemicalCarryall:special="ChemicalCarryall";break;case Unit_RebelHarvester:special="Harvestank";break;default:break;
     }
     manager().built(object->isAStructure(),special);

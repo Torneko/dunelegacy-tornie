@@ -1,3 +1,7 @@
+## 1.0.543 — expanded replacement (preparation)
+
+Non-Vanilla selling by default; 75% Easy Mode refund. New editable vanilla-derived units, movement slowing, saved Chaos worm offer, Elite Ornithopter. Harvestank and the two Harvester variants: level 7 + IX. Gas range 8 / sight 5. Protocol 18 / saves 9836. See the root bilingual release notes for faction availability.
+
 ## Game 1.0.534
 
 - Optional Chaos Mode: same-level donor faction per production/defence building and Palace; deterministic campaigns, custom and multiplayer, with saved draws. Vanilla is excluded.

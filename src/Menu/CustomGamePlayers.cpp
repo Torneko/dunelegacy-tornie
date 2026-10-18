@@ -290,7 +290,7 @@ CustomGamePlayers::CustomGamePlayers(const GameInitSettings& newGameInitSettings
     chatVBox.addWidget(&chatTextBox, 0.2);
     chatVBox.addWidget(Spacer::create(), 0.03);
     buttonHBox.addWidget(&chatVBox, 0.675);
-    if(coopSession || gameInitSettings.getGameType()==GameType::CustomMultiplayer || gameInitSettings.getGameType()==GameType::LoadMultiplayer)buttonHBox.addWidget(&coopOptionsScroll,280);
+    if(coopSession || gameInitSettings.getGameType()==GameType::CustomGame || gameInitSettings.getGameType()==GameType::CustomMultiplayer || gameInitSettings.getGameType()==GameType::LoadMultiplayer)buttonHBox.addWidget(&coopOptionsScroll,280);
 
     if(gameInitSettings.getGameType() != GameType::CustomMultiplayer && gameInitSettings.getGameType() != GameType::LoadMultiplayer) {
         chatVBox.setVisible(false);
@@ -555,7 +555,7 @@ CustomGamePlayers::CustomGamePlayers(const GameInitSettings& newGameInitSettings
         }
     }
 
-    if(coopSession || gameInitSettings.getGameType()==GameType::CustomMultiplayer || gameInitSettings.getGameType()==GameType::LoadMultiplayer) {
+    if(coopSession || gameInitSettings.getGameType()==GameType::CustomGame || gameInitSettings.getGameType()==GameType::CustomMultiplayer || gameInitSettings.getGameType()==GameType::LoadMultiplayer) {
         coopOptionsScroll.setPreserveContentWidth(true);
         coopOptionsScroll.setContent(&coopOptionsVBox);
         alliedControlCheckbox.setText(settings.general.language == "fr" ? "Contrôles alliés" : "Allied control");

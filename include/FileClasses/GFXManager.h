@@ -151,6 +151,18 @@ typedef enum {
     ObjPic_Doublefinery,
     ObjPic_FlameQuad,
     ObjPic_GasInfantry,
+    ObjPic_EliteOrnithopter,
+    ObjPic_RaiderQuad,
+    ObjPic_RangedTankBase,
+    ObjPic_RangedTankTurret,
+    ObjPic_SlowTankBase,
+    ObjPic_SlowTankTurret,
+    ObjPic_Slowpost,
+    ObjPic_CapacityHarvester,
+    ObjPic_FastHarvester,
+    ObjPic_TameSandworm,
+    ObjPic_NapalmRocket,
+    ObjPic_SlowRocket,
     NUM_OBJPICS
 } ObjPic_enum;
 
@@ -167,7 +179,7 @@ static const std::array<std::string, NUM_OBJPICS> ObjPicNames =  { { "Tank_Base"
     "SandDamage", "Terrain_Hidden", "Terrain_HiddenFog", "Terrain_Tracks", "Star", "RebelHarvester", "Worfinery", "TechCenter", "Scoutpost", "LoveFactory",
     "LegacyReserved01", "LegacyReserved02", "LegacyReserved03", "LegacyReserved04", "LegacyReserved05", "LegacyReserved06",
     "LegacyReserved07", "LegacyReserved08", "LegacyReserved09", "LegacyReserved10", "SonicTrike", "EliteLauncherGunTornie", "RebelSonicTankGun",
-    "HarvestankGunTornie", "ChemicalCarryall", "Flamepost", "Chemipost", "ChaosFactory", "Doublefinery", "FlameQuad", "GasInfantry" } };
+    "HarvestankGunTornie", "ChemicalCarryall", "Flamepost", "Chemipost", "ChaosFactory", "Doublefinery", "FlameQuad", "GasInfantry", "EliteOrnithopter", "RaiderQuad", "RangedTankBase", "RangedTankTurret", "SlowTankBase", "SlowTankTurret", "Slowpost", "CapacityHarvester", "FastHarvester", "TameSandworm", "NapalmRocket", "SlowRocket" } };
 
 #define GROUNDUNIT_ROW(i) (i+2)|TILE_NORMAL,(i+1)|TILE_NORMAL,i|TILE_NORMAL,(i+1)|TILE_FLIPV,(i+2)|TILE_FLIPV,(i+3)|TILE_FLIPV, (i+4)|TILE_NORMAL,(i+3)|TILE_NORMAL
 #define AIRUNIT_ROW(i) (i+2)|TILE_NORMAL,(i+1)|TILE_NORMAL,i|TILE_NORMAL,(i+1)|TILE_FLIPV,(i+2)|TILE_FLIPV,(i+1)|TILE_ROTATE, i|TILE_FLIPH,(i+1)|TILE_FLIPH
@@ -534,6 +546,14 @@ typedef enum {
     UI_MapEditor_FlameQuad,
     UI_MapEditor_GasInfantry,
     UI_MapEditor_FlameTrooper,
+    UI_MapEditor_EliteOrnithopter,
+    UI_MapEditor_RaiderQuad,
+    UI_MapEditor_RangedTank,
+    UI_MapEditor_SlowTank,
+    UI_MapEditor_CapacityHarvester,
+    UI_MapEditor_FastHarvester,
+    UI_MapEditor_TameSandworm,
+    UI_MapEditor_Slowpost,
     NUM_UIGRAPHICS
 } UIGraphics_Enum;
 

@@ -799,7 +799,7 @@ const ObjectBase* ObjectBase::findTarget() const {
 
     // Special handling for Ornithopter: check if this is an Ornithopter and if so,
     // skip the spatial grid to let Ornithopter::findTarget() handle QuantBot-style scoring
-    if(getItemID() != Unit_Ornithopter) {
+    if(!isOrnithopterUnit(getItemID())) {
         if(const SpatialGrid* grid = currentGame->getSpatialGrid()) {
             if(const ObjectBase* target = findTargetViaGrid(*this, *grid, checkRange, huntMode)) {
                 return target;
@@ -837,6 +837,7 @@ ObjectBase* ObjectBase::createObject(int itemID, House* Owner, bool byScenario, 
         case Structure_Barracks:            newObject = new Barracks(Owner); break;
         case Structure_ConstructionYard:    newObject = new ConstructionYard(Owner); break;
         case Structure_GunTurret:           newObject = new GunTurret(Owner); break;
+        case Structure_Slowpost: newObject = new GunTurret(Owner, Structure_Slowpost); break;
         case Structure_HeavyFactory:        newObject = new HeavyFactory(Owner); break;
         case Structure_HighTechFactory:     newObject = new HighTechFactory(Owner); break;
         case Structure_IX:                  newObject = new IX(Owner); break;
@@ -869,17 +870,24 @@ ObjectBase* ObjectBase::createObject(int itemID, House* Owner, bool byScenario, 
         case Unit_Deviator:                 newObject = new Deviator(Owner); break;
         case Unit_Frigate:                  newObject = new Frigate(Owner); break;
         case Unit_Harvester:                newObject = new Harvester(Owner); break;
+        case Unit_CapacityHarvester: newObject = new Harvester(Owner, Unit_CapacityHarvester); break;
+        case Unit_FastHarvester: newObject = new Harvester(Owner, Unit_FastHarvester); break;
         case Unit_RebelHarvester:           newObject = new RebelHarvester(Owner); break;
         case Unit_Soldier:                  newObject = new Soldier(Owner); break;
         case Unit_Launcher:                 newObject = new Launcher(Owner); break;
         case Unit_MCV:                      newObject = new MCV(Owner); break;
         case Unit_Ornithopter:              newObject = new Ornithopter(Owner); break;
+        case Unit_EliteOrnithopter: newObject = new Ornithopter(Owner, Unit_EliteOrnithopter); break;
         case Unit_Quad:                     newObject = new Quad(Owner); break;
+        case Unit_RaiderQuad: newObject = new Quad(Owner, Unit_RaiderQuad); break;
         case Unit_Saboteur:                 newObject = new Saboteur(Owner); break;
         case Unit_Sandworm:                 newObject = new Sandworm(Owner); break;
+        case Unit_TameSandworm: newObject = new Sandworm(Owner, Unit_TameSandworm); break;
         case Unit_SiegeTank:                newObject = new SiegeTank(Owner); break;
         case Unit_SonicTank:                newObject = new SonicTank(Owner); break;
         case Unit_Tank:                     newObject = new Tank(Owner); break;
+        case Unit_RangedTank: newObject = new Tank(Owner, Unit_RangedTank); break;
+        case Unit_SlowTank: newObject = new Tank(Owner, Unit_SlowTank); break;
         case Unit_Trike:                    newObject = new Trike(Owner); break;
         case Unit_RaiderTrike:              newObject = new RaiderTrike(Owner); break;
         case Unit_Trooper:                  newObject = new Trooper(Owner); break;
@@ -960,6 +968,7 @@ ObjectBase* ObjectBase::loadObject(InputStream& stream, int itemID, Uint32 objec
         case Structure_Barracks:            newObject = new Barracks(stream); break;
         case Structure_ConstructionYard:    newObject = new ConstructionYard(stream); break;
         case Structure_GunTurret:           newObject = new GunTurret(stream); break;
+        case Structure_Slowpost: newObject = new GunTurret(stream, Structure_Slowpost); break;
         case Structure_HeavyFactory:        newObject = new HeavyFactory(stream); break;
         case Structure_HighTechFactory:     newObject = new HighTechFactory(stream); break;
         case Structure_IX:                  newObject = new IX(stream); break;
@@ -992,17 +1001,24 @@ ObjectBase* ObjectBase::loadObject(InputStream& stream, int itemID, Uint32 objec
         case Unit_Deviator:                 newObject = new Deviator(stream); break;
         case Unit_Frigate:                  newObject = new Frigate(stream); break;
         case Unit_Harvester:                newObject = new Harvester(stream); break;
+        case Unit_CapacityHarvester: newObject = new Harvester(stream, Unit_CapacityHarvester); break;
+        case Unit_FastHarvester: newObject = new Harvester(stream, Unit_FastHarvester); break;
         case Unit_RebelHarvester:           newObject = new RebelHarvester(stream); break;
         case Unit_Soldier:                  newObject = new Soldier(stream); break;
         case Unit_Launcher:                 newObject = new Launcher(stream); break;
         case Unit_MCV:                      newObject = new MCV(stream); break;
         case Unit_Ornithopter:              newObject = new Ornithopter(stream); break;
+        case Unit_EliteOrnithopter: newObject = new Ornithopter(stream, Unit_EliteOrnithopter); break;
         case Unit_Quad:                     newObject = new Quad(stream); break;
+        case Unit_RaiderQuad: newObject = new Quad(stream, Unit_RaiderQuad); break;
         case Unit_Saboteur:                 newObject = new Saboteur(stream); break;
         case Unit_Sandworm:                 newObject = new Sandworm(stream); break;
+        case Unit_TameSandworm: newObject = new Sandworm(stream, Unit_TameSandworm); break;
         case Unit_SiegeTank:                newObject = new SiegeTank(stream); break;
         case Unit_SonicTank:                newObject = new SonicTank(stream); break;
         case Unit_Tank:                     newObject = new Tank(stream); break;
+        case Unit_RangedTank: newObject = new Tank(stream, Unit_RangedTank); break;
+        case Unit_SlowTank: newObject = new Tank(stream, Unit_SlowTank); break;
         case Unit_Trike:                    newObject = new Trike(stream); break;
         case Unit_RaiderTrike:              newObject = new RaiderTrike(stream); break;
         case Unit_Trooper:                  newObject = new Trooper(stream); break;

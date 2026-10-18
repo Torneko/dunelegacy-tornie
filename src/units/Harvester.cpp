@@ -53,9 +53,9 @@
 /* number spice output frames - 1 */
 #define LASTSANDFRAME 2
 
-Harvester::Harvester(House* newOwner) : TrackedUnit(newOwner)
+Harvester::Harvester(House* newOwner, int unitType) : TrackedUnit(newOwner)
 {
-    Harvester::init();
+    Harvester::init(unitType);
 
     setHealth(getMaxHealth());
 
@@ -69,9 +69,9 @@ Harvester::Harvester(House* newOwner) : TrackedUnit(newOwner)
     attackMode = GUARD;
 }
 
-Harvester::Harvester(InputStream& stream) : TrackedUnit(stream)
+Harvester::Harvester(InputStream& stream, int unitType) : TrackedUnit(stream)
 {
-    Harvester::init();
+    Harvester::init(unitType);
 
     harvestingMode = stream.readBool();
     returningToRefinery = stream.readBool();
@@ -81,14 +81,14 @@ Harvester::Harvester(InputStream& stream) : TrackedUnit(stream)
     returnPathFailCounter = 0;  // Runtime counter - not persisted
 }
 
-void Harvester::init()
+void Harvester::init(int unitType)
 {
-    itemID = Unit_Harvester;
+    itemID = unitType;
     owner->incrementUnits(itemID);
 
     canAttackStuff = false;
 
-    graphicID = ObjPic_Harvester;
+    graphicID = itemID == Unit_CapacityHarvester ? ObjPic_CapacityHarvester : itemID == Unit_FastHarvester ? ObjPic_FastHarvester : ObjPic_Harvester;
     graphic = pGFXManager->getObjPic(graphicID,getOwner()->getHouseID());
 
     numImagesX = NUM_ANGLES;
@@ -441,7 +441,7 @@ void Harvester::drawSelectionBox()
 
     if((getOwner() == pLocalHouse) && (spice > 0)) {
         for(int i=1;i<=currentZoomlevel+1;i++) {
-            renderDrawHLine(renderer, dest.x+1, dest.y-i-(currentZoomlevel+1), dest.x+1 + (lround(((spice)/HARVESTERMAXSPICE)*(getWidth(selectionBox)-3))), COLOR_ORANGE);
+            renderDrawHLine(renderer, dest.x+1, dest.y-i-(currentZoomlevel+1), dest.x+1 + (lround(((spice)/getSpiceCapacity())*(getWidth(selectionBox)-3))), COLOR_ORANGE);
         }
     }
 }
@@ -475,7 +475,7 @@ void Harvester::doReturn()
 
 void Harvester::setAmountOfSpice(FixPoint newSpice)
 {
-    if((newSpice >= 0) && (newSpice <= HARVESTERMAXSPICE)) {
+    if((newSpice >= 0) && (newSpice <= getSpiceCapacity())) {
         spice = newSpice;
     }
 }
@@ -562,7 +562,7 @@ void Harvester::move()
         if(harvestingMode) {
             // Track stuck harvesters (removed spammy 5-second logging)
             if(location == destination) {
-                if(spice < HARVESTERMAXSPICE) {
+                if(spice < getSpiceCapacity()) {
 
                     Tile* tile = currentGameMap->getTile(location);
 
@@ -615,7 +615,7 @@ void Harvester::move()
 
 bool Harvester::isHarvesting() const {
     return  harvestingMode
-            && (spice < HARVESTERMAXSPICE)
+            && (spice < getSpiceCapacity())
             && (blockDistance(location, destination) <= FixPt_SQRT2)
             && currentGameMap->tileExists(location) && currentGameMap->getTile(location)->hasSpice();
 }
@@ -643,13 +643,13 @@ FixPoint Harvester::extractSpice(FixPoint extractionSpeed)
 
 void Harvester::setSpeeds()
 {
-    FixPoint speed = getMaxSpeed();
+    FixPoint speed = getMaxSpeed() * getMovementSpeedFactor();
 
     if(isBadlyDamaged()) {
         speed *= HEAVILYDAMAGEDSPEEDMULTIPLIER;
     }
 
-    FixPoint percentFull = spice/HARVESTERMAXSPICE;
+    FixPoint percentFull = spice/getSpiceCapacity();
     speed = speed * (1 - MAXIMUMHARVESTERSLOWDOWN*percentFull);
 
     switch(drawnAngle){

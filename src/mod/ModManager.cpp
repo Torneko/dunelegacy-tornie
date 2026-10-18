@@ -446,7 +446,7 @@ SettingsClass::GameOptionsClass ModManager::loadEffectiveGameOptions(
     // Start with base options
     SettingsClass::GameOptionsClass result = baseOptions;
     result.content = activeContent;
-    if(initialized){result.sellingBuildings=false;result.showHarvesterCount=true;}
+    if(initialized){result.sellingBuildings=activeMod != VANILLA_MOD_NAME;result.showHarvesterCount=true;}
     const auto applyUserRules=[&] {
         if(!initialized)return;
         INIFile preferences(getConfigFilepath());

@@ -253,8 +253,8 @@ bool LoveFactory::isDeliveryCandidate(Uint32 unitItemID, Uint32 deliveryID) cons
        || unitItemID == Unit_Infantry5
        || unitItemID == Unit_Troopers5
        || unitItemID == Unit_ChemicalCarryall
-       || unitItemID == Unit_Frigate || unitItemID == Unit_Ornithopter
-       || unitItemID == Unit_Sandworm || unitItemID == Unit_Special) {
+       || unitItemID == Unit_Frigate || isOrnithopterUnit(unitItemID)
+       || isSandwormUnit(unitItemID) || unitItemID == Unit_Special) {
         return false;
     }
 

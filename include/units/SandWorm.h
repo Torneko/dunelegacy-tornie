@@ -25,9 +25,9 @@
 class Sandworm final : public GroundUnit
 {
 public:
-    explicit Sandworm(House* newOwner);
-    explicit Sandworm(InputStream& stream);
-    void init();
+    explicit Sandworm(House* newOwner, int unitType = Unit_Sandworm);
+    explicit Sandworm(InputStream& stream, int unitType = Unit_Sandworm);
+    void init(int unitType);
     virtual ~Sandworm();
 
     void save(OutputStream& stream) const override;

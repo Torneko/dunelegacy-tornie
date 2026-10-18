@@ -48,6 +48,14 @@ bool isVanillaModActive() {
 
 bool isTornieMapObject(int itemID) {
     switch(itemID) {
+        case Unit_RaiderQuad:
+        case Unit_RangedTank:
+        case Unit_SlowTank:
+        case Unit_CapacityHarvester:
+        case Unit_FastHarvester:
+        case Unit_TameSandworm:
+        case Structure_Slowpost:
+        case Unit_EliteOrnithopter:
         case Unit_FlameQuad:
         case Unit_GasInfantry:
         case Unit_FlameTrooper:
@@ -178,12 +186,15 @@ int resolveCoopGuestUnit(Game* game, int houseID, int itemID) {
         return static_cast<int>(ItemID_Invalid);
     };
     switch(itemID) {
+        case Unit_RaiderQuad:
         case Unit_Trike:
         case Unit_RaiderTrike:
         case Unit_RocketTrike:
         case Unit_SonicTrike:
         case Unit_Quad:
             return firstAvailable({Unit_Trike, Unit_RaiderTrike, Unit_RocketTrike, Unit_SonicTrike, Unit_Quad});
+        case Unit_CapacityHarvester:
+        case Unit_FastHarvester:
         case Unit_Harvester:
         case Unit_RebelHarvester:
             return firstAvailable({Unit_Harvester, Unit_RebelHarvester});
@@ -194,11 +205,14 @@ int resolveCoopGuestUnit(Game* game, int houseID, int itemID) {
         case Unit_Carryall:
         case Unit_ChemicalCarryall:
             return firstAvailable({Unit_Carryall, Unit_ChemicalCarryall});
+        case Unit_EliteOrnithopter:
         case Unit_Ornithopter:
         case Unit_Frigate:
             return firstAvailable({Unit_Ornithopter, Unit_Carryall, Unit_ChemicalCarryall});
         case Unit_MCV:
             return ItemID_Invalid;
+        case Unit_RangedTank:
+        case Unit_SlowTank:
         case Unit_Devastator:
         case Unit_Deviator:
         case Unit_SonicTank:

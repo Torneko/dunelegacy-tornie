@@ -51,6 +51,14 @@ SDL_Texture* resolveItemPicture(int itemID, HOUSETYPE house) {
     int newPicID;
 
     switch(itemID) {
+        case Unit_EliteOrnithopter: newPicID = Picture_Ornithopter; break;
+        case Unit_RaiderQuad: newPicID = Picture_Quad; break;
+        case Unit_RangedTank: newPicID = Picture_Tank; break;
+        case Unit_SlowTank: newPicID = Picture_Tank; break;
+        case Unit_CapacityHarvester: newPicID = Picture_Harvester; break;
+        case Unit_FastHarvester: newPicID = Picture_Harvester; break;
+        case Unit_TameSandworm: newPicID = Picture_Sandworm; break;
+        case Structure_Slowpost: newPicID = Picture_GunTurret; break;
         case Unit_FlameQuad: newPicID = Picture_FlameQuad; break;
         case Unit_GasInfantry: newPicID = Picture_GasInfantry; break;
         case Unit_FlameTrooper: newPicID = Picture_FlameTrooper; break;
@@ -239,6 +247,7 @@ Coord getStructureSize(int itemID) {
         case Structure_TechCenter:          return Coord(3,2); break;
         case Structure_Scoutpost:           return Coord(1,1); break;
         case Structure_Flamepost:           return Coord(1,1); break;
+        case Structure_Slowpost: return Coord(1,1);
         case Structure_Chemipost:           return Coord(1,1); break;
         case Structure_LoveFactory:         return Coord(2,3); break;
         case Structure_ChaosFactory:        return Coord(3,2); break;
@@ -315,6 +324,14 @@ Uint32  getItemIDByName(const std::string& name) {
     else if(lowerName == "infantry")                                            return Unit_Infantry;
     else if(lowerName == "troopers5")                                           return Unit_Troopers5;
     else if(lowerName == "troopers")                                            return Unit_Troopers;
+    else if(lowerName == "elite ornithopter") return Unit_EliteOrnithopter;
+    else if(lowerName == "raider quad") return Unit_RaiderQuad;
+    else if(lowerName == "ranged tank") return Unit_RangedTank;
+    else if(lowerName == "slow tank") return Unit_SlowTank;
+    else if(lowerName == "capacity harvester") return Unit_CapacityHarvester;
+    else if(lowerName == "fast harvester") return Unit_FastHarvester;
+    else if(lowerName == "tame sandworm") return Unit_TameSandworm;
+    else if(lowerName == "slowpost") return Structure_Slowpost;
     else if(lowerName == "flame quad") return Unit_FlameQuad;
     else if(lowerName == "gas infantry") return Unit_GasInfantry;
     else if(lowerName == "flame trooper") return Unit_FlameTrooper;
@@ -395,6 +412,14 @@ std::string getItemNameByID(Uint32 itemID) {
         case Unit_Infantry:                 return "Infantry";          break;
         case Unit_Troopers5:                return "Troopers5";         break;
         case Unit_Troopers:                 return "Troopers";          break;
+        case Unit_EliteOrnithopter: return "Elite Ornithopter";
+        case Unit_RaiderQuad: return "Raider Quad";
+        case Unit_RangedTank: return "Ranged Tank";
+        case Unit_SlowTank: return "Slow Tank";
+        case Unit_CapacityHarvester: return "Capacity Harvester";
+        case Unit_FastHarvester: return "Fast Harvester";
+        case Unit_TameSandworm: return "Tame Sandworm";
+        case Structure_Slowpost: return "Slowpost";
         case Unit_FlameQuad: return "Flame Quad";
         case Unit_GasInfantry: return "Gas Infantry";
         case Unit_FlameTrooper: return "Flame Trooper";
@@ -479,6 +504,14 @@ std::string resolveItemName(int itemID) {
         case Unit_Infantry:                 return _("@DUNE.ENG|199#Infantry");            break;
         case Unit_Troopers5:                return _("Super Heavy Trooper Squad");                     break;
         case Unit_Troopers:                 return _("@DUNE.ENG|201#Troopers");            break;
+        case Unit_EliteOrnithopter: return settings.general.language == "fr" ? "Ornithoptère élite" : "Elite Ornithopter";
+        case Unit_RaiderQuad: return settings.general.language == "fr" ? "Quad rapide" : "Raider Quad";
+        case Unit_RangedTank: return settings.general.language == "fr" ? "Tank longue portée" : "Ranged Tank";
+        case Unit_SlowTank: return settings.general.language == "fr" ? "Tank ralentisseur" : "Slow Tank";
+        case Unit_CapacityHarvester: return settings.general.language == "fr" ? "Moissonneuse grande capacité" : "Capacity Harvester";
+        case Unit_FastHarvester: return settings.general.language == "fr" ? "Moissonneuse rapide" : "Fast Harvester";
+        case Unit_TameSandworm: return settings.general.language == "fr" ? "Ver apprivoisé" : "Tame Sandworm";
+        case Structure_Slowpost: return settings.general.language == "fr" ? "Poste ralentisseur" : "Slowpost";
         case Unit_FlameQuad: return settings.general.language == "fr" ? "Quad lance-flammes" : "Flame Quad";
         case Unit_GasInfantry: return settings.general.language == "fr" ? "Infanterie à gaz" : "Gas Infantry";
         case Unit_FlameTrooper: return settings.general.language == "fr" ? "Trooper lance-flammes" : "Flame Trooper";

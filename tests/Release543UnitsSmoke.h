@@ -4,6 +4,7 @@
 #include "Release543EditorSmoke.h"
 
 struct FlameAccuracyFixture {
+    static int directDamage(const Bullet& bullet) { return bullet.damage; }
     static bool precise(const Bullet& bullet,const Coord& aim) {
         return bullet.destination==aim && bullet.detonationTimer==0;
     }
@@ -173,21 +174,51 @@ inline void verifyRelease543Units(const std::string& output,const std::string& m
         }
         require(magenta==0 && background>0 && visible>0,"magenta visible or transparency missing in rendered atlas");
         if(graphic==ObjPic_GasInfantry)require(black>0,"opaque black was erased with magenta");
-        if(graphic==ObjPic_FlameQuad)for(int direction=0;direction<8;++direction) {
-            const int cell=w/8;int left=cell,top=h,right=0,bottom=0;
-            for(int y=0;y<h;++y)for(int x=0;x<cell;++x) {
-                Uint8 r,g,b,a;SDL_GetRGBA(getPixel(pixels.get(),direction*cell+x,y),pixels->format,&r,&g,&b,&a);
-                if(r==7 && g==11 && b==13)continue;
-                left=std::min(left,x);top=std::min(top,y);right=std::max(right,x+1);bottom=std::max(bottom,y+1);
+        if(graphic==ObjPic_FlameQuad) {
+            require(baseW==128 && baseH==16,"Flame Quad cell differs from the vanilla Quad");
+            // Compare the native chassis anchors at integer scale. Vanilla's
+            // optional 2x/3x HD masks redraw outlines; those are not source offsets.
+            auto* vanilla=pGFXManager->getZoomedObjPic(ObjPic_Quad,owner->getHouseID(),0);
+            SDL_SetRenderDrawColor(renderer,7,11,13,255);SDL_RenderClear(renderer);SDL_RenderCopy(renderer,vanilla,nullptr,&rect);
+            auto reference=sdl2::surface_ptr{SDL_CreateRGBSurfaceWithFormat(0,w,h,32,SDL_PIXELFORMAT_RGBA32)};
+            require(SDL_RenderReadPixels(renderer,&rect,reference->format->format,reference->pixels,reference->pitch)==0,"vanilla Quad readback");
+            for(int direction=0;direction<8;++direction) {
+                const auto bounds=[&](SDL_Surface* image) {
+                    const int cell=w/8;SDL_Rect box{cell,h,0,0};int right=0,bottom=0;
+                    for(int y=0;y<h;++y)for(int x=0;x<cell;++x) {
+                        Uint8 r,g,b,a;SDL_GetRGBA(getPixel(image,direction*cell+x,y),image->format,&r,&g,&b,&a);
+                        if(r==7 && g==11 && b==13)continue;
+                        box.x=std::min(box.x,x);box.y=std::min(box.y,y);right=std::max(right,x+1);bottom=std::max(bottom,y+1);
+                    }
+                    box.w=right-box.x;box.h=bottom-box.y;return box;
+                };
+                const auto actual=bounds(pixels.get()),expected=bounds(reference.get());
+                if(actual.x!=expected.x || actual.y!=expected.y || actual.w!=expected.w || actual.h!=expected.h) {
+                    SDL_Log("QUAD ANCHOR: mod=%s zoom=%d direction=%d actual=%d,%d %dx%d expected=%d,%d %dx%d",mod.c_str(),zoom+1,direction,actual.x,actual.y,actual.w,actual.h,expected.x,expected.y,expected.w,expected.h);
+                    SavePNG(pixels.get(),(std::filesystem::path(output)/"quad-actual.png").string().c_str());
+                    SavePNG(reference.get(),(std::filesystem::path(output)/"quad-reference.png").string().c_str());
+                }
+                require(actual.x==expected.x && actual.y==expected.y && actual.w==expected.w && actual.h==expected.h,
+                    "Flame Quad chassis differs from vanilla direction anchor");
             }
-            require(right>left && bottom>top,"empty Flame Quad direction");
-            require(std::abs(left+right-cell)<=zoom+1 && std::abs(top+bottom-h)<=zoom+1,
-                "Flame Quad visible bounds are off centre");
-            if(direction==0)require(left+right>=cell,"right-facing Flame Quad is biased one pixel left");
         }
         const auto preview=(std::filesystem::path(output)/(mod+"-"+std::to_string(graphic)+"-zoom"+std::to_string(zoom+1)+".png")).string();
         require(SavePNG(pixels.get(),preview.c_str())==0,"new unit rendered atlas preview");
 
+    }
+    if(mod=="Tornie") {
+        for(const int graphic:{ObjPic_Quad,ObjPic_Harvester,ObjPic_Tank_Base,ObjPic_Tank_Gun,ObjPic_Ornithopter,ObjPic_Sandworm,ObjPic_Scoutpost,ObjPic_GunTurret,ObjPic_Bullet_LargeRocket,ObjPic_Bullet_MediumRocket}) {
+            auto* texture=pGFXManager->getZoomedObjPic(graphic,HOUSE_HARKONNEN,0);int w,h;
+            SDL_QueryTexture(texture,nullptr,nullptr,&w,&h);
+            auto image=sdl2::surface_ptr{SDL_CreateRGBSurfaceWithFormat(0,w,h,32,SDL_PIXELFORMAT_RGBA32)};
+            auto target=sdl2::texture_ptr{SDL_CreateTexture(renderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,w,h)};
+            auto* previous=SDL_GetRenderTarget(renderer);require(SDL_SetRenderTarget(renderer,target.get())==0,"atlas export target");
+            SDL_SetRenderDrawColor(renderer,0,0,0,0);SDL_RenderClear(renderer);SDL_RenderCopy(renderer,texture,nullptr,nullptr);
+            require(SDL_RenderReadPixels(renderer,nullptr,image->format->format,image->pixels,image->pitch)==0,"native atlas readback");
+            SDL_SetRenderTarget(renderer,previous);
+            const auto path=(std::filesystem::path(output)/("native-"+std::to_string(graphic)+".png")).string();
+            require(SavePNG(image.get(),path.c_str())==0,"native atlas export");
+        }
     }
     for(const int house:{HOUSE_HARKONNEN,HOUSE_ATREIDES,HOUSE_ORDOS}) {
         const int color=getHouseVisualHouse(house);

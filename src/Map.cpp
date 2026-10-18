@@ -164,7 +164,9 @@ void Map::damage(Uint32 damagerID, House* damagerOwner, const Coord& realPos, Ui
         for(auto objectID : affectedGroundAndUndergroundUnits) {
             auto pObject = currentGame->getObjectManager().getObject(objectID);
             if(pObject
-                && (pObject->getItemID() != Unit_Sandworm)
+                && (pObject->getItemID() != Unit_Sandworm && pObject->getItemID() != Unit_TameSandworm)
+                && (!(currentGame->getObjectManager().getObject(damagerID) && currentGame->getObjectManager().getObject(damagerID)->getItemID()==Unit_TameSandworm)
+                    || pObject->getOwner()->getTeamID()!=damagerOwner->getTeamID())
                 && (pObject->isAGroundUnit() || pObject->isInfantry())
                 && (pObject->getLocation() == location))
             {
@@ -199,7 +201,7 @@ void Map::damage(Uint32 damagerID, House* damagerOwner, const Coord& realPos, Ui
                         // - Ornithopters: Full damage (fast, fragile, need to be easy to hit)
                         // - Carryalls: Distance-based falloff (like ground units, 0.96.4 behavior)
                         int scaledDamage;
-                        if(pAirUnit->getItemID() == Unit_Ornithopter) {
+                        if(isOrnithopterUnit(pAirUnit->getItemID())) {
                             scaledDamage = lround(damage);
                         } else {
                             // Carryalls use same formula as ground units
@@ -209,7 +211,7 @@ void Map::damage(Uint32 damagerID, House* damagerOwner, const Coord& realPos, Ui
                         pAirUnit->handleDamage(scaledDamage, damagerID, damagerOwner);
 
                         // MULTIPLAYER-SAFE: Track rocket hits/kills on ornithopters (after damage)
-                        if(pAirUnit->getItemID() == Unit_Ornithopter && healthBefore > 0) {
+                        if(isOrnithopterUnit(pAirUnit->getItemID()) && healthBefore > 0) {
                             if(bulletID == Bullet_TurretRocket) {
                                 currentGame->combatStats.turretRocketsHitOrni++;
                                 if(pAirUnit->getHealth() <= 0) {
@@ -254,7 +256,7 @@ void Map::damage(Uint32 damagerID, House* damagerOwner, const Coord& realPos, Ui
 
                     if(distance <= damageRadius) {
                         // MULTIPLAYER-SAFE: Track rocket hits on ornithopters (before damage)
-                        const bool isOrni = (pUnit->getItemID() == Unit_Ornithopter);
+                        const bool isOrni = (isOrnithopterUnit(pUnit->getItemID()));
                         const FixPoint healthBefore = isOrni ? pUnit->getHealth() : 0;
 
                         if(bulletID == Bullet_DRocket) {

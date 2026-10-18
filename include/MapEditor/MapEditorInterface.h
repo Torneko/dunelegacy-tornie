@@ -310,7 +310,15 @@ private:
     SymbolButton        editorModeUnits_SpecialUnit;
     HBox                editorModeUnits_HBox7;
     SymbolButton        editorModeUnits_Carryall;
-    SymbolButton        editorModeUnits_Ornithopter;
+    HBox editorModeUnits_HBoxFallback1, editorModeUnits_HBoxFallback2;
+    SymbolButton editorModeUnits_RaiderQuad;
+    SymbolButton editorModeUnits_RangedTank;
+    SymbolButton editorModeUnits_SlowTank;
+    SymbolButton editorModeUnits_CapacityHarvester;
+    SymbolButton editorModeUnits_FastHarvester;
+    SymbolButton editorModeUnits_TameSandworm;
+    SymbolButton editorModeStructs_Slowpost;
+    SymbolButton        editorModeUnits_Ornithopter, editorModeUnits_EliteOrnithopter;
 
     PictureLabel        bottomBar;
 

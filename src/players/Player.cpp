@@ -191,7 +191,7 @@ int Player::chooseLowPriorityCustomUnit(const BuilderBase* pBuilder, int chanceD
     static const Uint32 customUnits[] = {
         Unit_RaiderTrike,
         Unit_RocketTrike,
-        Unit_FlameQuad,
+        Unit_RaiderQuad, Unit_RangedTank, Unit_SlowTank, Unit_CapacityHarvester, Unit_FastHarvester, Unit_TameSandworm, Unit_EliteOrnithopter, Unit_FlameQuad,
         Unit_GasInfantry,
         Unit_FlameTrooper,
         Unit_SonicTrike,

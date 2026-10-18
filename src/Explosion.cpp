@@ -72,10 +72,10 @@ Explosion::Explosion(InputStream& stream)
 
     init();
 
-    // The transient damage payload is intentionally not serialized so old
-    // saves remain readable. Reconstruct a conservative fallback if a game
-    // was saved during the very short flame animation.
-    if(explosionID == Explosion_FlameImpact && house >= 0 && house < NUM_HOUSES) {
+    // New saves retain the exact hazard; older saves keep their legacy fallback.
+    if(currentGame && currentGame->getLoadedSavegameVersion()>=9836) {
+        damagerID=stream.readUint32();persistentDamage=stream.readSint32();damageRadius=stream.readSint32();
+    } else if(explosionID == Explosion_FlameImpact && house >= 0 && house < NUM_HOUSES) {
         persistentDamage = currentGame->objectData.data[Unit_FlameTank][house].weapondamage / 10;
         if(persistentDamage < 1) {
             persistentDamage = 1;
@@ -171,6 +171,7 @@ void Explosion::save(OutputStream& stream) const
     stream.writeUint32(house);
     stream.writeSint32(frameTimer);
     stream.writeSint32(currentFrame);
+    stream.writeUint32(damagerID);stream.writeSint32(persistentDamage);stream.writeSint32(damageRadius);
 }
 
 void Explosion::blitToScreen() const

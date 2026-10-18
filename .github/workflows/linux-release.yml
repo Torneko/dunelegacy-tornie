@@ -235,13 +235,14 @@ jobs:
           test "$(grep -c 'RELEASE 543 NEUTRAL SABOTEUR PASS:' "$PROFILE/--verify-release543.log")" -eq 3
           test "$(grep -c 'RELEASE 543 EDITOR TERRAIN PASS:' "$PROFILE/--verify-release543.log")" -eq 6
           test "$(grep -c 'RELEASE 543 FLAME PORTRAITS PASS:' "$PROFILE/--verify-release543.log")" -eq 3
+          test "$(grep -c 'RELEASE 543 EXPANSION PASS:' "$PROFILE/--verify-release543.log")" -eq 7
 
       - name: Record the exact packaged source
         run: |
           VERSION="$(sed -n 's/^project(DuneLegacyTornie VERSION \([0-9]*\.[0-9]*\.[0-9]*\).*/\1/p' CMakeLists.txt)"
           SOURCE_COMMIT="$(git rev-parse HEAD)" RELEASE_VERSION="$VERSION" python3 - <<'PYTHON'
           import json, os, pathlib
-          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio','videoCases':['window','fullscreen','stale-combined-desktop'],'xrandr':True},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat','rebels-windtrap-upgrade','building-sales','normal-multiplayer-alliances','flame-and-gas-units','magenta-free-zooms','house-colours-and-blue-stars','neutral-saboteur-tier-seven','editor-terrain-blue-stars','original-flame-squad-portraits','precise-close-flame-quad','sales-destruction-and-concrete','sale-button-after-upgrade'],'networkProtocol':17,'saveVersion':9835}
+          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio','videoCases':['window','fullscreen','stale-combined-desktop'],'xrandr':True},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat','rebels-windtrap-upgrade','building-sales','normal-multiplayer-alliances','flame-and-gas-units','magenta-free-zooms','house-colours-and-blue-stars','neutral-saboteur-tier-seven','editor-terrain-blue-stars','original-flame-squad-portraits','precise-close-flame-quad','sales-destruction-and-concrete','sale-button-after-upgrade','easy-sales-75-percent','extended-fallback-units','movement-slowing','saved-chaos-worm-offer','elite-ornithopter','seventy-achievements','palace-napalm-and-saved-hazards'],'networkProtocol':18,'saveVersion':9836}
           pathlib.Path('build/Linux-Build-'+report['version']+'.json').write_text(json.dumps(report,indent=2)+'\n')
           PYTHON
 

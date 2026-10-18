@@ -1207,7 +1207,7 @@ Uint32 Tile::getRadarColor(House* pHouse, bool radar) {
     if (pObject != nullptr) {
         Uint32 color;
 
-        if (pObject->getItemID() == Unit_Sandworm) {
+        if (isSandwormUnit(pObject->getItemID())) {
             color = COLOR_WHITE;
         }
         else {

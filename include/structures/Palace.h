@@ -73,6 +73,7 @@ public:
     inline int getSpecialWeaponTimer() const { return specialWeaponTimer; }
     bool usesJerichoOrnithopterStrike() const;
     bool usesJerichoKleshmershFremenCall() const;
+    bool usesKleshmershNapalm() const;
     bool usesLightVehicleCall() const;
     bool usesTornieMainRebelsCooldown() const;
     bool usesTornieMainRebelsRandomSpecial() const;
@@ -85,7 +86,7 @@ public:
             return MILLI2CYCLES(7*60*1000 + 30*1000);
         }
         if(getTechnologyHouseID() == HOUSE_HARKONNEN || getTechnologyHouseID() == HOUSE_SARDAUKAR
-           || usesJerichoOrnithopterStrike()) {
+           || usesJerichoOrnithopterStrike() || usesKleshmershNapalm()) {
             // 10 min
             return MILLI2CYCLES(10*60*1000);
         } else {

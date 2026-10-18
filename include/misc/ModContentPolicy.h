@@ -5,7 +5,15 @@
 // Keep scenario forces and objectives when custom content is switched off.
 inline int neutralVanillaMapItem(int item) {
     switch(item) {
+        case Unit_RaiderQuad:
         case Unit_FlameQuad: return Unit_Quad;
+        case Unit_RangedTank:
+        case Unit_SlowTank:
+        case Unit_TameSandworm: return Unit_Tank; // Keep an allied combat unit when custom control is disabled.
+        case Unit_EliteOrnithopter: return Unit_Ornithopter;
+        case Unit_CapacityHarvester:
+        case Unit_FastHarvester: return Unit_Harvester;
+        case Structure_Slowpost: return Structure_GunTurret;
         case Unit_GasInfantry:
         case Unit_FlameTrooper: return Unit_Trooper;
         case Unit_Infantry5: return Unit_Infantry;

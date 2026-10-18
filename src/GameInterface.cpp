@@ -191,7 +191,7 @@ GameInterface::~GameInterface() {
 }
 
 void GameInterface::draw(Point position) {
-    const int harvesterCount = pLocalHouse != nullptr ? (pLocalHouse->getNumItems(Unit_Harvester) + pLocalHouse->getNumItems(Unit_RebelHarvester)) : 0;
+    const int harvesterCount = pLocalHouse != nullptr ? (pLocalHouse->getNumItems(Unit_Harvester) + pLocalHouse->getNumItems(Unit_RebelHarvester) + pLocalHouse->getNumItems(Unit_CapacityHarvester) + pLocalHouse->getNumItems(Unit_FastHarvester)) : 0;
     if (harvesterCount != displayedHarvesterCount) {
         displayedHarvesterCount = harvesterCount;
         const char* caption = settings.general.language == "fr" ? "Moissonneuses : " : "Harvesters: ";

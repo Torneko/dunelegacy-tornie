@@ -55,7 +55,7 @@ inline void verifyRelease541Rules(const std::string& output,const std::string& m
         std::string power;
         if(palace->usesTornieMainRebelsRandomSpecial()) power=mod=="vanilla" ? "random-classic" : "random-expanded";
         else if(palace->usesJerichoOrnithopterStrike()) power="ornithopters";
-        else if(palace->usesJerichoKleshmershFremenCall()) power="fremen";
+        else if(palace->usesKleshmershNapalm()) power="napalm";
         else if(palace->usesLightVehicleCall()) power="light-vehicles";
         else {
             const int faction=getHouseFallbackHouse(static_cast<HOUSETYPE>(palace->getTechnologyHouseID()));
@@ -64,7 +64,7 @@ inline void verifyRelease541Rules(const std::string& output,const std::string& m
         }
         const int identity=getHouseFactionIdentity(static_cast<HOUSETYPE>(roster[i]));
         const int expectedMinutes=identity==HOUSE_REBELS || (mod=="vanilla" && (identity==HOUSE_NEUTRAL || identity==HOUSE_KLESHMERSH)) ? 450
-            : identity==HOUSE_HARKONNEN || identity==HOUSE_SARDAUKAR || identity==HOUSE_WILDSPADE ? 600 : 300;
+            : identity==HOUSE_HARKONNEN || identity==HOUSE_SARDAUKAR || identity==HOUSE_WILDSPADE || (identity==HOUSE_KLESHMERSH && mod!="vanilla") ? 600 : 300;
         require(palace->getMaxSpecialWeaponTimer()==MILLI2CYCLES(expectedMinutes*1000),"Palace recharge duration");
         powers << (i ? "," : "") << "{\"house\":\"" << getHouseNameByNumber(static_cast<HOUSETYPE>(roster[i]))
             << "\",\"power\":\"" << power << "\",\"seconds\":" << expectedMinutes << "}";

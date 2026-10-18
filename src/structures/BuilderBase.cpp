@@ -34,12 +34,13 @@
 #include <GUI/ObjectInterfaces/BuilderInterface.h>
 
 #include <algorithm>
+#include <structures/Worfinery.h>
 
 const int BuilderBase::itemOrder[] = { Unit_Troopers5, Unit_Infantry5, Unit_ChemicalCarryall, Structure_Slab4, Structure_Slab1, Structure_IX, Structure_StarPort,
                                            Structure_HighTechFactory, Structure_HeavyFactory, Structure_RocketTurret,
                                            Structure_Scoutpost, Structure_Flamepost, Structure_Chemipost, Structure_LoveFactory, Structure_ChaosFactory,
                                            Structure_RepairYard, Structure_GunTurret, Structure_TechCenter, Structure_WOR,
-                                           Structure_Worfinery, Structure_Doublefinery,
+                                           Structure_Worfinery, Structure_Slowpost, Structure_Doublefinery,
                                            Structure_Barracks, Structure_Wall, Structure_LightFactory,
                                            Structure_Silo, Structure_Radar, Structure_Refinery, Structure_WindTrap,
                                            Structure_AdvancedWindTrap, Structure_AdvancedWindTrapMK2, Structure_AdvancedWindTrapMK3,
@@ -48,7 +49,7 @@ const int BuilderBase::itemOrder[] = { Unit_Troopers5, Unit_Infantry5, Unit_Chem
                                            Unit_EliteLauncher, Unit_EliteSiegeTank, Unit_ChemicalSiegeTank, Unit_FlameTank,
                                            Unit_Launcher, Unit_SiegeTank, Unit_Tank, Unit_MCV,
                                            Unit_RebelHarvester, Unit_Harvester,
-                                           Unit_Ornithopter, Unit_Carryall, Unit_Quad, Unit_RocketTrike, Unit_SonicTrike, Unit_RaiderTrike,
+                                           Unit_RaiderQuad, Unit_RangedTank, Unit_SlowTank, Unit_CapacityHarvester, Unit_FastHarvester, Unit_TameSandworm, Unit_EliteOrnithopter, Unit_Ornithopter, Unit_Carryall, Unit_Quad, Unit_RocketTrike, Unit_SonicTrike, Unit_RaiderTrike,
                                            Unit_Trike, Unit_FlameQuad, Unit_GasInfantry, Unit_FlameTrooper, Unit_Troopers, Unit_Trooper, Unit_Infantry, Unit_Soldier,
                                            Unit_Frigate, Unit_Sandworm, Unit_Saboteur, ItemID_Invalid };
 
@@ -372,6 +373,12 @@ void BuilderBase::updateBuildList()
 
         int itemID2Add = itemOrder[i];
 
+        if(itemID2Add==Unit_TameSandworm) {
+            const auto* combo=dynamic_cast<const Worfinery*>(this);
+            if(!combo || !combo->hasTameWormOffer() || !currentGame->getGameInitSettings().getGameOptions().chaosMode) {
+                removeItem(buildList,iter,itemID2Add);continue;
+            }
+        }
         const auto activeModName = ModManager::instance().getActiveModName();
         const int technologyHouse = ModManager::instance().isTornieContentActive()
             ? getTechnologyHouseID() : owner->getFactionID();
@@ -395,7 +402,7 @@ void BuilderBase::updateBuildList()
             removeItem(buildList,iter,itemID2Add);
             continue;
         }
-        const int dataHouseID = neutralSaboteur ? owner->getFactionID()
+        const int dataHouseID = (neutralSaboteur || itemID2Add==Unit_TameSandworm) ? owner->getFactionID()
             : (itemID2Add == Unit_ChemicalCarryall) ? technologyHouse : getTechnologyHouseID();
         const ObjectData::ObjectDataStruct& objData = currentGame->objectData.data[itemID2Add][dataHouseID];
 

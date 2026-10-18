@@ -66,3 +66,14 @@ TEST_CASE("Old all-colour preferences cannot enable unsupported mod spices", "[m
         old.greenSpice=old.redSpice=old.purpleSpice=old.blueSpice=false;old.restrictSpices(name);REQUIRE(old.spiceMask()==0);
     }
 }
+
+#include <misc/ModContentPolicy.h>
+TEST_CASE("Disabling custom content preserves new forces as controllable vanilla equivalents", "[mods][map][compatibility]") {
+    for(const auto pair:{std::pair<int,int>{Unit_EliteOrnithopter,Unit_Ornithopter},
+        {Unit_RaiderQuad,Unit_Quad},{Unit_RangedTank,Unit_Tank},{Unit_SlowTank,Unit_Tank},
+        {Unit_CapacityHarvester,Unit_Harvester},{Unit_FastHarvester,Unit_Harvester},
+        {Unit_TameSandworm,Unit_Tank},{Structure_Slowpost,Structure_GunTurret}}) {
+        REQUIRE(neutralVanillaMapItem(pair.first)==pair.second);
+        REQUIRE(neutralVanillaMapItem(pair.second)==pair.second);
+    }
+}

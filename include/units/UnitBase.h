@@ -57,6 +57,9 @@ public:
 
     ObjectInterface* getInterfaceContainer() override;
 
+    void applySlow();
+    int getSlowTimer() const { return slowTimer; }
+    FixPoint getMovementSpeedFactor() const;
     virtual void checkPos() = 0;
     virtual void deploy(const Coord& newLocation);
 
@@ -309,6 +312,7 @@ protected:
     bool     tracked;                ///< Does this unit have tracks?
     bool     turreted;               ///< Does this unit have a turret?
     int      numWeapons;             ///< How many weapons do we have?
+    int slowTimer = 0;
     int      bulletType;             ///< Type of bullet to shot with
     int      lastFiredBulletType;    ///< Bullet actually fired, including distance-based weapon changes
 

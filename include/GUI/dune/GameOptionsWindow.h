@@ -56,6 +56,7 @@ public:
         return dlg;
     }
 
+    friend struct Release543OptionsFixture;
 private:
     void onGameSpeedMinus();
     void onGameSpeedPlus();

@@ -41,6 +41,7 @@ public:
     void init();
     virtual ~Worfinery();
 
+    bool hasTameWormOffer() const { return tameWormOffer; }
     void save(OutputStream& stream) const override;
 
     ObjectInterface* getInterfaceContainer() override;
@@ -69,6 +70,7 @@ private:
     ObjectPointer harvester;
     Uint32 bookings = 0;
     bool firstRun = true;
+    bool tameWormOffer = false;
 };
 
 #endif // WORFINERY_H

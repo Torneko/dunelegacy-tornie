@@ -1,4 +1,10 @@
-# Derniers ajustements 1.0.543 — publiés
+# Remplacement étendu 1.0.543 — validation avant publication
+
+Préparation autorisée sur `prepare/1.0.543-selling-allied-options`, sans fusion dans la branche principale et sans 1.0.544. Protocole **18**, nouvelles sauvegardes **9836**, 70 succès. Le site courant `0769ffbcb9167520342e8f577ddf58606e1876bb` a été récupéré depuis `origin/gh-pages` avant modification. Les reçus de l’édition publique précédente sont archivés dans [pre-expansion-replacement-1.0.543](../release_notes/pre-expansion-replacement-1.0.543/).
+
+Les notes FR/EN, les pages d’unités/bâtiments, niveaux/prérequis, palais, succès, galerie, planches modifiables et paquet hors ligne doivent suivre la nouvelle source figée. Les paquets publics restent ceux de la précédente édition tant que les deux compilations CI n’ont pas réussi. Les preuves et liens de publication seront inscrits après vérification des fichiers livrés.
+
+# Ajustements graphiques précédents 1.0.543 — historique
 
 La release existante est remplacée sans créer de 1.0.544. Jeu et tag `v1.0.543` : `8a7a9980110979ba619c746d952c243631104071`. Site FR/EN : `0769ffbcb9167520342e8f577ddf58606e1876bb`, récupéré depuis `1206aa0e96bd0fc45a52fd28390973ab6e194435`. Protocole **17**, sauvegardes **9835** et lecteurs des anciennes sauvegardes conservés. Tous les joueurs doivent retélécharger ce remplacement.
 
@@ -12,7 +18,7 @@ La release existante est remplacée sans créer de 1.0.544. Jeu et tag `v1.0.543
 
 CI Linux : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39136016151 — succès. Windows : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39136018362 — succès. Paquets : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39137724369 — succès. Pages : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39138125184 — succès. Documentation : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39138209928 — succès.
 
-[Audit final](../release_notes/Final-Publication-Audit-1.0.543.json) et [reçus](../release_notes/Publication-Receipt-1.0.543.json). Les reçus suivent le tag figé sur la branche de préparation ; aucune fusion dans la branche principale. Les confirmations sur les moniteurs physiques de Mint et en partie Internet humaine restent distinctes des vérifications automatisées.
+[Audit final](../release_notes/pre-expansion-replacement-1.0.543/Final-Publication-Audit-1.0.543.json) et [reçus](../release_notes/pre-expansion-replacement-1.0.543/Publication-Receipt-1.0.543.json). Les reçus suivent le tag figé sur la branche de préparation ; aucune fusion dans la branche principale. Les confirmations sur les moniteurs physiques de Mint et en partie Internet humaine restent distinctes des vérifications automatisées.
 
 # Correction d’affichage Linux précédente — historique
 

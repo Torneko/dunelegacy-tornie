@@ -431,7 +431,8 @@ bool StructureBase::canSell() const {
 int StructureBase::getSaleRefund() const {
     const int value=currentGame->getGameInitSettings().campaignPurchasePrice(
         currentGame->objectData.data[itemID][originalHouseID].price,owner->getHouseID());
-    return std::max(0,value)/2;
+    const int rate = currentGame->getGameInitSettings().isEasyModeHouse(owner->getHouseID()) ? 75 : 50;
+    return static_cast<int>(static_cast<std::int64_t>(std::max(0,value)) * rate / 100);
 }
 
 void StructureBase::handleSellClick() {

@@ -145,6 +145,7 @@ Palace::TornieRebelsSpecialWeapon Palace::getTornieMainRebelsSpecialWeapon() con
 }
 
 bool Palace::usesTargetedSpecialWeapon() const {
+    if(usesKleshmershNapalm())return true;
     if(usesTornieMainRebelsRandomSpecial()) {
         return getTornieMainRebelsSpecialWeapon() == TornieRebelsSpecialWeapon::Missile;
     }
@@ -171,9 +172,13 @@ bool Palace::usesJerichoOrnithopterStrike() const {
 }
 
 bool Palace::usesJerichoKleshmershFremenCall() const {
-    return ModManager::instance().isInitialized()
-        && ModManager::instance().isTornieContentActive()
-        && isHouseFaction(static_cast<HOUSETYPE>(getTechnologyHouseID()), HOUSE_KLESHMERSH);
+    return false; // Replaced by the targeted napalm missile in this revision.
+}
+
+bool Palace::usesKleshmershNapalm() const {
+    return ModManager::instance().isTornieContentActive()
+        && currentGame->getGameInitSettings().getGameOptions().content.customUnitsAndBuildings
+        && isHouseFaction(static_cast<HOUSETYPE>(getTechnologyHouseID()),HOUSE_KLESHMERSH);
 }
 
 bool Palace::usesLightVehicleCall() const {
@@ -323,7 +328,7 @@ void Palace::doLaunchDeathhand(int x, int y) {
     Coord dest( x * TILESIZE + TILESIZE/2 + deathOffX,
                 y * TILESIZE + TILESIZE/2 + deathOffY);
 
-    bulletList.push_back(new Bullet(objectID, &centerPoint, &dest, Bullet_LargeRocket, PALACE_DEATHHAND_WEAPONDAMAGE, false, nullptr));
+    bulletList.push_back(new Bullet(objectID, &centerPoint, &dest, usesKleshmershNapalm()?Bullet_Napalm:Bullet_LargeRocket, usesKleshmershNapalm()?PALACE_DEATHHAND_WEAPONDAMAGE/2:PALACE_DEATHHAND_WEAPONDAMAGE, false, nullptr));
     AchievementEvents::missile(getOwner());
     soundPlayer->playSoundAt(Sound_Rocket, getLocation());
 

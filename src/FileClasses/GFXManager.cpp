@@ -186,6 +186,19 @@ static const Coord objPicTiles[] {
     { 10, 1 },  // ObjPic_Doublefinery
     { 8, 1 },   // ObjPic_FlameQuad
     { 4, 3 },   // ObjPic_GasInfantry
+    { 8, 3 }, // ObjPic_EliteOrnithopter
+    { 8, 1 }, // ObjPic_RaiderQuad
+    { 8, 1 }, // ObjPic_RangedTankBase
+    { 8, 1 }, // ObjPic_RangedTankTurret
+    { 8, 1 }, // ObjPic_SlowTankBase
+    { 8, 1 }, // ObjPic_SlowTankTurret
+    { 10, 1 }, // ObjPic_Slowpost
+    { 8, 1 }, // ObjPic_CapacityHarvester
+    { 8, 1 }, // ObjPic_FastHarvester
+    { 1, 9 }, // ObjPic_TameSandworm
+    { 16, 1 }, // ObjPic_NapalmRocket
+    { 16, 1 }, // ObjPic_SlowRocket
+
 };
 static_assert(sizeof(objPicTiles) / sizeof(objPicTiles[0]) == NUM_OBJPICS,
               "objPicTiles must have one entry per ObjPic enum value");
@@ -2337,7 +2350,7 @@ GFXManager::GFXManager() {
         // atlas. Reusing an eagerly cached custom slot can preserve the authored
         // purple tint in both the map-editor button and sidebar portrait.
         const bool forceCustomRemap = tornieGraphicsVisible
-            && objPicID!=ObjPic_FlameQuad && objPicID!=ObjPic_GasInfantry
+            && objPicID!=ObjPic_FlameQuad && objPicID!=ObjPic_GasInfantry && objPicID<ObjPic_EliteOrnithopter
             && (colorSlot == HOUSE_CUSTOM || isCustomHouseColorSlot(colorSlot));
         SDL_Surface* atlas = forceCustomRemap
             ? nullptr
@@ -2395,11 +2408,27 @@ GFXManager::GFXManager() {
     for(int colorSlot = 0; colorSlot < NUM_HOUSE_COLOR_SLOTS; ++colorSlot) {
         for(const auto& custom : {std::pair<unsigned int,unsigned int>{UI_MapEditor_FlameQuad,ObjPic_FlameQuad},
                                   {UI_MapEditor_GasInfantry,ObjPic_GasInfantry},
-                                  {UI_MapEditor_FlameTrooper,ObjPic_Trooper}}) {
-            const bool infantry=custom.first!=UI_MapEditor_FlameQuad;
-            auto frame=getColoredEditorFrame(custom.second,colorSlot,0,0,infantry?4:8,infantry?3:1);
+                                  {UI_MapEditor_FlameTrooper,ObjPic_Trooper},
+                                  {UI_MapEditor_EliteOrnithopter,ObjPic_EliteOrnithopter}}) {
+            const bool infantry=custom.first==UI_MapEditor_GasInfantry || custom.first==UI_MapEditor_FlameTrooper;
+            auto frame=getColoredEditorFrame(custom.second,colorSlot,0,0,infantry?4:8,infantry || custom.first==UI_MapEditor_EliteOrnithopter?3:1);
             uiGraphicTex[custom.first][colorSlot].reset();
             uiGraphic[custom.first][colorSlot]=decorateNewUnitEditorIcon(frame.get(),customMapEditorStar.get());
+        }
+        for(const auto& item : {std::pair<unsigned int,unsigned int>{UI_MapEditor_RaiderQuad,ObjPic_RaiderQuad},
+            {UI_MapEditor_CapacityHarvester,ObjPic_CapacityHarvester},{UI_MapEditor_FastHarvester,ObjPic_FastHarvester},
+            {UI_MapEditor_TameSandworm,ObjPic_TameSandworm},{UI_MapEditor_Slowpost,ObjPic_Slowpost}}) {
+            const bool worm=item.first==UI_MapEditor_TameSandworm,post=item.first==UI_MapEditor_Slowpost;
+            auto frame=getColoredEditorFrame(item.second,colorSlot,post?2:0,worm?5:0,worm?1:post?10:8,worm?9:1);
+            uiGraphicTex[item.first][colorSlot].reset();
+            uiGraphic[item.first][colorSlot]=decorateNewUnitEditorIcon(frame.get(),customMapEditorStar.get());
+        }
+        for(const bool slow:{false,true}) {
+            const auto id=slow?UI_MapEditor_SlowTank:UI_MapEditor_RangedTank;
+            auto base=getColoredEditorFrame(slow?ObjPic_SlowTankBase:ObjPic_RangedTankBase,colorSlot,0,0,8,1);
+            auto gun=getColoredEditorFrame(slow?ObjPic_SlowTankTurret:ObjPic_RangedTankTurret,colorSlot,0,0,8,1);
+            auto frame=combinePictures(base.get(),gun.get(),0,0);
+            uiGraphicTex[id][colorSlot].reset();uiGraphic[id][colorSlot]=decorateNewUnitEditorIcon(frame.get(),customMapEditorStar.get());
         }
         const int fixedTornieGunSlot = tornieGraphicsVisible ? HOUSE_HARKONNEN : colorSlot;
 
@@ -4389,6 +4418,13 @@ void GFXManager::reloadModDependentObjectGraphics() {
                 }
             }
         }
+        if(!gas && tornieGraphicsVisible) {
+            auto asset=openTornieAsset("FlameQuadAtlas.png","unit");auto raw=asset?LoadPNG_RW(asset.get()):nullptr;
+            if(raw) {
+                if(raw->w!=128 || raw->h!=16)throw std::runtime_error("FlameQuadAtlas.png must contain eight 16x16 frames");
+                atlas=sdl2::surface_ptr{SDL_ConvertSurfaceFormat(raw.get(),SDL_PIXELFORMAT_RGBA32,0)};
+            }
+        }
         for(int slot=0;slot<NUM_HOUSE_COLOR_SLOTS;++slot) {
             auto* fallbackSource=objPic[fallback][slot][0].get();
             if(!fallbackSource)fallbackSource=objPic[fallback][HOUSE_HARKONNEN][0].get();
@@ -4419,6 +4455,52 @@ void GFXManager::reloadModDependentObjectGraphics() {
     };
     installSuppliedAtlas(ObjPic_FlameQuad,ObjPic_Quad,"FlameQuadTiles.png",false);
     installSuppliedAtlas(ObjPic_GasInfantry,ObjPic_Trooper,"Gaz_Infantry_sprites.png",true);
+
+    // Complete, editable native-size sheets. Missing artwork uses the vanilla
+    // per-house atlas; portraits keep their original clean artwork.
+    const auto installFallbackSheet=[&](int id,int fallback,const char* filename) {
+        sdl2::surface_ptr raw;
+        if(tornieGraphicsVisible) {
+            auto asset=openTornieAsset(filename,"unit");
+            if(asset)raw=LoadPNG_RW(asset.get());
+        }
+        auto* reference=objPic[fallback][HOUSE_HARKONNEN][0].get();
+        if(raw && (!reference || raw->w!=reference->w || raw->h!=reference->h))
+            throw std::runtime_error(std::string("Fallback sheet dimensions differ from vanilla: ")+filename);
+        for(int slot=0;slot<NUM_HOUSE_COLOR_SLOTS;++slot) {
+            auto* base=objPic[fallback][slot][0].get();if(!base)base=reference;
+            auto image=raw?sdl2::surface_ptr{SDL_ConvertSurfaceFormat(raw.get(),SDL_PIXELFORMAT_RGBA32,0)}:copySurface(base);
+            if(raw)for(int y=0;y<image->h;++y)for(int x=0;x<image->w;++x) {
+                Uint8 r,g,b,a;SDL_GetRGBA(getPixel(image.get(),x,y),image->format,&r,&g,&b,&a);
+                if(!a)continue;
+                if(r==255 && g==0 && b==255){putPixel(image.get(),x,y,0);continue;}
+                constexpr Uint8 red[]={212,180,152,124,88,60,32};
+                for(int shade=0;shade<7;++shade) {
+                    const auto source=palette[PALCOLOR_HARKONNEN+shade];
+                    if((r==source.r && g==source.g && b==source.b) || (r==red[shade] && !g && !b)) {
+                        const auto target=getHouseColorSDL(slot,shade);
+                        putPixel(image.get(),x,y,SDL_MapRGBA(image->format,target.r,target.g,target.b,a));break;
+                    }
+                }
+            }
+            objPic[id][slot][0]=std::move(image);
+            for(int zoom=1;zoom<NUM_ZOOMLEVEL;++zoom)objPic[id][slot][zoom]=scaleSurfaceNearest(objPic[id][slot][0].get(),zoom+1);
+            for(int zoom=0;zoom<NUM_ZOOMLEVEL;++zoom){objPicTex[id][slot][zoom].reset();if(objPic[id][slot][zoom])SDL_SetSurfaceBlendMode(objPic[id][slot][zoom].get(),SDL_BLENDMODE_BLEND);}
+        }
+    };
+    installFallbackSheet(ObjPic_EliteOrnithopter,ObjPic_Ornithopter,"EliteOrnithopter.png");
+    installFallbackSheet(ObjPic_RaiderQuad,ObjPic_Quad,"RaiderQuad.png");
+    installFallbackSheet(ObjPic_RangedTankBase,ObjPic_Tank_Base,"RangedTank-Base.png");
+    installFallbackSheet(ObjPic_RangedTankTurret,ObjPic_Tank_Gun,"RangedTank-Turret.png");
+    installFallbackSheet(ObjPic_SlowTankBase,ObjPic_Tank_Base,"SlowTank-Base.png");
+    installFallbackSheet(ObjPic_SlowTankTurret,ObjPic_Tank_Gun,"SlowTank-Turret.png");
+    installFallbackSheet(ObjPic_Slowpost,ObjPic_GunTurret,"Slowpost.png");
+    installFallbackSheet(ObjPic_CapacityHarvester,ObjPic_Harvester,"Harvester-Capacity.png");
+    installFallbackSheet(ObjPic_FastHarvester,ObjPic_Harvester,"Harvester-Fast.png");
+    installFallbackSheet(ObjPic_TameSandworm,ObjPic_Sandworm,"TameSandworm.png");
+    installFallbackSheet(ObjPic_NapalmRocket,ObjPic_Bullet_LargeRocket,"NapalmRocket.png");
+    installFallbackSheet(ObjPic_SlowRocket,ObjPic_Bullet_MediumRocket,"SlowRocket.png");
+
 
 }
 
@@ -4538,7 +4620,7 @@ void GFXManager::rebuildModDependentEditorGraphics() {
                                      int frameX, int frameY, int framesX,
                                      int framesY) -> sdl2::surface_ptr {
         const bool forceCustomRemap = tornieGraphicsVisible
-            && objPicID!=ObjPic_FlameQuad && objPicID!=ObjPic_GasInfantry
+            && objPicID!=ObjPic_FlameQuad && objPicID!=ObjPic_GasInfantry && objPicID<ObjPic_EliteOrnithopter
             && (colorSlot == HOUSE_CUSTOM || isCustomHouseColorSlot(colorSlot));
         SDL_Surface* atlas = forceCustomRemap
             ? nullptr
@@ -4635,11 +4717,27 @@ void GFXManager::rebuildModDependentEditorGraphics() {
 
         for(const auto& custom : {std::pair<unsigned int,unsigned int>{UI_MapEditor_FlameQuad,ObjPic_FlameQuad},
                                   {UI_MapEditor_GasInfantry,ObjPic_GasInfantry},
-                                  {UI_MapEditor_FlameTrooper,ObjPic_Trooper}}) {
-            const bool infantry=custom.first!=UI_MapEditor_FlameQuad;
-            auto frame=getRuntimeEditorFrame(custom.second,colorSlot,0,0,infantry?4:8,infantry?3:1);
+                                  {UI_MapEditor_FlameTrooper,ObjPic_Trooper},
+                                  {UI_MapEditor_EliteOrnithopter,ObjPic_EliteOrnithopter}}) {
+            const bool infantry=custom.first==UI_MapEditor_GasInfantry || custom.first==UI_MapEditor_FlameTrooper;
+            auto frame=getRuntimeEditorFrame(custom.second,colorSlot,0,0,infantry?4:8,infantry || custom.first==UI_MapEditor_EliteOrnithopter?3:1);
             uiGraphicTex[custom.first][colorSlot].reset();
             uiGraphic[custom.first][colorSlot]=decorateNewUnitEditorIcon(frame.get(),customStar.get());
+        }
+        for(const auto& item : {std::pair<unsigned int,unsigned int>{UI_MapEditor_RaiderQuad,ObjPic_RaiderQuad},
+            {UI_MapEditor_CapacityHarvester,ObjPic_CapacityHarvester},{UI_MapEditor_FastHarvester,ObjPic_FastHarvester},
+            {UI_MapEditor_TameSandworm,ObjPic_TameSandworm},{UI_MapEditor_Slowpost,ObjPic_Slowpost}}) {
+            const bool worm=item.first==UI_MapEditor_TameSandworm,post=item.first==UI_MapEditor_Slowpost;
+            auto frame=getRuntimeEditorFrame(item.second,colorSlot,post?2:0,worm?5:0,worm?1:post?10:8,worm?9:1);
+            uiGraphicTex[item.first][colorSlot].reset();
+            uiGraphic[item.first][colorSlot]=decorateNewUnitEditorIcon(frame.get(),customStar.get());
+        }
+        for(const bool slow:{false,true}) {
+            const auto id=slow?UI_MapEditor_SlowTank:UI_MapEditor_RangedTank;
+            auto base=getRuntimeEditorFrame(slow?ObjPic_SlowTankBase:ObjPic_RangedTankBase,colorSlot,0,0,8,1);
+            auto gun=getRuntimeEditorFrame(slow?ObjPic_SlowTankTurret:ObjPic_RangedTankTurret,colorSlot,0,0,8,1);
+            auto frame=combinePictures(base.get(),gun.get(),0,0);
+            uiGraphicTex[id][colorSlot].reset();uiGraphic[id][colorSlot]=decorateNewUnitEditorIcon(frame.get(),customStar.get());
         }
         const int fixedTornieGunSlot = tornieGraphicsVisible ? HOUSE_HARKONNEN : colorSlot;
         for(const unsigned int squadID : {UI_MapEditor_Infantry5, UI_MapEditor_Troopers5}) {

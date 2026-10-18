@@ -95,7 +95,7 @@ void RocketTurret::attack() {
             }
         } else {
             // MULTIPLAYER-SAFE: Track turret rocket firing
-            if(pObject->getItemID() == Unit_Ornithopter) {
+            if(isOrnithopterUnit(pObject->getItemID())) {
                 currentGame->combatStats.rocketTurretFiresOnOrni++;
                 currentGame->combatStats.turretRocketsSpawned++;
             }
@@ -111,7 +111,7 @@ void RocketTurret::attack() {
         }
     } else if((weaponTimer != 0) && (target.getObjPointer() != nullptr)) {
         // MULTIPLAYER-SAFE: Track when weapon timer blocks firing
-        if(target.getObjPointer()->getItemID() == Unit_Ornithopter) {
+        if(isOrnithopterUnit(target.getObjPointer()->getItemID())) {
             currentGame->combatStats.rocketTurretFireBlocked++;
         }
     }

@@ -1,0 +1,132 @@
+{
+  "cell": [
+    16,
+    16
+  ],
+  "columns": 8,
+  "rows": 1,
+  "angles": [
+    "E",
+    "NE",
+    "N",
+    "NW",
+    "W",
+    "SW",
+    "S",
+    "SE"
+  ],
+  "frames": [
+    {
+      "direction": 0,
+      "sourceView": 2,
+      "anchor": [
+        1,
+        2,
+        16,
+        15
+      ],
+      "offset": [
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 1,
+      "sourceView": 1,
+      "anchor": [
+        0,
+        1,
+        16,
+        16
+      ],
+      "offset": [
+        -1,
+        0
+      ]
+    },
+    {
+      "direction": 2,
+      "sourceView": 0,
+      "anchor": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "offset": [
+        -2,
+        0
+      ]
+    },
+    {
+      "direction": 3,
+      "sourceView": 1,
+      "anchor": [
+        0,
+        1,
+        16,
+        16
+      ],
+      "offset": [
+        -1,
+        0
+      ]
+    },
+    {
+      "direction": 4,
+      "sourceView": 2,
+      "anchor": [
+        0,
+        2,
+        15,
+        15
+      ],
+      "offset": [
+        -1,
+        0
+      ]
+    },
+    {
+      "direction": 5,
+      "sourceView": 3,
+      "anchor": [
+        0,
+        1,
+        16,
+        16
+      ],
+      "offset": [
+        -2,
+        0
+      ]
+    },
+    {
+      "direction": 6,
+      "sourceView": 4,
+      "anchor": [
+        1,
+        2,
+        15,
+        15
+      ],
+      "offset": [
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 7,
+      "sourceView": 3,
+      "anchor": [
+        0,
+        1,
+        16,
+        16
+      ],
+      "offset": [
+        0,
+        0
+      ]
+    }
+  ]
+}

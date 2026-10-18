@@ -679,7 +679,7 @@ FixPoint RebelHarvester::extractSpice(FixPoint extractionSpeed)
 
 void RebelHarvester::setSpeeds()
 {
-    FixPoint speed = getMaxSpeed();
+    FixPoint speed = getMaxSpeed() * getMovementSpeedFactor();
 
     if(isBadlyDamaged()) {
         speed *= HEAVILYDAMAGEDSPEEDMULTIPLIER;

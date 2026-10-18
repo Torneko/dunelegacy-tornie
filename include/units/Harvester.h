@@ -24,11 +24,12 @@ class Harvester final : public TrackedUnit
 {
 public:
 
-    explicit Harvester(House* newOwner);
-    explicit Harvester(InputStream& stream);
-    void init();
+    explicit Harvester(House* newOwner, int unitType = Unit_Harvester);
+    explicit Harvester(InputStream& stream, int unitType = Unit_Harvester);
+    void init(int unitType);
     virtual ~Harvester();
 
+    int getSpiceCapacity() const { return itemID == Unit_CapacityHarvester ? HARVESTERMAXSPICE * 3 / 2 : HARVESTERMAXSPICE; }
     void save(OutputStream& stream) const override;
 
     void blitToScreen() override;

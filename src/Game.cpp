@@ -352,7 +352,7 @@ bool Game::canPlayerControlHouse(const House* playerHouse, const House* owner) c
     if(!playerHouse || !owner)return false;
     if(playerHouse==owner)return true;
     if(coopContext)return coop::canControlHouse(*coopContext,playerHouse->getHouseID(),owner->getHouseID());
-    return gameType==GameType::CustomMultiplayer && gameInitSettings.getGameOptions().alliedControl
+    return (gameType==GameType::CustomMultiplayer || gameType==GameType::CustomGame) && gameInitSettings.getGameOptions().alliedControl
         && playerHouse->getTeamID()==owner->getTeamID();
 }
 
@@ -360,7 +360,7 @@ bool Game::canBuildOnAlliedLand(const House* builderHouse,int landHouse) const {
     if(!builderHouse || landHouse<0 || landHouse>=NUM_HOUSES)return false;
     if(coopContext)return coop::canBuildOnAlliedLand(*coopContext,builderHouse->getHouseID(),landHouse);
     const auto* landOwner=getHouse(landHouse);
-    return gameType==GameType::CustomMultiplayer && gameInitSettings.getGameOptions().alliedBuilding
+    return (gameType==GameType::CustomMultiplayer || gameType==GameType::CustomGame) && gameInitSettings.getGameOptions().alliedBuilding
         && landOwner && builderHouse->getTeamID()==landOwner->getTeamID();
 }
 
@@ -3731,7 +3731,7 @@ void Game::selectAllOrnithopters()
 
     for(UnitBase* pUnit : unitList) {
         if((canControlHouse(pUnit->getOwner())) &&
-           (pUnit->getItemID() == Unit_Ornithopter) &&
+           (isOrnithopterUnit(pUnit->getItemID())) &&
            pUnit->isRespondable()) {
             ornithopterIDs.insert(pUnit->getObjectID());
             summedPosition += pUnit->getLocation();

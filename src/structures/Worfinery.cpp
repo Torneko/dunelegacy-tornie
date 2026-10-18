@@ -36,6 +36,7 @@
 
 Worfinery::Worfinery(House* newOwner) : BuilderBase(newOwner) {
     Worfinery::init();
+    tameWormOffer=currentGame->getGameInitSettings().getGameOptions().chaosMode && currentGame->randomGen.rand(0,9)==0;
 
     setHealth(getMaxHealth());
 }
@@ -59,6 +60,7 @@ Worfinery::Worfinery(InputStream& stream) : BuilderBase(stream) {
     } else {
         startAnimate();
     }
+    if(currentGame->getLoadedSavegameVersion()>=9836)tameWormOffer=stream.readBool();
     firstRun = false;
 }
 
@@ -105,6 +107,7 @@ void Worfinery::save(OutputStream& stream) const {
     stream.writeBool(extractingSpice);
     harvester.save(stream);
     stream.writeUint32(bookings);
+    stream.writeBool(tameWormOffer);
 }
 
 ObjectInterface* Worfinery::getInterfaceContainer() {

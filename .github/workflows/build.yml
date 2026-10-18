@@ -199,7 +199,7 @@ jobs:
             if ($process.ExitCode -ne 0) { Get-Content -LiteralPath $log -Tail 120 }
             if ($process.ExitCode -ne 0 -or -not (Select-String -LiteralPath $log -Pattern "MOD SMOKE COMPLETE:")) { throw "Installed $language mod runtime checks failed." }
             if (-not (Select-String -LiteralPath $log -Pattern "ACHIEVEMENT SMOKE COMPLETE:")) { throw "Installed $language achievement checks failed." }
-            foreach ($check in @(@("RELEASE 543 PASS:", 7), @("RELEASE 543 ALLIANCES PASS:", 7), @("RELEASE 543 UNITS PASS:", 6), @("RELEASE 543 GRAPHICS PASS:", 6), @("RELEASE 543 NEUTRAL SABOTEUR PASS:", 3), @("RELEASE 543 EDITOR TERRAIN PASS:", 6), @("RELEASE 543 FLAME PORTRAITS PASS:", 3))) {
+            foreach ($check in @(@("RELEASE 543 PASS:", 7), @("RELEASE 543 ALLIANCES PASS:", 7), @("RELEASE 543 UNITS PASS:", 6), @("RELEASE 543 GRAPHICS PASS:", 6), @("RELEASE 543 NEUTRAL SABOTEUR PASS:", 3), @("RELEASE 543 EDITOR TERRAIN PASS:", 6), @("RELEASE 543 FLAME PORTRAITS PASS:", 3), @("RELEASE 543 EXPANSION PASS:", 7))) {
               if ((Select-String -LiteralPath $log -Pattern $check[0]).Count -ne $check[1]) { throw "Installed $language 543 checks failed: $($check[0])" }
             }
             if (Select-String -LiteralPath "../src/main.cpp" -Pattern 'parameter == "--verify-startup"') {
@@ -225,9 +225,9 @@ jobs:
             run = [long]"${{ github.run_id }}"
             engineAndNetworkTests = $true
             installedRuntimeChecks = @("fr", "en")
-            release543Checks = @("building-sales", "normal-multiplayer-alliances", "flame-and-gas-units", "magenta-free-zooms", "house-colours-and-blue-stars", "neutral-saboteur-tier-seven", "editor-terrain-blue-stars", "original-flame-squad-portraits", "precise-close-flame-quad", "sales-destruction-and-concrete", "sale-button-after-upgrade")
-            networkProtocol = 17
-            saveVersion = 9835
+            release543Checks = @("building-sales", "normal-multiplayer-alliances", "flame-and-gas-units", "magenta-free-zooms", "house-colours-and-blue-stars", "neutral-saboteur-tier-seven", "editor-terrain-blue-stars", "original-flame-squad-portraits", "precise-close-flame-quad", "sales-destruction-and-concrete", "sale-button-after-upgrade", "easy-sales-75-percent", "extended-fallback-units", "movement-slowing", "saved-chaos-worm-offer", "elite-ornithopter", "seventy-achievements", "palace-napalm-and-saved-hazards")
+            networkProtocol = 18
+            saveVersion = 9836
             menuStartupChecks = @("fr", "en")
             videoOptionsChecks = @("fr", "en")
             package = $package.Name

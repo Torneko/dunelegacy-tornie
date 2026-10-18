@@ -65,7 +65,8 @@ protected:
         sellButton.setVisible(currentGame->getGameInitSettings().getGameOptions().sellingBuildings);
         sellButton.setEnabled(structure->canSell() && currentGame->canControlHouse(structure->getOwner()));
         sellButton.setTooltipText((settings.general.language=="fr" ? "Vendre : " : "Sell: ")
-            +std::to_string(structure->getSaleRefund())+(settings.general.language=="fr" ? " crédits (50 %)" : " credits (50%)"));
+            +std::to_string(structure->getSaleRefund())+(settings.general.language=="fr" ? " crédits" : " credits")+" ("
+            +std::to_string(currentGame->getGameInitSettings().isEasyModeHouse(structure->getOwner()->getHouseID())?75:50)+" %)");
     }
     void OnRepair() {
         ObjectBase* pObject = currentGame->getObjectManager().getObject(objectID);

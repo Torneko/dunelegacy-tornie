@@ -54,7 +54,7 @@ public:
     inline int getTeamID() const { return teamID; }
 
     inline bool isAI() const { return ai; }
-    inline bool isAlive() const { return (teamID == 0) || !(((numStructures - numItem[Structure_Wall]) <= 0) && (((numUnits - numItem[Unit_Carryall] - numItem[Unit_ChemicalCarryall] - numItem[Unit_Harvester] - numItem[Unit_RebelHarvester] - numItem[Unit_Frigate] - numItem[Unit_Sandworm]) <= 0))); }
+    inline bool isAlive() const { return (teamID == 0) || !(((numStructures - numItem[Structure_Wall]) <= 0) && (((numUnits - numItem[Unit_Carryall] - numItem[Unit_ChemicalCarryall] - numItem[Unit_Harvester] - numItem[Unit_RebelHarvester] - numItem[Unit_CapacityHarvester] - numItem[Unit_FastHarvester] - numItem[Unit_Frigate] - numItem[Unit_Sandworm]) <= 0))); }
 
     inline bool hasCarryalls() const { return (numItem[Unit_Carryall] + numItem[Unit_ChemicalCarryall] > 0); }
     inline bool hasBarracks() const { return (numItem[Structure_Barracks] > 0); }
@@ -135,7 +135,7 @@ public:
     */
     inline bool isGroundUnitLimitReached() const {
         if (maxUnits == 0) return false;  // 0 = unlimited units
-        int numGroundUnit = numUnits - numItem[Unit_Soldier] - numItem[Unit_Trooper] - numItem[Unit_Carryall] - numItem[Unit_ChemicalCarryall] - numItem[Unit_Ornithopter];
+        int numGroundUnit = numUnits - numItem[Unit_Soldier] - numItem[Unit_Trooper] - numItem[Unit_Carryall] - numItem[Unit_ChemicalCarryall] - (numItem[Unit_Ornithopter] + numItem[Unit_EliteOrnithopter]);
         return (numGroundUnit + (numItem[Unit_Soldier]+2)/3 + (numItem[Unit_Trooper]+2)/3  >= maxUnits);
     };
 
@@ -145,7 +145,7 @@ public:
     */
     inline bool isInfantryUnitLimitReached() const {
         if (maxUnits == 0) return false;  // 0 = unlimited units
-        int numGroundUnit = numUnits - numItem[Unit_Soldier] - numItem[Unit_Trooper] - numItem[Unit_Carryall] - numItem[Unit_ChemicalCarryall] - numItem[Unit_Ornithopter];
+        int numGroundUnit = numUnits - numItem[Unit_Soldier] - numItem[Unit_Trooper] - numItem[Unit_Carryall] - numItem[Unit_ChemicalCarryall] - (numItem[Unit_Ornithopter] + numItem[Unit_EliteOrnithopter]);
         return (numGroundUnit + numItem[Unit_Soldier]/3 + numItem[Unit_Trooper]/3  >= maxUnits);
     };
 
@@ -155,7 +155,7 @@ public:
     */
     inline bool isAirUnitLimitReached() const {
         if (maxUnits == 0) return false;  // 0 = unlimited units
-        return (numItem[Unit_Carryall] + numItem[Unit_ChemicalCarryall] + numItem[Unit_Ornithopter] >= 11*std::max(maxUnits,25)/25);
+        return (numItem[Unit_Carryall] + numItem[Unit_ChemicalCarryall] + (numItem[Unit_Ornithopter] + numItem[Unit_EliteOrnithopter]) >= 11*std::max(maxUnits,25)/25);
     }
 
     /**
@@ -164,7 +164,7 @@ public:
     */
     inline bool isHarvesterLimitReached() const {
         if (maxHarvesters == 0) return false;  // 0 = unlimited harvesters
-        return ((numItem[Unit_Harvester] + numItem[Unit_RebelHarvester]) >= maxHarvesters);
+        return ((numItem[Unit_Harvester] + numItem[Unit_RebelHarvester] + numItem[Unit_CapacityHarvester] + numItem[Unit_FastHarvester]) >= maxHarvesters);
     }
 
     inline Choam& getChoam() { return choam; };
@@ -231,7 +231,7 @@ public:
 
 protected:
     int factionID = HOUSE_INVALID; ///< Reconstructed from game metadata, not serialized.
-    void decrementHarvesters();
+    void decrementHarvesters(int itemID = Unit_Harvester);
 
     std::list<std::unique_ptr<Player> > players;        ///< List of associated players that control this house
 

@@ -16,6 +16,8 @@
  */
 
 #include <Bullet.h>
+#include <units/UnitBase.h>
+#include <structures/StructureBase.h>
 
 #include <globals.h>
 
@@ -195,19 +197,21 @@ void Bullet::init()
             graphic = pGFXManager->getObjPic(ObjPic_Bullet_MediumRocket, houseID);
         } break;
 
+                case Bullet_Slow:
                 case Bullet_Heal: {
             damageRadius = 0;
             speed = 19.2_fix;
             detonationTimer = -1;
             numFrames = 16;
-            graphic = pGFXManager->getObjPic(ObjPic_Bullet_MediumRocket, houseID);
+            graphic = pGFXManager->getObjPic(bulletID==Bullet_Slow?ObjPic_SlowRocket:ObjPic_Bullet_MediumRocket, houseID);
         } break;
+case Bullet_Napalm:
 case Bullet_LargeRocket: {
             damageRadius = TILESIZE;
             speed = 32.0_fix;
             detonationTimer = -1;
             numFrames = 16;
-            graphic = pGFXManager->getObjPic(ObjPic_Bullet_LargeRocket, houseID);
+            graphic = pGFXManager->getObjPic(bulletID==Bullet_Napalm?ObjPic_NapalmRocket:ObjPic_Bullet_LargeRocket, houseID);
         } break;
 
         case Bullet_Rocket: {
@@ -397,7 +401,7 @@ void Bullet::update()
         // Carryalls are NOT tracked - they use static scattered destination
         ObjectBase* pTarget = target.getObjPointer();
 
-        if(pTarget != nullptr && pTarget->getItemID() == Unit_Ornithopter) {
+        if(pTarget != nullptr && isOrnithopterUnit(pTarget->getItemID())) {
             // Track the moving ornithopter's current position (for both steering AND proximity check)
             destination = pTarget->getCenterPoint();
         }
@@ -434,7 +438,7 @@ void Bullet::update()
         ySpeed = speed * -FixPoint::sin(Deg256ToRad(angle));
 
         drawnAngle = lround(numFrames*angle/256) % numFrames;
-    } else if(bulletID == Bullet_TurretRocket || bulletID == Bullet_Heal) {
+    } else if(bulletID == Bullet_TurretRocket || bulletID == Bullet_Heal || bulletID == Bullet_Slow) {
 
         // Dynasty: Turret rockets actively track their moving target
         ObjectBase* pTarget = target.getObjPointer();
@@ -479,6 +483,15 @@ void Bullet::update()
     }
 
 
+    if(bulletID==Bullet_Napalm) {
+        const Coord position(lround(realX),lround(realY));
+        const auto* launch=dynamic_cast<const StructureBase*>(currentGame->getObjectManager().getObject(shooterID));
+        const Coord tile(position.x/TILESIZE,position.y/TILESIZE);
+        const bool insideLaunch=launch && tile.x>=launch->getLocation().x && tile.y>=launch->getLocation().y
+            && tile.x<launch->getLocation().x+launch->getStructureSizeX() && tile.y<launch->getLocation().y+launch->getStructureSizeY();
+        if(!insideLaunch && currentGameMap->tileExists(tile))
+            currentGame->getExplosionList().push_back(new Explosion(Explosion_FlameImpact,position,owner->getHouseID(),shooterID,3,TILESIZE/2));
+    }
     FixPoint oldDistanceToDestination = distanceFrom(realX, realY, destination.x, destination.y);
 
     realX += xSpeed;  //keep the bullet moving by its current speeds
@@ -565,7 +578,7 @@ void Bullet::update()
                 // No timer check needed - they should always hit their target on proximity
                 // MULTIPLAYER-SAFE: Track proximity detonation
                 ObjectBase* pTarget = target.getObjPointer();
-                if(pTarget && pTarget->getItemID() == Unit_Ornithopter) {
+                if(pTarget && isOrnithopterUnit(pTarget->getItemID())) {
                     currentGame->combatStats.turretRocketsProximityDetonated++;
                 }
                 realX = destination.x;
@@ -593,6 +606,13 @@ void Bullet::destroy()
     int houseID = owner->getHouseID();
 
     switch(bulletID) {
+        case Bullet_Slow: {
+            // The impact cloud can hit allies too, including a forced target.
+            for(auto* unit:unitList)if(unit->getHealth()>0
+                && distanceFrom(unit->getCenterPoint(),position)<=TILESIZE/2)unit->applySlow();
+            soundPlayer->playSoundAt(Sound_ExplosionGas,position);
+            currentGame->getExplosionList().push_back(new Explosion(Explosion_Gas,position,houseID));
+        } break;
         case Bullet_DRocket: {
             currentGameMap->damage(shooterID, owner, position, bulletID, damage, damageRadius, airAttack);
             soundPlayer->playSoundAt(Sound_ExplosionGas, position);
@@ -609,7 +629,17 @@ void Bullet::destroy()
             soundPlayer->playSoundAt(Sound_ExplosionGas, position);
             currentGame->getExplosionList().push_back(new Explosion(Explosion_Gas, position, houseID));
         } break;
+case Bullet_Napalm:
 case Bullet_LargeRocket: {
+            if(bulletID==Bullet_Napalm) {
+                soundPlayer->playSoundAt(Sound_ExplosionLarge,position);
+                for(int y=-1;y<=1;++y)for(int x=-1;x<=1;++x) {
+                    const Coord fire(position.x+x*TILESIZE,position.y+y*TILESIZE);
+                    currentGameMap->damage(shooterID,owner,fire,Bullet_Flame,damage,TILESIZE/2,false);
+                    currentGame->getExplosionList().push_back(new Explosion(Explosion_FlameImpact,fire,houseID,shooterID,6,TILESIZE/2));
+                }
+                break;
+            }
             AchievementEvents::beginMissileImpact(owner, shooterID);
             soundPlayer->playSoundAt(Sound_ExplosionLarge, position);
 

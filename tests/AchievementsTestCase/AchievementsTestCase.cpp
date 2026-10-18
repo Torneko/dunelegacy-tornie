@@ -141,7 +141,7 @@ TEST_CASE_METHOD(Fixture,"A damaged or newer profile is preserved rather than ov
     std::ifstream in(path);const std::string text(std::istreambuf_iterator<char>(in),{});REQUIRE(text.find("Protected=original")!=std::string::npos);
 }
 TEST_CASE_METHOD(Fixture,"Catalog ships every proposed achievement and notifications fire once","[achievements]"){
-    REQUIRE(manager.definitions().size()==68);REQUIRE(manager.unlock("PACIFISM"));REQUIRE_FALSE(manager.unlock("PACIFISM"));
+    REQUIRE(manager.definitions().size()==70);REQUIRE(manager.unlock("PACIFISM"));REQUIRE_FALSE(manager.unlock("PACIFISM"));
     REQUIRE(manager.takeNotification()=="PACIFISM");REQUIRE(manager.takeNotification().empty());REQUIRE_FALSE(manager.unlock("UNKNOWN"));
 }
 TEST_CASE_METHOD(Fixture,"Extra factions complete a campaign without replacing the eight required houses","[achievements]"){
@@ -363,4 +363,20 @@ TEST_CASE_METHOD(Fixture,"Building sales unlock once and retain replay-safe life
     REQUIRE(resumed.unlocked("SELL_FIRST_BUILDING"));
     info.enabled=false;resumed.begin(info);resumed.sold(1000);
     REQUIRE(resumed.statistic("StructuresSold")==2);
+}
+
+TEST_CASE_METHOD(Fixture,"ArcaKev campaign awards separate full and Lite progress and survive reload","[achievements]") {
+    info.mode=Mode::Campaign;info.mission=22;info.mod="Jericho";
+    const char* houses[]={"Harkonnen","Atreides","Ordos","Fremen","Sardaukar","Mercenary","Kleshmersh","Wildspade","Rebels","Neutral","Tharpique","Corruptique"};
+    for(auto house:houses){info.house=house;manager.begin(info);manager.finish(true,false);}
+    REQUIRE_FALSE(manager.unlocked("ARCAKEV_MASTER"));
+    info.mod="ArcaKev";
+    for(int i=0;i<11;++i){info.house=houses[i];manager.begin(info);manager.finish(true,false);}
+    REQUIRE_FALSE(manager.unlocked("ARCAKEV_MASTER"));
+    info.house=houses[11];manager.begin(info);manager.finish(true,false);REQUIRE(manager.unlocked("ARCAKEV_MASTER"));
+    REQUIRE_FALSE(manager.unlocked("ARCAKEV_LITE_MASTER"));info.mod="ArcaKevLite";
+    for(int i=0;i<6;++i){info.house=houses[i];manager.begin(info);manager.finish(true,false);}
+    REQUIRE(manager.unlocked("ARCAKEV_LITE_MASTER"));REQUIRE(manager.save());
+    AchievementManager loaded;REQUIRE(loaded.configure("",(dir/"achievements.ini").u8string()));
+    REQUIRE(loaded.unlocked("ARCAKEV_MASTER"));REQUIRE(loaded.unlocked("ARCAKEV_LITE_MASTER"));
 }

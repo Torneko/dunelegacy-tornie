@@ -28,26 +28,26 @@
 #include <SoundPlayer.h>
 
 
-Tank::Tank(House* newOwner) : TankBase(newOwner) {
-    Tank::init();
+Tank::Tank(House* newOwner, int unitType) : TankBase(newOwner) {
+    Tank::init(unitType);
 
     setHealth(getMaxHealth());
 }
 
-Tank::Tank(InputStream& stream) : TankBase(stream) {
-    Tank::init();
+Tank::Tank(InputStream& stream, int unitType) : TankBase(stream) {
+    Tank::init(unitType);
 }
 
-void Tank::init() {
-    itemID = Unit_Tank;
+void Tank::init(int unitType) {
+    itemID = unitType;
     owner->incrementUnits(itemID);
 
     numWeapons = 1;
-    bulletType = Bullet_ShellMedium;
+    bulletType = itemID == Unit_SlowTank ? Bullet_Slow : Bullet_ShellMedium;
 
-    graphicID = ObjPic_Tank_Base;
+    graphicID = itemID == Unit_RangedTank ? ObjPic_RangedTankBase : itemID == Unit_SlowTank ? ObjPic_SlowTankBase : ObjPic_Tank_Base;
     graphic = pGFXManager->getObjPic(graphicID,getOwner()->getHouseID());
-    gunGraphicID = ObjPic_Tank_Gun;
+    gunGraphicID = itemID == Unit_RangedTank ? ObjPic_RangedTankTurret : itemID == Unit_SlowTank ? ObjPic_SlowTankTurret : ObjPic_Tank_Gun;
     turretGraphic = pGFXManager->getObjPic(gunGraphicID,getOwner()->getHouseID());
 
     numImagesX = NUM_ANGLES;
@@ -56,6 +56,11 @@ void Tank::init() {
 
 Tank::~Tank() = default;
 
+
+bool Tank::canAttack(const ObjectBase* object) const {
+    if(itemID==Unit_SlowTank && (!object || object->isAStructure() || object->isAFlyingUnit()))return false;
+    return TankBase::canAttack(object);
+}
 
 void Tank::blitToScreen() {
     int x = screenborder->world2screenX(realX);
@@ -98,5 +103,5 @@ void Tank::destroy() {
 }
 
 void Tank::playAttackSound() {
-    soundPlayer->playSoundAt(Sound_ExplosionSmall,location);
+    soundPlayer->playSoundAt(itemID==Unit_SlowTank?Sound_RocketSmall:Sound_ExplosionSmall,location);
 }

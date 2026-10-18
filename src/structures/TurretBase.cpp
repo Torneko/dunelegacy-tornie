@@ -77,7 +77,7 @@ void TurretBase::updateStructureSpecificStuff() {
     if(target && (target.getObjPointer() != nullptr)) {
         if(!canAttack(target.getObjPointer()) || !targetInWeaponRange()) {
             // MULTIPLAYER-SAFE: Track when turret loses ornithopter target
-            if(getItemID() == Structure_RocketTurret && target.getObjPointer()->getItemID() == Unit_Ornithopter) {
+            if(getItemID() == Structure_RocketTurret && isOrnithopterUnit(target.getObjPointer()->getItemID())) {
                 currentGame->combatStats.rocketTurretLosesOrniTarget++;
             }
             
@@ -124,7 +124,7 @@ void TurretBase::updateStructureSpecificStuff() {
                 }
                 
                 // MULTIPLAYER-SAFE: Track firing opportunities for rocket turrets vs ornithopters
-                if(getItemID() == Structure_RocketTurret && target.getObjPointer()->getItemID() == Unit_Ornithopter) {
+                if(getItemID() == Structure_RocketTurret && isOrnithopterUnit(target.getObjPointer()->getItemID())) {
                     if(shouldFire) {
                         currentGame->combatStats.orniInRangeCorrectAngle++;
                     } else {
@@ -153,7 +153,7 @@ void TurretBase::updateStructureSpecificStuff() {
         const ObjectBase* newTarget = findTarget();
         
         // MULTIPLAYER-SAFE: Track stats unconditionally (doesn't affect game logic)
-        if(getItemID() == Structure_RocketTurret && newTarget && newTarget->getItemID() == Unit_Ornithopter) {
+        if(getItemID() == Structure_RocketTurret && newTarget && isOrnithopterUnit(newTarget->getItemID())) {
             currentGame->combatStats.rocketTurretTargetsOrni++;
         }
         

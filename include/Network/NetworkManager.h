@@ -75,7 +75,8 @@
 // Version 5: Cooperative campaign result/readiness and stage transitions
 // Version 9: Doublefinery's deterministic footprint is five by two.
 // Version 10: Host relay fallback and authenticated logical peer identities.
-#define NETWORK_PROTOCOL_VERSION            17
+// Version 18: 75% Easy Mode sales, gas range and Elite Ornithopter.
+#define NETWORK_PROTOCOL_VERSION            18
 
 /**
  * Reject an incompatible config-hash handshake and dispatch its disconnect cause.

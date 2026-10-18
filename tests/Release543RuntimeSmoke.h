@@ -8,10 +8,21 @@
 #include <misc/IMemoryStream.h>
 
 #include "Release543UnitsSmoke.h"
+#include "Release543ExpansionSmoke.h"
+#include "Release543OptionsSmoke.h"
 
 inline void verifyRelease543Alliances(const std::string& output,const std::string& mod) {
     auto require=[](bool ok,const char* message){if(!ok)throw std::runtime_error(std::string("Release 543 alliances: ")+message);};
     const HOUSETYPE houses[]={getRuntimeHouseForIdentity(HOUSE_ATREIDES),getRuntimeHouseForIdentity(HOUSE_HARKONNEN),getRuntimeHouseForIdentity(HOUSE_ORDOS)};
+    {
+        auto init=chaosSmokeInit(getRuntimeHouseForIdentity(HOUSE_ATREIDES),effectiveGameOptions);
+        auto lobby=std::make_unique<CustomGamePlayers>(init,true);
+        require(lobby->alliedControlCheckbox.isVisible() && lobby->alliedControlCheckbox.isEnabled(),"custom lobby hides allied control");
+        require(lobby->alliedBuildingCheckbox.isVisible() && lobby->alliedBuildingCheckbox.isEnabled(),"custom lobby hides allied land sharing");
+        lobby->alliedControlCheckbox.setChecked(true);lobby->alliedBuildingCheckbox.setChecked(true);
+        lobby->addAllPlayersToGameInitSettings();
+        require(lobby->gameInitSettings.getGameOptions().alliedControl && lobby->gameInitSettings.getGameOptions().alliedBuilding,"custom lobby lost alliance options");
+    }
     for(int flags=0;flags<4;++flags) {
         auto options=effectiveGameOptions;options.chaosMode=false;options.sellingBuildings=true;
         options.alliedControl=(flags&1)!=0;options.alliedBuilding=(flags&2)!=0;
@@ -28,6 +39,12 @@ inline void verifyRelease543Alliances(const std::string& output,const std::strin
         require(!game->canPlayerControlHouse(owner,enemy),"enemy control allowed");
         require(game->canBuildOnAlliedLand(owner,houses[1])==options.alliedBuilding,"allied construction flag ignored");
         require(!game->canBuildOnAlliedLand(owner,houses[2]),"enemy construction allowed");
+        const auto originalType=game->gameType;game->gameType=GameType::CustomGame;
+        require(game->canPlayerControlHouse(owner,ally)==options.alliedControl && game->canBuildOnAlliedLand(owner,houses[1])==options.alliedBuilding,"custom game ignores alliance rules");
+        require(!game->canPlayerControlHouse(owner,enemy) && !game->canBuildOnAlliedLand(owner,houses[2]),"custom game grants enemy permissions");
+        game->gameType=GameType::Campaign;
+        require(!game->canPlayerControlHouse(owner,ally) && !game->canBuildOnAlliedLand(owner,houses[1]),"custom alliance rules escaped into solo campaign");
+        game->gameType=originalType;
         auto* silo=ally->placeStructure(NONE_ID,Structure_Silo,12,12,true,true);require(silo,"allied silo placement");
         const auto id=silo->getObjectID();const int ownFunds=owner->getCredits(),allyFunds=ally->getCredits(),refund=silo->getSaleRefund();
         Command sale(pLocalPlayer->getPlayerID(),CMD_STRUCTURE_SELL,id);sale.executeCommand();
@@ -51,8 +68,9 @@ inline void verifyRelease543Alliances(const std::string& output,const std::strin
 
 inline void verifyRelease543Rules(const std::string& output,const std::string& mod) {
     auto require=[](bool ok,const std::string& message){if(!ok)throw std::runtime_error("Release 543: "+message);};
+    Release543OptionsFixture::verify(output,mod);
     const auto defaults=effectiveGameOptions;
-    require(defaults.sellingBuildings==(mod=="Tornie"||mod=="TornieLite"||mod=="ArcaKev"||mod=="ArcaKevLite"),"selling default for "+mod);
+    require(defaults.sellingBuildings==(mod!="vanilla"),"selling default for "+mod);
     require(defaults.showHarvesterCount==(mod!="Tornie"&&mod!="TornieLite"),"harvester overlay default for "+mod);
     auto options=defaults;options.sellingBuildings=true;options.alliedControl=true;options.alliedBuilding=true;
     auto init=chaosSmokeInit(getRuntimeHouseForIdentity(HOUSE_ATREIDES),options);
@@ -131,5 +149,6 @@ inline void verifyRelease543Rules(const std::string& output,const std::string& m
     game.reset();currentGame=nullptr;pLocalHouse=nullptr;pLocalPlayer=nullptr;
     verifyRelease543Alliances(output,mod);
     verifyRelease543Units(output,mod);
+    verifyRelease543Expansion(output,mod);
     SDL_Log("RELEASE 543 PASS: %s, rule defaults, 50%% selling, no-storage funds, evacuation, power, command replay and save/reload",mod.c_str());
 }

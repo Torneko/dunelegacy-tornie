@@ -82,7 +82,7 @@ void ChaosFactory::save(OutputStream& stream) const {
 
 bool ChaosFactory::isOfferCandidate(Uint32 candidate) const {
     if(currentGame == nullptr || !isUnit(candidate)
-       || candidate == Unit_Sandworm
+       || isSandwormUnit(candidate)
        || candidate == Unit_Saboteur
        || candidate == Unit_Soldier
        || candidate == Unit_Infantry5
