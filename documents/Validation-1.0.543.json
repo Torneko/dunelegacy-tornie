@@ -1039,7 +1039,85 @@
         }
       ]
     },
-    "additionalOriginalFlameIcons": 2
+    "additionalOriginalFlameIcons": 2,
+    "flameProductionPortraits": {
+      "passed": true,
+      "count": 12,
+      "results": [
+        {
+          "lang": "fr",
+          "mod": "Tornie",
+          "house": "K",
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "mod": "Tornie",
+          "house": "H",
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "mod": "Jericho",
+          "house": "K",
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "mod": "Jericho",
+          "house": "H",
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "mod": "ArcaKev",
+          "house": "K",
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "mod": "ArcaKev",
+          "house": "H",
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "mod": "Tornie",
+          "house": "K",
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "mod": "Tornie",
+          "house": "H",
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "mod": "Jericho",
+          "house": "K",
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "mod": "Jericho",
+          "house": "H",
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "mod": "ArcaKev",
+          "house": "K",
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "mod": "ArcaKev",
+          "house": "H",
+          "passed": true
+        }
+      ]
+    }
   },
   "publication": {
     "authorized": true,
