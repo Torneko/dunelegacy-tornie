@@ -1,15 +1,16 @@
 {
   "status": "validated",
   "version": "1.0.543",
-  "sourceCommit": "f956080b98bf4ba8fcb1ebca6e74df0332212984",
+  "sourceCommit": "1741fbda449f585d28bef20672369dccf03b3369",
   "networkProtocol": 16,
   "saveVersion": 9835,
   "engine": {
     "ctest": "2/2 PASS",
-    "testCases": 136,
-    "assertions": 10318,
+    "testCases": 139,
+    "assertions": 10332,
     "fullRuntimeFrenchScenarios": 1606,
-    "fullRuntimeFrenchComplete": true
+    "fullRuntimeFrenchComplete": true,
+    "fullRuntimeAchievementsComplete": true
   },
   "runtime": {
     "rulesAndSelling": [
@@ -477,258 +478,258 @@
     }
   ],
   "website": {
-    "base": "9ea28520c8fa97d519e2da79338cf476e2468c1e",
+    "base": "3bebd5a0db74b63c46e56d301c44f2f5d23123f0",
     "routes": {
       "passed": true,
       "count": 36,
       "results": [
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "fr",
           "route": "accueil",
           "heading": "Conna\u00eetre ses unit\u00e9s.\nConstruire sa strat\u00e9gie."
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "fr",
           "route": "unites",
           "heading": "Les unit\u00e9s"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "fr",
           "route": "batiments",
           "heading": "Les b\u00e2timents"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "fr",
           "route": "technologies",
           "heading": "Les technologies, niveau par niveau"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "fr",
           "route": "factions",
           "heading": "Factions & modes"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "fr",
           "route": "hauts-faits",
           "heading": "Les hauts faits"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "fr",
           "route": "guide",
           "heading": "Le guide du joueur"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "fr",
           "route": "galerie",
           "heading": "Les PNG du jeu"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "fr",
           "route": "projet",
           "heading": "Dune Legacy Tornie"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "en",
           "route": "accueil",
           "heading": "Know your units.\nBuild your strategy."
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "en",
           "route": "unites",
           "heading": "Units"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "en",
           "route": "batiments",
           "heading": "Buildings"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "en",
           "route": "technologies",
           "heading": "Technologies, level by level"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "en",
           "route": "factions",
           "heading": "Factions & modes"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "en",
           "route": "hauts-faits",
           "heading": "Achievements"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "en",
           "route": "guide",
           "heading": "The player guide"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "en",
           "route": "galerie",
           "heading": "Game PNGs"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 1440,
           "lang": "en",
           "route": "projet",
           "heading": "Dune Legacy Tornie"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "fr",
           "route": "accueil",
           "heading": "Conna\u00eetre ses unit\u00e9s.\nConstruire sa strat\u00e9gie."
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "fr",
           "route": "unites",
           "heading": "Les unit\u00e9s"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "fr",
           "route": "batiments",
           "heading": "Les b\u00e2timents"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "fr",
           "route": "technologies",
           "heading": "Les technologies, niveau par niveau"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "fr",
           "route": "factions",
           "heading": "Factions & modes"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "fr",
           "route": "hauts-faits",
           "heading": "Les hauts faits"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "fr",
           "route": "guide",
           "heading": "Le guide du joueur"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "fr",
           "route": "galerie",
           "heading": "Les PNG du jeu"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "fr",
           "route": "projet",
           "heading": "Dune Legacy Tornie"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "en",
           "route": "accueil",
           "heading": "Know your units.\nBuild your strategy."
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "en",
           "route": "unites",
           "heading": "Units"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "en",
           "route": "batiments",
           "heading": "Buildings"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "en",
           "route": "technologies",
           "heading": "Technologies, level by level"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "en",
           "route": "factions",
           "heading": "Factions & modes"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "en",
           "route": "hauts-faits",
           "heading": "Achievements"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "en",
           "route": "guide",
           "heading": "The player guide"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "en",
           "route": "galerie",
           "heading": "Game PNGs"
         },
         {
-          "base": "http://127.0.0.1:8547/",
+          "base": "http://127.0.0.1:8555/",
           "width": 390,
           "lang": "en",
           "route": "projet",
@@ -827,18 +828,18 @@
   },
   "publication": {
     "authorized": true,
-    "linuxRun": 39091317138,
-    "windowsRun": 39091316992,
+    "linuxRun": 39129880567,
+    "windowsRun": 39129882688,
     "linuxPackageChecks": "success",
     "windowsPackageChecks": "success",
     "tag": "v1.0.543",
-    "linuxWorkflow": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39091317138",
-    "windowsWorkflow": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39091316992",
-    "packagePublicationRun": 39093202725
+    "linuxWorkflow": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39129880567",
+    "windowsWorkflow": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39129882688",
+    "packagePublicationRun": 39132350296
   },
-  "source": "f956080b98bf4ba8fcb1ebca6e74df0332212984",
-  "validationStage": "local-ci-and-delivered-replacement-packages",
-  "previousPublicationSource": "472538d7a6f84fd024f4950641bcbb60ee142d21",
+  "source": "1741fbda449f585d28bef20672369dccf03b3369",
+  "validationStage": "ci-and-downloaded-packages",
+  "previousPublicationSource": "f956080b98bf4ba8fcb1ebca6e74df0332212984",
   "replacement543": {
     "flameQuadVisibleBoundsCentered": true,
     "directions": 8,
@@ -879,7 +880,7 @@
   },
   "deliveredPackages": {
     "version": "1.0.543",
-    "source": "f956080b98bf4ba8fcb1ebca6e74df0332212984",
+    "source": "1741fbda449f585d28bef20672369dccf03b3369",
     "passed": true,
     "packages": [
       {
@@ -887,21 +888,25 @@
         "allModFilesMatchSource": true,
         "modFileCount": 5497,
         "suppliedOriginalPngCopies": 30,
-        "sha256": "50be5a1c29cfaded71b9a97faa49177dc4e82d5345a5d6a73360db7e934ec540"
+        "sha256": "0ff1cc006dbafb47ae7a4af8c4e5e17b60d72ec2f335302e1bb8603fadac2a8d"
       },
       {
         "name": "DuneLegacyTornie-1.0.543-Linux-Mint-Compatible.AppImage",
         "allModFilesMatchSource": true,
         "modFileCount": 5497,
         "suppliedOriginalPngCopies": 30,
-        "sha256": "c2b0ff46425955b142291b3d544f9524de5a6aad4c50e1fadfd2aea3af8af712"
+        "sha256": "baae165d475379835943dde7096ca38dbe2a953b25a53ac0ef6d1b382c2ab650",
+        "xrandrCompiledAndBundled": true,
+        "pulseAudioCompiled": true
       },
       {
         "name": "DuneLegacyTornie-1.0.543-Linux-x86_64.AppImage",
         "allModFilesMatchSource": true,
         "modFileCount": 5497,
         "suppliedOriginalPngCopies": 30,
-        "sha256": "0a9091569f692cdf7958a80a7534f7d7c881cdd714071630f4e0912874e03aaf"
+        "sha256": "ce65b43fd520bc489ee520582cf6a7c57224dd315e4a00bc3e0e78d36e3f8f3c",
+        "xrandrCompiledAndBundled": true,
+        "pulseAudioCompiled": true
       }
     ],
     "downloadedMintStartup": {
@@ -910,5 +915,129 @@
       "renderer": "software",
       "developmentLibraryPathRemoved": true
     }
-  }
+  },
+  "linuxVideo": {
+    "xrandrBuildRequired": true,
+    "libXrandrBundled": true,
+    "preservesSelectedWindowSize": true,
+    "fitsStaleCombinedDesktopToMonitor": true,
+    "nativeModeAndSmallerChoices": true,
+    "fullscreenWindowRoundtrip": true,
+    "localFRandENCases": 10,
+    "cases": [
+      "1280x720-on-3840x1080",
+      "1280x720-window",
+      "1280x720-fullscreen",
+      "3840x1080-stale-on-1920x1080",
+      "800x600-on-1280x720"
+    ],
+    "xvfbNoReset": true,
+    "protocolUnchanged": 16,
+    "saveVersionUnchanged": 9835,
+    "localChecks": [
+      {
+        "language": "fr",
+        "case": "window-wide",
+        "screen": "3840x1080",
+        "selected": "1280x720",
+        "passed": true
+      },
+      {
+        "language": "fr",
+        "case": "window",
+        "screen": "1920x1080",
+        "selected": "1280x720",
+        "passed": true
+      },
+      {
+        "language": "fr",
+        "case": "fullscreen",
+        "screen": "1920x1080",
+        "selected": "1280x720",
+        "passed": true
+      },
+      {
+        "language": "fr",
+        "case": "stale",
+        "screen": "1920x1080",
+        "selected": "1920x1080",
+        "passed": true
+      },
+      {
+        "language": "fr",
+        "case": "small",
+        "screen": "1280x720",
+        "selected": "800x600",
+        "passed": true
+      },
+      {
+        "language": "en",
+        "case": "window-wide",
+        "screen": "3840x1080",
+        "selected": "1280x720",
+        "passed": true
+      },
+      {
+        "language": "en",
+        "case": "window",
+        "screen": "1920x1080",
+        "selected": "1280x720",
+        "passed": true
+      },
+      {
+        "language": "en",
+        "case": "fullscreen",
+        "screen": "1920x1080",
+        "selected": "1280x720",
+        "passed": true
+      },
+      {
+        "language": "en",
+        "case": "stale",
+        "screen": "1920x1080",
+        "selected": "1920x1080",
+        "passed": true
+      },
+      {
+        "language": "en",
+        "case": "small",
+        "screen": "1280x720",
+        "selected": "800x600",
+        "passed": true
+      }
+    ],
+    "currentSourceRuntimeRegression": {
+      "RELEASE 543 PASS:": 7,
+      "RELEASE 543 ALLIANCES PASS:": 7,
+      "RELEASE 543 UNITS PASS:": 6,
+      "RELEASE 543 GRAPHICS PASS:": 6,
+      "RELEASE 543 NEUTRAL SABOTEUR PASS:": 3
+    },
+    "pulseAudioBuildRequired": true,
+    "audioErrorPreserved": true,
+    "repeatedLegacyIntegration": {
+      "passed": true,
+      "checks": [
+        {
+          "run": 1,
+          "sameOutputDirectory": true,
+          "sevenModes": true,
+          "enemyAndFriendlyMissesExcluded": true,
+          "localMissAndThreeBuildingBlastVerified": true
+        },
+        {
+          "run": 2,
+          "sameOutputDirectory": true,
+          "sevenModes": true,
+          "enemyAndFriendlyMissesExcluded": true,
+          "localMissAndThreeBuildingBlastVerified": true
+        }
+      ]
+    },
+    "ciLinuxPassed": true,
+    "ciWindowsPassed": true,
+    "packagedAppImageVideoCases": 12
+  },
+  "linuxRun": 39129880567,
+  "windowsRun": 39129882688
 }

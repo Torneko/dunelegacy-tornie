@@ -1,0 +1,69 @@
+{
+  "version": "1.0.543",
+  "source": "f956080b98bf4ba8fcb1ebca6e74df0332212984",
+  "website": "3bebd5a0db74b63c46e56d301c44f2f5d23123f0",
+  "linuxRun": 39091317138,
+  "assets": [
+    {
+      "name": "DuneLegacyTornie-1.0.543-Linux-Mint-Compatible.AppImage",
+      "size": 37247480,
+      "sha256": "c2b0ff46425955b142291b3d544f9524de5a6aad4c50e1fadfd2aea3af8af712"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.543-Linux-x64.deb",
+      "size": 50985888,
+      "sha256": "38b5d208e56043b9bbc83ad78ef85700d756513ec5bacb65ea500aa8a95cf958"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.543-Linux-x64.rpm",
+      "size": 51067379,
+      "sha256": "2a75a808a7b5e5877c752a09001ca690e2449bd4cfce81d503308b05d4eef396"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.543-Linux-x64.tar.gz",
+      "size": 51527362,
+      "sha256": "e78cacc47cd714a614769d1881e516cd72c1a6dc27a0f80b2eac29d31ad6e9e2"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.543-Linux-x86_64.AppImage",
+      "size": 37247480,
+      "sha256": "0a9091569f692cdf7958a80a7534f7d7c881cdd714071630f4e0912874e03aaf"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.543-Sources.zip",
+      "size": 62831492,
+      "sha256": "83bd484af32bc160818f3392ad380e62f2dba895a6f1e249628fe88219569213"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.543-Windows-x64.zip",
+      "size": 63734261,
+      "sha256": "50be5a1c29cfaded71b9a97faa49177dc4e82d5345a5d6a73360db7e934ec540"
+    },
+    {
+      "name": "Linux-Build-1.0.543.json",
+      "size": 728,
+      "sha256": "cd39cae178351c1db099fabac28e4254810c3d34690abd5fa89a55b6b92ca353"
+    },
+    {
+      "name": "Release-Notes-1.0.543-EN.md",
+      "size": 3506,
+      "sha256": "f33f7ddf3adac6801e29e5c1f5d9d693066c3f6c88ed42426415626ea5c9ad68"
+    },
+    {
+      "name": "Release-Notes-1.0.543-FR.md",
+      "size": 4141,
+      "sha256": "623699ceb1a1254553ade0f62a00acf365e28108ec5e036413b8c69e5aa4381e"
+    },
+    {
+      "name": "Validation-1.0.543.json",
+      "size": 23046,
+      "sha256": "1dbe3763522a5b889476275028f2aa09d894650b80fbce1576a6bed1d0ae84c2"
+    },
+    {
+      "name": "Windows-Build-1.0.543.json",
+      "size": 677,
+      "sha256": "d7bca6c28a97066e04d7e7fd321b9cbc4aa982c439c71ef078683b2e23dd7f77"
+    }
+  ],
+  "windowsRun": 39091316992
+}

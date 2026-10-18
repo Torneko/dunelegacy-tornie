@@ -1,4 +1,19 @@
-# Remplacement 1.0.543 — publié sur Linux, Windows et le site FR/EN
+# Correction d’affichage Linux 1.0.543 — publiée
+
+La release existante est remplacée, sans créer de 1.0.544. Source du jeu et tag `v1.0.543` : `1741fbda449f585d28bef20672369dccf03b3369`. Site FR/EN publié : `1206aa0e96bd0fc45a52fd28390973ab6e194435`, récupéré depuis `3bebd5a0db74b63c46e56d301c44f2f5d23123f0`. Protocole **16** et sauvegardes **9835** conservés.
+
+- SDL détecte les moniteurs X11 via XRandR ; les deux AppImages incluent libXrandr. Les en-têtes de compilation font partie de la clé du cache Linux, afin de ne pas réutiliser une bibliothèque sans cette prise en charge. La CI refuse une telle configuration.
+- PulseAudio est explicitement compilé et contrôlé dans SDL pour les deux AppImages, afin de préserver le démarrage sous Mint après une compilation sans cache. Les erreurs audio conservent désormais leur détail. Le profil synthétique de vérification des succès est isolé pour permettre les exécutions répétées.
+- Les tailles de fenêtre choisies sont conservées même si Linux ne propose qu’un mode natif. Les anciennes dimensions supérieures au moniteur sont corrigées ; les résolutions plus petites réapparaissent dans le menu. Le plein écran reste sur le moniteur de la fenêtre.
+- **139 cas / 10 332 assertions**, **CTest 2/2**, **10 cas vidéo FR/EN** locaux et repli logiciel : 1280×720 sur un bureau 3840×1080, fenêtre/plein écran, ancienne configuration 3840×1080 sur moniteur 1920×1080 et fenêtre 800×600. Le menu réel est capturé et la bascule plein écran/fenêtre est vérifiée.
+- La CI contrôle chaque AppImage en FR/EN, en fenêtre, en plein écran et avec une ancienne configuration trop grande. Windows vérifie aussi le menu vidéo installé ; ses contrôles complets des mods et des succès sont conservés. Le site local passe 36 parcours ; les sites public/hors ligne passent 72 parcours.
+- Les règles, unités, mods et protocole restent ceux du remplacement graphique précédent. Les paquets publics sont comparés aux **5 497 fichiers de mods exacts** et aux 30 copies des PNG fournis ; XRandR compilé et bibliothèque embarquée sont contrôlés dans les AppImages téléchargées.
+
+CI Linux : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39129880567 — succès. Windows : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39129882688 — succès. Envoi des paquets vérifiés : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39132350296 — succès. Pages : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39132528038 — succès. Documents et contrôles navigateur : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39132594554 — succès.
+
+L’[audit final](../release_notes/Final-Publication-Audit-1.0.543.json) vérifie la même release, les 16 fichiers publics, leurs SHA-256 et les sources Linux/Windows/site. Les [reçus de publication](../release_notes/Publication-Receipt-1.0.543.json) suivent le tag figé sur la branche de préparation ; aucune fusion dans la branche principale. La confirmation sur les moniteurs physiques du PC Mint de l’utilisatrice reste à effectuer.
+
+# Remplacement graphique précédent de la 1.0.543 — historique
 
 Remplacement autorisé par Tornie, sans créer de 1.0.544. La release existante et ses liens sont conservés. Source du jeu et tag `v1.0.543` : `f956080b98bf4ba8fcb1ebca6e74df0332212984`. Site publié : `3bebd5a0db74b63c46e56d301c44f2f5d23123f0`, préparé depuis le site 1.0.543 précédent `9ea28520c8fa97d519e2da79338cf476e2468c1e`. Protocole **16**, sauvegardes **9835**, anciennes sauvegardes lisibles ; retélécharger les paquets sur tous les postes.
 
@@ -15,7 +30,7 @@ Tests locaux : **136 cas / 10 318 assertions**, **CTest 2/2**, **1 606 scénario
 - Pages : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39093279022 — succès.
 - Archive hors ligne, sources, notes et contrôles navigateur : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39093323184 — succès, **72 parcours FR/EN publics/hors ligne, ordinateur/mobile**.
 
-L’[audit final](../release_notes/Final-Publication-Audit-1.0.543.json) vérifie la même release existante, les 16 fichiers publics, leurs empreintes SHA-256, la source des deux plateformes et la révision du site déployé. La source du jeu reste figée ; les reçus sont enregistrés ensuite sur la branche de préparation, sans déplacer à nouveau le tag.
+L’[audit final](../release_notes/graphics-replacement-1.0.543/Final-Publication-Audit-1.0.543.json) vérifie la même release existante, les 16 fichiers publics, leurs empreintes SHA-256, la source des deux plateformes et la révision du site déployé. La source du jeu reste figée ; les reçus sont enregistrés ensuite sur la branche de préparation, sans déplacer à nouveau le tag.
 
 ## Publication initiale 1.0.543
 

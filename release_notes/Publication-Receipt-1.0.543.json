@@ -1,42 +1,180 @@
 {
   "version": "1.0.543",
   "replacement": true,
-  "source": "f956080b98bf4ba8fcb1ebca6e74df0332212984",
+  "source": "1741fbda449f585d28bef20672369dccf03b3369",
   "networkProtocol": 16,
   "saveVersion": 9835,
-  "linuxRun": 39091317138,
-  "windowsRun": 39091316992,
+  "linuxRun": 39129880567,
+  "windowsRun": 39129882688,
   "siteWorktree": "work/site-543-draft",
-  "siteBase": "9ea28520c8fa97d519e2da79338cf476e2468c1e",
-  "currentReleaseSource": "472538d7a6f84fd024f4950641bcbb60ee142d21",
-  "tagMoved": true,
-  "packagesReplaced": true,
+  "siteBase": "3bebd5a0db74b63c46e56d301c44f2f5d23123f0",
+  "currentReleaseSource": "f956080b98bf4ba8fcb1ebca6e74df0332212984",
+  "sourceBranch": "prepare/1.0.543-selling-allied-options",
   "authorized": true,
-  "notes": "No 544. Neutral Saboteur campaign and MP, Worfinery 7+IX 500. Brighter Neutral Tornie/ArcaKev. Other new units/napalm/slowing/tame worm deferred.",
+  "publicationStatus": "complete",
+  "notes": "Linux XRandR monitor detection, selected window size and restored resolution choices. Replace 543 only; protocol 16/save9835 retained.",
   "localEngineTests": {
-    "cases": 136,
-    "assertions": 10318,
+    "cases": 139,
+    "assertions": 10332,
     "ctest": "2/2"
   },
-  "localFullFrenchScenarios": 1606,
-  "localReleaseRules": 7,
-  "localNewUnitModes": 6,
-  "localGraphicsModes": 6,
-  "localNeutralSaboteurModes": 3,
+  "localVideoCases": 10,
+  "localVideoChecks": [
+    {
+      "language": "fr",
+      "case": "window-wide",
+      "screen": "3840x1080",
+      "selected": "1280x720",
+      "passed": true
+    },
+    {
+      "language": "fr",
+      "case": "window",
+      "screen": "1920x1080",
+      "selected": "1280x720",
+      "passed": true
+    },
+    {
+      "language": "fr",
+      "case": "fullscreen",
+      "screen": "1920x1080",
+      "selected": "1280x720",
+      "passed": true
+    },
+    {
+      "language": "fr",
+      "case": "stale",
+      "screen": "1920x1080",
+      "selected": "1920x1080",
+      "passed": true
+    },
+    {
+      "language": "fr",
+      "case": "small",
+      "screen": "1280x720",
+      "selected": "800x600",
+      "passed": true
+    },
+    {
+      "language": "en",
+      "case": "window-wide",
+      "screen": "3840x1080",
+      "selected": "1280x720",
+      "passed": true
+    },
+    {
+      "language": "en",
+      "case": "window",
+      "screen": "1920x1080",
+      "selected": "1280x720",
+      "passed": true
+    },
+    {
+      "language": "en",
+      "case": "fullscreen",
+      "screen": "1920x1080",
+      "selected": "1280x720",
+      "passed": true
+    },
+    {
+      "language": "en",
+      "case": "stale",
+      "screen": "1920x1080",
+      "selected": "1920x1080",
+      "passed": true
+    },
+    {
+      "language": "en",
+      "case": "small",
+      "screen": "1280x720",
+      "selected": "800x600",
+      "passed": true
+    }
+  ],
   "browserRoutes": 36,
-  "browserFeatureContexts": 28,
-  "browserSaboteurDetails": 6,
+  "localDummyVideoPassed": true,
+  "gameplayAndModResourcesUnchangedFrom": "f956080b98bf4ba8fcb1ebca6e74df0332212984",
+  "currentSourceRuntimeRegression": {
+    "RELEASE 543 PASS:": 7,
+    "RELEASE 543 ALLIANCES PASS:": 7,
+    "RELEASE 543 UNITS PASS:": 6,
+    "RELEASE 543 GRAPHICS PASS:": 6,
+    "RELEASE 543 NEUTRAL SABOTEUR PASS:": 3
+  },
+  "diagnosticSource": "dd0d467456d989be82c68529c656b6a38d0f90c2",
+  "diagnosticLinuxRun": 39128246472,
+  "diagnosticWindowsRun": 39128248783,
+  "localFullRuntime": {
+    "scenarios": 1606,
+    "achievements": true,
+    "source": "9f35da94d50c844b549d1e32e39165a6c018ec1a"
+  },
+  "repeatedLegacyIntegration": {
+    "passed": true,
+    "checks": [
+      {
+        "run": 1,
+        "sameOutputDirectory": true,
+        "sevenModes": true,
+        "enemyAndFriendlyMissesExcluded": true,
+        "localMissAndThreeBuildingBlastVerified": true
+      },
+      {
+        "run": 2,
+        "sameOutputDirectory": true,
+        "sevenModes": true,
+        "enemyAndFriendlyMissesExcluded": true,
+        "localMissAndThreeBuildingBlastVerified": true
+      }
+    ]
+  },
+  "audioErrorPreserved": true,
   "linuxStatus": "success",
+  "linuxPackagedVideoCases": 12,
+  "pulseAudioAndXrandrBuildVerified": true,
   "windowsStatus": "success",
-  "publicationStatus": "complete",
-  "sourceBranch": "prepare/1.0.543-selling-allied-options",
-  "siteBranch": "docs/1.0.543-draft",
-  "postPublicationRoadmap": "work/fix-543-r2/roadmap-after-543.md",
-  "packagePublicationRun": 39093202725,
-  "websiteCommit": "3bebd5a0db74b63c46e56d301c44f2f5d23123f0",
-  "pagesRun": 39093279022,
-  "tagPushRunCancelled": 39093191704,
-  "documentsRun": 39093323184,
+  "packagePublicationRun": 39132350296,
+  "deliveredPackages": {
+    "version": "1.0.543",
+    "source": "1741fbda449f585d28bef20672369dccf03b3369",
+    "passed": true,
+    "packages": [
+      {
+        "name": "DuneLegacyTornie-1.0.543-Windows-x64.zip",
+        "allModFilesMatchSource": true,
+        "modFileCount": 5497,
+        "suppliedOriginalPngCopies": 30,
+        "sha256": "0ff1cc006dbafb47ae7a4af8c4e5e17b60d72ec2f335302e1bb8603fadac2a8d"
+      },
+      {
+        "name": "DuneLegacyTornie-1.0.543-Linux-Mint-Compatible.AppImage",
+        "allModFilesMatchSource": true,
+        "modFileCount": 5497,
+        "suppliedOriginalPngCopies": 30,
+        "sha256": "baae165d475379835943dde7096ca38dbe2a953b25a53ac0ef6d1b382c2ab650",
+        "xrandrCompiledAndBundled": true,
+        "pulseAudioCompiled": true
+      },
+      {
+        "name": "DuneLegacyTornie-1.0.543-Linux-x86_64.AppImage",
+        "allModFilesMatchSource": true,
+        "modFileCount": 5497,
+        "suppliedOriginalPngCopies": 30,
+        "sha256": "ce65b43fd520bc489ee520582cf6a7c57224dd315e4a00bc3e0e78d36e3f8f3c",
+        "xrandrCompiledAndBundled": true,
+        "pulseAudioCompiled": true
+      }
+    ],
+    "downloadedMintStartup": {
+      "passed": true,
+      "language": "fr",
+      "renderer": "software",
+      "developmentLibraryPathRemoved": true
+    }
+  },
+  "websiteCommit": "1206aa0e96bd0fc45a52fd28390973ab6e194435",
+  "pagesRun": 39132528038,
+  "documentsRun": 39132594554,
   "assetCount": 16,
   "websiteBrowserRoutes": 72,
   "latest": true,
