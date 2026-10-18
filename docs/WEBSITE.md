@@ -1,6 +1,6 @@
 # Remplacement 1.0.543 — centrage et tirage Special
 
-Remplacement autorisé, sans créer de 1.0.544. Centrer les huit directions du Flame Quad dans les zooms natifs et l’éditeur ; exclure la nouvelle infanterie du tirage des véhicules Special en conservant la production Harkonnen niveau 7 + IX. Version 1.0.543, protocole 16, sauvegardes 9835. La publication précédente est archivée dans les rapports existants ; récupérer le site publié `9ea28520c8fa97d519e2da79338cf476e2468c1e` avant de préparer le remplacement.
+Remplacement autorisé, sans créer de 1.0.544. Ajouts confirmés : teintes VGA des nouvelles unités, étoiles bleues dans l’éditeur/portraits, Neutral blanc dans Tornie et ArcaKev, Saboteur Neutral à 500 crédits dans la Worfinery (niveau 7 + IX), en campagne et multijoueur. Les nouvelles unités sans graphismes, le napalm, les ralentissements et le ver apprivoisé sont reportés. Centrer les huit directions du Flame Quad dans les zooms natifs et l’éditeur ; exclure la nouvelle infanterie du tirage des véhicules Special en conservant la production Harkonnen niveau 7 + IX. Version 1.0.543, protocole 16, sauvegardes 9835. La publication précédente est archivée dans les rapports existants ; récupérer le site publié `9ea28520c8fa97d519e2da79338cf476e2468c1e` avant de préparer le remplacement.
 
 # 1.0.543 — publication autorisée, CI en cours
 

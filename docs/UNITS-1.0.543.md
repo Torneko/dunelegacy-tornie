@@ -22,3 +22,15 @@ Code and assets are integrated on the preparation branch; local validation passe
 - Gas Infantry: Ordos and Tharpique, produced by WOR and Worfinery, requiring an IX. Heal allies and apply the Deviator effect to enemies. Outside Vanilla; Ordos is included in Lite, Tharpique only where that faction exists.
 - All five original PNG files were received in `Images.tar.gz`, preserved unchanged in the six mods and added to SHA-256 manifests. Portraits are 91×55, Quad 88×58, gas 101×42. Five Quad views and the first nine individual gas poses are normalized into standard orientation/animation atlases in memory. Magenta becomes transparent, opaque black remains visible, and all three zooms use exact integer scales.
 - Initial balance is configurable in ObjectData: Flame Quad 300 credits / 130 HP / two 12-damage shots / range 4; Gas Infantry 250 credits / 45 HP / range 5 / Deviator enemy gas / 15 healing per missile; Harkonnen flame Trooper 200 credits using the Kleshmersh Trooper values and existing flame damage bonus.
+
+## Remplacement 1.0.543 / Replacement 1.0.543
+
+Neutral : Saboteur produit à la Worfinery, niveau 7, IX, 500 crédits, campagne et multijoueur, uniquement dans les mods complets Tornie/Jericho/ArcaKev. Les autres factions gardent leurs pouvoirs de palais ; elles ne produisent pas ce Saboteur. Neutral est plus blanc dans Tornie et ArcaKev.
+
+Neutral Saboteur production: Worfinery, level 7, IX, 500 credits, campaign and multiplayer, full Tornie/Jericho/ArcaKev only. Palace Saboteurs remain unchanged. Brighter Neutral white applies to Tornie and ArcaKev.
+
+Le Flame Quad est centré aux trois zooms. Le masque VGA des couleurs de maison est reconnu pour le Quad et l’infanterie à gaz ; le vert du gaz et les détails bruns restent fixes. Les trois unités ont des étoiles bleues dans l’éditeur ; les portraits des deux nouvelles infanteries ont leur marqueur en bas à droite. L’infanterie est exclue des véhicules Special. PNG originaux conservés.
+
+Flame Quad centring and VGA team-colour masks are corrected. Green gas and brown chassis details are preserved. Blue stars identify the three editor units; infantry portrait markers are in the bottom-right. Infantry is excluded from Special vehicle pools. Original PNGs are unchanged.
+
+Reportés / Deferred: moissonneuses grande capacité et rapide, Raider Quad, tank longue portée, missile au napalm, Slowpost, Slow Tank et effets de ralentissement (déplacement uniquement ; Kleshmersh immunisé, Rebels plus sensible), ver apprivoisé. Attendre les graphismes et préciser factions, déblocages et valeurs avant intégration.

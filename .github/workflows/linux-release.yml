@@ -216,13 +216,15 @@ jobs:
           test "$(grep -c 'RELEASE 543 PASS:' "$PROFILE/--verify-release543.log")" -eq 7
           test "$(grep -c 'RELEASE 543 ALLIANCES PASS:' "$PROFILE/--verify-release543.log")" -eq 7
           test "$(grep -c 'RELEASE 543 UNITS PASS:' "$PROFILE/--verify-release543.log")" -eq 6
+          test "$(grep -c 'RELEASE 543 GRAPHICS PASS:' "$PROFILE/--verify-release543.log")" -eq 6
+          test "$(grep -c 'RELEASE 543 NEUTRAL SABOTEUR PASS:' "$PROFILE/--verify-release543.log")" -eq 3
 
       - name: Record the exact packaged source
         run: |
           VERSION="$(sed -n 's/^project(DuneLegacyTornie VERSION \([0-9]*\.[0-9]*\.[0-9]*\).*/\1/p' CMakeLists.txt)"
           SOURCE_COMMIT="$(git rev-parse HEAD)" RELEASE_VERSION="$VERSION" python3 - <<'PYTHON'
           import json, os, pathlib
-          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio'},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat','rebels-windtrap-upgrade','building-sales','normal-multiplayer-alliances','flame-and-gas-units','magenta-free-zooms']}
+          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio'},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat','rebels-windtrap-upgrade','building-sales','normal-multiplayer-alliances','flame-and-gas-units','magenta-free-zooms','house-colours-and-blue-stars','neutral-saboteur-tier-seven']}
           pathlib.Path('build/Linux-Build-'+report['version']+'.json').write_text(json.dumps(report,indent=2)+'\n')
           PYTHON
 

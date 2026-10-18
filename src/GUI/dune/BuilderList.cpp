@@ -268,6 +268,18 @@ void BuilderList::draw(Point position) {
                     SDL_RenderCopy(renderer, pTexture, nullptr, &tmpDest);
                 }
 
+                if(buildItem.itemID==Unit_Troopers5) {
+                    // Keep the original portrait; a clear count distinguishes
+                    // the five-person order from the ordinary three Troopers.
+                    const SDL_Rect badge{dest.x+dest.w-15,dest.y+2,13,15};
+                    SDL_SetRenderDrawColor(renderer,0,32,104,255);SDL_RenderFillRect(renderer,&badge);
+                    auto count=pFontManager->createTextureWithText("5",COLOR_WHITE,12);
+                    if(count) {
+                        SDL_Rect text=calcDrawingRect(count.get(),badge.x+badge.w/2,badge.y+badge.h/2,HAlign::Center,VAlign::Center);
+                        SDL_RenderCopy(renderer,count.get(),nullptr,&text);
+                    }
+                }
+
                 if(isStructure(buildItem.itemID)) {
                     const Coord footprint=getStructureSize(buildItem.itemID);
                     drawStructureSizePreview(renderer,

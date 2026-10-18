@@ -217,6 +217,14 @@ SDL_Color getHouseColorSDL(int colorSlot, int shadeOffset) {
         return SDL_Color{ 0, 0, 0, 255 };
     }
 
+    if(colorSlot==HOUSE_NEUTRAL && (ModManager::instance().getActiveModName()=="Tornie"
+        || ModManager::instance().getActiveModName()=="ArcaKev")) {
+        static const std::array<SDL_Color,8> neutralWhite{{
+            {255,255,255,255},{236,236,236,255},{212,212,212,255},{188,188,188,255},
+            {160,160,160,255},{132,132,132,255},{104,104,104,255},{76,76,76,255}
+        }};
+        return neutralWhite[shadeOffset];
+    }
     static const std::array<SDL_Color, 8> campaignGreen{{
         {60,140,64,255},{48,124,52,255},{36,108,40,255},{28,92,32,255},
         {20,76,24,255},{12,60,16,255},{8,44,12,255},{4,28,8,255}

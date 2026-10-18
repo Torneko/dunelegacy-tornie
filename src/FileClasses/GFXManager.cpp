@@ -192,7 +192,9 @@ static_assert(sizeof(objPicTiles) / sizeof(objPicTiles[0]) == NUM_OBJPICS,
 
 static void applyRebelsTint(SDL_Surface* surface, int colorSlot);
 static bool usesPrivateVisualColorRamp(int colorSlot) {
-    return isTornieRebelsColorSlot(colorSlot) || isVanillaRebelsColorSlot(colorSlot)
+    return (colorSlot==HOUSE_NEUTRAL && (ModManager::instance().getActiveModName()=="Tornie"
+                || ModManager::instance().getActiveModName()=="ArcaKev"))
+        || isTornieRebelsColorSlot(colorSlot) || isVanillaRebelsColorSlot(colorSlot)
         || colorSlot == HOUSE_CUSTOM || isCustomHouseColorSlot(colorSlot)
         || isJerichoHouseColorSlot(colorSlot);
 }
@@ -231,6 +233,42 @@ static sdl2::surface_ptr overlayEditorStar(SDL_Surface* vehicle, SDL_Surface* st
     }
     return result;
 }
+// New-unit editor markers use a full button-sized canvas: the 9-pixel
+// infantry frames must not be almost entirely covered by a 7-pixel star.
+static sdl2::surface_ptr decorateNewUnitEditorIcon(SDL_Surface* frame, SDL_Surface* star) {
+    if(!frame) return nullptr;
+    const int size=2*D2_TILESIZE;
+    auto result=sdl2::surface_ptr{SDL_CreateRGBSurfaceWithFormat(0,size,size,32,SDL_PIXELFORMAT_RGBA32)};
+    if(!result)return nullptr;
+    SDL_FillRect(result.get(),nullptr,SDL_MapRGBA(result->format,0,0,0,0));
+    SDL_Rect unit{(size-frame->w)/2,(size-frame->h)/2,frame->w,frame->h};
+    SDL_BlitSurface(frame,nullptr,result.get(),&unit);
+    if(star) {
+        SDL_Rect mark{size-star->w-1,size-star->h-1,star->w,star->h};
+        SDL_BlitSurface(star,nullptr,result.get(),&mark);
+    }
+    SDL_SetSurfaceBlendMode(result.get(),SDL_BLENDMODE_BLEND);
+    return result;
+}
+
+static void addNewInfantryPortraitStar(SDL_Surface* portrait) {
+    if(!portrait)return;
+    constexpr const char* rows[]={"....#....","...###...","...###...","#########",".#######.","..#####..","..##.##..",".##...##.","#.......#"};
+    constexpr int size=9;
+    // One pixel farther right/down than the older portrait marker, with
+    // enough room for its dark outline at the bottom-right edge.
+    const int left=portrait->w-size-1,top=portrait->h-size-1;
+    const Uint32 border=SDL_MapRGBA(portrait->format,0,32,104,255);
+    const Uint32 blue=SDL_MapRGBA(portrait->format,24,152,255,255);
+    for(int y=0;y<size;++y)for(int x=0;x<size;++x)if(rows[y][x]=='#')
+        for(int dy=-1;dy<=1;++dy)for(int dx=-1;dx<=1;++dx) {
+            SDL_Rect pixel{left+x+dx,top+y+dy,1,1};SDL_FillRect(portrait,&pixel,border);
+        }
+    for(int y=0;y<size;++y)for(int x=0;x<size;++x)if(rows[y][x]=='#') {
+        SDL_Rect pixel{left+x,top+y,1,1};SDL_FillRect(portrait,&pixel,blue);
+    }
+}
+
 static sdl2::surface_ptr resizeSurfaceNearest(SDL_Surface* source, int width, int height);
 static sdl2::surface_ptr scaleSurfaceNearest(SDL_Surface* source, int factor);
 static std::unique_ptr<Animation> loadPngStripAnimation(const std::string& filename, int frameCount, double frameRate, bool bDoublePic = true, int transparentColorKey = -1);
@@ -2361,6 +2399,7 @@ GFXManager::GFXManager() {
         // atlas. Reusing an eagerly cached custom slot can preserve the authored
         // purple tint in both the map-editor button and sidebar portrait.
         const bool forceCustomRemap = tornieGraphicsVisible
+            && objPicID!=ObjPic_FlameQuad && objPicID!=ObjPic_GasInfantry
             && (colorSlot == HOUSE_CUSTOM || isCustomHouseColorSlot(colorSlot));
         SDL_Surface* atlas = forceCustomRemap
             ? nullptr
@@ -2422,7 +2461,7 @@ GFXManager::GFXManager() {
             const bool infantry=custom.first!=UI_MapEditor_FlameQuad;
             auto frame=getColoredEditorFrame(custom.second,colorSlot,0,0,infantry?4:8,infantry?3:1);
             uiGraphicTex[custom.first][colorSlot].reset();
-            uiGraphic[custom.first][colorSlot]=decorateEditorVehicle(std::move(frame),true);
+            uiGraphic[custom.first][colorSlot]=decorateNewUnitEditorIcon(frame.get(),customMapEditorStar.get());
         }
         const int fixedTornieGunSlot = tornieGraphicsVisible ? HOUSE_HARKONNEN : colorSlot;
 
@@ -4414,7 +4453,22 @@ void GFXManager::reloadModDependentObjectGraphics() {
         for(int slot=0;slot<NUM_HOUSE_COLOR_SLOTS;++slot) {
             auto* fallbackSource=objPic[fallback][slot][0].get();
             if(!fallbackSource)fallbackSource=objPic[fallback][HOUSE_HARKONNEN][0].get();
-            auto source=atlas?remapTruecolorHouseColorRange(atlas.get(),slot):sdl2::surface_ptr{};
+            auto source=atlas?copySurface(atlas.get()):sdl2::surface_ptr{};
+            if(source) {
+                // Supplied sheets use VGA six-bit values multiplied by four;
+                // the engine expands IBM.PAL by 255/63. Match the seven exact
+                // source team reds rather than comparing against that palette.
+                // The green gas weapon, brown chassis and black stay intact.
+                constexpr Uint8 teamRed[]={212,180,152,124,88,60,32};
+                for(int y=0;y<source->h;++y)for(int x=0;x<source->w;++x) {
+                    Uint8 r,g,b,a;SDL_GetRGBA(getPixel(source.get(),x,y),source->format,&r,&g,&b,&a);
+                    if(a==0 || g!=0 || b!=0)continue;
+                    for(int shade=0;shade<7;++shade)if(r==teamRed[shade]) {
+                        const auto target=getHouseColorSDL(slot,shade);
+                        putPixel(source.get(),x,y,SDL_MapRGBA(source->format,target.r,target.g,target.b,a));break;
+                    }
+                }
+            }
             if(!source && fallbackSource)source=copySurface(fallbackSource);
             objPic[id][slot][0]=std::move(source);
             for(int zoom=1;zoom<NUM_ZOOMLEVEL;++zoom)objPic[id][slot][zoom]=scaleSurfaceNearest(objPic[id][slot][0].get(),zoom+1);
@@ -4447,6 +4501,10 @@ void GFXManager::reloadRuntimeModPortraits() {
                         if(resized) {
                             raw = std::move(resized);
                         }
+                    }
+                    if(pictureID==Picture_FlameTrooper || pictureID==Picture_GasInfantry) {
+                        auto rgba=sdl2::surface_ptr{SDL_ConvertSurfaceFormat(raw.get(),SDL_PIXELFORMAT_RGBA32,0)};
+                        if(rgba){raw=std::move(rgba);addNewInfantryPortraitStar(raw.get());}
                     }
                     auto texture = convertSurfaceToTexture(raw.get());
                     if(texture) {
@@ -4544,6 +4602,7 @@ void GFXManager::rebuildModDependentEditorGraphics() {
                                      int frameX, int frameY, int framesX,
                                      int framesY) -> sdl2::surface_ptr {
         const bool forceCustomRemap = tornieGraphicsVisible
+            && objPicID!=ObjPic_FlameQuad && objPicID!=ObjPic_GasInfantry
             && (colorSlot == HOUSE_CUSTOM || isCustomHouseColorSlot(colorSlot));
         SDL_Surface* atlas = forceCustomRemap
             ? nullptr
@@ -4644,7 +4703,7 @@ void GFXManager::rebuildModDependentEditorGraphics() {
             const bool infantry=custom.first!=UI_MapEditor_FlameQuad;
             auto frame=getRuntimeEditorFrame(custom.second,colorSlot,0,0,infantry?4:8,infantry?3:1);
             uiGraphicTex[custom.first][colorSlot].reset();
-            uiGraphic[custom.first][colorSlot]=decorateRuntimeEditorVehicle(std::move(frame),true);
+            uiGraphic[custom.first][colorSlot]=decorateNewUnitEditorIcon(frame.get(),customStar.get());
         }
         const int fixedTornieGunSlot = tornieGraphicsVisible ? HOUSE_HARKONNEN : colorSlot;
         for(const unsigned int squadID : {UI_MapEditor_Infantry5, UI_MapEditor_Troopers5}) {

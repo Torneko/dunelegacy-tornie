@@ -386,7 +386,17 @@ void BuilderBase::updateBuildList()
             removeItem(buildList, iter, itemID2Add);
             continue;
         }
-        const int dataHouseID = (itemID2Add == Unit_ChemicalCarryall) ? technologyHouse : getTechnologyHouseID();
+        const bool neutralSaboteur = itemID2Add == Unit_Saboteur
+            && owner && isHouseFaction(static_cast<HOUSETYPE>(owner->getFactionID()),HOUSE_NEUTRAL)
+            && isTornieFamilyMod(activeModName)
+            && currentGame->getGameInitSettings().getGameOptions().content.customUnitsAndBuildings
+            && itemID == Structure_Worfinery;
+        if(itemID2Add == Unit_Saboteur && !neutralSaboteur) {
+            removeItem(buildList,iter,itemID2Add);
+            continue;
+        }
+        const int dataHouseID = neutralSaboteur ? owner->getFactionID()
+            : (itemID2Add == Unit_ChemicalCarryall) ? technologyHouse : getTechnologyHouseID();
         const ObjectData::ObjectDataStruct& objData = currentGame->objectData.data[itemID2Add][dataHouseID];
 
         const bool fiveSoldiers = itemID2Add == Unit_Infantry5;
