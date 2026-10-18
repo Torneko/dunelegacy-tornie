@@ -29,7 +29,7 @@ jobs:
             if re.search(r'unhandled exception|runtime check:|FAILED:|test cases:|assertions:|Error:|Exception:|failed\.|failed!|tests failed',line,re.I):
               selected.update(range(max(0,i-1),min(len(lines),i+7)))
           if not selected:selected=set(range(max(0,len(lines)-35),len(lines)))
-          for i in sorted(selected)[-90:]:
-            text=lines[i].replace('%','%25').replace('\r','%0D').replace('\n','%0A')
-            print('::notice title=Failed test log::'+text[:5000])
+          message='\n'.join(lines[i] for i in sorted(selected)[-90:])
+          text=message.replace('%','%25').replace('\r','%0D').replace('\n','%0A')
+          print('::notice title=Failed test log::'+text[:60000])
           PY
