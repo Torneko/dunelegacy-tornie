@@ -1,0 +1,100 @@
+{
+  "version": "1.0.543",
+  "passed": true,
+  "source": "c47c8f4069ab3f5fadc17cee5ef4bcfad5ca4c17",
+  "releaseId": 416108548,
+  "releaseUrl": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.543",
+  "latestRelease": true,
+  "replacement": true,
+  "networkProtocol": 18,
+  "saveVersion": 9836,
+  "assetCount": 16,
+  "assetDigestsVerified": true,
+  "linuxVideoVerified": true,
+  "websiteBrowserRoutes": 72,
+  "publicWebsiteCommit": "64a57fb5d912b65128a33aab0994f2b73e54343f",
+  "linuxRun": 39155815209,
+  "windowsRun": 39155817228,
+  "assets": [
+    {
+      "name": "DuneLegacyTornie-1.0.543-Linux-Mint-Compatible.AppImage",
+      "size": 37423608,
+      "digest": "sha256:a3603b75977e5f69a4e09c72d5b42ef39662099ecb033a40ea418db62a349e1a"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.543-Linux-x64.deb",
+      "size": 51224190,
+      "digest": "sha256:1008fa4fff0ae711f9a0cb4e60d27faa7a6b7196fa191508b0561650b75c6415"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.543-Linux-x64.rpm",
+      "size": 51313913,
+      "digest": "sha256:08a021679ed5b409a84aa7e6f7d7a42473e2434a5c2858fe882009dbd41dba10"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.543-Linux-x64.tar.gz",
+      "size": 51786719,
+      "digest": "sha256:402d9b4bd1178fb74f37310d331a301d1d4130300a6a5bb03f76f8bc2935abe0"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.543-Linux-x86_64.AppImage",
+      "size": 37423608,
+      "digest": "sha256:343100c6012a03582fe02810af746eb6296fcf4bd8ca6559e93b5a42328497c7"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.543-Sources.zip",
+      "size": 63126752,
+      "digest": "sha256:e4ad8d3060129213123adbd6d2adc9a0be24fb5ec40492f3b9266a9c010c8d44"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.543-Windows-x64.zip",
+      "size": 63979664,
+      "digest": "sha256:d855754edd325cdc5ce8e4697bcf057db59bab03821bee0bd985c4a391d4b6e2"
+    },
+    {
+      "name": "DuneLegacyTornie-Site-Local-1.0.543.zip",
+      "size": 510258901,
+      "digest": "sha256:f1137c2fd0cdfff5f66b3d95538950fff7a9647396f0d11aef2e171f6026aae1"
+    },
+    {
+      "name": "Linux-Build-1.0.543.json",
+      "size": 1270,
+      "digest": "sha256:62ed640414c4448d5715790eb3f76a5b6375f55d865a8de709d8830f3962c0b6"
+    },
+    {
+      "name": "Publication-Validation-1.0.543.json",
+      "size": 2272,
+      "digest": "sha256:3eec72e927c1d279bef803a01e48c93c5368333d5b9a99420677458a5104b9f6"
+    },
+    {
+      "name": "Release-Notes-1.0.543-EN.md",
+      "size": 6009,
+      "digest": "sha256:8954454c355b3829a721bcd6c3af7267e7a53f16f4290edc27621c4dce6edc64"
+    },
+    {
+      "name": "Release-Notes-1.0.543-FR.md",
+      "size": 7111,
+      "digest": "sha256:1241615446a700890213156f116ecfaabc6c32e9e8a4b4e00a68ff5180936f83"
+    },
+    {
+      "name": "SHA256SUMS-1.0.543.txt",
+      "size": 1531,
+      "digest": "sha256:672d71707350fc7c3af31a327b821ec82542ebb0d4349e30653d34a8f27101eb"
+    },
+    {
+      "name": "Validation-1.0.543.json",
+      "size": 44687,
+      "digest": "sha256:71f32a92241a4106ffc593c0421428f526474161caca22a25b6681cfb06a0b6e"
+    },
+    {
+      "name": "Website-Validation-1.0.543.json",
+      "size": 15218,
+      "digest": "sha256:080f5230df454c028eeb6042eb2a2cef37ff5a75eea6c7f61d966bb96c00e03c"
+    },
+    {
+      "name": "Windows-Build-1.0.543.json",
+      "size": 1173,
+      "digest": "sha256:f71d04838771e9a5ae4478e6d4eff3fd05c3b9966038af4eb2fe9e2741456d75"
+    }
+  ]
+}

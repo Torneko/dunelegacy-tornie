@@ -1,8 +1,17 @@
-# Remplacement étendu 1.0.543 — validation avant publication
+# Remplacement étendu 1.0.543 — publié
 
-Préparation autorisée sur `prepare/1.0.543-selling-allied-options`, sans fusion dans la branche principale et sans 1.0.544. Protocole **18**, nouvelles sauvegardes **9836**, 70 succès. Le site courant `0769ffbcb9167520342e8f577ddf58606e1876bb` a été récupéré depuis `origin/gh-pages` avant modification. Les reçus de l’édition publique précédente sont archivés dans [pre-expansion-replacement-1.0.543](../release_notes/pre-expansion-replacement-1.0.543/).
+La release existante est remplacée, sans 1.0.544. Source du jeu et tag `v1.0.543` : `c47c8f4069ab3f5fadc17cee5ef4bcfad5ca4c17`. Site FR/EN : `64a57fb5d912b65128a33aab0994f2b73e54343f`, préparé depuis `0769ffbcb9167520342e8f577ddf58606e1876bb` récupéré sur `origin/gh-pages`. Protocole **18**, nouvelles sauvegardes **9836**, anciennes sauvegardes lisibles. Tous les participants doivent retélécharger ce remplacement.
 
-Les notes FR/EN, les pages d’unités/bâtiments, niveaux/prérequis, palais, succès, galerie, planches modifiables et paquet hors ligne doivent suivre la nouvelle source figée. Les paquets publics restent ceux de la précédente édition tant que les deux compilations CI n’ont pas réussi. Les preuves et liens de publication seront inscrits après vérification des fichiers livrés.
+- Vente par défaut hors Vanilla, remboursement 50 % ou 75 % en mode facile ; options d’alliance dans les lobbies personnalisés et multijoueurs ; béton requis à gauche.
+- Quad aligné sur la planche vanilla, gaz portée 8/vision 5, éolienne verticale Neutral ; Raider Quad, tank longue portée, Slowpost/Slow Tank et ralentissement du déplacement. Moissonneuses rapide/grande capacité et Harvestank au niveau 7 + IX ; Ornithoptère élite Wildspade au niveau 8, amélioration 3 + IX.
+- Palais Kleshmersh au napalm avec recharge Harkonnen et incendies conservés à la reprise ; offre de ver apprivoisé Chaos à 10 % par nouvelle Worfinery, enregistrée. Les planches vanilla modifiables sont dans les sources, le site et l’archive hors ligne.
+- **70 succès**, ArcaKev/Lite et guide FR/EN actualisés, 40 fiches d’unités et 145 images de galerie. Les 131 images précédentes restent identiques ; étoiles bleues dans l’éditeur uniquement, portraits et sept PNG fournis conservés.
+- Vérifications locales : **141 cas / 10 646 assertions**, **CTest 2/2**, **1 606 scénarios**, sept modes, reprise d’une sauvegarde réelle 9835. Contrôles CI Linux et Windows, dont exécution installée FR/EN Windows. Les trois paquets publics audités contiennent les **5 587 fichiers de mods exacts**, dont 42 copies des sept PNG fournis et 78 copies des planches nouvelles. L’AppImage Mint téléchargée démarre sans bibliothèques de développement ; XRandR/PulseAudio sont compilés et embarqués.
+- Site local : **36 parcours et 144 contextes** FR/EN, ordinateur/mobile. Sites public et hors ligne : **72 parcours**. Les 16 fichiers de la release et leurs empreintes SHA-256 sont contrôlés.
+
+CI Linux : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39155815209 — succès. Windows : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39155817228 — succès. Envoi des paquets : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39175275550 — succès. Pages : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39175456301 — succès. Documentation et contrôles public/hors ligne : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39175504112 — succès.
+
+[Audit final](../release_notes/Final-Publication-Audit-1.0.543.json) · [Audit des paquets](../release_notes/Package-Resources-Audit-1.0.543.json) · [Reçus](../release_notes/Publication-Receipt-1.0.543.json). Les reçus sont enregistrés après le tag figé sur la branche de préparation ; aucune fusion dans la branche principale. Les contrôles automatisés restent distincts d’une confirmation sur les moniteurs physiques de Mint et d’une partie humaine Internet entre connexions indépendantes.
 
 # Ajustements graphiques précédents 1.0.543 — historique
 

@@ -1,0 +1,60 @@
+{
+  "version": "1.0.543",
+  "replacement": true,
+  "authorized": true,
+  "sourceBranch": "prepare/1.0.543-selling-allied-options",
+  "networkProtocol": 18,
+  "saveVersion": 9836,
+  "siteWorktree": "work/site-543-draft",
+  "siteBase": "0769ffbcb9167520342e8f577ddf58606e1876bb",
+  "currentReleaseSource": "8a7a9980110979ba619c746d952c243631104071",
+  "publicationStatus": "complete",
+  "localEngineTests": {
+    "cases": 141,
+    "assertions": 10646,
+    "ctest": "2/2"
+  },
+  "browserRoutes": 36,
+  "websiteFeatureContexts": 144,
+  "originalGalleryFilesPreserved": 131,
+  "editableSheets": 14,
+  "newBundledFallbackCopies": 78,
+  "achievements": 70,
+  "unitsInWebsite": 40,
+  "notes": "Replace 543 after verified Linux/Windows CI; no 544 and no default-branch merge.",
+  "localFullRuntime": {
+    "scenarios": 1606,
+    "complete": true,
+    "achievements": true
+  },
+  "currentSourceRuntimeRegression": {
+    "RELEASE 543 PASS:": 7,
+    "RELEASE 543 ALLIANCES PASS:": 7,
+    "RELEASE 543 UNITS PASS:": 6,
+    "RELEASE 543 GRAPHICS PASS:": 6,
+    "RELEASE 543 EDITOR TERRAIN PASS:": 6,
+    "RELEASE 543 FLAME PORTRAITS PASS:": 3,
+    "RELEASE 543 NEUTRAL SABOTEUR PASS:": 3,
+    "RELEASE 543 EXPANSION PASS:": 7
+  },
+  "source": "c47c8f4069ab3f5fadc17cee5ef4bcfad5ca4c17",
+  "windowsRun": 39155817228,
+  "linuxRun": 39155815209,
+  "linuxStatus": "success",
+  "windowsStatus": "success",
+  "localFrenchRuntime": {
+    "scenarios": 1606,
+    "complete": true,
+    "achievements": true,
+    "previous9835SaveLoaded": true
+  },
+  "cancelledAutomaticTagRun": 39175270747,
+  "packagePublicationRun": 39175275550,
+  "websiteCommit": "64a57fb5d912b65128a33aab0994f2b73e54343f",
+  "pagesRun": 39175456301,
+  "documentsRun": 39175504112,
+  "assetCount": 16,
+  "websiteBrowserRoutes": 72,
+  "latest": true,
+  "release": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.543"
+}

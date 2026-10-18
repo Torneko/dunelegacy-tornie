@@ -1,0 +1,41 @@
+{
+  "version": "1.0.543",
+  "source": "c47c8f4069ab3f5fadc17cee5ef4bcfad5ca4c17",
+  "passed": true,
+  "packages": [
+    {
+      "name": "DuneLegacyTornie-1.0.543-Windows-x64.zip",
+      "allModFilesMatchSource": true,
+      "modFileCount": 5587,
+      "suppliedOriginalPngCopies": 42,
+      "editableFallbackPngCopies": 78,
+      "sha256": "d855754edd325cdc5ce8e4697bcf057db59bab03821bee0bd985c4a391d4b6e2"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.543-Linux-Mint-Compatible.AppImage",
+      "allModFilesMatchSource": true,
+      "modFileCount": 5587,
+      "suppliedOriginalPngCopies": 42,
+      "editableFallbackPngCopies": 78,
+      "sha256": "a3603b75977e5f69a4e09c72d5b42ef39662099ecb033a40ea418db62a349e1a",
+      "xrandrCompiledAndBundled": true,
+      "pulseAudioCompiled": true
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.543-Linux-x86_64.AppImage",
+      "allModFilesMatchSource": true,
+      "modFileCount": 5587,
+      "suppliedOriginalPngCopies": 42,
+      "editableFallbackPngCopies": 78,
+      "sha256": "343100c6012a03582fe02810af746eb6296fcf4bd8ca6559e93b5a42328497c7",
+      "xrandrCompiledAndBundled": true,
+      "pulseAudioCompiled": true
+    }
+  ],
+  "downloadedMintStartup": {
+    "passed": true,
+    "language": "fr",
+    "renderer": "software",
+    "developmentLibraryPathRemoved": true
+  }
+}
