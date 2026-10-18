@@ -1,4 +1,20 @@
-# Correction d’affichage Linux 1.0.543 — publiée
+# Derniers ajustements 1.0.543 — publiés
+
+La release existante est remplacée sans créer de 1.0.544. Jeu et tag `v1.0.543` : `8a7a9980110979ba619c746d952c243631104071`. Site FR/EN : `0769ffbcb9167520342e8f577ddf58606e1876bb`, récupéré depuis `1206aa0e96bd0fc45a52fd28390973ab6e194435`. Protocole **17**, sauvegardes **9835** et lecteurs des anciennes sauvegardes conservés. Tous les joueurs doivent retélécharger ce remplacement.
+
+- Flame Quad précis à courte portée, sans dispersion ni détonation retardée ; correction du biais à gauche sur les vues de largeur impaire, dont la vue vers la droite.
+- Étoiles bleues des trois nouvelles unités dans les boutons et sur le terrain de l’éditeur en 1×/2×/3×. Aucun marqueur ajouté aux portraits ; aucun chiffre 5 superposé aux super escouades.
+- Deux nouveaux PNG originaux des commandes lance-flammes de 3 et 5 Troopers, conservés intacts dans les six mods. Production Kleshmersh et technologie Chaos associée.
+- Vente avec explosions et son de destruction, puis béton appartenant au propriétaire sur toute l’emprise sans texture de ruine. Remboursement de 50 % sans stockage, évacuation, succès et statistiques conservés.
+- Réparer → Améliorer → Vendre tient dans la barre latérale existante. Couleur bonus verte de Jericho/Lite et ArcaKev/Lite identique aux Rebels de Tornie ; couleurs de faction par défaut conservées.
+- Correctifs Linux XRandR, résolutions et PulseAudio conservés. **139 cas / 10 332 assertions**, **CTest 2/2**, contrôles complets des mods et campagnes en local et dans la CI, plus contrôles FR/EN des paquets Windows installés.
+- Les 16 fichiers publics et leurs SHA-256 sont vérifiés. Les trois téléchargements de jeu contrôlés contiennent les **5 509 fichiers de mods exacts**, dont **42 copies des sept PNG fournis**. L’AppImage Mint téléchargée démarre sans chemin de bibliothèques de développement. Site local : 36 parcours, 28 contextes de mods et 12 contextes de portraits Kleshmersh/Harkonnen ; sites public et hors ligne : 72 parcours. Les images d’origine du site restent inchangées.
+
+CI Linux : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39136016151 — succès. Windows : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39136018362 — succès. Paquets : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39137724369 — succès. Pages : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39138125184 — succès. Documentation : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39138209928 — succès.
+
+[Audit final](../release_notes/Final-Publication-Audit-1.0.543.json) et [reçus](../release_notes/Publication-Receipt-1.0.543.json). Les reçus suivent le tag figé sur la branche de préparation ; aucune fusion dans la branche principale. Les confirmations sur les moniteurs physiques de Mint et en partie Internet humaine restent distinctes des vérifications automatisées.
+
+# Correction d’affichage Linux précédente — historique
 
 La release existante est remplacée, sans créer de 1.0.544. Source du jeu et tag `v1.0.543` : `1741fbda449f585d28bef20672369dccf03b3369`. Site FR/EN publié : `1206aa0e96bd0fc45a52fd28390973ab6e194435`, récupéré depuis `3bebd5a0db74b63c46e56d301c44f2f5d23123f0`. Protocole **16** et sauvegardes **9835** conservés.
 
@@ -11,7 +27,7 @@ La release existante est remplacée, sans créer de 1.0.544. Source du jeu et ta
 
 CI Linux : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39129880567 — succès. Windows : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39129882688 — succès. Envoi des paquets vérifiés : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39132350296 — succès. Pages : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39132528038 — succès. Documents et contrôles navigateur : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39132594554 — succès.
 
-L’[audit final](../release_notes/Final-Publication-Audit-1.0.543.json) vérifie la même release, les 16 fichiers publics, leurs SHA-256 et les sources Linux/Windows/site. Les [reçus de publication](../release_notes/Publication-Receipt-1.0.543.json) suivent le tag figé sur la branche de préparation ; aucune fusion dans la branche principale. La confirmation sur les moniteurs physiques du PC Mint de l’utilisatrice reste à effectuer.
+L’[audit final](../release_notes/linux-video-replacement-1.0.543/Final-Publication-Audit-1.0.543.json) vérifie la même release, les 16 fichiers publics, leurs SHA-256 et les sources Linux/Windows/site. Les [reçus de publication](../release_notes/linux-video-replacement-1.0.543/Publication-Receipt-1.0.543.json) suivent le tag figé sur la branche de préparation ; aucune fusion dans la branche principale. La confirmation sur les moniteurs physiques du PC Mint de l’utilisatrice reste à effectuer.
 
 # Remplacement graphique précédent de la 1.0.543 — historique
 

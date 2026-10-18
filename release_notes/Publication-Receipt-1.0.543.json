@@ -1,180 +1,84 @@
 {
   "version": "1.0.543",
   "replacement": true,
-  "source": "1741fbda449f585d28bef20672369dccf03b3369",
-  "networkProtocol": 16,
-  "saveVersion": 9835,
-  "linuxRun": 39129880567,
-  "windowsRun": 39129882688,
-  "siteWorktree": "work/site-543-draft",
-  "siteBase": "3bebd5a0db74b63c46e56d301c44f2f5d23123f0",
-  "currentReleaseSource": "f956080b98bf4ba8fcb1ebca6e74df0332212984",
-  "sourceBranch": "prepare/1.0.543-selling-allied-options",
   "authorized": true,
+  "sourceBranch": "prepare/1.0.543-selling-allied-options",
+  "networkProtocol": 17,
+  "saveVersion": 9835,
+  "siteWorktree": "work/site-543-draft",
+  "siteBase": "1206aa0e96bd0fc45a52fd28390973ab6e194435",
+  "currentReleaseSource": "1741fbda449f585d28bef20672369dccf03b3369",
   "publicationStatus": "complete",
-  "notes": "Linux XRandR monitor detection, selected window size and restored resolution choices. Replace 543 only; protocol 16/save9835 retained.",
   "localEngineTests": {
     "cases": 139,
     "assertions": 10332,
     "ctest": "2/2"
   },
-  "localVideoCases": 10,
-  "localVideoChecks": [
+  "newArtwork": [
     {
-      "language": "fr",
-      "case": "window-wide",
-      "screen": "3840x1080",
-      "selected": "1280x720",
-      "passed": true
+      "file": "ProductionTroopersFlames3.png",
+      "size": [
+        91,
+        55
+      ],
+      "sha256": "97d43b2db4127bb75f470b24e027b293e23c5785816b187c11506caa7144133c",
+      "identicalCopies": [
+        "Tornie",
+        "TornieLite",
+        "Jericho",
+        "JerichoLite",
+        "ArcaKev",
+        "ArcaKevLite"
+      ]
     },
     {
-      "language": "fr",
-      "case": "window",
-      "screen": "1920x1080",
-      "selected": "1280x720",
-      "passed": true
-    },
-    {
-      "language": "fr",
-      "case": "fullscreen",
-      "screen": "1920x1080",
-      "selected": "1280x720",
-      "passed": true
-    },
-    {
-      "language": "fr",
-      "case": "stale",
-      "screen": "1920x1080",
-      "selected": "1920x1080",
-      "passed": true
-    },
-    {
-      "language": "fr",
-      "case": "small",
-      "screen": "1280x720",
-      "selected": "800x600",
-      "passed": true
-    },
-    {
-      "language": "en",
-      "case": "window-wide",
-      "screen": "3840x1080",
-      "selected": "1280x720",
-      "passed": true
-    },
-    {
-      "language": "en",
-      "case": "window",
-      "screen": "1920x1080",
-      "selected": "1280x720",
-      "passed": true
-    },
-    {
-      "language": "en",
-      "case": "fullscreen",
-      "screen": "1920x1080",
-      "selected": "1280x720",
-      "passed": true
-    },
-    {
-      "language": "en",
-      "case": "stale",
-      "screen": "1920x1080",
-      "selected": "1920x1080",
-      "passed": true
-    },
-    {
-      "language": "en",
-      "case": "small",
-      "screen": "1280x720",
-      "selected": "800x600",
-      "passed": true
+      "file": "ProductionTroopersFlames5.png",
+      "size": [
+        91,
+        55
+      ],
+      "sha256": "d6507ab6468871c34271b2fc4d811a181e7786a78dc298a5d0e83d79e7a86f44",
+      "identicalCopies": [
+        "Tornie",
+        "TornieLite",
+        "Jericho",
+        "JerichoLite",
+        "ArcaKev",
+        "ArcaKevLite"
+      ]
     }
   ],
-  "browserRoutes": 36,
-  "localDummyVideoPassed": true,
-  "gameplayAndModResourcesUnchangedFrom": "f956080b98bf4ba8fcb1ebca6e74df0332212984",
+  "notes": "Replace 543 only after verified Linux and Windows builds; no 544 and no default-branch merge.",
+  "source": "8a7a9980110979ba619c746d952c243631104071",
+  "linuxRun": 39136016151,
+  "windowsRun": 39136018362,
+  "localFullRuntime": {
+    "source": "8a7a9980110979ba619c746d952c243631104071",
+    "scenarios": 1606,
+    "complete": true,
+    "achievements": true
+  },
   "currentSourceRuntimeRegression": {
     "RELEASE 543 PASS:": 7,
     "RELEASE 543 ALLIANCES PASS:": 7,
     "RELEASE 543 UNITS PASS:": 6,
     "RELEASE 543 GRAPHICS PASS:": 6,
+    "RELEASE 543 EDITOR TERRAIN PASS:": 6,
+    "RELEASE 543 FLAME PORTRAITS PASS:": 3,
     "RELEASE 543 NEUTRAL SABOTEUR PASS:": 3
   },
-  "diagnosticSource": "dd0d467456d989be82c68529c656b6a38d0f90c2",
-  "diagnosticLinuxRun": 39128246472,
-  "diagnosticWindowsRun": 39128248783,
-  "localFullRuntime": {
-    "scenarios": 1606,
-    "achievements": true,
-    "source": "9f35da94d50c844b549d1e32e39165a6c018ec1a"
-  },
-  "repeatedLegacyIntegration": {
-    "passed": true,
-    "checks": [
-      {
-        "run": 1,
-        "sameOutputDirectory": true,
-        "sevenModes": true,
-        "enemyAndFriendlyMissesExcluded": true,
-        "localMissAndThreeBuildingBlastVerified": true
-      },
-      {
-        "run": 2,
-        "sameOutputDirectory": true,
-        "sevenModes": true,
-        "enemyAndFriendlyMissesExcluded": true,
-        "localMissAndThreeBuildingBlastVerified": true
-      }
-    ]
-  },
-  "audioErrorPreserved": true,
+  "browserRoutes": 36,
+  "websiteFeatureContexts": 28,
+  "originalGalleryFilesPreserved": 129,
   "linuxStatus": "success",
   "linuxPackagedVideoCases": 12,
   "pulseAudioAndXrandrBuildVerified": true,
   "windowsStatus": "success",
-  "packagePublicationRun": 39132350296,
-  "deliveredPackages": {
-    "version": "1.0.543",
-    "source": "1741fbda449f585d28bef20672369dccf03b3369",
-    "passed": true,
-    "packages": [
-      {
-        "name": "DuneLegacyTornie-1.0.543-Windows-x64.zip",
-        "allModFilesMatchSource": true,
-        "modFileCount": 5497,
-        "suppliedOriginalPngCopies": 30,
-        "sha256": "0ff1cc006dbafb47ae7a4af8c4e5e17b60d72ec2f335302e1bb8603fadac2a8d"
-      },
-      {
-        "name": "DuneLegacyTornie-1.0.543-Linux-Mint-Compatible.AppImage",
-        "allModFilesMatchSource": true,
-        "modFileCount": 5497,
-        "suppliedOriginalPngCopies": 30,
-        "sha256": "baae165d475379835943dde7096ca38dbe2a953b25a53ac0ef6d1b382c2ab650",
-        "xrandrCompiledAndBundled": true,
-        "pulseAudioCompiled": true
-      },
-      {
-        "name": "DuneLegacyTornie-1.0.543-Linux-x86_64.AppImage",
-        "allModFilesMatchSource": true,
-        "modFileCount": 5497,
-        "suppliedOriginalPngCopies": 30,
-        "sha256": "ce65b43fd520bc489ee520582cf6a7c57224dd315e4a00bc3e0e78d36e3f8f3c",
-        "xrandrCompiledAndBundled": true,
-        "pulseAudioCompiled": true
-      }
-    ],
-    "downloadedMintStartup": {
-      "passed": true,
-      "language": "fr",
-      "renderer": "software",
-      "developmentLibraryPathRemoved": true
-    }
-  },
-  "websiteCommit": "1206aa0e96bd0fc45a52fd28390973ab6e194435",
-  "pagesRun": 39132528038,
-  "documentsRun": 39132594554,
+  "packagePublicationRun": 39137724369,
+  "websiteCommit": "0769ffbcb9167520342e8f577ddf58606e1876bb",
+  "siteFlamePortraitContexts": 12,
+  "pagesRun": 39138125184,
+  "documentsRun": 39138209928,
   "assetCount": 16,
   "websiteBrowserRoutes": 72,
   "latest": true,

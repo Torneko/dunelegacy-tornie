@@ -1,30 +1,30 @@
 {
   "version": "1.0.543",
-  "source": "1741fbda449f585d28bef20672369dccf03b3369",
+  "source": "8a7a9980110979ba619c746d952c243631104071",
   "passed": true,
   "packages": [
     {
       "name": "DuneLegacyTornie-1.0.543-Windows-x64.zip",
       "allModFilesMatchSource": true,
-      "modFileCount": 5497,
-      "suppliedOriginalPngCopies": 30,
-      "sha256": "0ff1cc006dbafb47ae7a4af8c4e5e17b60d72ec2f335302e1bb8603fadac2a8d"
+      "modFileCount": 5509,
+      "suppliedOriginalPngCopies": 42,
+      "sha256": "60a000593b8587e08bed959a8ae560952fa7cfb40910d8098a1fac726bc76d23"
     },
     {
       "name": "DuneLegacyTornie-1.0.543-Linux-Mint-Compatible.AppImage",
       "allModFilesMatchSource": true,
-      "modFileCount": 5497,
-      "suppliedOriginalPngCopies": 30,
-      "sha256": "baae165d475379835943dde7096ca38dbe2a953b25a53ac0ef6d1b382c2ab650",
+      "modFileCount": 5509,
+      "suppliedOriginalPngCopies": 42,
+      "sha256": "19fe9522d12dca25c5d3bb7e308d9a01613cb42acc4b54f9b9e2a2745687052b",
       "xrandrCompiledAndBundled": true,
       "pulseAudioCompiled": true
     },
     {
       "name": "DuneLegacyTornie-1.0.543-Linux-x86_64.AppImage",
       "allModFilesMatchSource": true,
-      "modFileCount": 5497,
-      "suppliedOriginalPngCopies": 30,
-      "sha256": "ce65b43fd520bc489ee520582cf6a7c57224dd315e4a00bc3e0e78d36e3f8f3c",
+      "modFileCount": 5509,
+      "suppliedOriginalPngCopies": 42,
+      "sha256": "c9f884c5d72fb52c8adfb28120d85c9804519c107871096c582b36c10729f753",
       "xrandrCompiledAndBundled": true,
       "pulseAudioCompiled": true
     }
