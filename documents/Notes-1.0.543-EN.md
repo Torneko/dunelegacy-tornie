@@ -2,6 +2,14 @@
 
 Linux, Mint AppImage and Windows share the same source. All participants need **1.0.543 / protocol 16**; new saves use **9835**, older saves remain readable.
 
+## Linux display correction
+
+- PulseAudio and XRandR are explicitly compiled and checked before packaging; audio failure details are preserved.
+- Linux packages detect physical monitors through XRandR; both AppImages bundle the library.
+- Windows retain the selected resolution instead of snapping to the sole desktop mode reported by Linux. Stale dimensions larger than the monitor are fitted to that screen.
+- Smaller resolutions remain available in video options even when Linux reports only its native mode. Fullscreen stays on the window’s monitor.
+- Replaces 1.0.543 only; protocol 16 and save format 9835 are unchanged.
+
 ## Replacement 1.0.543
 
 - Correct Flame Quad and Gas Infantry house tinting across VGA conversion differences; keep the gas weapon green.
@@ -22,7 +30,7 @@ Linux, Mint AppImage and Windows share the same source. All participants need **
 - First sale achievement, plus persistent buildings-sold and sale-credit statistics.
 - Non-cooperative multiplayer: independent host permissions for allied control and construction on allied land, restricted to the same team. Ownership and funds remain separate.
 - Optional harvester counter, disabled by default in Tornie/Tornie Lite and enabled in other modes.
-- Protocol 15 and save format 9835, retaining old save readers.
+- Protocol 16 and save format 9835, retaining old save readers.
 
 ## New units integrated and locally verified
 
@@ -33,6 +41,6 @@ Linux, Mint AppImage and Windows share the same source. All participants need **
 - Five original PNGs preserved in all six mods. Gas sprite magenta is made transparent at load time, opaque black remains, and zoom uses exact 1×/2×/3× scales.
 - New units are registered in the editor, reinforcements and save factories using appended IDs.
 
-See the [specification and initial balance](https://github.com/Torneko/dunelegacy-tornie/blob/v1.0.543/docs/UNITS-1.0.543.md). The FR/EN website and matching offline archive accompany the Linux/Windows 1.0.543 release.
+See the [specification and initial balance](../docs/UNITS-1.0.543.md). The FR/EN website and matching offline archive accompany the Linux/Windows 1.0.543 release.
 
 Flame Quad: **300 credits and 12 damage per shot**, compared with **200 credits and 7 damage per shot** for the Quad, plus the flame effect. All six configurations were checked.

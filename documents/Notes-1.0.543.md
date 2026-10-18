@@ -2,6 +2,14 @@
 
 Linux, AppImage Mint et Windows partagent la même source. Tous les participants doivent utiliser **1.0.543 / protocole 16** ; nouvelles sauvegardes **9835**, anciennes sauvegardes lisibles.
 
+## Correction de l’affichage Linux
+
+- PulseAudio et XRandR sont compilés explicitement et contrôlés avant création des paquets ; le détail des erreurs audio est conservé.
+- Détection des moniteurs physiques par XRandR dans les paquets Linux ; bibliothèque incluse dans les deux AppImages.
+- Une fenêtre conserve la résolution choisie au lieu de passer au seul mode du bureau annoncé par Linux. Les anciennes dimensions dépassant le moniteur sont ramenées à cet écran.
+- Les résolutions plus petites sont de nouveau proposées dans les options, même quand Linux n’annonce que la résolution native. Plein écran limité au moniteur de la fenêtre.
+- Remplacement de la 1.0.543 uniquement ; protocole 16 et sauvegardes 9835 inchangés.
+
 ## Remplacement de la 1.0.543
 
 - Teinte de maison du Flame Quad et de l’infanterie à gaz corrigée malgré la différence de conversion VGA ; le vert du gaz reste intact.
@@ -22,7 +30,7 @@ Linux, AppImage Mint et Windows partagent la même source. Tous les participants
 - Premier bâtiment vendu : succès « Liquidités ». Nombre de ventes et crédits remboursés dans les statistiques, conservés en sauvegarde.
 - Hors coop multijoueur : contrôle allié et construction sur terrain allié sont deux permissions indépendantes de l'hôte, limitées aux membres d'une même équipe. Les fonds et bâtiments gardent leur propriétaire.
 - Option de compteur de moissonneuses, désactivée par défaut dans Tornie/Tornie Lite et activée dans les autres modes.
-- Protocole 15 et des sauvegardes 9835 ; conservation de la lecture des anciennes sauvegardes.
+- Protocole 16 et des sauvegardes 9835 ; conservation de la lecture des anciennes sauvegardes.
 
 ## Nouvelles unités intégrées et validées localement
 
@@ -33,6 +41,6 @@ Linux, AppImage Mint et Windows partagent la même source. Tous les participants
 - Cinq PNG reçus, conservés intacts dans les six mods. Magenta retiré au chargement du sprite à gaz, noir opaque préservé ; découpage natif et zooms entiers 1×/2×/3×.
 - Les nouvelles unités sont ajoutées à l’éditeur, aux renforts et aux tables de sauvegarde avec des identifiants ajoutés après les anciens.
 
-Voir les [spécifications et valeurs initiales](https://github.com/Torneko/dunelegacy-tornie/blob/v1.0.543/docs/UNITS-1.0.543.md). Le site FR/EN et son archive hors ligne accompagnent la release Linux/Windows 1.0.543.
+Voir les [spécifications et valeurs initiales](../docs/UNITS-1.0.543.md). Le site FR/EN et son archive hors ligne accompagnent la release Linux/Windows 1.0.543.
 
 Flame Quad : **300 crédits et 12 dégâts par tir**, contre **200 crédits et 7 dégâts par tir** pour le Quad ; effet de flamme en plus. Les six configurations ont été contrôlées.
