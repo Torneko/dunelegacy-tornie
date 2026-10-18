@@ -1,0 +1,157 @@
+{
+  "status": "received-awaiting-complete-user-list",
+  "publicationAuthorized": false,
+  "tagOrVersionChosen": false,
+  "currentReleaseUnchanged": "1.0.543",
+  "archiveSha256": "f27e62b3f36cd30ee85e495e9e366db129d9af16d18fa4bd354176e25728642a",
+  "files": [
+    {
+      "file": "CapacityHarvesterIcon.png",
+      "sizeBytes": 3797,
+      "sha256": "24b2102048042f2d673683010ed0fccf9acf1b712fc491b892c00e6ab1045353",
+      "dimensions": [
+        91,
+        55
+      ],
+      "mode": "RGB",
+      "alphaRange": [
+        255,
+        255
+      ],
+      "opaqueMagentaPixels": 0,
+      "role": "portrait"
+    },
+    {
+      "file": "HarvesterCapacity.png",
+      "sizeBytes": 4229,
+      "sha256": "96fe5a08c43894ca7a1fe52625e6ba6d3b3baaef2f1c212f76eb5af20ff74dec",
+      "dimensions": [
+        192,
+        24
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "opaqueMagentaPixels": 0,
+      "proposedTarget": "graphics/fallbacks-543/Harvester-Capacity.png",
+      "expectedDimensions": [
+        192,
+        24
+      ],
+      "dimensionsMatch": true
+    },
+    {
+      "file": "HarvesterSpeed.png",
+      "sizeBytes": 2640,
+      "sha256": "1930ebb28398e89a9254d3b28b8bbfe04539f4e16c7dd33f54eec2863b12f50c",
+      "dimensions": [
+        192,
+        24
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "opaqueMagentaPixels": 0,
+      "proposedTarget": "graphics/fallbacks-543/Harvester-Fast.png",
+      "expectedDimensions": [
+        192,
+        24
+      ],
+      "dimensionsMatch": true
+    },
+    {
+      "file": "RaiderQuadIcon.png",
+      "sizeBytes": 6608,
+      "sha256": "1073bf20b051106a4c657437151f067884bbc9c923e07a318981da472f508cd4",
+      "dimensions": [
+        91,
+        55
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        255,
+        255
+      ],
+      "opaqueMagentaPixels": 0,
+      "role": "portrait"
+    },
+    {
+      "file": "RaiderQuadTiles.png",
+      "sizeBytes": 2298,
+      "sha256": "936df5d70194450be32dfe230720e440d7b629598e75406c3d6dc6a12659db90",
+      "dimensions": [
+        88,
+        58
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "opaqueMagentaPixels": 0,
+      "proposedTarget": "graphics/fallbacks-543/RaiderQuad.png",
+      "expectedDimensions": [
+        128,
+        16
+      ],
+      "dimensionsMatch": false
+    },
+    {
+      "file": "Slowpost.png",
+      "sizeBytes": 920,
+      "sha256": "cc4eb40560460054d14b3cb2eaf77896a4354d5d7807f0a88691d55aa3c274b7",
+      "dimensions": [
+        16,
+        32
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        255,
+        255
+      ],
+      "opaqueMagentaPixels": 0,
+      "proposedTarget": "graphics/fallbacks-543/Slowpost.png",
+      "expectedDimensions": [
+        160,
+        16
+      ],
+      "dimensionsMatch": false
+    },
+    {
+      "file": "SlowpostIcon.png",
+      "sizeBytes": 20642,
+      "sha256": "a514f6575245e9daad31d2a948c182ae2c5bf6dec83e9bcef3ae3d4e1a1f9207",
+      "dimensions": [
+        182,
+        110
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        255,
+        255
+      ],
+      "opaqueMagentaPixels": 0,
+      "role": "portrait"
+    },
+    {
+      "file": "SpeedHarvesterIcon.png",
+      "sizeBytes": 3851,
+      "sha256": "a8b09c6b165c0451e2a7c183a974a78d56edeff43bdb565c80430f4466f13397",
+      "dimensions": [
+        91,
+        55
+      ],
+      "mode": "RGB",
+      "alphaRange": [
+        255,
+        255
+      ],
+      "opaqueMagentaPixels": 0,
+      "role": "portrait"
+    }
+  ]
+}

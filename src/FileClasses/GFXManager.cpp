@@ -4459,6 +4459,23 @@ void GFXManager::reloadModDependentObjectGraphics() {
     // Complete, editable native-size sheets. Missing artwork uses the vanilla
     // per-house atlas; portraits keep their original clean artwork.
     const auto installFallbackSheet=[&](int id,int fallback,const char* filename) {
+        // These two turret accents identify the unit; chassis retain house colours.
+        const bool whiteTurret=tornieGraphicsVisible && id==ObjPic_SlowTankTurret;
+        const bool violetTurret=tornieGraphicsVisible && id==ObjPic_RangedTankTurret;
+        const bool fixedTurret=whiteTurret || violetTurret;
+        static const std::array<SDL_Color,8> white{{
+            {255,255,255,255},{236,236,236,255},{212,212,212,255},{188,188,188,255},
+            {160,160,160,255},{132,132,132,255},{104,104,104,255},{76,76,76,255}
+        }};
+        static const std::array<SDL_Color,8> violet{{
+            {216,172,255,255},{192,140,240,255},{168,108,220,255},{144,80,192,255},
+            {116,56,160,255},{88,36,124,255},{60,20,88,255},{32,8,48,255}
+        }};
+        // Vanilla tank turrets use metal shades, not the chassis team ramp.
+        static const std::array<SDL_Color,8> vanillaMetal{{
+            {194,194,218,255},{157,157,186,255},{125,125,153,255},{105,109,153,255},
+            {85,85,85,255},{64,64,89,255},{40,40,60,255},{28,28,20,255}
+        }};
         sdl2::surface_ptr raw;
         if(tornieGraphicsVisible) {
             auto asset=openTornieAsset(filename,"unit");
@@ -4468,17 +4485,29 @@ void GFXManager::reloadModDependentObjectGraphics() {
         if(raw && (!reference || raw->w!=reference->w || raw->h!=reference->h))
             throw std::runtime_error(std::string("Fallback sheet dimensions differ from vanilla: ")+filename);
         for(int slot=0;slot<NUM_HOUSE_COLOR_SLOTS;++slot) {
-            auto* base=objPic[fallback][slot][0].get();if(!base)base=reference;
-            auto image=raw?sdl2::surface_ptr{SDL_ConvertSurfaceFormat(raw.get(),SDL_PIXELFORMAT_RGBA32,0)}:copySurface(base);
-            if(raw)for(int y=0;y<image->h;++y)for(int x=0;x<image->w;++x) {
+            auto* base=objPic[fallback][fixedTurret?HOUSE_HARKONNEN:slot][0].get();if(!base)base=reference;
+            auto image=(raw || fixedTurret)
+                ?sdl2::surface_ptr{SDL_ConvertSurfaceFormat(raw?raw.get():base,SDL_PIXELFORMAT_RGBA32,0)}
+                :copySurface(base);
+            if(raw || fixedTurret)for(int y=0;y<image->h;++y)for(int x=0;x<image->w;++x) {
                 Uint8 r,g,b,a;SDL_GetRGBA(getPixel(image.get(),x,y),image->format,&r,&g,&b,&a);
                 if(!a)continue;
                 if(r==255 && g==0 && b==255){putPixel(image.get(),x,y,0);continue;}
+                bool metalRemapped=false;
+                if(fixedTurret)for(int shade=0;shade<8;++shade) {
+                    const auto source=vanillaMetal[shade];
+                    if(r==source.r && g==source.g && b==source.b) {
+                        const auto target=whiteTurret?white[shade]:violet[shade];
+                        putPixel(image.get(),x,y,SDL_MapRGBA(image->format,target.r,target.g,target.b,a));
+                        metalRemapped=true;break;
+                    }
+                }
+                if(metalRemapped)continue;
                 constexpr Uint8 red[]={212,180,152,124,88,60,32};
                 for(int shade=0;shade<7;++shade) {
                     const auto source=palette[PALCOLOR_HARKONNEN+shade];
                     if((r==source.r && g==source.g && b==source.b) || (r==red[shade] && !g && !b)) {
-                        const auto target=getHouseColorSDL(slot,shade);
+                        const auto target=whiteTurret?white[shade]:violetTurret?violet[shade]:getHouseColorSDL(slot,shade);
                         putPixel(image.get(),x,y,SDL_MapRGBA(image->format,target.r,target.g,target.b,a));break;
                     }
                 }

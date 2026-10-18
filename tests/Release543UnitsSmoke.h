@@ -222,7 +222,7 @@ inline void verifyRelease543Units(const std::string& output,const std::string& m
     }
     for(const int house:{HOUSE_HARKONNEN,HOUSE_ATREIDES,HOUSE_ORDOS}) {
         const int color=getHouseVisualHouse(house);
-        for(const int graphic:{ObjPic_FlameQuad,ObjPic_GasInfantry}) {
+        for(const int graphic:{ObjPic_FlameQuad,ObjPic_GasInfantry,ObjPic_SlowTankTurret,ObjPic_RangedTankTurret}) {
             auto* texture=pGFXManager->getZoomedObjPic(graphic,house,0);int w,h;
             SDL_QueryTexture(texture,nullptr,nullptr,&w,&h);
             SDL_SetRenderDrawColor(renderer,7,11,13,255);SDL_RenderClear(renderer);
@@ -232,12 +232,20 @@ inline void verifyRelease543Units(const std::string& output,const std::string& m
             int teamPixels=0;
             for(int y=0;y<h;++y)for(int x=0;x<w;++x) {
                 Uint8 r,g,b,a;SDL_GetRGBA(getPixel(image.get(),x,y),image->format,&r,&g,&b,&a);
+                if(graphic==ObjPic_SlowTankTurret) {
+                    if(r==255 && g==255 && b==255)++teamPixels;
+                    continue;
+                }
+                if(graphic==ObjPic_RangedTankTurret) {
+                    if(r==216 && g==172 && b==255)++teamPixels;
+                    continue;
+                }
                 for(int shade=0;shade<7;++shade) {
                     const auto expected=getHouseColorSDL(color,shade);
                     if(r==expected.r && g==expected.g && b==expected.b){++teamPixels;break;}
                 }
             }
-            require(teamPixels>0,"supplied unit has no pixels in its house colour ramp");
+            require(teamPixels>0,"unit atlas is missing its expected house colour or fixed turret accent");
             const auto filename=(std::filesystem::path(output)/(mod+"-colour-"+std::to_string(house)+"-"+std::to_string(graphic)+".png")).string();
             require(SavePNG(image.get(),filename.c_str())==0,"colour preview export");
         }

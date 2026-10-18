@@ -32,7 +32,7 @@ inline void verifyRelease543Expansion(const std::string& output,const std::strin
             {HOUSE_CUSTOM,Unit_SlowTank,Structure_HeavyFactory,7,0,true},{HOUSE_NEUTRAL,Structure_Slowpost,Structure_ConstructionYard,7,0,true},
             {HOUSE_ATREIDES,Unit_FastHarvester,Structure_HeavyFactory,7,0,true},{HOUSE_KLESHMERSH,Unit_FastHarvester,Structure_HeavyFactory,7,0,true},
             {HOUSE_WILDSPADE,Unit_CapacityHarvester,Structure_HeavyFactory,7,0,true},{HOUSE_MERCENARY,Unit_CapacityHarvester,Structure_HeavyFactory,7,0,true},
-            {HOUSE_KLESHMERSH,Unit_RebelHarvester,Structure_HeavyFactory,7,0,true},{HOUSE_REBELS,Unit_RebelHarvester,Structure_HeavyFactory,7,0,true},
+            {HOUSE_REBELS,Unit_RebelHarvester,Structure_HeavyFactory,7,0,true},
             {HOUSE_CUSTOM,Unit_RebelHarvester,Structure_HeavyFactory,7,0,true},{HOUSE_WILDSPADE,Unit_EliteOrnithopter,Structure_HighTechFactory,8,3,true}};
         for(const auto& product:products) {
             auto* owner=game->getHouse(runtime(product.faction));if(!owner)continue;
@@ -43,6 +43,8 @@ inline void verifyRelease543Expansion(const std::string& output,const std::strin
             for(int upgrade=0;upgrade<product.upgrade;++upgrade){require(!available(builder,product.item),"unit unlocked before its upgrade");require(builder->doUpgrade(),"required upgrade refused");builder->update();}
             if(product.ix && owner->getNumItems(Structure_IX)==0){require(!available(builder,product.item),"unit unlocked without IX");require(owner->placeStructure(NONE_ID,Structure_IX,x,26,true,true),"IX placement");}
             require(available(builder,product.item),"configured unit missing: "+getItemNameByID(product.item));
+            if(product.faction==HOUSE_KLESHMERSH && product.item==Unit_FastHarvester)
+                require(!available(builder,Unit_RebelHarvester),"Kleshmersh still produces Harvestank outside Chaos");
             builder->doProduceItem(product.item);require(builder->getCurrentProducedItem()==static_cast<Uint32>(product.item),"production order refused");builder->doCancelItem(product.item);
             if(isUnit(product.item)) {
                 auto* instance=owner->createUnit(product.item,true);require(instance && instance->getItemID()==static_cast<Uint32>(product.item),"unit factory identity");
