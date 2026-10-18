@@ -93,7 +93,8 @@ std::string getCustomColorName(int colorSlot) {
         case HOUSECOLOR_CUSTOM_FUCHSIA:     return "Fuchsia";
         case HOUSECOLOR_CUSTOM_TEAL:        return "Teal";
         case HOUSECOLOR_CUSTOM_APPLE_GREEN: return
-            (ModManager::instance().getActiveModName() == "Jericho" || ModManager::instance().getActiveModName() == "JerichoLite") ? _("Dark Green") : _("Dark Grey");
+            (ModManager::instance().getActiveModName() == "Jericho" || ModManager::instance().getActiveModName() == "JerichoLite"
+             || ModManager::instance().getActiveModName() == "ArcaKev" || ModManager::instance().getActiveModName() == "ArcaKevLite") ? _("Dark Green") : _("Dark Grey");
         case HOUSECOLOR_CUSTOM_LIGHT_PINK:
             return ModManager::instance().getActiveModName() == "Tornie" ? "Yellow" : "Pink";
         case HOUSECOLOR_CUSTOM_BRIGHT_YELLOW: return "Brown";

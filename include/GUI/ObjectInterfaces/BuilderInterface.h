@@ -55,8 +55,8 @@ protected:
         upgradeProgressBar.setText(_("Upgrade"));
         upgradeProgressBar.setTextColor(color);
         upgradeProgressBar.setVisible(false);
-        topBox.addWidget(&upgradeButton,Point(44,2),Point(75,18));
-        topBox.addWidget(&upgradeProgressBar,Point(44,2),Point(75,18));
+        topBox.addWidget(&upgradeButton,Point(upgradeButtonX,2),Point(upgradeButtonWidth,18));
+        topBox.addWidget(&upgradeProgressBar,Point(upgradeButtonX,2),Point(upgradeButtonWidth,18));
 
         mainHBox.addWidget(Spacer::create());
 

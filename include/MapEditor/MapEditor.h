@@ -145,6 +145,7 @@ public:
     friend struct DoublefineryEditorFixture;
 #ifdef DUNELEGACY_RUNTIME_TESTS
     friend struct EditorOwnershipFixture;
+    friend struct Release543EditorFixture;
 #endif
 
     void RunEditor();

@@ -3,7 +3,7 @@ const {chromium}=require('playwright'),fs=require('fs');
  const browser=await chromium.launch({executablePath:process.env.SITE_BROWSER||'/usr/bin/chromium',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
  const results=[],errors=[];
  const expected=process.env.RELEASE_VERSION||'1.0.543';
- const protocol=process.env.NETWORK_PROTOCOL||'16';
+ const protocol=process.env.NETWORK_PROTOCOL||'17';
  const routes=['accueil','unites','batiments','technologies','factions','hauts-faits','guide','galerie','projet'];
  const bases=process.argv.slice(2);if(!bases.length)throw Error('Provide the offline file URL and/or published site URL');
  for(const base of bases)for(const width of [1440,390])for(const lang of ['fr','en']){

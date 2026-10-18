@@ -56,6 +56,9 @@ public:
     inline FixPoint getRealY() const { return realY; }
 
 private:
+#ifdef DUNELEGACY_RUNTIME_TESTS
+    friend struct FlameAccuracyFixture;
+#endif
     // constants for each bullet type
     int      damageRadius;               ///< The radius of the bullet
     bool     explodesAtGroundObjects;    ///< false = bullet goes through objects, true = bullet explodes at ground objects

@@ -74,8 +74,17 @@ BuilderList::BuilderList(Uint32 builderObjectID) {
             {Unit_Soldier, "ProductionSoldier.png"}, {Unit_Infantry, "ProductionInfantry3.png"},
             {Unit_Infantry5, "ProductionInfantry5.png"}, {Unit_Trooper, "ProductionTrooper.png"},
             {Unit_Troopers, "ProductionTroopers3.png"}, {Unit_Troopers5, "ProductionTroopers5.png"}};
-        for(const auto& icon : icons) if(pFileManager->exists(icon.second)) {
-            auto surface = LoadPNG_RW(pFileManager->openFile(icon.second).get());
+        const bool flameTroopers=currentGame->getGameInitSettings().getGameOptions().content.customUnitsAndBuildings
+            && isHouseFaction(static_cast<HOUSETYPE>(builder->getTechnologyHouseID()),HOUSE_KLESHMERSH);
+        for(const auto& icon : icons) {
+            const char* filename=icon.second;
+            if(flameTroopers) {
+                if(icon.first==Unit_Trooper)filename="ProductionTrooperFlames.png";
+                else if(icon.first==Unit_Troopers)filename="ProductionTroopersFlames3.png";
+                else if(icon.first==Unit_Troopers5)filename="ProductionTroopersFlames5.png";
+            }
+            if(!pFileManager->exists(filename))continue;
+            auto surface = LoadPNG_RW(pFileManager->openFile(filename).get());
             if(surface) productionPortraits.emplace(icon.first, convertSurfaceToTexture(std::move(surface)));
         }
     }
@@ -258,6 +267,7 @@ void BuilderList::draw(Point position) {
                 if(portrait != productionPortraits.end()) pTexture = portrait->second.get();
                 if(currentGame->getGameInitSettings().getGameOptions().content.customUnitsAndBuildings
                    && (buildItem.itemID==Unit_Trooper || buildItem.itemID==Unit_Troopers || buildItem.itemID==Unit_Troopers5)
+                   && portrait==productionPortraits.end()
                    && isHouseFaction(static_cast<HOUSETYPE>(pBuilder->getTechnologyHouseID()),HOUSE_KLESHMERSH))
                     pTexture=pGFXManager->getSmallDetailPic(Picture_FlameTrooper);
                 const SDL_Rect dest = {position.x + getButtonPosition(i - currentListPos).x,
@@ -266,18 +276,6 @@ void BuilderList::draw(Point position) {
                 if(pTexture != nullptr) {
                     SDL_Rect tmpDest = dest;
                     SDL_RenderCopy(renderer, pTexture, nullptr, &tmpDest);
-                }
-
-                if(buildItem.itemID==Unit_Troopers5) {
-                    // Keep the original portrait; a clear count distinguishes
-                    // the five-person order from the ordinary three Troopers.
-                    const SDL_Rect badge{dest.x+dest.w-15,dest.y+2,13,15};
-                    SDL_SetRenderDrawColor(renderer,0,32,104,255);SDL_RenderFillRect(renderer,&badge);
-                    auto count=pFontManager->createTextureWithText("5",COLOR_WHITE,12);
-                    if(count) {
-                        SDL_Rect text=calcDrawingRect(count.get(),badge.x+badge.w/2,badge.y+badge.h/2,HAlign::Center,VAlign::Center);
-                        SDL_RenderCopy(renderer,count.get(),nullptr,&text);
-                    }
                 }
 
                 if(isStructure(buildItem.itemID)) {

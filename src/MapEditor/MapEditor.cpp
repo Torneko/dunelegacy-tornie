@@ -1950,6 +1950,8 @@ void MapEditor::drawMap(ScreenBorder* pScreenborder, bool bCompleteMap) {
         const bool yellowStarMarker = (unit.itemID == Unit_RaiderTrike || unit.itemID == Unit_Special
                                        || unit.itemID == Unit_Deviator);
         const bool customStarMarker = (unit.itemID == Unit_Infantry5 || unit.itemID == Unit_Troopers5
+                                       || unit.itemID == Unit_FlameQuad || unit.itemID == Unit_GasInfantry
+                                       || unit.itemID == Unit_FlameTrooper
                                        || unit.itemID == Unit_RocketTrike || unit.itemID == Unit_SonicTrike
                                        || unit.itemID == Unit_FlameTank || unit.itemID == Unit_EliteLauncher
                                        || unit.itemID == Unit_EliteSiegeTank || unit.itemID == Unit_ChemicalSiegeTank

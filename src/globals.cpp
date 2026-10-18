@@ -254,8 +254,8 @@ SDL_Color getHouseColorSDL(int colorSlot, int shadeOffset) {
 
     if(colorSlot == HOUSECOLOR_CUSTOM_APPLE_GREEN) {
         const auto& mod = ModManager::instance().getActiveModName();
-        return (mod == "Jericho" || mod == "JerichoLite")
-            ? campaignGreen[shadeOffset] : darkGreyRamp[shadeOffset];
+        return (mod == "Jericho" || mod == "JerichoLite" || mod == "ArcaKev" || mod == "ArcaKevLite")
+            ? rebelsColorRamp[shadeOffset] : darkGreyRamp[shadeOffset];
     }
     if(colorSlot == HOUSECOLOR_CUSTOM_DARK_VIOLET) {
         const auto& mod = ModManager::instance().getActiveModName();
@@ -308,7 +308,7 @@ void applyCustomPaletteRuntimeHouseRamps() {
         && ModManager::instance().getActiveModName() == "Tornie";
     const bool crossModHouseColorsActive =
         ModManager::instance().isInitialized()
-        && (tornieMainActive || ModManager::instance().getActiveModName() == "Jericho")
+        && ModManager::instance().isTornieContentActive()
         && customPaletteLoaded
         && customPalette.getNumColors() >= PALCOLOR_SARDAUKAR + 8;
 

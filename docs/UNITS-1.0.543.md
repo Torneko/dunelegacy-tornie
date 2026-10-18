@@ -1,6 +1,6 @@
-# Unités personnalisées — spécifications en préparation / pending specification
+# Unités personnalisées — 1.0.543 / Custom units
 
-Ces demandes sont prévues après la 1.0.542. Le code et les ressources sont intégrés sur la branche de préparation ; les validations locales passent. Aucun tag ni aucune publication de la prochaine version n'est autorisé par ce document.
+Spécifications des unités de la 1.0.543. Les remplacements de cette version suivent les demandes de Tornie ; les reçus de publication sont conservés dans WEBSITE.md.
 
 ## Français
 
@@ -14,7 +14,7 @@ Ces demandes sont prévues après la 1.0.542. Le code et les ressources sont int
 
 ## English
 
-Code and assets are integrated on the preparation branch; local validation passes. This is not a publication report.
+Unit specifications for 1.0.543; publication receipts are recorded in WEBSITE.md.
 
 - Outside Vanilla, Kleshmersh's default Troopers use flamethrowers. In Chaos mode, the weapon, price and dedicated production portrait must follow the randomly inherited production technology rather than the receiving faction.
 - Harkonnen keeps ordinary Troopers and gains a separate flamethrower Trooper product at level 7, requiring an IX. Apply outside Vanilla, including Lite rosters containing Harkonnen. Do not replace ordinary Troopers or impose this unlock on Kleshmersh's default Troopers.
@@ -29,8 +29,12 @@ Neutral : Saboteur produit à la Worfinery, niveau 7, IX, 500 crédits, campagne
 
 Neutral Saboteur production: Worfinery, level 7, IX, 500 credits, campaign and multiplayer, full Tornie/Jericho/ArcaKev only. Palace Saboteurs remain unchanged. Brighter Neutral white applies to Tornie and ArcaKev.
 
-Le Flame Quad est centré aux trois zooms. Le masque VGA des couleurs de maison est reconnu pour le Quad et l’infanterie à gaz ; le vert du gaz et les détails bruns restent fixes. Les trois unités ont des étoiles bleues dans l’éditeur ; les portraits des deux nouvelles infanteries ont leur marqueur en bas à droite. L’infanterie est exclue des véhicules Special. PNG originaux conservés.
+Le Flame Quad est centré aux trois zooms. Le masque VGA des couleurs de maison est reconnu pour le Quad et l’infanterie à gaz ; le vert du gaz et les détails bruns restent fixes. Les trois unités ont des étoiles bleues dans l’éditeur ; aucune étoile n’est ajoutée sur les portraits. Les marqueurs apparaissent aussi sur les unités placées sur le terrain de l’éditeur aux trois zooms. L’infanterie est exclue des véhicules Special. PNG originaux conservés.
 
-Flame Quad centring and VGA team-colour masks are corrected. Green gas and brown chassis details are preserved. Blue stars identify the three editor units; infantry portrait markers are in the bottom-right. Infantry is excluded from Special vehicle pools. Original PNGs are unchanged.
+Flame Quad centring and VGA team-colour masks are corrected. Green gas and brown chassis details are preserved. Blue stars identify the three editor units; no blue stars are added to portraits. Placed editor units also show their markers at all three zooms. Infantry is excluded from Special vehicle pools. Original PNGs are unchanged.
 
 Reportés / Deferred: moissonneuses grande capacité et rapide, Raider Quad, tank longue portée, missile au napalm, Slowpost, Slow Tank et effets de ralentissement (déplacement uniquement ; Kleshmersh immunisé, Rebels plus sensible), ver apprivoisé. Attendre les graphismes et préciser factions, déblocages et valeurs avant intégration.
+
+Les icônes originales `ProductionTroopersFlames3.png` et `ProductionTroopersFlames5.png` de `troopers_flames.tar.gz` sont conservées sans modification dans les six mods. Les commandes de Kleshmersh (et la technologie empruntée en Chaos) utilisent les portraits individuels/3/5 adaptés, sans chiffre ni étoile superposés. Le Flame Quad utilise une trajectoire précise à courte portée et son centre natif n’est plus biaisé à gauche sur les vues de largeur impaire.
+
+Original three/five flame-Trooper production icons are preserved unchanged in all six mods. Kleshmersh production and inherited Chaos technology select the correct single/three/five portrait without number or star overlays. Flame Quad uses accurate close-range trajectories and odd-width views no longer have a leftward pixel bias.

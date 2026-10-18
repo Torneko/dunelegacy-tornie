@@ -458,7 +458,7 @@ void StructureBase::doSell() {
     AchievementEvents::sold(owner,refund);
     selling=true;
     setHealth(0); // Remove health-scaled power before virtual destruction.
-    delete this; // No explosions, random survivor infantry, enemy kills or structure loss.
+    destroy();
 }
 
 void StructureBase::handleRepairClick() {
@@ -579,6 +579,22 @@ bool StructureBase::update() {
 }
 
 void StructureBase::destroy() {
+    if(selling) {
+        for(int y=0;y<structureSize.y;++y)for(int x=0;x<structureSize.x;++x) {
+            auto* tile=currentGameMap->getTile(location.x+x,location.y+y);
+            tile->setType(Terrain_Slab); // Also clears the destroyed-building overlay.
+            tile->setOwner(owner->getHouseID());
+            const Coord position((location.x+x)*TILESIZE+TILESIZE/2,
+                                 (location.y+y)*TILESIZE+TILESIZE/2);
+            const auto explosion=currentGame->randomGen.getRandOf({Explosion_Large1,Explosion_Large2});
+            currentGame->getExplosionList().push_back(new Explosion(explosion,position,owner->getHouseID()));
+        }
+        if(isVisible(pLocalHouse->getTeamID()))
+            soundPlayer->playSoundAt(Sound_ExplosionStructure,location);
+        // Selling retains its own refund/statistics and never spawns survivors.
+        delete this;
+        return;
+    }
     int*    pDestroyedStructureTiles = nullptr;
     int     DestroyedStructureTilesSizeY = 0;
     static int DestroyedStructureTilesWall[] = { DestroyedStructure_Wall };

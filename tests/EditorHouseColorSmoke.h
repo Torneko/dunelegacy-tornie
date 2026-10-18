@@ -13,6 +13,15 @@ inline void verifyEditorHouseColors(const std::string& output, const std::string
     std::vector<int> roster;
     for(int h=0;h<NUM_HOUSES;++h)if(isCampaignHouseAvailable(static_cast<HOUSETYPE>(h)))roster.push_back(h);
     const int count=static_cast<int>(roster.size());
+    if(mod=="Jericho" || mod=="JerichoLite" || mod=="ArcaKev" || mod=="ArcaKevLite") {
+        const auto original=LoadPalette_RW(pFileManager->openFile("Custom_IBM.PAL").get());
+        for(int shade=0;shade<8;++shade) {
+            const auto actual=getHouseColorSDL(HOUSECOLOR_CUSTOM_APPLE_GREEN,shade);
+            const auto wanted=original[PALCOLOR_SARDAUKAR+shade];
+            require(actual.r==wanted.r && actual.g==wanted.g && actual.b==wanted.b,
+                mod+" bonus dark green differs from Tornie Rebels");
+        }
+    }
     SDL_RenderSetClipRect(renderer, nullptr);
     SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
     SDL_RenderClear(renderer);

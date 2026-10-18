@@ -54,10 +54,11 @@ Bullet::Bullet(Uint32 shooterID, Coord* newRealLocation, Coord* newRealDestinati
     const bool usesPreciseFlameTrajectory = bulletID == Bullet_Flame
         && pShooter != nullptr
         && (pShooter->getItemID() == Unit_Trooper
+            || pShooter->getItemID() == Unit_FlameQuad
             || pShooter->getItemID() == Structure_Flamepost);
     if(usesPreciseFlameTrajectory) {
-        // Trooper rockets travel directly to their target. Keep the flame
-        // projectile and impact, but remove the delayed point-blank miss.
+        // Short-range flame weapons travel directly to their target. Keep
+        // the flame impact without long-range rocket scatter or delay.
         detonationTimer = 0;
     }
 

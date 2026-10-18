@@ -1,6 +1,50 @@
 #pragma once
 #include <units/GasInfantry.h>
 #include <SpecialVehicle.h>
+#include "Release543EditorSmoke.h"
+
+struct FlameAccuracyFixture {
+    static bool precise(const Bullet& bullet,const Coord& aim) {
+        return bullet.destination==aim && bullet.detonationTimer==0;
+    }
+};
+
+inline void verifyFlameSquadPortraits(const std::string& output,const std::string& mod,
+                                     const SettingsClass::GameOptionsClass& options) {
+    const auto require=[](bool ok,const char* message) {
+        if(!ok)throw std::runtime_error(std::string("Flame squad portraits: ")+message);
+    };
+    auto game=std::make_unique<Game>();currentGame=game.get();
+    game->initGame(chaosSmokeInit(getRuntimeHouseForIdentity(HOUSE_KLESHMERSH),options));
+    pLocalHouse->createUnit(Unit_MCV,true);
+    const auto capture=[&](SDL_Texture* texture) {
+        require(texture!=nullptr,"missing production portrait");
+        SDL_SetRenderDrawColor(renderer,7,11,13,255);SDL_RenderClear(renderer);
+        SDL_Rect area{0,0,91,55};SDL_RenderCopy(renderer,texture,nullptr,&area);
+        auto image=sdl2::surface_ptr{SDL_CreateRGBSurfaceWithFormat(0,91,55,32,SDL_PIXELFORMAT_RGBA32)};
+        require(SDL_RenderReadPixels(renderer,&area,image->format->format,image->pixels,image->pitch)==0,"production readback");
+        return image;
+    };
+    for(const int building:{Structure_WOR,Structure_Worfinery}) {
+        auto* builder=pLocalHouse->placeStructure(NONE_ID,building,2,building==Structure_WOR?2:8,true,true);
+        require(builder!=nullptr,"production building");
+        StaticContainer panel;auto* list=BuilderList::create(builder->getObjectID());
+        panel.addWidget(list,Point(0,0),list->getMinimumSize());
+        for(const auto& icon:{std::pair<int,const char*>{Unit_Trooper,"ProductionTrooperFlames.png"},
+                              {Unit_Troopers,"ProductionTroopersFlames3.png"},
+                              {Unit_Troopers5,"ProductionTroopersFlames5.png"}}) {
+            auto actual=capture(list->getProductionPortrait(icon.first));
+            auto raw=LoadPNG_RW(pFileManager->openFile(icon.second).get());require(raw!=nullptr,"source PNG");
+            auto reference=convertSurfaceToTexture(std::move(raw));auto expected=capture(reference.get());
+            for(int y=0;y<55;++y)for(int x=0;x<91;++x)
+                require(getPixel(actual.get(),x,y)==getPixel(expected.get(),x,y),"production icon differs from the original artwork");
+            const auto file=(std::filesystem::path(output)/(mod+"-flame-order-"+std::to_string(icon.first)+".png")).string();
+            require(SavePNG(actual.get(),file.c_str())==0,"production preview export");
+        }
+    }
+    game.reset();currentGame=nullptr;pLocalHouse=nullptr;pLocalPlayer=nullptr;
+    SDL_Log("RELEASE 543 FLAME PORTRAITS PASS: %s, original single/three/five Trooper icons at WOR and Worfinery",mod.c_str());
+}
 
 inline void verifyRelease543Units(const std::string& output,const std::string& mod) {
     auto require=[](bool ok,const char* message){if(!ok)throw std::runtime_error(std::string("Release 543 units: ")+message);};
@@ -29,6 +73,7 @@ inline void verifyRelease543Units(const std::string& output,const std::string& m
     game.reset();currentGame=nullptr;pLocalHouse=nullptr;pLocalPlayer=nullptr;
     if(mod=="vanilla")return;
     if(!isLiteMod(mod)) {
+        verifyFlameSquadPortraits(output,mod,options);
         game=std::make_unique<Game>();currentGame=game.get();
         game->initGame(chaosSmokeInit(getRuntimeHouseForIdentity(HOUSE_NEUTRAL),options));owner=pLocalHouse;owner->createUnit(Unit_MCV,true);
         auto* combo=dynamic_cast<BuilderBase*>(owner->placeStructure(NONE_ID,Structure_Worfinery,2,2,true,true));
@@ -102,6 +147,13 @@ inline void verifyRelease543Units(const std::string& output,const std::string& m
         require(bulletList.size()>count,unit->getItemID()==Unit_FlameQuad?"Flame Quad never fired":"Flame Trooper never fired");
         require(bulletList.back()->getBulletID()==Bullet_Flame,"new flame unit launched a non-flame weapon");
     }
+    for(const Coord offset:{Coord(1,0),Coord(0,1),Coord(-1,0),Coord(0,-1)}) {
+        auto start=quad->getCenterPoint();auto aim=start+offset*TILESIZE;
+        for(int shot=0;shot<32;++shot) {
+            Bullet bullet(quad->getObjectID(),&start,&aim,Bullet_Flame,12,false,nullptr);
+            require(FlameAccuracyFixture::precise(bullet,aim),"close-range Flame Quad projectile scatters or has delayed detonation");
+        }
+    }
 
     const auto gasID=gas->getObjectID(),flameID=flame->getObjectID(),quadID=quad->getObjectID();
     for(int zoom=0;zoom<3;++zoom)for(const int graphic:{ObjPic_FlameQuad,ObjPic_GasInfantry}) {
@@ -131,6 +183,7 @@ inline void verifyRelease543Units(const std::string& output,const std::string& m
             require(right>left && bottom>top,"empty Flame Quad direction");
             require(std::abs(left+right-cell)<=zoom+1 && std::abs(top+bottom-h)<=zoom+1,
                 "Flame Quad visible bounds are off centre");
+            if(direction==0)require(left+right>=cell,"right-facing Flame Quad is biased one pixel left");
         }
         const auto preview=(std::filesystem::path(output)/(mod+"-"+std::to_string(graphic)+"-zoom"+std::to_string(zoom+1)+".png")).string();
         require(SavePNG(pixels.get(),preview.c_str())==0,"new unit rendered atlas preview");
@@ -176,9 +229,9 @@ inline void verifyRelease543Units(const std::string& output,const std::string& m
         int blue=0;
         for(int y=0;y<h;++y)for(int x=0;x<w;++x) {
             Uint8 r,g,b,a;SDL_GetRGBA(getPixel(image.get(),x,y),image->format,&r,&g,&b,&a);
-            if(r==24 && g==152 && b==255){++blue;require(x>=w-10 && y>=h-10,"portrait star is too near the centre");}
+            if(r==24 && g==152 && b==255)++blue;
         }
-        require(blue>20,"infantry portrait marker missing or clipped");
+        require(blue==0,"blue editor star leaked onto an infantry portrait");
         const auto filename=(std::filesystem::path(output)/(mod+"-portrait-"+std::to_string(picture)+".png")).string();require(SavePNG(image.get(),filename.c_str())==0,"portrait marker preview");
     }
     const auto save=(std::filesystem::path(output)/(mod+"-units543.dls")).string();require(game->saveGame(save),"new units save");
@@ -186,6 +239,7 @@ inline void verifyRelease543Units(const std::string& output,const std::string& m
     game=std::make_unique<Game>();currentGame=game.get();game->initGame(GameInitSettings(save));
     require(dynamic_cast<GasInfantry*>(game->getObjectManager().getObject(gasID)) && game->getObjectManager().getObject(flameID)->getItemID()==Unit_FlameTrooper && game->getObjectManager().getObject(quadID)->getItemID()==Unit_FlameQuad,"new unit types lost after reload");
     game.reset();currentGame=nullptr;pLocalHouse=nullptr;pLocalPlayer=nullptr;
-    SDL_Log("RELEASE 543 GRAPHICS PASS: %s, source VGA team colours, blue editor stars and bottom-right infantry portrait markers",mod.c_str());
+    Release543EditorFixture::verify(output,mod);
+    SDL_Log("RELEASE 543 GRAPHICS PASS: %s, house colours, blue editor palette/terrain stars, clean portraits and right-facing Quad alignment",mod.c_str());
     SDL_Log("RELEASE 543 UNITS PASS: %s, separate Harkonnen tier-seven IX flame Troopers, gas WOR/Worfinery IX, real healing missile, exact zoom ratios and save/reload",mod.c_str());
 }

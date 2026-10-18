@@ -37,6 +37,9 @@ public:
     }
 
 protected:
+    static constexpr int upgradeButtonX=22;
+    static constexpr int upgradeButtonWidth=75;
+    static constexpr int sellButtonX=upgradeButtonX+upgradeButtonWidth+2;
     explicit DefaultStructureInterface(int objectID) : DefaultObjectInterface(objectID) {
         SDL_Texture* pUIRepair = pGFXManager->getUIGraphic(UI_Repair);
         SDL_Texture* pUIRepairPressed = pGFXManager->getUIGraphic(UI_Repair_Pressed);
@@ -54,7 +57,8 @@ protected:
             auto* structure=dynamic_cast<StructureBase*>(currentGame->getObjectManager().getObject(this->objectID));
             if(structure)structure->handleSellClick();
         });
-        topBox.addWidget(&sellButton,Point(4+buttonSize.x,2),buttonSize);
+        // Fit Repair, Upgrade and Sell into the existing 119-pixel toolbar.
+        topBox.addWidget(&sellButton,Point(sellButtonX,2),buttonSize);
     }
 
     void updateSellButton(StructureBase* structure) {

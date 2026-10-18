@@ -71,10 +71,12 @@ inline void verifyRelease543Rules(const std::string& output,const std::string& m
     struct Toolbar : DefaultStructureInterface {
         explicit Toolbar(int id):DefaultStructureInterface(id){}
         bool refresh(){return update();}
-        bool paired(){return sellButton.getSize()==repairButton.getSize() && topBox.getWidgetPosition(&sellButton).x==topBox.getWidgetPosition(&repairButton).x+repairButton.getSize().x+2;}
+        bool paired(){return sellButton.getSize()==repairButton.getSize()
+            && topBox.getWidgetPosition(&sellButton).x==99
+            && topBox.getWidgetPosition(&sellButton).x+sellButton.getSize().x<=topBox.getSize().x;}
     };
     {
-        Toolbar toolbar(id);require(toolbar.refresh() && toolbar.paired(),"sale/repair buttons differ in size or overlap");
+        Toolbar toolbar(id);require(toolbar.refresh() && toolbar.paired(),"sale button is not repair-sized after the Upgrade slot");
         SDL_RenderSetClipRect(renderer,nullptr);SDL_SetRenderDrawColor(renderer,30,30,30,255);SDL_RenderClear(renderer);toolbar.draw(Point(0,0));
         SDL_Rect area{0,0,SIDEBARWIDTH-25,22};
         auto surface=sdl2::surface_ptr{SDL_CreateRGBSurfaceWithFormat(0,area.w,area.h,32,SDL_PIXELFORMAT_RGBA32)};
@@ -84,9 +86,16 @@ inline void verifyRelease543Rules(const std::string& output,const std::string& m
     Command unauthorized(255,CMD_STRUCTURE_SELL,id);unauthorized.executeCommand();
     require(game->getObjectManager().getObject(id)!=nullptr,"invalid player sold a building");
     const int funds=owner->getCredits();const int losses=owner->getNumDestroyedStructures();
+    const auto explosionsBefore=game->getExplosionList().size();
+    silo->setVisible(-1,true);currentGameMap->viewMap(owner->getHouseID(),Coord(4,4),4);
+    soundPlayer->setSound(true);Mix_HaltChannel(9);Mix_HaltChannel(10);
     Command sale(pLocalPlayer->getPlayerID(),CMD_STRUCTURE_SELL,id);
     OMemoryStream commands;sale.save(commands);IMemoryStream bytes(commands.getData(),commands.getDataLength());Command networkSale(bytes);
     networkSale.executeCommand();networkSale.executeCommand();
+    require(game->getExplosionList().size()==explosionsBefore+4,"sale explosion missing, duplicated or wrong footprint");
+    require((Mix_Playing(9) && Mix_GetChunk(9)==pSFXManager->getSound(Sound_ExplosionStructure))
+         || (Mix_Playing(10) && Mix_GetChunk(10)==pSFXManager->getSound(Sound_ExplosionStructure)),"sale did not play the building destruction sound");
+    soundPlayer->setSound(settings.audio.playSFX);
     require(!game->getObjectManager().getObject(id),"sale left a structure registered");
     require(owner->getCapacity()==0 && owner->getStoredCredits()==0,"sale proceeds occupy storage");
     owner->update();
@@ -94,6 +103,11 @@ inline void verifyRelease543Rules(const std::string& output,const std::string& m
     require(owner->getStructuresSold()==1 && owner->getSaleCredits()==refund,"per-house sale statistics");
     require(owner->getNumDestroyedStructures()==losses,"sale counted as destruction");
     require(!currentGameMap->getTile(4,4)->hasAGroundObject(),"sold building still blocks its footprint");
+    for(int y=4;y<6;++y)for(int x=4;x<6;++x) {
+        auto* tile=currentGameMap->getTile(x,y);
+        require(tile->isConcrete() && tile->getDestroyedStructureTile()==DestroyedStructure_None
+            && tile->getOwner()==owner->getHouseID(),"sale did not leave owned concrete without rubble");
+    }
     // A refinery's hidden harvester must be deployed, not destroyed with its container.
     auto* refinery=dynamic_cast<Refinery*>(owner->placeStructure(NONE_ID,Structure_Refinery,8,8,true,true));require(refinery,"refinery placement");
     auto* harvester=dynamic_cast<Harvester*>(owner->createUnit(Unit_Harvester,true));require(harvester,"harvester creation");
@@ -107,6 +121,8 @@ inline void verifyRelease543Rules(const std::string& output,const std::string& m
     game.reset();currentGame=nullptr;pLocalHouse=nullptr;pLocalPlayer=nullptr;
     GameInitSettings load(file);game=std::make_unique<Game>();currentGame=game.get();game->initGame(load);
     require(pLocalHouse->getStructuresSold()==saleCount && pLocalHouse->getSaleCredits()==saleCredits && pLocalHouse->getCredits()==balance,"sale statistics or protected refund changed after reload");
+    require(currentGameMap->getTile(4,4)->isConcrete()
+        && currentGameMap->getTile(4,4)->getDestroyedStructureTile()==DestroyedStructure_None,"sold building concrete lost on reload");
     game.reset();currentGame=nullptr;pLocalHouse=nullptr;pLocalPlayer=nullptr;
     options.sellingBuildings=false;init=chaosSmokeInit(getRuntimeHouseForIdentity(HOUSE_ATREIDES),options);
     game=std::make_unique<Game>();currentGame=game.get();game->initGame(init);

@@ -251,23 +251,7 @@ static sdl2::surface_ptr decorateNewUnitEditorIcon(SDL_Surface* frame, SDL_Surfa
     return result;
 }
 
-static void addNewInfantryPortraitStar(SDL_Surface* portrait) {
-    if(!portrait)return;
-    constexpr const char* rows[]={"....#....","...###...","...###...","#########",".#######.","..#####..","..##.##..",".##...##.","#.......#"};
-    constexpr int size=9;
-    // One pixel farther right/down than the older portrait marker, with
-    // enough room for its dark outline at the bottom-right edge.
-    const int left=portrait->w-size-1,top=portrait->h-size-1;
-    const Uint32 border=SDL_MapRGBA(portrait->format,0,32,104,255);
-    const Uint32 blue=SDL_MapRGBA(portrait->format,24,152,255,255);
-    for(int y=0;y<size;++y)for(int x=0;x<size;++x)if(rows[y][x]=='#')
-        for(int dy=-1;dy<=1;++dy)for(int dx=-1;dx<=1;++dx) {
-            SDL_Rect pixel{left+x+dx,top+y+dy,1,1};SDL_FillRect(portrait,&pixel,border);
-        }
-    for(int y=0;y<size;++y)for(int x=0;x<size;++x)if(rows[y][x]=='#') {
-        SDL_Rect pixel{left+x,top+y,1,1};SDL_FillRect(portrait,&pixel,blue);
-    }
-}
+
 
 static sdl2::surface_ptr resizeSurfaceNearest(SDL_Surface* source, int width, int height);
 static sdl2::surface_ptr scaleSurfaceNearest(SDL_Surface* source, int factor);
@@ -1604,7 +1588,7 @@ GFXManager::GFXManager() {
         constexpr int SmallDetailPicHeight = 55;
 
         auto loadIcon = [&](int pictureIndex, const std::string& pngName,
-                            const char* fallbackWsa, bool addBlueStar = false) {
+                            const char* fallbackWsa) {
             try {
                 if(auto iconAsset = openTornieAsset(pngName.c_str(), "portrait")) {
                     auto raw = LoadPNG_RW(iconAsset.get());
@@ -1619,53 +1603,7 @@ GFXManager::GFXManager() {
                                 raw = std::move(resized);
                             }
                         }
-                        if(addBlueStar) {
-                            sdl2::surface_ptr rgba{
-                                SDL_ConvertSurfaceFormat(raw.get(), SDL_PIXELFORMAT_RGBA32, 0)
-                            };
-                            if(rgba) {
-                                raw = std::move(rgba);
-                                SDL_SetColorKey(raw.get(), SDL_FALSE, 0);
-                                SDL_SetSurfaceBlendMode(raw.get(), SDL_BLENDMODE_BLEND);
-                                static const char* starRows[] = {
-                                    "....#....",
-                                    "...###...",
-                                    "...###...",
-                                    "#########",
-                                    ".#######.",
-                                    "..#####..",
-                                    "..##.##..",
-                                    ".##...##.",
-                                    "#.......#"
-                                };
-                                constexpr int starSize = 9;
-                                const int starX = raw->w - starSize - 2;
-                                const int starY = raw->h - starSize - 2;
-                                const Uint32 border = SDL_MapRGBA(raw->format, 0, 32, 104, 255);
-                                const Uint32 blue = SDL_MapRGBA(raw->format, 24, 152, 255, 255);
-                                for(int y = 0; y < starSize; ++y) {
-                                    for(int x = 0; x < starSize; ++x) {
-                                        if(starRows[y][x] != '#') {
-                                            continue;
-                                        }
-                                        for(int oy = -1; oy <= 1; ++oy) {
-                                            for(int ox = -1; ox <= 1; ++ox) {
-                                                SDL_Rect pixel{starX + x + ox, starY + y + oy, 1, 1};
-                                                SDL_FillRect(raw.get(), &pixel, border);
-                                            }
-                                        }
-                                    }
-                                }
-                                for(int y = 0; y < starSize; ++y) {
-                                    for(int x = 0; x < starSize; ++x) {
-                                        if(starRows[y][x] == '#') {
-                                            SDL_Rect pixel{starX + x, starY + y, 1, 1};
-                                            SDL_FillRect(raw.get(), &pixel, blue);
-                                        }
-                                    }
-                                }
-                            }
-                        }
+
                         sdl2::texture_ptr tex{ SDL_CreateTextureFromSurface(renderer, raw.get()) };
                         if(tex) {
                             smallDetailPicTex[pictureIndex] = std::move(tex);
@@ -4427,7 +4365,8 @@ void GFXManager::reloadModDependentObjectGraphics() {
                     const bool flip=gas?col==2:(col>=3 && col<=5);
                     // The Quad contact sheet has unequal transparent margins per
                     // direction. Centre the visible bounds, not the source cell,
-                    // before mirroring and generating the integer zooms.
+                    // before mirroring and generating the integer zooms. Odd widths
+                    // use the centre pixel, avoiding a one-pixel left bias.
                     int left=0,top=0,right=width,bottom=height;
                     if(!gas) {
                         left=width;top=height;right=bottom=0;
@@ -4439,7 +4378,7 @@ void GFXManager::reloadModDependentObjectGraphics() {
                         }
                     }
                     const int visibleWidth=right-left,visibleHeight=bottom-top;
-                    const int offsetX=gas?0:(cell-visibleWidth)/2;
+                    const int offsetX=gas?0:(cell-visibleWidth+1)/2;
                     const int offsetY=gas?0:(cell-visibleHeight)/2;
                     for(int y=top;y<bottom;++y)for(int x=left;x<right;++x) {
                         Uint8 r,g,b,a;SDL_GetRGBA(getPixel(rgba.get(),sx+x,sy+y),rgba->format,&r,&g,&b,&a);
@@ -4502,10 +4441,7 @@ void GFXManager::reloadRuntimeModPortraits() {
                             raw = std::move(resized);
                         }
                     }
-                    if(pictureID==Picture_FlameTrooper || pictureID==Picture_GasInfantry) {
-                        auto rgba=sdl2::surface_ptr{SDL_ConvertSurfaceFormat(raw.get(),SDL_PIXELFORMAT_RGBA32,0)};
-                        if(rgba){raw=std::move(rgba);addNewInfantryPortraitStar(raw.get());}
-                    }
+
                     auto texture = convertSurfaceToTexture(raw.get());
                     if(texture) {
                         SDL_SetTextureBlendMode(texture.get(), SDL_BLENDMODE_BLEND);
