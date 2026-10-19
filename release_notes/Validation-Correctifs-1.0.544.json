@@ -1,0 +1,164 @@
+{
+  "version": "1.0.544",
+  "status": "unreleased-corrections",
+  "codeCommit": "a30b766e80a58ec2b353262c9891fe4d24a056fc",
+  "networkProtocol": 20,
+  "saveVersion": 9838,
+  "build": {
+    "platform": "Linux",
+    "compiler": "GCC 13.3.0",
+    "configuration": "Debug",
+    "targets": [
+      "dunelegacy",
+      "dunelegacy_tests"
+    ],
+    "passed": true
+  },
+  "ctest": {
+    "passed": true,
+    "tests": 2,
+    "testCases": 142,
+    "assertions": 10647,
+    "network": "real UDP loopback"
+  },
+  "runtime": {
+    "language": "fr",
+    "command": "--verify-correctifs544",
+    "passed": true,
+    "modes": {
+      "Tornie": {
+        "slowpost": true,
+        "artwork": true,
+        "worfinery": true
+      },
+      "TornieLite": {
+        "slowpost": true,
+        "artwork": true,
+        "worfinery": true
+      },
+      "Jericho": {
+        "slowpost": true,
+        "artwork": true,
+        "worfinery": true
+      },
+      "JerichoLite": {
+        "slowpost": true,
+        "artwork": true,
+        "worfinery": true
+      },
+      "ArcaKev": {
+        "slowpost": true,
+        "artwork": true,
+        "worfinery": true
+      },
+      "ArcaKevLite": {
+        "slowpost": true,
+        "artwork": true,
+        "worfinery": true
+      },
+      "vanilla": {
+        "slowpost": true,
+        "artwork": true,
+        "worfinery": true
+      }
+    }
+  },
+  "harvesterGeometry": {
+    "passed": true,
+    "nativeSize": [
+      192,
+      24
+    ],
+    "directions": [
+      {
+        "direction": 0,
+        "vanillaSilhouette": true,
+        "overlappingHouseMasks": 0,
+        "paintedPixels": 220,
+        "capacityHousePixels": 104,
+        "fastHousePixels": 116
+      },
+      {
+        "direction": 1,
+        "vanillaSilhouette": true,
+        "overlappingHouseMasks": 0,
+        "paintedPixels": 190,
+        "capacityHousePixels": 90,
+        "fastHousePixels": 100
+      },
+      {
+        "direction": 2,
+        "vanillaSilhouette": true,
+        "overlappingHouseMasks": 0,
+        "paintedPixels": 197,
+        "capacityHousePixels": 87,
+        "fastHousePixels": 110
+      },
+      {
+        "direction": 3,
+        "vanillaSilhouette": true,
+        "overlappingHouseMasks": 0,
+        "paintedPixels": 190,
+        "capacityHousePixels": 90,
+        "fastHousePixels": 100
+      },
+      {
+        "direction": 4,
+        "vanillaSilhouette": true,
+        "overlappingHouseMasks": 0,
+        "paintedPixels": 220,
+        "capacityHousePixels": 104,
+        "fastHousePixels": 116
+      },
+      {
+        "direction": 5,
+        "vanillaSilhouette": true,
+        "overlappingHouseMasks": 0,
+        "paintedPixels": 208,
+        "capacityHousePixels": 99,
+        "fastHousePixels": 109
+      },
+      {
+        "direction": 6,
+        "vanillaSilhouette": true,
+        "overlappingHouseMasks": 0,
+        "paintedPixels": 200,
+        "capacityHousePixels": 96,
+        "fastHousePixels": 104
+      },
+      {
+        "direction": 7,
+        "vanillaSilhouette": true,
+        "overlappingHouseMasks": 0,
+        "paintedPixels": 208,
+        "capacityHousePixels": 99,
+        "fastHousePixels": 109
+      }
+    ]
+  },
+  "website": {
+    "routes": 36,
+    "affectedViews": 96,
+    "languages": [
+      "fr",
+      "en"
+    ],
+    "widths": [
+      1440,
+      390
+    ],
+    "base": "69dec6d4c434fe275903493ec8f92d0fb5e29974",
+    "preservedOriginalPngs": 155,
+    "renderedPngPreviews": 5
+  },
+  "ci": {
+    "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39245054041",
+    "windows": "in-progress",
+    "linuxBuild": "success"
+  },
+  "publication": {
+    "gameTagReplaced": false,
+    "publicDownloadsReplaced": false,
+    "websitePublished": false
+  }
+}

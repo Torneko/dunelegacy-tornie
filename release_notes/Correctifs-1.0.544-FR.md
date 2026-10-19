@@ -13,4 +13,4 @@ Le correctif utilise le **protocole réseau 20** ; les participants doivent util
 
 ## Vérifications
 
-Résultats réels à consigner dans `Validation-Correctifs-1.0.544.json` après compilation et exécution. Les tests ajoutés couvrent l’amélioration, les permissions de commande, les deux états animés, la valeur de vente sauvegardée, les libellés après défilement et les deux couleurs des huit vues de moissonneuses.
+Compilation Linux réussie : moteur et tests, **142 cas / 10 647 assertions**, **CTest 2/2** (dont UDP réel). Le contrôle `--verify-correctifs544` passe dans les sept modes : amélioration, autorisation, paiement, animation et sauvegarde ; six modes de graphismes bicolores et de libellés Worfinery. Les huit silhouettes des moissonneuses correspondent à la base vanilla et leurs zones de couleur sont complémentaires. Documentation : 36 parcours et 96 fiches FR/EN, ordinateur/mobile. La CI Windows reste en cours ; voir [le rapport](Validation-Correctifs-1.0.544.json).
