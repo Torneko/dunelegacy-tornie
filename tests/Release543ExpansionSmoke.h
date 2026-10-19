@@ -7,8 +7,10 @@
 #include <structures/GunTurret.h>
 #include <misc/OFileStream.h>
 #include <Explosion.h>
+#include "PalaceNapalmSmoke.h"
 
 inline void verifyRelease543Expansion(const std::string& output,const std::string& mod) {
+    verifyRandomPalaceNapalm(output,mod);
     const auto require=[](bool ok,const std::string& why){if(!ok)throw std::runtime_error("Release 543 expansion: "+why);};
     auto options=effectiveGameOptions;options.chaosMode=false;options.instantBuild=true;
     const auto roster=getFactionSelectionOrder();
@@ -98,19 +100,32 @@ inline void verifyRelease543Expansion(const std::string& output,const std::strin
             for(int tick=0;tick<palace->getMaxSpecialWeaponTimer() && !palace->isSpecialWeaponReady();++tick){palace->setHealth(palace->getMaxHealth());palace->update();}
             require(palace->isSpecialWeaponReady(),"napalm Palace never becomes ready");
             std::set<Explosion*> previous;for(auto* effect:game->getExplosionList())previous.insert(effect);
-            palace->doLaunchDeathhand(55,39);require(!bulletList.empty() && bulletList.back()->getBulletID()==Bullet_Napalm,"Palace launched an ordinary missile");
+            palace->doLaunchDeathhand(32,24);require(!bulletList.empty() && bulletList.back()->getBulletID()==Bullet_Napalm,"Palace launched an ordinary missile");
             auto* napalm=bulletList.back();require(FlameAccuracyFixture::directDamage(*napalm)==50,"napalm direct damage not halved");
-            for(int tick=0;tick<500;++tick){bool alive=false;for(auto* missile:bulletList)if(missile==napalm)alive=true;if(!alive)break;napalm->update();}
+            const auto inFlight=[&]{for(auto* missile:bulletList)if(missile==napalm)return true;return false;};
+            for(int tick=0;tick<500;++tick) {
+                if(!inFlight())break;
+                napalm->update();
+                if(inFlight())
+                    require(game->getExplosionList().size()==previous.size(),"napalm ignited the route before impact");
+            }
             std::vector<Explosion*> fires;for(auto* effect:game->getExplosionList())if(!previous.count(effect))fires.push_back(effect);
-            require(fires.size()>9,"napalm has no fire trail in addition to its impact");
+            require(fires.size()==9,"napalm must ignite only its 3x3 impact area");
             UnitBase* target=nullptr;Explosion* fire=nullptr;
             for(auto* effect:fires){
                 const auto point=effect->getPosition();const Coord tile(point.x/TILESIZE,point.y/TILESIZE);
-                const Coord center=tile*TILESIZE+Coord(TILESIZE/2,TILESIZE/2);
-                if(!currentGameMap->tileExists(tile) || currentGameMap->getTile(tile)->hasAGroundObject() || distanceFrom(point,center)>TILESIZE/2)continue;
-                target=pLocalHouse->placeUnit(Unit_Soldier,tile.x,tile.y,true);
-                if(target && distanceFrom(target->getCenterPoint(),point)<=TILESIZE/2){fire=effect;break;}
-                if(target){target->destroy();target=nullptr;}
+                if(!currentGameMap->tileExists(tile) || currentGameMap->getTile(tile)->hasAGroundObject())continue;
+                // An impact can land near any tile corner. Try the infantry's
+                // five sub-tile positions, not only the tile centre.
+                std::vector<UnitBase*> probes;
+                for(int slot=0;slot<5 && !fire;++slot) {
+                    auto* probe=pLocalHouse->placeUnit(Unit_Soldier,tile.x,tile.y,true);
+                    if(!probe)break;
+                    probes.push_back(probe);
+                    if(distanceFrom(probe->getCenterPoint(),point)<=TILESIZE/2){target=probe;fire=effect;}
+                }
+                for(auto* probe:probes)if(probe!=target)probe->destroy();
+                if(fire)break;
             }
             require(target && fire,"no fire tile available for persistence check");const auto hp=target->getHealth();
             const auto targetID=target->getObjectID();const auto firePoint=fire->getPosition();

@@ -62,7 +62,8 @@ public:
         Fremen = 2,
         Saboteur = 3,
         LightVehicles = 4,
-        Ornithopters = 5
+        Ornithopters = 5,
+        Napalm = 6
     };
 
     int getPercentComplete() const {
@@ -107,6 +108,7 @@ protected:
     void updateStructureSpecificStuff() override;
 
 private:
+    friend struct PalaceNapalmFixture;
     void selectTornieMainRebelsSpecialWeapon();
 
     Sint32  specialWeaponTimer;       ///< Positive while charging; negative stores Tornie's revealed random weapon.

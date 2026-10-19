@@ -64,6 +64,18 @@ inline void verifyEditorUnitScrolling(const std::string& output, const std::stri
         SDL_RenderSetClipRect(renderer,nullptr);
         SDL_SetRenderDrawColor(renderer,176,126,16,255);SDL_RenderClear(renderer);
         auto& layout=ui.editorModeStructs_AdvancedLayout;
+        const auto flamePosition=layout.getWidgetPosition(&ui.editorModeStructs_Flamepost);
+        const auto slowPosition=layout.getWidgetPosition(&ui.editorModeStructs_Slowpost);
+        const auto postSize=ui.editorModeStructs_Flamepost.getSize();
+        require(slowPosition.x==flamePosition.x && slowPosition.y==flamePosition.y+postSize.y,
+            "Slowpost is not directly below Flamepost");
+        for(auto* post:{&ui.editorModeStructs_Scoutpost,&ui.editorModeStructs_Chemipost,&ui.editorModeStructs_Slowpost})
+            require(post->getSize()==postSize,"post editor buttons have different sizes");
+        for(const int icon:{UI_MapEditor_Scoutpost,UI_MapEditor_Flamepost,UI_MapEditor_Chemipost,UI_MapEditor_Slowpost}) {
+            const auto* surface=pGFXManager->getUIGraphicSurface(icon,(mod == "Tornie" || mod == "Jericho" ? HOUSE_WILDSPADE : HOUSE_ATREIDES));
+            require(surface && surface->w==D2_TILESIZE && surface->h==D2_TILESIZE,
+                "post editor icon is not one native tile");
+        }
         layout.draw(Point(8,8));
         const Point size=layout.getMinimumSize();
         SDL_Rect area{0,0,size.x+16,size.y+16};

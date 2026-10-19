@@ -137,7 +137,7 @@ Palace::TornieRebelsSpecialWeapon Palace::getTornieMainRebelsSpecialWeapon() con
 
     const Sint32 encodedWeapon = -specialWeaponTimer;
     if(encodedWeapon < static_cast<Sint32>(TornieRebelsSpecialWeapon::Missile)
-       || encodedWeapon > static_cast<Sint32>(TornieRebelsSpecialWeapon::Ornithopters)) {
+       || encodedWeapon > static_cast<Sint32>(TornieRebelsSpecialWeapon::Napalm)) {
         return TornieRebelsSpecialWeapon::None;
     }
 
@@ -159,7 +159,8 @@ void Palace::selectTornieMainRebelsSpecialWeapon() {
         && ModManager::instance().getActiveModName() == "vanilla";
     const TornieRebelsSpecialWeapon lastWeapon = vanillaRandom
         ? TornieRebelsSpecialWeapon::Saboteur
-        : TornieRebelsSpecialWeapon::Ornithopters;
+        : (currentGame->getGameInitSettings().getGameOptions().content.customUnitsAndBuildings
+            ? TornieRebelsSpecialWeapon::Napalm : TornieRebelsSpecialWeapon::Ornithopters);
     const Sint32 selectedWeapon = currentGame->randomGen.rand(
         static_cast<Sint32>(TornieRebelsSpecialWeapon::Missile),
         static_cast<Sint32>(lastWeapon));
@@ -178,7 +179,8 @@ bool Palace::usesJerichoKleshmershFremenCall() const {
 bool Palace::usesKleshmershNapalm() const {
     return ModManager::instance().isTornieContentActive()
         && currentGame->getGameInitSettings().getGameOptions().content.customUnitsAndBuildings
-        && isHouseFaction(static_cast<HOUSETYPE>(getTechnologyHouseID()),HOUSE_KLESHMERSH);
+        && (isHouseFaction(static_cast<HOUSETYPE>(getTechnologyHouseID()),HOUSE_KLESHMERSH)
+            || getTornieMainRebelsSpecialWeapon() == TornieRebelsSpecialWeapon::Napalm);
 }
 
 bool Palace::usesLightVehicleCall() const {
@@ -208,7 +210,8 @@ void Palace::doSpecialWeapon() {
         bool activated = false;
         switch(getTornieMainRebelsSpecialWeapon()) {
             case TornieRebelsSpecialWeapon::Missile:
-                // The missile is launched through doLaunchDeathhand after selecting a target.
+            case TornieRebelsSpecialWeapon::Napalm:
+                // Targeted missiles are launched through doLaunchDeathhand after selecting a target.
                 return;
 
             case TornieRebelsSpecialWeapon::Fremen:

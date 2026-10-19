@@ -483,15 +483,7 @@ void Bullet::update()
     }
 
 
-    if(bulletID==Bullet_Napalm) {
-        const Coord position(lround(realX),lround(realY));
-        const auto* launch=dynamic_cast<const StructureBase*>(currentGame->getObjectManager().getObject(shooterID));
-        const Coord tile(position.x/TILESIZE,position.y/TILESIZE);
-        const bool insideLaunch=launch && tile.x>=launch->getLocation().x && tile.y>=launch->getLocation().y
-            && tile.x<launch->getLocation().x+launch->getStructureSizeX() && tile.y<launch->getLocation().y+launch->getStructureSizeY();
-        if(!insideLaunch && currentGameMap->tileExists(tile))
-            currentGame->getExplosionList().push_back(new Explosion(Explosion_FlameImpact,position,owner->getHouseID(),shooterID,3,TILESIZE/2));
-    }
+    // Napalm burns the impact area only; flight must not ignite the launch route.
     FixPoint oldDistanceToDestination = distanceFrom(realX, realY, destination.x, destination.y);
 
     realX += xSpeed;  //keep the bullet moving by its current speeds

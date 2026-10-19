@@ -635,7 +635,8 @@ MapEditorInterface::MapEditorInterface(MapEditor* pMapEditor)
         editorModeStructs_Slowpost.setToggleButton(true);
         editorModeStructs_Slowpost.setTooltipText(resolveItemName(Structure_Slowpost));
         editorModeStructs_Slowpost.setOnClick(std::bind(&MapEditorInterface::onStructButton,this,Structure_Slowpost));
-        addBuilding(editorModeStructs_Slowpost,5,9,1,1);
+        // One native tile, directly below Flamepost in the free sixth column.
+        addBuilding(editorModeStructs_Slowpost,          5, 9, 1, 1);
         addBuilding(editorModeStructs_Doublefinery,       0, 9, 5, 2);
         editorModeStructs_VBox.addWidget(&editorModeStructs_AdvancedLayout, 11*cellSize);
     }

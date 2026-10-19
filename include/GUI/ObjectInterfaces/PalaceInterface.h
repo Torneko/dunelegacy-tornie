@@ -97,6 +97,7 @@ protected:
                     picID = Picture_PalaceRebelsCharging;
                 } else switch(pPalace->getTornieMainRebelsSpecialWeapon()) {
                     case Palace::TornieRebelsSpecialWeapon::Missile:
+                    case Palace::TornieRebelsSpecialWeapon::Napalm:
                         picID = Picture_DeathHand;
                         break;
 
@@ -157,6 +158,8 @@ protected:
             weaponProgressBar.setProgress(pPalace->getPercentComplete());
 
             weaponSelectButton.setVisible(pPalace->isSpecialWeaponReady());
+            weaponSelectButton.setTooltipText(pPalace->usesKleshmershNapalm()
+                ? (settings.general.language == "fr" ? "Missile au napalm" : "Napalm missile") : "");
 
 
             const bool powered = pPalace->getOwner()->hasPower();

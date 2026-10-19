@@ -19,6 +19,7 @@
 #include <structures/Refinery.h>
 #include <structures/RepairYard.h>
 #include <structures/StarPort.h>
+#include <structures/WindTrap.h>
 #include <Achievements/AchievementEvents.h>
 
 #include <globals.h>
@@ -429,10 +430,25 @@ bool StructureBase::canSell() const {
 }
 
 int StructureBase::getSaleRefund() const {
-    const int value=currentGame->getGameInitSettings().campaignPurchasePrice(
-        currentGame->objectData.data[itemID][originalHouseID].price,owner->getHouseID());
-    const int rate = currentGame->getGameInitSettings().isEasyModeHouse(owner->getHouseID()) ? 75 : 50;
-    return static_cast<int>(static_cast<std::int64_t>(std::max(0,value)) * rate / 100);
+    const auto& settings = currentGame->getGameInitSettings();
+    const auto& data = currentGame->objectData.data;
+    // Flamepost and Chemipost are Scoutpost conversions: their configured
+    // price is the extra conversion charge, not a replacement purchase price.
+    const bool convertedPost = itemID == Structure_Flamepost || itemID == Structure_Chemipost;
+    const int baseItem = convertedPost ? Structure_Scoutpost : itemID;
+    std::int64_t value = std::max(0, settings.campaignPurchasePrice(
+        data[baseItem][originalHouseID].price, owner->getHouseID()));
+    if(convertedPost) value += std::max(0, data[itemID][originalHouseID].price);
+    if(const auto* builder = dynamic_cast<const BuilderBase*>(this)) {
+        // Pending upgrade progress is cancelled separately in doSell().
+        value += static_cast<std::int64_t>(builder->getCurrentUpgradeLevel())
+            * std::max(0, builder->getUpgradeCost());
+    }
+    if(const auto* trap = dynamic_cast<const WindTrap*>(this)) {
+        if(trap->isPowerUpgraded()) value += 150;
+    }
+    const int rate = settings.isEasyModeHouse(owner->getHouseID()) ? 75 : 50;
+    return static_cast<int>(value * rate / 100);
 }
 
 void StructureBase::handleSellClick() {

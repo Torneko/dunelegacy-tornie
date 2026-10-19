@@ -2421,7 +2421,9 @@ GFXManager::GFXManager() {
             const bool worm=item.first==UI_MapEditor_TameSandworm,post=item.first==UI_MapEditor_Slowpost;
             auto frame=getColoredEditorFrame(item.second,colorSlot,post?2:0,worm?5:0,worm?1:post?10:8,worm?9:1);
             uiGraphicTex[item.first][colorSlot].reset();
-            uiGraphic[item.first][colorSlot]=decorateNewUnitEditorIcon(frame.get(),customMapEditorStar.get());
+            // A one-tile post must keep the same native canvas as the other posts.
+            uiGraphic[item.first][colorSlot]=post ? overlayEditorStar(frame.get(),customMapEditorStar.get())
+                : decorateNewUnitEditorIcon(frame.get(),customMapEditorStar.get());
         }
         for(const bool slow:{false,true}) {
             const auto id=slow?UI_MapEditor_SlowTank:UI_MapEditor_RangedTank;
@@ -4759,7 +4761,9 @@ void GFXManager::rebuildModDependentEditorGraphics() {
             const bool worm=item.first==UI_MapEditor_TameSandworm,post=item.first==UI_MapEditor_Slowpost;
             auto frame=getRuntimeEditorFrame(item.second,colorSlot,post?2:0,worm?5:0,worm?1:post?10:8,worm?9:1);
             uiGraphicTex[item.first][colorSlot].reset();
-            uiGraphic[item.first][colorSlot]=decorateNewUnitEditorIcon(frame.get(),customStar.get());
+            // A one-tile post must keep the same native canvas as the other posts.
+            uiGraphic[item.first][colorSlot]=post ? overlayEditorStar(frame.get(),customStar.get())
+                : decorateNewUnitEditorIcon(frame.get(),customStar.get());
         }
         for(const bool slow:{false,true}) {
             const auto id=slow?UI_MapEditor_SlowTank:UI_MapEditor_RangedTank;

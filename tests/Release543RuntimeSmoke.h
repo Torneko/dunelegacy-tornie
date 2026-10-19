@@ -10,6 +10,7 @@
 #include "Release543UnitsSmoke.h"
 #include "Release543ExpansionSmoke.h"
 #include "Release543OptionsSmoke.h"
+#include "BuildingSaleUpgradeSmoke.h"
 
 inline void verifyRelease543Alliances(const std::string& output,const std::string& mod) {
     auto require=[](bool ok,const char* message){if(!ok)throw std::runtime_error(std::string("Release 543 alliances: ")+message);};
@@ -68,6 +69,8 @@ inline void verifyRelease543Alliances(const std::string& output,const std::strin
 
 inline void verifyRelease543Rules(const std::string& output,const std::string& mod) {
     auto require=[](bool ok,const std::string& message){if(!ok)throw std::runtime_error("Release 543: "+message);};
+    if(mod!="vanilla")verifyEditorUnitScrolling(output,mod);
+    verifyUpgradedBuildingSales(output,mod);
     Release543OptionsFixture::verify(output,mod);
     const auto defaults=effectiveGameOptions;
     require(defaults.sellingBuildings==(mod!="vanilla"),"selling default for "+mod);
