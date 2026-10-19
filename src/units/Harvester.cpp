@@ -215,7 +215,7 @@ void Harvester::checkPos()
                 }
 
                 // Check if path to refinery is blocked - request carryall if stuck
-                if(!awaitingPickup && !moving && pathList.empty() && destination != location) {
+                if(!awaitingPickup && !moving && pathList.empty() && !nextSpotFound && !pathRequestQueued && destination != location) {
                     // Not moving, no path, but has a destination - path is likely blocked
                     returnPathFailCounter++;
                     if(returnPathFailCounter >= 3) {
@@ -252,7 +252,7 @@ void Harvester::checkPos()
                             returnPathFailCounter = 0;
                         }
                     }
-                } else if(moving || !pathList.empty()) {
+                } else if(moving || !pathList.empty() || nextSpotFound || pathRequestQueued) {
                     // Successfully moving or have path - reset counter
                     returnPathFailCounter = 0;
                 }
@@ -291,8 +291,9 @@ void Harvester::checkPos()
             }
         } else if (harvestingMode && !hasBookedCarrier() && destination.isValid() && (blockDistance(location, destination) >= MIN_CARRYALL_LIFT_DISTANCE)) {
             requestCarryall();
-        } else if(harvestingMode && destination != location && pathList.empty() && !moving) {
-            // Stuck in harvesting mode with unreachable destination
+        } else if(harvestingMode && destination != location && pathList.empty() && !nextSpotFound && !pathRequestQueued && !moving) {
+            // A queued path or the last staged waypoint is normal navigation, not a blockage.
+            // Only count failures once no navigation work remains.
             // Give pathfinding a few cycles to resolve, then try carryall or give up
             pathFailCounter++;
             if(pathFailCounter >= 3) {
@@ -309,7 +310,7 @@ void Harvester::checkPos()
                 }
                 // If already has a booked carrier, just wait
             }
-        } else if(harvestingMode && (!pathList.empty() || moving)) {
+        } else if(harvestingMode && (!pathList.empty() || nextSpotFound || pathRequestQueued || moving)) {
             // Successfully moving or have path - reset counter
             pathFailCounter = 0;
         } else if(respondable && !harvestingMode && attackMode != STOP) {
@@ -601,7 +602,7 @@ void Harvester::move()
                 } else {
                     doReturn();
                 }
-            } else if(pathList.empty()) {
+            } else if(pathList.empty() && !nextSpotFound && !pathRequestQueued) {
                 // Stuck: in harvesting mode with a destination, but can't path there.
                 // If a carryall is coming to deliver us, preserve harvestingMode so
                 // checkPos() doesn't reset guardPoint/destination back to the old tile.

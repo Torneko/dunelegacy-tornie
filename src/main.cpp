@@ -68,6 +68,7 @@
 #include "../tests/AchievementRuntimeSmoke.h"
 #include "../tests/Release538Smoke.h"
 #include "../tests/SelectedPortraitSmoke.h"
+#include "../tests/HarvesterCrushSmoke.h"
 #endif
 
 #include <SDL_ttf.h>
@@ -796,6 +797,7 @@ int main(int argc, char *argv[]) {
         bool bVerifyVideo = false;
         bool bVerifyExpandedCoop = false;
         bool bVerifyRelease541 = false;
+        bool bVerifyHarvesterCrush = false;
         bool bVerifyWindtrapPreview = false;
         bool bVerifyAchievements = false;
         bool bVerifyRelease538 = false;
@@ -816,6 +818,7 @@ int main(int argc, char *argv[]) {
             }
             if(parameter == "--verify-windtrap-preview") { bVerifyMods=true;bVerifyWindtrapPreview=true;continue; }
             if(parameter == "--verify-release541" || parameter == "--verify-release542" || parameter == "--verify-release543") { bVerifyMods=true;bVerifyRelease541=true;continue; }
+            if(parameter == "--verify-harvester-crush") { bVerifyMods=true;bVerifyHarvesterCrush=true;continue; }
             if(parameter == "--verify-coop-expanded") { bVerifyMods=true;bVerifyExpandedCoop=true;continue; }
             if(parameter == "--verify-startup") { bVerifyMods = true; bVerifyStartup = true; continue; }
             if(parameter == "--verify-video") { bVerifyMods = true; bVerifyStartup = true; bVerifyVideo = true; continue; }
@@ -1336,6 +1339,15 @@ int main(int argc, char *argv[]) {
                         if(!ModManager::instance().setActiveMod("ArcaKev"))throw std::runtime_error("Preview mod activation");
                         exportRebelsWindtrapPreview(output,getRuntimeHouseForIdentity(HOUSE_REBELS));
                         SDL_Log("WINDTRAP PREVIEW PASS: original blue and upgraded green, native rendered cycle");
+                    }
+                    else if(bVerifyHarvesterCrush) {
+                        const char* output=std::getenv("DUNELEGACY_SMOKE_DIR");
+                        if(!output)throw std::runtime_error("Harvester crush check needs an output directory");
+                        for(const std::string mod:{"Tornie","TornieLite","Jericho","JerichoLite","ArcaKev","ArcaKevLite","vanilla"}) {
+                            if(!ModManager::instance().setActiveMod(mod))throw std::runtime_error("Harvester check mod activation");
+                            effectiveGameOptions=ModManager::instance().loadEffectiveGameOptions(settings.gameOptions);
+                            verifyHarvesterCrushing(output,mod);
+                        }
                     }
                     else if(bVerifyRelease541) {
                         const char* output=std::getenv("DUNELEGACY_SMOKE_DIR");

@@ -31,6 +31,7 @@
 #include "CoopLobbySmoke.h"
 #include <Network/NetworkManager.h>
 #include "CustomUnitZoomSmoke.h"
+#include "HarvesterCrushSmoke.h"
 
 inline void verifyChaosFactoryGraphics(const std::string& output, const std::string& mod,
                                       const std::string& stage) {
@@ -119,6 +120,7 @@ inline void runModRuntimeSmoke() {
         verifyCustomUnitZooms(output, mod);
         if(release541Checked.insert(mod).second) {
             verifyRelease541Rules(output,mod);verifyExpandedCoop(output,mod);
+            verifyHarvesterCrushing(output,mod);
         }
         verifyFremenConfirmation(output, "switch");
         verifyWildspadeTechnology(output, mod);

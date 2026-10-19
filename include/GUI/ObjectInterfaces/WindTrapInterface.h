@@ -24,6 +24,7 @@
 #include <FileClasses/TextManager.h>
 
 #include <House.h>
+#include <sand.h>
 #include <structures/Scoutpost.h>
 #include <structures/WindTrap.h>
 
@@ -54,14 +55,14 @@ protected:
         producedEnergyLabel.setTextColor(color);
         textVBox.addWidget(&producedEnergyLabel, (Sint32)18);
 
-        flamepostUpgradeButton.setText(_("Upgrade to Flamepost"));
+        flamepostUpgradeButton.setText(resolveItemName(Structure_Flamepost));
         flamepostUpgradeButton.setTextColor(color);
         flamepostUpgradeButton.setTooltipText(_("Requires House IX"));
         flamepostUpgradeButton.setVisible(false);
         flamepostUpgradeButton.setOnClick(std::bind(&WindTrapInterface::onFlamepostUpgrade, this));
         textVBox.addWidget(&flamepostUpgradeButton, (Sint32)26);
 
-        chemipostUpgradeButton.setText(_("Upgrade to Chemipost"));
+        chemipostUpgradeButton.setText(resolveItemName(Structure_Chemipost));
         chemipostUpgradeButton.setTextColor(color);
         chemipostUpgradeButton.setTooltipText(_("Requires House IX and Tech Level 7"));
         chemipostUpgradeButton.setVisible(false);
@@ -105,8 +106,9 @@ protected:
         flamepostUpgradeButton.setVisible(showFlamepostUpgrade);
         if(showFlamepostUpgrade) {
             const int cost = pScoutpost->getFlamepostUpgradeCost();
-            flamepostUpgradeButton.setText(_("Upgrade to Flamepost") + " (" + std::to_string(cost) + ")");
-            flamepostUpgradeButton.setTooltipText(_("Upgrade this Scoutpost to a Flamepost"));
+            flamepostUpgradeButton.setText(resolveItemName(Structure_Flamepost));
+            flamepostUpgradeButton.setTooltipText(_("Upgrade this Scoutpost to a Flamepost") + " (" + std::to_string(cost)
+                + (settings.general.language=="fr" ? " crédits)" : " credits)"));
         }
 
         const bool showChemipostUpgrade = pScoutpost != nullptr
@@ -115,8 +117,9 @@ protected:
         chemipostUpgradeButton.setVisible(showChemipostUpgrade);
         if(showChemipostUpgrade) {
             const int cost = pScoutpost->getChemipostUpgradeCost();
-            chemipostUpgradeButton.setText(_("Upgrade to Chemipost") + " (" + std::to_string(cost) + ")");
-            chemipostUpgradeButton.setTooltipText(_("Upgrade this Scoutpost to a healing Chemipost"));
+            chemipostUpgradeButton.setText(resolveItemName(Structure_Chemipost));
+            chemipostUpgradeButton.setTooltipText(_("Upgrade this Scoutpost to a healing Chemipost") + " (" + std::to_string(cost)
+                + (settings.general.language=="fr" ? " crédits)" : " credits)"));
         }
 
 
