@@ -1,0 +1,25 @@
+# Dune Legacy Tornie 1.0.544
+
+Linux, AppImage Mint et Windows partagent les mêmes règles. Tous les joueurs d’une partie réseau doivent utiliser **1.0.544 / protocole 19**. Les nouvelles sauvegardes portent la version **9837** ; les anciennes restent lisibles. Les moteurs précédents refusent les nouvelles sauvegardes contenant le sixième pouvoir de palais.
+
+## Graphismes
+
+- Dix PNG originaux intégrés, conservés sans modification : portraits des tanks longue portée et ralentisseur ; tuiles et portraits du Raider Quad, du Slowpost et des deux moissonneuses spécialisées.
+- Les cinq vues du Raider Quad sont adaptées en mémoire aux huit directions natives 16×16. La planche verticale du Slowpost est adaptée à son atlas d’une tuile, avec les étapes de construction. Les moissonneuses conservent leurs huit cases 24×24.
+- Portraits affichés sans étoile ajoutée. Le portrait 182×110 du Slowpost est réduit en mémoire à 91×55 ; les fichiers fournis restent intacts.
+- Les sprites conservent leurs détails colorés et prennent la teinte de leur maison. Les zooms 1×/2×/3× utilisent des multiples entiers. Slow Tank : tourelle blanc clair ; tank longue portée : tourelle violette ; châssis aux couleurs du propriétaire.
+
+## Règles et correctifs
+
+- **Kleshmersh** garde la moissonneuse standard et la rapide ; le Harvestank disparaît de sa production normale dans Tornie/Jericho/ArcaKev. La rapide reste au niveau 7 avec IX. Les autres factions, les technologies empruntées en Chaos et les unités déjà sauvegardées gardent leurs règles.
+- **Récolte en Area Guard** : une moissonneuse ne confond plus une recherche de chemin ou un prochain pas en attente avec un blocage. Elle peut écraser le fantassin ennemi sur l’épice et reprendre la récolte. Le Harvestank garde son armement ; sa récolte et les retours en raffinerie reçoivent le même correctif. Les protections des alliés et du relief sont conservées.
+- **Vente améliorée** : le remboursement inclut le bâtiment initial et les améliorations terminées : niveaux d’usine, amélioration Rebels de la Windtrap à 150 crédits, conversion Scoutpost → Flamepost/Chemipost. Taux : **50 %**, ou **75 % pour les alliés en mode facile**. La réduction d’achat facile n’est appliquée qu’au bâtiment, pas une seconde fois aux améliorations. Les crédits d’une amélioration en cours sont remboursés séparément, sans double compte. L’infobulle, les crédits sans stockage et les statistiques concordent.
+- **Scoutpost** : boutons « Flamepost » et « Chemipost », prix dans l’infobulle. **Slowpost dans l’éditeur** : case libre sous Flamepost, même taille que les trois autres postes, étoile bleue conservée.
+- **Napalm du palais** : aucun incendie au sol pendant le vol depuis le palais. Les feux persistants restent dans la zone d’impact **3×3**, avec dégâts directs réduits de moitié. Kleshmersh conserve la recharge Harkonnen de dix minutes.
+- **Palais aléatoires étendus** : le napalm rejoint Death Hand, Fremen, Saboteur, véhicules légers et Ornithoptères dans Tornie/Jericho/ArcaKev. Il se cible comme un missile et son tirage est conservé en sauvegarde. La recharge habituelle de ces palais reste de 7 min 30. Vanilla conserve ses trois pouvoirs classiques.
+
+Les sept modes, 70 succès, campagnes, quatre factions alliées en coop, archonte jusqu’à huit contrôleurs, relais Internet et corrections Linux XRandR/PulseAudio sont conservés.
+
+## Ressources et vérification
+
+[Spécification et intégration des PNG](https://github.com/Torneko/dunelegacy-tornie/blob/v1.0.544/docs/RELEASE-1.0.544.md). Les notes de validation et reçus de publication indiquent les résultats réels du moteur, des paquets installés et du site FR/EN. Les confirmations sur le PC Mint physique et en partie Internet humaine restent distinctes des vérifications automatisées.

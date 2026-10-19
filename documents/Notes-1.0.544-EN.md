@@ -1,0 +1,25 @@
+# Dune Legacy Tornie 1.0.544
+
+Linux, Mint AppImage and Windows share the same rules. Every network participant needs **1.0.544 / protocol 19**. New saves use **9837**; earlier saves remain readable. Earlier engines reject new saves containing the sixth random Palace power.
+
+## Artwork
+
+- Ten original PNGs integrated without modifying their files: Ranged/Slow Tank portraits; Raider Quad, Slowpost and both specialist Harvester sheets and portraits.
+- The Raider Quad’s five views become eight native 16×16 directions in memory. The vertical Slowpost sheet becomes a one-tile atlas with construction stages. Harvester sheets retain eight 24×24 cells.
+- No editor star is added to portraits. The 182×110 Slowpost portrait is fitted to 91×55 in memory; originals stay intact.
+- Sprites retain their coloured details and house tint, with exact integer 1×/2×/3× zooms. Slow Tank has a light white turret; Ranged Tank a violet turret. Chassis keep owner colours.
+
+## Rules and fixes
+
+- **Kleshmersh** keeps normal and Fast Harvesters; ordinary Harvestank production is removed in Tornie/Jericho/ArcaKev. Fast remains at level 7 + IX. Other factions, borrowed Chaos technology and units already saved retain their rules.
+- **Area Guard harvesting** no longer treats a pending path request or next step as a blockage. Unarmed Harvesters can crush an enemy infantry blocker on spice and resume collecting. Harvestank keeps its weapon; its harvesting and refinery-return navigation receive the same fix. Allied and terrain crush rules remain unchanged.
+- **Upgraded-building sales** include original construction plus completed factory levels, the Rebels Windtrap’s 150-credit upgrade and Scoutpost conversions. Refund **50%**, or **75% for Easy Mode allies**, without storage. The Easy purchase discount applies to construction only; paid progress of unfinished upgrades is refunded separately without double counting. Tooltips, balance and statistics agree.
+- **Scoutpost** upgrade buttons show “Flamepost” / “Chemipost”, with cost in tooltips. **Editor Slowpost** occupies the free cell below Flamepost and matches the other three posts’ size, retaining its blue star.
+- **Palace napalm** no longer ignites the flight path. Persistent fire remains within the **3×3 impact area**, with half direct damage. Kleshmersh keeps the ten-minute Harkonnen cooldown.
+- **Expanded random Palaces** can draw napalm alongside Death Hand, Fremen, Saboteur, light vehicles and Ornithopters in Tornie/Jericho/ArcaKev. It uses missile targeting and retains its selected power in saves. These Palaces keep their 7 min 30 cooldown. Vanilla retains its three classic random powers.
+
+All seven modes, 70 achievements, campaigns, four allied co-op factions, up to eight Archon controllers, Internet host relay and XRandR/PulseAudio Linux fixes remain included.
+
+## Resources and validation
+
+[Artwork and integration specification](https://github.com/Torneko/dunelegacy-tornie/blob/v1.0.544/docs/RELEASE-1.0.544.md). Validation reports and publication receipts record actual engine, installed-package and bilingual website results. Physical Mint monitor confirmation and a human match across independent Internet connections remain separate from automated checks.
