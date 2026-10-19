@@ -2,7 +2,7 @@ name: Build Dune Legacy
 
 on:
   push:
-    branches: [ main, release-*, tornie-beta, dunelegacy-tornie ]
+    branches: [ main, release-*, tornie-beta, dunelegacy-tornie, publish/544-correctifs ]
     tags:     [ 'v*' ]
   pull_request:
     branches: [ main, dunelegacy-tornie, prepare/1.0.544 ]
@@ -214,9 +214,9 @@ jobs:
           cpack -G ZIP -C Release
 
       - name: Record Windows package provenance
-        if: inputs.windows_only
+        if: inputs.windows_only || github.ref == 'refs/heads/publish/544-correctifs'
         run: |
-          $version = "${{ inputs.release_tag }}".Substring(1)
+          $version = "${{ inputs.release_tag || 'v1.0.544' }}".Substring(1)
           $package = Get-Item "build/DuneLegacyTornie-$version-Windows-x64.zip"
           $report = @{
             version = $version
@@ -225,7 +225,7 @@ jobs:
             run = [long]"${{ github.run_id }}"
             engineAndNetworkTests = $true
             installedRuntimeChecks = @("fr", "en")
-            release543Checks = @("building-sales", "normal-multiplayer-alliances", "flame-and-gas-units", "magenta-free-zooms", "house-colours-and-blue-stars", "neutral-saboteur-tier-seven", "editor-terrain-blue-stars", "original-flame-squad-portraits", "precise-close-flame-quad", "sales-destruction-and-concrete", "sale-button-after-upgrade", "easy-sales-75-percent", "extended-fallback-units", "movement-slowing", "saved-chaos-worm-offer", "elite-ornithopter", "seventy-achievements", "palace-napalm-and-saved-hazards", "harvester-area-guard-crush", "completed-upgrade-sales", "native-slowpost-editor-icon", "impact-only-and-random-palace-napalm", "ten-original-artwork-files")
+            release543Checks = @("building-sales", "normal-multiplayer-alliances", "flame-and-gas-units", "magenta-free-zooms", "house-colours-and-blue-stars", "neutral-saboteur-tier-seven", "editor-terrain-blue-stars", "original-flame-squad-portraits", "precise-close-flame-quad", "sales-destruction-and-concrete", "sale-button-after-upgrade", "easy-sales-75-percent", "extended-fallback-units", "movement-slowing", "saved-chaos-worm-offer", "elite-ornithopter", "seventy-achievements", "palace-napalm-and-saved-hazards", "harvester-area-guard-crush", "completed-upgrade-sales", "native-slowpost-editor-icon", "impact-only-and-random-palace-napalm", "ten-original-artwork-files", "scoutpost-slowpost-upgrade", "bicolour-vanilla-harvesters", "worfinery-displayed-labels")
             networkProtocol = 20
             saveVersion = 9838
             menuStartupChecks = @("fr", "en")
