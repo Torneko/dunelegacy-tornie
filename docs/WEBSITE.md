@@ -1,3 +1,11 @@
+# 1.0.544 — préparation de publication
+
+Publication d’une nouvelle version autorisée après réception de `tanks.tar.gz`. Les dix PNG originaux sont intégrés ; protocole **19**, nouvelles sauvegardes **9837**, anciennes lisibles. Les sources du jeu seront figées sous `v1.0.544` avant la publication des paquets vérifiés Linux/Windows ; les reçus suivent le tag, sans fusion de la branche principale.
+
+Site FR/EN préparé depuis `64a57fb5d912b65128a33aab0994f2b73e54343f` récupéré sur `origin/gh-pages`. Quarante fiches d’unités, 70 succès, 155 images de galerie dont les 145 précédentes inchangées, archive des dix PNG originaux. Vérifications locales : CTest 2/2, sept modes de règles, 52 cas de vente, 25 scénarios de moissonneuses, six modes de graphismes, 36 parcours de site et 144 contextes FR/EN ordinateur/mobile. Les versions installées Linux/Windows et les parcours publics/hors ligne sont vérifiés par la CI avant le rapport final.
+
+Voir [FR](../release_notes/1.0.544-FR.md), [EN](../release_notes/1.0.544-EN.md), [spécification](RELEASE-1.0.544.md), [validation locale](../release_notes/Validation-1.0.544.json).
+
 # Remplacement étendu 1.0.543 — publié
 
 La release existante est remplacée, sans 1.0.544. Source du jeu et tag `v1.0.543` : `c47c8f4069ab3f5fadc17cee5ef4bcfad5ca4c17`. Site FR/EN : `64a57fb5d912b65128a33aab0994f2b73e54343f`, préparé depuis `0769ffbcb9167520342e8f577ddf58606e1876bb` récupéré sur `origin/gh-pages`. Protocole **18**, nouvelles sauvegardes **9836**, anciennes sauvegardes lisibles. Tous les participants doivent retélécharger ce remplacement.

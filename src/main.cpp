@@ -820,7 +820,7 @@ int main(int argc, char *argv[]) {
             if(parameter == "--verify-windtrap-preview") { bVerifyMods=true;bVerifyWindtrapPreview=true;continue; }
             if(parameter == "--verify-release541" || parameter == "--verify-release542" || parameter == "--verify-release543") { bVerifyMods=true;bVerifyRelease541=true;continue; }
             if(parameter == "--verify-harvester-crush") { bVerifyMods=true;bVerifyHarvesterCrush=true;continue; }
-            if(parameter == "--verify-next-draft") { bVerifyMods=true;bVerifyNextDraft=true;continue; }
+            if((parameter == "--verify-next-draft" || parameter == "--verify-release544")) { bVerifyMods=true;bVerifyNextDraft=true;continue; }
             if(parameter == "--verify-coop-expanded") { bVerifyMods=true;bVerifyExpandedCoop=true;continue; }
             if(parameter == "--verify-startup") { bVerifyMods = true; bVerifyStartup = true; continue; }
             if(parameter == "--verify-video") { bVerifyMods = true; bVerifyStartup = true; bVerifyVideo = true; continue; }

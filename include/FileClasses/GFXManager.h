@@ -265,6 +265,12 @@ typedef enum {
     Picture_FlameQuad,
     Picture_GasInfantry,
     Picture_FlameTrooper,
+    Picture_RaiderQuad,
+    Picture_RangedTank,
+    Picture_SlowTank,
+    Picture_CapacityHarvester,
+    Picture_FastHarvester,
+    Picture_Slowpost,
     NUM_SMALLDETAILPICS
 } SmallDetailPics_Enum;
 

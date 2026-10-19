@@ -1,3 +1,7 @@
+## 1.0.544
+
+Ten exact supplied PNGs, native sprite layouts and clean portraits. Total upgraded-building refunds, Area Guard harvesting fix, short Scoutpost labels, one-tile Slowpost editor preview and impact-only napalm in expanded random Palaces. Kleshmersh ordinary Harvestank removed in full mods. Protocol 19 / save gate 9837. See root bilingual release notes.
+
 ## 1.0.543 — expanded replacement (preparation)
 
 Non-Vanilla selling by default; 75% Easy Mode refund. New editable vanilla-derived units, movement slowing, saved Chaos worm offer, Elite Ornithopter. Harvestank and the two Harvester variants: level 7 + IX. Gas range 8 / sight 5. Protocol 18 / saves 9836. See the root bilingual release notes for faction availability.

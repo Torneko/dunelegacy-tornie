@@ -1,8 +1,7 @@
 {
-  "status": "received-awaiting-complete-user-list",
-  "publicationAuthorized": false,
-  "tagOrVersionChosen": false,
-  "currentReleaseUnchanged": "1.0.543",
+  "status": "integrated-release-544",
+  "publicationAuthorized": true,
+  "tagOrVersionChosen": true,
   "archiveSha256": "f27e62b3f36cd30ee85e495e9e366db129d9af16d18fa4bd354176e25728642a",
   "files": [
     {
@@ -152,6 +151,43 @@
       ],
       "opaqueMagentaPixels": 0,
       "role": "portrait"
+    },
+    {
+      "file": "SlowTank.png",
+      "sizeBytes": 3652,
+      "sha256": "a62e2f3a9c2a5575295b4c95185b80dbbbd5198e7e8fa60157f24348e34ce300",
+      "dimensions": [
+        91,
+        55
+      ],
+      "role": "portrait"
+    },
+    {
+      "file": "RangedCombatTankIcon.png",
+      "sizeBytes": 3402,
+      "sha256": "b847d40774b4ac0424dddb94ffe889cca4d9213afb2159b509743b9e536a6cfb",
+      "dimensions": [
+        91,
+        55
+      ],
+      "role": "portrait"
     }
-  ]
+  ],
+  "version": "1.0.544",
+  "installedNames": {
+    "RaiderQuadTiles.png": "RaiderQuad.png",
+    "Slowpost.png": "Slowpost.png",
+    "HarvesterSpeed.png": "Harvester-Fast.png",
+    "HarvesterCapacity.png": "Harvester-Capacity.png",
+    "RaiderQuadIcon.png": "RaiderQuadIcon.png",
+    "SlowpostIcon.png": "SlowpostIcon.png",
+    "SpeedHarvesterIcon.png": "SpeedHarvesterIcon.png",
+    "CapacityHarvesterIcon.png": "CapacityHarvesterIcon.png",
+    "SlowTank.png": "SlowTankIcon.png",
+    "RangedCombatTankIcon.png": "RangedCombatTankIcon.png"
+  },
+  "archives": {
+    "correctifs_graphiques.tar.gz": "f27e62b3f36cd30ee85e495e9e366db129d9af16d18fa4bd354176e25728642a",
+    "tanks.tar.gz": "de98b97508de522b03e47eaec74c7e527ad553d7fe2983827acf25ee92f4143e"
+  }
 }

@@ -76,7 +76,8 @@
 // Version 9: Doublefinery's deterministic footprint is five by two.
 // Version 10: Host relay fallback and authenticated logical peer identities.
 // Version 18: 75% Easy Mode sales, gas range and Elite Ornithopter.
-#define NETWORK_PROTOCOL_VERSION            18
+// Version 19: total upgraded-building refunds, harvest navigation and random napalm.
+#define NETWORK_PROTOCOL_VERSION            19
 
 /**
  * Reject an incompatible config-hash handshake and dispatch its disconnect cause.

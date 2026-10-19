@@ -2,6 +2,7 @@
 #include <units/GasInfantry.h>
 #include <SpecialVehicle.h>
 #include "Release543EditorSmoke.h"
+#include "Release544ArtworkSmoke.h"
 
 struct FlameAccuracyFixture {
     static int directDamage(const Bullet& bullet) { return bullet.damage; }
@@ -279,6 +280,7 @@ inline void verifyRelease543Units(const std::string& output,const std::string& m
     require(dynamic_cast<GasInfantry*>(game->getObjectManager().getObject(gasID)) && game->getObjectManager().getObject(flameID)->getItemID()==Unit_FlameTrooper && game->getObjectManager().getObject(quadID)->getItemID()==Unit_FlameQuad,"new unit types lost after reload");
     game.reset();currentGame=nullptr;pLocalHouse=nullptr;pLocalPlayer=nullptr;
     Release543EditorFixture::verify(output,mod);
+    verifyRelease544Artwork(output,mod);
     SDL_Log("RELEASE 543 GRAPHICS PASS: %s, house colours, blue editor palette/terrain stars, clean portraits and right-facing Quad alignment",mod.c_str());
     SDL_Log("RELEASE 543 UNITS PASS: %s, separate Harkonnen tier-seven IX flame Troopers, gas WOR/Worfinery IX, real healing missile, exact zoom ratios and save/reload",mod.c_str());
 }

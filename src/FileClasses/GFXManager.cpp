@@ -4484,6 +4484,42 @@ void GFXManager::reloadModDependentObjectGraphics() {
             if(asset)raw=LoadPNG_RW(asset.get());
         }
         auto* reference=objPic[fallback][HOUSE_HARKONNEN][0].get();
+        // Supplied contact sheets are preserved on disk. Normalize their
+        // layouts here so rendering, editor previews and zooms share one atlas.
+        if(raw && id==ObjPic_RaiderQuad && raw->w==88 && raw->h==58) {
+            auto source=sdl2::surface_ptr{SDL_ConvertSurfaceFormat(raw.get(),SDL_PIXELFORMAT_RGBA32,0)};
+            auto atlas=sdl2::surface_ptr{SDL_CreateRGBSurfaceWithFormat(0,128,16,32,SDL_PIXELFORMAT_RGBA32)};
+            SDL_FillRect(atlas.get(),nullptr,0);
+            constexpr int views[]={2,1,0,1,2,3,4,3},starts[]={0,18,36,53,71};
+            for(int col=0;col<8;++col) {
+                const int view=views[col],width=(view==2 || view==4)?17:18;
+                int left=width,top=17,right=0,bottom=0;
+                for(int y=0;y<17;++y)for(int x=0;x<width;++x) {
+                    Uint8 r,g,b,a;SDL_GetRGBA(getPixel(source.get(),starts[view]+x,21+y),source->format,&r,&g,&b,&a);
+                    if(!a || (r==255 && g==0 && b==255))continue;
+                    left=std::min(left,x);top=std::min(top,y);right=std::max(right,x+1);bottom=std::max(bottom,y+1);
+                }
+                const int w=right-left,h=bottom-top;
+                if(w<=0 || h<=0 || w>16 || h>16)throw std::runtime_error("Raider Quad view does not fit its native tile");
+                for(int y=top;y<bottom;++y)for(int x=left;x<right;++x) {
+                    const int dx=(col>=3 && col<=5)?w-1-(x-left):x-left;
+                    putPixel(atlas.get(),col*16+(16-w+1)/2+dx,(16-h)/2+y-top,
+                        getPixel(source.get(),starts[view]+x,21+y));
+                }
+            }
+            raw=std::move(atlas);
+        }
+        if(raw && id==ObjPic_Slowpost && raw->w==16 && raw->h==32) {
+            auto source=sdl2::surface_ptr{SDL_ConvertSurfaceFormat(raw.get(),SDL_PIXELFORMAT_RGBA32,0)};
+            auto atlas=sdl2::surface_ptr{SDL_CreateRGBSurfaceWithFormat(0,160,16,32,SDL_PIXELFORMAT_RGBA32)};
+            SDL_FillRect(atlas.get(),nullptr,0);
+            for(int frame=0;frame<10;++frame) {
+                SDL_Rect destination{frame*16,0,16,16};
+                SDL_Rect crop{frame<2?frame*16:0,frame<2?0:((frame-2)%2)*16,16,16};
+                SDL_BlitSurface(frame<2?reference:source.get(),&crop,atlas.get(),&destination);
+            }
+            raw=std::move(atlas);
+        }
         if(raw && (!reference || raw->w!=reference->w || raw->h!=reference->h))
             throw std::runtime_error(std::string("Fallback sheet dimensions differ from vanilla: ")+filename);
         for(int slot=0;slot<NUM_HOUSE_COLOR_SLOTS;++slot) {
@@ -4597,6 +4633,12 @@ void GFXManager::reloadRuntimeModPortraits() {
     loadPortrait(Picture_PalaceRebelsCharging, "PalaceRebelsChargingIcon.png", "FREMEN.WSA",
                  activeMod == "Tornie" || activeMod == "Jericho" || activeMod == "ArcaKev" || activeMod == "vanilla");
     loadPortrait(Picture_Harvestank, "HarvestankIcon.png", "HARVEST.WSA", tornieGraphicsVisible);
+    loadPortrait(Picture_RaiderQuad, "RaiderQuadIcon.png", "QUAD.WSA", tornieGraphicsVisible);
+    loadPortrait(Picture_RangedTank, "RangedCombatTankIcon.png", "LTANK.WSA", tornieGraphicsVisible);
+    loadPortrait(Picture_SlowTank, "SlowTankIcon.png", "LTANK.WSA", tornieGraphicsVisible);
+    loadPortrait(Picture_CapacityHarvester, "CapacityHarvesterIcon.png", "HARVEST.WSA", tornieGraphicsVisible);
+    loadPortrait(Picture_FastHarvester, "SpeedHarvesterIcon.png", "HARVEST.WSA", tornieGraphicsVisible);
+    loadPortrait(Picture_Slowpost, "SlowpostIcon.png", "TURRET.WSA", tornieGraphicsVisible);
 
 
 }

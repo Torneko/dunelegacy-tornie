@@ -52,13 +52,13 @@ SDL_Texture* resolveItemPicture(int itemID, HOUSETYPE house) {
 
     switch(itemID) {
         case Unit_EliteOrnithopter: newPicID = Picture_Ornithopter; break;
-        case Unit_RaiderQuad: newPicID = Picture_Quad; break;
-        case Unit_RangedTank: newPicID = Picture_Tank; break;
-        case Unit_SlowTank: newPicID = Picture_Tank; break;
-        case Unit_CapacityHarvester: newPicID = Picture_Harvester; break;
-        case Unit_FastHarvester: newPicID = Picture_Harvester; break;
+        case Unit_RaiderQuad: newPicID = Picture_RaiderQuad; break;
+        case Unit_RangedTank: newPicID = Picture_RangedTank; break;
+        case Unit_SlowTank: newPicID = Picture_SlowTank; break;
+        case Unit_CapacityHarvester: newPicID = Picture_CapacityHarvester; break;
+        case Unit_FastHarvester: newPicID = Picture_FastHarvester; break;
         case Unit_TameSandworm: newPicID = Picture_Sandworm; break;
-        case Structure_Slowpost: newPicID = Picture_GunTurret; break;
+        case Structure_Slowpost: newPicID = Picture_Slowpost; break;
         case Unit_FlameQuad: newPicID = Picture_FlameQuad; break;
         case Unit_GasInfantry: newPicID = Picture_GasInfantry; break;
         case Unit_FlameTrooper: newPicID = Picture_FlameTrooper; break;

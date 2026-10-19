@@ -19,10 +19,10 @@
 #define TEST_NETWORKPACKET_SENDGAMEINFO         1
 #define TEST_NETWORKPACKET_CLIENTSTATS          13
 #define TEST_NETWORKPACKET_KEEPALIVE            19
-#define TEST_NETWORK_PROTOCOL_VERSION           18
+#define TEST_NETWORK_PROTOCOL_VERSION           19
 
-TEST_CASE("NetworkManager: expanded unit rules and Easy Mode building sales require protocol 18", "[network][protocol]") {
-    REQUIRE(NETWORK_PROTOCOL_VERSION == 18);
+TEST_CASE("NetworkManager: upgraded sales and random napalm require protocol 19", "[network][protocol]") {
+    REQUIRE(NETWORK_PROTOCOL_VERSION == 19);
     REQUIRE(TEST_NETWORK_PROTOCOL_VERSION != 4);
     REQUIRE(NETWORKPACKET_COOP_READY == 20);
     REQUIRE(NETWORKPACKET_COOP_ADVANCE == 21);

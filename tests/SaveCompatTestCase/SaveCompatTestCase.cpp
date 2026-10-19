@@ -145,3 +145,7 @@ TEST_CASE("Save compat: determineLegacySavedItemCount maps correctly",
         REQUIRE(determineLegacySavedItemCount(9812, "dunecity1.1.0") == 0);
     }
 }
+
+TEST_CASE("Save compat: random Palace napalm rejects older engines", "[save-compat][palace]") {
+    REQUIRE(SAVEGAMEVERSION == 9837);
+}

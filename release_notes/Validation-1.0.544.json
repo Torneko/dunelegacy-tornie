@@ -1,0 +1,59 @@
+{
+  "version": "1.0.544",
+  "sourceRef": "v1.0.544",
+  "status": "local-validation-complete-ci-pending",
+  "networkProtocol": 19,
+  "saveVersion": 9837,
+  "ctest": "2/2 PASS",
+  "nativeChecks": {
+    "RELEASE 543 PASS:": 7,
+    "RELEASE 543 ALLIANCES PASS:": 7,
+    "RELEASE 543 UNITS PASS:": 6,
+    "RELEASE 543 GRAPHICS PASS:": 6,
+    "RELEASE 543 EDITOR TERRAIN PASS:": 6,
+    "RELEASE 543 FLAME PORTRAITS PASS:": 3,
+    "RELEASE 543 NEUTRAL SABOTEUR PASS:": 3,
+    "RELEASE 543 EXPANSION PASS:": 7,
+    "UPGRADED SALE PASS:": 7,
+    "PALACE NAPALM PASS:": 7,
+    "RELEASE 544 ARTWORK PASS:": 6
+  },
+  "saleCases": 52,
+  "harvesterRegression": {
+    "modes": 7,
+    "scenarios": 25,
+    "passed": true
+  },
+  "artwork": {
+    "originalFiles": 10,
+    "exactModCopies": 60,
+    "nativeAtlases": 4,
+    "portraits": 6,
+    "houseColourChecks": 3,
+    "zooms": [
+      1,
+      2,
+      3
+    ],
+    "allSixMods": true,
+    "originalsUnmodified": true
+  },
+  "website": {
+    "languages": [
+      "fr",
+      "en"
+    ],
+    "localHttpRoutes": 36,
+    "featureContexts": 144,
+    "units": 40,
+    "achievements": 70,
+    "galleryImages": 155,
+    "previousImagesPreserved": 145,
+    "offlineFileAndPublicChecks": "performed by publication CI"
+  },
+  "ci": {
+    "linux": "pending",
+    "windows": "pending"
+  },
+  "physicalMintAndHumanInternet": "separate from automated validation"
+}
