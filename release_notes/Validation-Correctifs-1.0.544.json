@@ -1,6 +1,6 @@
 {
   "version": "1.0.544",
-  "status": "release-candidate",
+  "status": "released",
   "codeCommit": "a30b766e80a58ec2b353262c9891fe4d24a056fc",
   "networkProtocol": 20,
   "saveVersion": 9838,
@@ -149,18 +149,30 @@
     ],
     "base": "69dec6d4c434fe275903493ec8f92d0fb5e29974",
     "preservedOriginalPngs": 155,
-    "renderedPngPreviews": 5
+    "renderedPngPreviews": 5,
+    "publicAndOfflineRoutes": 72
   },
   "ci": {
-    "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39245054041",
-    "windows": "in-progress",
-    "linuxBuild": "success"
+    "linux": {
+      "run": 39247482935,
+      "conclusion": "success",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39247482935"
+    },
+    "windows": {
+      "run": 39247482961,
+      "conclusion": "success",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39247482961"
+    }
   },
   "publication": {
-    "gameTagReplaced": false,
-    "publicDownloadsReplaced": false,
-    "websitePublished": false,
     "authorized": true,
-    "gate": "matching successful Windows and Linux package runs, protocol 20, save 9838"
-  }
+    "gameTagReplaced": true,
+    "publicDownloadsReplaced": true,
+    "websitePublished": true,
+    "website": "0e8430ddd317b7441058d33ee311b77b08ea97fd",
+    "preparedWebsite": "3652cc6b4a8276df6fbdf2cbbf5f5605a11db84b",
+    "websiteTree": "46d758330fbcf43c546233b87e09fcfa0ea6012d",
+    "offlineWebsiteMatchesPublishedTree": true
+  },
+  "source": "d6a29fd82906eb1f4856eced2dfb01fe3e74637e"
 }

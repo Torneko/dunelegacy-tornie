@@ -1,0 +1,51 @@
+{
+  "version": "1.0.544",
+  "saveVersion": 9838,
+  "networkProtocol": 20,
+  "videoOptionsChecks": [
+    "fr",
+    "en"
+  ],
+  "installedRuntimeChecks": [
+    "fr",
+    "en"
+  ],
+  "engineAndNetworkTests": true,
+  "menuStartupChecks": [
+    "fr",
+    "en"
+  ],
+  "package": "DuneLegacyTornie-1.0.544-Windows-x64.zip",
+  "source": "d6a29fd82906eb1f4856eced2dfb01fe3e74637e",
+  "run": 39247482961,
+  "workflowSource": "d6a29fd82906eb1f4856eced2dfb01fe3e74637e",
+  "sha256": "4bfd6bc81db615ac4683b563f1438a9515a1cc19fd7fbfc4b3273e989f8c5ae2",
+  "release543Checks": [
+    "building-sales",
+    "normal-multiplayer-alliances",
+    "flame-and-gas-units",
+    "magenta-free-zooms",
+    "house-colours-and-blue-stars",
+    "neutral-saboteur-tier-seven",
+    "editor-terrain-blue-stars",
+    "original-flame-squad-portraits",
+    "precise-close-flame-quad",
+    "sales-destruction-and-concrete",
+    "sale-button-after-upgrade",
+    "easy-sales-75-percent",
+    "extended-fallback-units",
+    "movement-slowing",
+    "saved-chaos-worm-offer",
+    "elite-ornithopter",
+    "seventy-achievements",
+    "palace-napalm-and-saved-hazards",
+    "harvester-area-guard-crush",
+    "completed-upgrade-sales",
+    "native-slowpost-editor-icon",
+    "impact-only-and-random-palace-napalm",
+    "ten-original-artwork-files",
+    "scoutpost-slowpost-upgrade",
+    "bicolour-vanilla-harvesters",
+    "worfinery-displayed-labels"
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "version": "1.0.544",
+  "status": "published",
+  "source": "d6a29fd82906eb1f4856eced2dfb01fe3e74637e",
+  "website": "0e8430ddd317b7441058d33ee311b77b08ea97fd",
+  "websiteTree": "46d758330fbcf43c546233b87e09fcfa0ea6012d",
+  "networkProtocol": 20,
+  "saveVersion": 9838,
+  "release": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.544",
+  "publicAndOfflineRoutes": 72,
+  "releaseAssets": 21,
+  "runs": {
+    "linux": {
+      "id": 39247482935,
+      "conclusion": "success"
+    },
+    "windows": {
+      "id": 39247482961,
+      "conclusion": "success"
+    },
+    "publication": {
+      "id": 39248316052,
+      "attempt": 2,
+      "conclusion": "success"
+    },
+    "pages": {
+      "id": 39273065470,
+      "conclusion": "success"
+    }
+  },
+  "pullRequests": {
+    "game": 16,
+    "website": 17
+  },
+  "reports": [
+    {
+      "releaseFile": "Final-Publication-Audit-Correctifs-1.0.544.json",
+      "repositoryFile": "Final-Publication-Audit-Correctifs-1.0.544.json",
+      "sha256": "af8fdfb90436e51bfd6df0b969b835c34b2026a2fd51faa4217122ae2855059b"
+    },
+    {
+      "releaseFile": "Package-Resources-Audit-Correctifs-1.0.544.json",
+      "repositoryFile": "Package-Resources-Audit-Correctifs-1.0.544.json",
+      "sha256": "d9f0cfbb978756270677dc88421a721e22ffccf6990179bbaab7e0bb8ca3e27d"
+    },
+    {
+      "releaseFile": "Publication-Validation-1.0.544.json",
+      "repositoryFile": "Publication-Validation-Correctifs-1.0.544.json",
+      "sha256": "90832a632c74d3cc498d99807fbd0c8d6ccd166cef8eed493e50b983b2f71b06"
+    },
+    {
+      "releaseFile": "Validation-Correctifs-1.0.544.json",
+      "repositoryFile": "Validation-Correctifs-1.0.544.json",
+      "sha256": "f772358620f6918029dcc7d77cbc1237f3d90f353f7573e609b0a50fd990938d"
+    },
+    {
+      "releaseFile": "Website-Validation-1.0.544.json",
+      "repositoryFile": "Website-Validation-Correctifs-1.0.544.json",
+      "sha256": "e66f9ad3aeeadcfcc51ebab0461776ea10396399ed1340d4e142f26e9d28e284"
+    },
+    {
+      "releaseFile": "Linux-Build-1.0.544.json",
+      "repositoryFile": "Linux-Build-Correctifs-1.0.544.json",
+      "sha256": "5373d7840fab6f07d3d3a98039319a7e906a7414c3da3abe6e28248ca8cc807d"
+    },
+    {
+      "releaseFile": "Windows-Build-1.0.544.json",
+      "repositoryFile": "Windows-Build-Correctifs-1.0.544.json",
+      "sha256": "5e5e04ba13a56fcb53aafff93ba19a40d64af388074dffad194a08e678925043"
+    },
+    {
+      "releaseFile": "SHA256SUMS-1.0.544.txt",
+      "repositoryFile": "SHA256SUMS-Correctifs-1.0.544.txt",
+      "sha256": "482096911769d10805d5922f295e24b5ab7651ab70ebcf7f522a24cf9abdb2ca"
+    }
+  ]
+}
