@@ -23,7 +23,8 @@ inline void verifyUpgradedBuildingSales(const std::string& output, const std::st
         {HOUSE_WILDSPADE, Structure_HighTechFactory, ItemID_Invalid},
         {HOUSE_REBELS, Structure_WindTrap, ItemID_Invalid},
         {HOUSE_KLESHMERSH, Structure_Scoutpost, Structure_Flamepost},
-        {HOUSE_THARPIQUE, Structure_Scoutpost, Structure_Chemipost}
+        {HOUSE_THARPIQUE, Structure_Scoutpost, Structure_Chemipost},
+        {HOUSE_NEUTRAL, Structure_Scoutpost, Structure_Slowpost}
     };
     int checked = 0;
     for(const bool easy : {false, true}) for(const auto& test : cases) {
@@ -77,7 +78,8 @@ inline void verifyUpgradedBuildingSales(const std::string& output, const std::st
             require(!trap->doPowerUpgrade(), "Rebels upgrade applied twice");
         } else if(auto* post = dynamic_cast<Scoutpost*>(structure)) {
             if(test.converted == Structure_Flamepost) post->doUpgradeToFlamepost();
-            else post->doUpgradeToChemipost();
+            else if(test.converted == Structure_Chemipost) post->doUpgradeToChemipost();
+            else post->doUpgradeToSlowpost();
             require(post->getItemID() == static_cast<Uint32>(test.converted), "Scoutpost conversion refused");
         }
         const int invested = base + fundsBefore - owner->getCredits();

@@ -180,6 +180,7 @@ protected:
 
     // structure state
     bool    selling = false;     ///< Transient deletion reason, never serialized.
+    bool    scoutpostConversion = false; ///< Stored in the reserved structure save byte.
     bool    repairing;          ///< currently repairing?
     int     degradeTimer;       ///< after which time of insufficient power should we degrade this building again
 

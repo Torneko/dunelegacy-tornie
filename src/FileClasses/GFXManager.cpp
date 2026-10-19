@@ -4465,13 +4465,15 @@ void GFXManager::reloadModDependentObjectGraphics() {
         const bool whiteTurret=tornieGraphicsVisible && id==ObjPic_SlowTankTurret;
         const bool violetTurret=tornieGraphicsVisible && id==ObjPic_RangedTankTurret;
         const bool fixedTurret=whiteTurret || violetTurret;
+        const bool twoToneHarvester=tornieGraphicsVisible
+            && (id==ObjPic_CapacityHarvester || id==ObjPic_FastHarvester);
         static const std::array<SDL_Color,8> white{{
             {255,255,255,255},{236,236,236,255},{212,212,212,255},{188,188,188,255},
             {160,160,160,255},{132,132,132,255},{104,104,104,255},{76,76,76,255}
         }};
         static const std::array<SDL_Color,8> violet{{
-            {216,172,255,255},{192,140,240,255},{168,108,220,255},{144,80,192,255},
-            {116,56,160,255},{88,36,124,255},{60,20,88,255},{32,8,48,255}
+            {160,88,224,255},{140,64,208,255},{120,44,184,255},{100,28,156,255},
+            {80,20,128,255},{60,12,100,255},{44,8,72,255},{28,4,44,255}
         }};
         // Vanilla tank turrets use metal shades, not the chassis team ramp.
         static const std::array<SDL_Color,8> vanillaMetal{{
@@ -4522,6 +4524,44 @@ void GFXManager::reloadModDependentObjectGraphics() {
         }
         if(raw && (!reference || raw->w!=reference->w || raw->h!=reference->h))
             throw std::runtime_error(std::string("Fallback sheet dimensions differ from vanilla: ")+filename);
+        // Rebuild both liveries from the untouched vanilla Harvester, rather
+        // than the supplied montages. Split its painted armour in vehicle-local
+        // coordinates, so the two halves rotate together through all eight views.
+        constexpr int facingX[]={-1,-1,0,1,1,1,0,-1};
+        constexpr int facingY[]={0,-1,-1,-1,0,1,1,1};
+        constexpr Uint8 red8[]={214,182,153,125,89,60,32};
+        const auto harvesterShade=[&](Uint8 r,Uint8 g,Uint8 b) {
+            for(int shade=0;shade<7;++shade) {
+                const auto source=palette[PALCOLOR_HARKONNEN+shade];
+                if((r==source.r && g==source.g && b==source.b)
+                   || (r==red8[shade] && g==0 && b==0)) return shade;
+            }
+            return -1;
+        };
+        std::array<int,8> split{};
+        if(twoToneHarvester) {
+            raw.reset(SDL_ConvertSurfaceFormat(reference,SDL_PIXELFORMAT_RGBA32,0));
+            if(!raw || raw->w!=192 || raw->h!=24)
+                throw std::runtime_error("Missing native vanilla Harvester atlas for two-tone liveries");
+            for(int frame=0;frame<8;++frame) {
+                std::vector<int> positions;
+                for(int y=0;y<24;++y)for(int x=0;x<24;++x) {
+                    Uint8 r,g,b,a;SDL_GetRGBA(getPixel(raw.get(),frame*24+x,y),raw->format,&r,&g,&b,&a);
+                    if(a && harvesterShade(r,g,b)>=0) positions.push_back(x*facingX[frame]+y*facingY[frame]);
+                }
+                if(positions.empty())throw std::runtime_error("Vanilla Harvester view has no house-colour armour");
+                std::sort(positions.begin(),positions.end());
+                split[frame]=positions[positions.size()/2];
+            }
+        }
+        static const std::array<SDL_Color,7> capacityColour{{
+            {160,32,124,255},{136,27,106,255},{114,23,89,255},{94,19,73,255},
+            {66,13,52,255},{45,9,35,255},{24,5,19,255}
+        }};
+        static const std::array<SDL_Color,7> fastColour{{
+            {0,142,214,255},{0,121,182,255},{0,101,153,255},{0,83,125,255},
+            {0,59,89,255},{0,40,60,255},{0,21,32,255}
+        }};
         for(int slot=0;slot<NUM_HOUSE_COLOR_SLOTS;++slot) {
             auto* base=objPic[fallback][fixedTurret?HOUSE_HARKONNEN:slot][0].get();if(!base)base=reference;
             auto image=(raw || fixedTurret)
@@ -4531,6 +4571,18 @@ void GFXManager::reloadModDependentObjectGraphics() {
                 Uint8 r,g,b,a;SDL_GetRGBA(getPixel(image.get(),x,y),image->format,&r,&g,&b,&a);
                 if(!a)continue;
                 if(r==255 && g==0 && b==255){putPixel(image.get(),x,y,0);continue;}
+                if(twoToneHarvester) {
+                    const int shade=harvesterShade(r,g,b);
+                    if(shade>=0) {
+                        const int frame=x/24;
+                        const bool front=(x%24)*facingX[frame]+y*facingY[frame]>=split[frame];
+                        const bool fixed=id==ObjPic_CapacityHarvester ? front : !front;
+                        const auto target=fixed ? (id==ObjPic_CapacityHarvester ? capacityColour[shade] : fastColour[shade])
+                            : getHouseColorSDL(slot,shade);
+                        putPixel(image.get(),x,y,SDL_MapRGBA(image->format,target.r,target.g,target.b,a));
+                    }
+                    continue;
+                }
                 bool metalRemapped=false;
                 if(fixedTurret)for(int shade=0;shade<8;++shade) {
                     const auto source=vanillaMetal[shade];

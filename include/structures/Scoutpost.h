@@ -42,10 +42,19 @@ public:
     void handleChemipostUpgradeClick();
     void doUpgradeToChemipost();
 
+    bool isSlowpostUpgradeEligible() const;
+    bool canUpgradeToSlowpost() const;
+    int getSlowpostUpgradeCost() const;
+    void handleSlowpostUpgradeClick();
+    void doUpgradeToSlowpost();
+
 protected:
     void updateStructureSpecificStuff() override;
 
 private:
+#ifdef DUNELEGACY_RUNTIME_TESTS
+    friend struct SlowpostSmokeFixture;
+#endif
     UnitBase* findDamagedAlly() const;
 };
 

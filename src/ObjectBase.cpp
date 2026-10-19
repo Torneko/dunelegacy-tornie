@@ -837,7 +837,7 @@ ObjectBase* ObjectBase::createObject(int itemID, House* Owner, bool byScenario, 
         case Structure_Barracks:            newObject = new Barracks(Owner); break;
         case Structure_ConstructionYard:    newObject = new ConstructionYard(Owner); break;
         case Structure_GunTurret:           newObject = new GunTurret(Owner); break;
-        case Structure_Slowpost: newObject = new GunTurret(Owner, Structure_Slowpost); break;
+        case Structure_Slowpost: newObject = new Scoutpost(Owner, Structure_Slowpost); break;
         case Structure_HeavyFactory:        newObject = new HeavyFactory(Owner); break;
         case Structure_HighTechFactory:     newObject = new HighTechFactory(Owner); break;
         case Structure_IX:                  newObject = new IX(Owner); break;
@@ -968,7 +968,7 @@ ObjectBase* ObjectBase::loadObject(InputStream& stream, int itemID, Uint32 objec
         case Structure_Barracks:            newObject = new Barracks(stream); break;
         case Structure_ConstructionYard:    newObject = new ConstructionYard(stream); break;
         case Structure_GunTurret:           newObject = new GunTurret(stream); break;
-        case Structure_Slowpost: newObject = new GunTurret(stream, Structure_Slowpost); break;
+        case Structure_Slowpost: newObject = new Scoutpost(stream, Structure_Slowpost); break;
         case Structure_HeavyFactory:        newObject = new HeavyFactory(stream); break;
         case Structure_HighTechFactory:     newObject = new HighTechFactory(stream); break;
         case Structure_IX:                  newObject = new IX(stream); break;

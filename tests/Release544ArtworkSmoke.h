@@ -21,13 +21,26 @@ inline void verifyRelease544Artwork(const std::string& output, const std::string
                 auto image=sdl2::surface_ptr{SDL_CreateRGBSurfaceWithFormat(0,w,h,32,SDL_PIXELFORMAT_RGBA32)};
                 require(SDL_RenderReadPixels(renderer,&rect,image->format->format,image->pixels,image->pitch)==0,"atlas readback");
                 int team=0;
+                std::array<int,8> fixedHalf{},houseHalf{};
                 for(int y=0;y<h;++y)for(int x=0;x<w;++x) {
                     Uint8 r,g,b,a;SDL_GetRGBA(getPixel(image.get(),x,y),image->format,&r,&g,&b,&a);
                     require(!(r==255 && g==0 && b==255),"opaque magenta in new artwork");
                     for(int shade=0;shade<7;++shade){const auto c=getHouseColorSDL(house,shade);if(r==c.r&&g==c.g&&b==c.b){++team;break;}}
+                    if(atlas.id==ObjPic_CapacityHarvester || atlas.id==ObjPic_FastHarvester) {
+                        const int frame=x/(24*(zoom+1));
+                        for(int shade=0;shade<7;++shade) {
+                            const auto c=getHouseColorSDL(house,shade);
+                            if(r==c.r && g==c.g && b==c.b) {++houseHalf[frame];break;}
+                        }
+                        if(atlas.id==ObjPic_CapacityHarvester ? (r>b && b>g && g>0) : (r==0 && b>g && g>0))
+                            ++fixedHalf[frame];
+                    }
                     if(base)require(getPixel(image.get(),x,y)==getPixel(base,x/(zoom+1),y/(zoom+1)),"non-integer sprite zoom");
                 }
                 require(team>0,"new atlas lacks house tint");
+                if(atlas.id==ObjPic_CapacityHarvester || atlas.id==ObjPic_FastHarvester)
+                    for(int frame=0;frame<8;++frame)
+                        require(fixedHalf[frame]>0 && houseHalf[frame]>0,"Harvester direction lost a fixed or house-colour half");
                 if(zoom==0) {
                     base=image.release();
                     require(SavePNG(base,(std::filesystem::path(output)/(mod+"-art544-atlas-"+std::to_string(atlas.id)+"-"+std::to_string(house)+".png")).string().c_str())==0,"atlas export");

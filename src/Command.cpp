@@ -117,7 +117,7 @@ void Command::save(OutputStream& stream) const {
 
 void Command::executeCommand() const {
     const bool objectCommand = (commandID >= CMD_PLACE_STRUCTURE && commandID <= CMD_TURRET_ATTACKOBJECT)
-        || (commandID >= CMD_TECHCENTER_SPAWN && commandID <= CMD_STRUCTURE_SELL);
+        || (commandID >= CMD_TECHCENTER_SPAWN && commandID <= CMD_SCOUTPOST_SLOWPOST_UPGRADE);
     if(objectCommand && !parameter.empty()) {
         auto* object = currentGame->getObjectManager().getObject(parameter[0]);
         auto* player = currentGame->getPlayerByID(playerID);
@@ -424,6 +424,14 @@ case CMD_INFANTRY_CAPTURE: {
                 return;
             }
             pScoutpost->doUpgradeToChemipost();
+        } break;
+
+        case CMD_SCOUTPOST_SLOWPOST_UPGRADE: {
+            if(parameter.size() != 1) return;
+            auto* post = dynamic_cast<Scoutpost*>(currentGame->getObjectManager().getObject(parameter[0]));
+            auto* player = currentGame->getPlayerByID(playerID);
+            if(post && player && currentGame->canPlayerControlHouse(player->getHouse(), post->getOwner()))
+                post->doUpgradeToSlowpost();
         } break;
 
         case CMD_STRUCTURE_SELL: {

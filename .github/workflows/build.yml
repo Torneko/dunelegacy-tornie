@@ -5,7 +5,7 @@ on:
     branches: [ main, release-*, tornie-beta, dunelegacy-tornie ]
     tags:     [ 'v*' ]
   pull_request:
-    branches: [ main, dunelegacy-tornie ]
+    branches: [ main, dunelegacy-tornie, prepare/1.0.544 ]
   workflow_dispatch:
     inputs:
       windows_only:

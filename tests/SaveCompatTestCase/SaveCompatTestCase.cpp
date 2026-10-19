@@ -147,5 +147,5 @@ TEST_CASE("Save compat: determineLegacySavedItemCount maps correctly",
 }
 
 TEST_CASE("Save compat: random Palace napalm rejects older engines", "[save-compat][palace]") {
-    REQUIRE(SAVEGAMEVERSION == 9837);
+    REQUIRE(SAVEGAMEVERSION >= 9837);
 }

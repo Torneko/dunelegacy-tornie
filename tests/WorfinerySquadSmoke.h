@@ -4,12 +4,27 @@
 #include <GUI/dune/BuilderList.h>
 #include <GUI/StaticContainer.h>
 #include <FileClasses/LoadSavePNG.h>
+#include <sand.h>
 #include <Game.h>
 #include <House.h>
 #include <Map.h>
 #include <units/UnitBase.h>
 #include <filesystem>
 #include <stdexcept>
+
+struct WorfineryLabelSmoke {
+    static void verify(BuilderList& list, int count) {
+        for(int index=0;index<count;++index) {
+            list.currentListPos=index;
+            list.lastMousePos=list.getButtonPosition(0)+Point(8,8);
+            list.lastMouseMovement=SDL_GetTicks()-1000;
+            list.drawOverlay(Point(0,0));
+            if(list.tooltipText!=resolveItemName(list.getItemIDFromIndex(index)))
+                throw std::runtime_error("Worfinery hover label differs from the displayed/clicked product");
+        }
+        list.currentListPos=0;
+    }
+};
 
 inline void verifyWorfinerySquad(const std::string& output, const std::string& mod) {
     auto require=[](bool value,const char* message) {
@@ -54,6 +69,7 @@ inline void verifyWorfinerySquad(const std::string& output, const std::string& m
             require(buttons->getItemIDFromIndex(0)==Unit_Troopers5,"five-Trooper order moved from the first button");
             require(buttons->getItemIDFromIndex(count-1)==Unit_Harvester,"Harvester is not the last displayed/clickable product");
             require(buttons->getItemIDFromIndex(count)==ItemID_Invalid,"out-of-range product lookup");
+            WorfineryLabelSmoke::verify(*buttons,count);
             SDL_RenderClear(renderer);panel.draw(Point(0,0));
             auto pixels=renderReadSurface(renderer);
             require(pixels && SavePNG(pixels.get(),(std::filesystem::path(output)/(mod+"-worfinery-order-538.png")).string().c_str())==0,"Worfinery order capture");
@@ -81,6 +97,7 @@ inline void verifyWorfinerySquad(const std::string& output, const std::string& m
             auto* buttons=BuilderList::create(worfinery->getObjectID());
             panel.addWidget(buttons,Point(0,0),buttons->getMinimumSize());
             require(buttons->getItemIDFromIndex(worfinery->getBuildListSize()-1)==Unit_Harvester,"loaded Harvester button order");
+            WorfineryLabelSmoke::verify(*buttons,worfinery->getBuildListSize());
             require(worfinery->getCurrentProducedItem()==Unit_Troopers5,"display ordering changed a saved production order");
         }
         const int before=worfinery->getOwner()->getNumItems(Unit_Trooper);

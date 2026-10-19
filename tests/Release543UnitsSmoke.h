@@ -238,7 +238,7 @@ inline void verifyRelease543Units(const std::string& output,const std::string& m
                     continue;
                 }
                 if(graphic==ObjPic_RangedTankTurret) {
-                    if(r==216 && g==172 && b==255)++teamPixels;
+                    if(r==160 && g==88 && b==224)++teamPixels;
                     continue;
                 }
                 for(int shade=0;shade<7;++shade) {
