@@ -1,6 +1,6 @@
 {
   "version": "1.0.544",
-  "status": "unreleased-corrections",
+  "status": "release-candidate",
   "codeCommit": "a30b766e80a58ec2b353262c9891fe4d24a056fc",
   "networkProtocol": 20,
   "saveVersion": 9838,
@@ -159,6 +159,8 @@
   "publication": {
     "gameTagReplaced": false,
     "publicDownloadsReplaced": false,
-    "websitePublished": false
+    "websitePublished": false,
+    "authorized": true,
+    "gate": "matching successful Windows and Linux package runs, protocol 20, save 9838"
   }
 }

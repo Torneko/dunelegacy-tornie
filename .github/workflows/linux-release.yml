@@ -1,6 +1,8 @@
 name: Linux release packages
 
 on:
+  push:
+    branches: [ publish/544-correctifs ]
   workflow_dispatch:
     inputs:
       release_tag:
@@ -38,7 +40,7 @@ permissions:
   actions: read
 
 concurrency:
-  group: linux-release-${{ inputs.release_tag }}
+  group: linux-release-${{ inputs.release_tag || github.ref_name }}
   cancel-in-progress: false
 
 jobs:
@@ -53,7 +55,7 @@ jobs:
 
       - name: Confirm release tag and source version
         env:
-          RELEASE_TAG: ${{ inputs.release_tag }}
+          RELEASE_TAG: ${{ inputs.release_tag || 'v1.0.544' }}
         run: |
           [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "Invalid version tag"; exit 1; }
           VERSION=$(sed -n 's/^project(DuneLegacyTornie VERSION \([0-9]*\.[0-9]*\.[0-9]*\).*/\1/p' CMakeLists.txt)
@@ -240,13 +242,14 @@ jobs:
           test "$(grep -c 'UPGRADED SALE PASS:' "$PROFILE/--verify-release543.log")" -eq 7
           test "$(grep -c 'PALACE NAPALM PASS:' "$PROFILE/--verify-release543.log")" -eq 7
           test "$(grep -c 'RELEASE 544 ARTWORK PASS:' "$PROFILE/--verify-release543.log")" -eq 6
+          test "$(grep -c 'SLOWPOST UPGRADE PASS:' "$PROFILE/--verify-release543.log")" -eq 7
 
       - name: Record the exact packaged source
         run: |
           VERSION="$(sed -n 's/^project(DuneLegacyTornie VERSION \([0-9]*\.[0-9]*\.[0-9]*\).*/\1/p' CMakeLists.txt)"
           SOURCE_COMMIT="$(git rev-parse HEAD)" RELEASE_VERSION="$VERSION" python3 - <<'PYTHON'
           import json, os, pathlib
-          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio','videoCases':['window','fullscreen','stale-combined-desktop'],'xrandr':True},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat','rebels-windtrap-upgrade','building-sales','normal-multiplayer-alliances','flame-and-gas-units','magenta-free-zooms','house-colours-and-blue-stars','neutral-saboteur-tier-seven','editor-terrain-blue-stars','original-flame-squad-portraits','precise-close-flame-quad','sales-destruction-and-concrete','sale-button-after-upgrade','easy-sales-75-percent','extended-fallback-units','movement-slowing','saved-chaos-worm-offer','elite-ornithopter','seventy-achievements','palace-napalm-and-saved-hazards','harvester-area-guard-crush','completed-upgrade-sales','native-slowpost-editor-icon','impact-only-and-random-palace-napalm','ten-original-artwork-files'],'networkProtocol':19,'saveVersion':9837}
+          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio','videoCases':['window','fullscreen','stale-combined-desktop'],'xrandr':True},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat','rebels-windtrap-upgrade','building-sales','normal-multiplayer-alliances','flame-and-gas-units','magenta-free-zooms','house-colours-and-blue-stars','neutral-saboteur-tier-seven','editor-terrain-blue-stars','original-flame-squad-portraits','precise-close-flame-quad','sales-destruction-and-concrete','sale-button-after-upgrade','easy-sales-75-percent','extended-fallback-units','movement-slowing','saved-chaos-worm-offer','elite-ornithopter','seventy-achievements','palace-napalm-and-saved-hazards','harvester-area-guard-crush','completed-upgrade-sales','native-slowpost-editor-icon','impact-only-and-random-palace-napalm','ten-original-artwork-files','scoutpost-slowpost-upgrade','bicolour-vanilla-harvesters','worfinery-displayed-labels'],'networkProtocol':20,'saveVersion':9838}
           pathlib.Path('build/Linux-Build-'+report['version']+'.json').write_text(json.dumps(report,indent=2)+'\n')
           PYTHON
 
@@ -265,7 +268,7 @@ jobs:
         if: inputs.publish_packages
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_TAG: ${{ inputs.release_tag }}
+          RELEASE_TAG: ${{ inputs.release_tag || 'v1.0.544' }}
         run: |
           gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
           shopt -s nullglob
@@ -295,7 +298,7 @@ jobs:
       - name: Verify and publish both staged platforms
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_TAG: ${{ inputs.release_tag }}
+          RELEASE_TAG: ${{ inputs.release_tag || 'v1.0.544' }}
           VERIFIED_LINUX_RUN: ${{ inputs.verified_linux_run }}
           VERIFIED_WINDOWS_RUN: ${{ inputs.verified_windows_run }}
         run: |
@@ -346,7 +349,7 @@ jobs:
       - name: Verify the packaged source and matching website
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_TAG: ${{ inputs.release_tag }}
+          RELEASE_TAG: ${{ inputs.release_tag || 'v1.0.544' }}
           VERIFIED_LINUX_RUN: ${{ inputs.verified_linux_run }}
           VERIFIED_WINDOWS_RUN: ${{ inputs.verified_windows_run }}
         run: |
@@ -400,7 +403,7 @@ jobs:
       - name: Assemble and attach release documents
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_TAG: ${{ inputs.release_tag }}
+          RELEASE_TAG: ${{ inputs.release_tag || 'v1.0.544' }}
           VERIFIED_LINUX_RUN: ${{ inputs.verified_linux_run }}
           VERIFIED_WINDOWS_RUN: ${{ inputs.verified_windows_run }}
         run: |

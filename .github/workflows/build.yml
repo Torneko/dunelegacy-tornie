@@ -2,7 +2,7 @@ name: Build Dune Legacy
 
 on:
   push:
-    branches: [ main, release-*, tornie-beta, dunelegacy-tornie ]
+    branches: [ main, release-*, tornie-beta, dunelegacy-tornie, publish/544-correctifs ]
     tags:     [ 'v*' ]
   pull_request:
     branches: [ main, dunelegacy-tornie, prepare/1.0.544 ]
