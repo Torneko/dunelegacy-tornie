@@ -31,7 +31,7 @@ inline void verifyRelease543Expansion(const std::string& output,const std::strin
         const Product products[]={
             {HOUSE_ORDOS,Unit_RaiderQuad,Structure_LightFactory,4,1,false},{HOUSE_SARDAUKAR,Unit_RaiderQuad,Structure_LightFactory,4,1,false},
             {HOUSE_ATREIDES,Unit_RangedTank,Structure_HeavyFactory,5,2,false},{HOUSE_FREMEN,Unit_RangedTank,Structure_HeavyFactory,5,2,false},
-            {HOUSE_CUSTOM,Unit_SlowTank,Structure_HeavyFactory,7,0,true},{HOUSE_NEUTRAL,Structure_Slowpost,Structure_ConstructionYard,7,0,true},
+            {HOUSE_CUSTOM,Unit_SlowTank,Structure_HeavyFactory,7,0,true},
             {HOUSE_ATREIDES,Unit_FastHarvester,Structure_HeavyFactory,7,0,true},{HOUSE_KLESHMERSH,Unit_FastHarvester,Structure_HeavyFactory,7,0,true},
             {HOUSE_WILDSPADE,Unit_CapacityHarvester,Structure_HeavyFactory,7,0,true},{HOUSE_MERCENARY,Unit_CapacityHarvester,Structure_HeavyFactory,7,0,true},
             {HOUSE_REBELS,Unit_RebelHarvester,Structure_HeavyFactory,7,0,true},
@@ -87,7 +87,7 @@ inline void verifyRelease543Expansion(const std::string& output,const std::strin
         require(game->getObjectManager().getObject(wormID)->getItemID()==Unit_TameSandworm,"tame worm identity lost");
         restored->doSetAttackMode(STOP);for(int tick=0;tick<timer;++tick)restored->update();require(restored->getSlowTimer()==0 && restored->getMovementSpeedFactor()==1.0_fix,"slow never expires");
         if(auto* neutral=game->getHouse(runtime(HOUSE_NEUTRAL))) {
-            auto* post=dynamic_cast<GunTurret*>(neutral->placeStructure(NONE_ID,Structure_Slowpost,34,31,true,true));
+            auto* post=dynamic_cast<Scoutpost*>(neutral->placeStructure(NONE_ID,Structure_Slowpost,34,31,true,true));
             auto* victim=pLocalHouse->placeUnit(Unit_Tank,35,31,true);require(post && victim && !post->canBeCaptured(),"Slowpost factory/capture policy");
             victim->setVisible(-1,true);victim->doSetAttackMode(STOP);post->doAttackObject(victim);
             const auto count=bulletList.size();for(int tick=0;tick<500 && bulletList.size()==count;++tick)post->update();

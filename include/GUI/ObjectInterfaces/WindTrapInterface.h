@@ -69,6 +69,15 @@ protected:
         chemipostUpgradeButton.setOnClick(std::bind(&WindTrapInterface::onChemipostUpgrade, this));
         textVBox.addWidget(&chemipostUpgradeButton, (Sint32)26);
 
+        slowpostUpgradeButton.setText(resolveItemName(Structure_Slowpost));
+        slowpostUpgradeButton.setTextColor(color);
+        slowpostUpgradeButton.setVisible(false);
+        slowpostUpgradeButton.setOnClick([this] {
+            if(auto* post = dynamic_cast<Scoutpost*>(currentGame->getObjectManager().getObject(this->objectID)))
+                post->handleSlowpostUpgradeClick();
+        });
+        textVBox.addWidget(&slowpostUpgradeButton, (Sint32)26);
+
 
         powerUpgradeButton.setText(settings.general.language=="fr" ? "Énergie x2 (150)" : "Power x2 (150)");
         powerUpgradeButton.setTextColor(color);powerUpgradeButton.setVisible(false);
@@ -100,6 +109,17 @@ protected:
         powerUpgradeButton.setVisible(windtrap && windtrap->isPowerUpgradeEligible());
         powerUpgradeButton.setEnabled(windtrap && windtrap->isPowerUpgradeEligible() && pOwner->getCredits()>=150);
         Scoutpost* pScoutpost = dynamic_cast<Scoutpost*>(pObject);
+        const bool showSlowpostUpgrade = pScoutpost && pScoutpost->isSlowpostUpgradeEligible()
+            && pOwner->getNumItems(Structure_IX) > 0;
+        slowpostUpgradeButton.setVisible(showSlowpostUpgrade);
+        slowpostUpgradeButton.setEnabled(showSlowpostUpgrade && pScoutpost->canUpgradeToSlowpost());
+        if(showSlowpostUpgrade) {
+            const int cost = pScoutpost->getSlowpostUpgradeCost();
+            slowpostUpgradeButton.setTooltipText(
+                (settings.general.language == "fr" ? "Améliorer en poste ralentisseur" : "Upgrade this Scoutpost to a Slowpost")
+                + std::string(" (") + std::to_string(cost)
+                + (settings.general.language == "fr" ? " crédits)" : " credits)"));
+        }
         const bool showFlamepostUpgrade = pScoutpost != nullptr
             && pScoutpost->isFlamepostUpgradeEligible()
             && pOwner->getNumItems(Structure_IX) > 0;
@@ -150,6 +170,7 @@ private:
     TextButton powerUpgradeButton;
     TextButton flamepostUpgradeButton;
     TextButton chemipostUpgradeButton;
+    TextButton slowpostUpgradeButton;
 
 };
 

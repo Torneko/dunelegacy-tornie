@@ -20,3 +20,7 @@ Raider Quad: cinq vues 88×58, découpées aux origines x=0/18/36/53/71 et y=21.
 Les anciens identifiants d’unités et les cinq premiers pouvoirs de palais restent stables. Le napalm aléatoire est ajouté en sixième position. Protocole 19, nouvelles sauvegardes 9837 ; lecture des anciens formats conservée. / Stable unit IDs and earlier random powers are retained; the sixth saved power requires the new compatibility gate.
 
 Les conditions de production, prix et capacités des nouvelles unités de la 1.0.543 sont conservés, hormis le retrait normal du Harvestank Kleshmersh. Voir [les spécifications 1.0.543](UNITS-1.0.543.md), [les notes FR](../release_notes/1.0.544-FR.md) et [EN](../release_notes/1.0.544-EN.md).
+
+## Correctifs en préparation / pending fixes
+
+Voir [FR](../release_notes/Correctifs-1.0.544-FR.md) et [EN](../release_notes/Correctifs-1.0.544-EN.md). Les deux vues actives du Slowpost sont animées, indépendamment de la visée. Les moissonneuses sont désormais recolorées depuis la planche vanilla en deux moitiés complémentaires ; les montages fournis ne définissent plus leurs pixels de rendu. / Slowpost states are animated independently of aim. Both specialist Harvesters are recoloured from the vanilla atlas into complementary halves; supplied montages no longer define their rendered pixels. Original PNGs remain unchanged.

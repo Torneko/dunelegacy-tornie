@@ -98,7 +98,8 @@ StructureBase::StructureBase(InputStream& stream): ObjectBase(stream) {
         smoke.emplace_back(stream);
     }
 
-    (void) stream.readUint8(); // legacy legacy save byte
+    const auto flags = stream.readUint8();
+    scoutpostConversion = currentGame->getLoadedSavegameVersion() >= 9838 && (flags & 1) != 0;
 }
 
 int StructureBase::getTechnologyHouseID() const {
@@ -154,7 +155,7 @@ void StructureBase::save(OutputStream& stream) const {
         structureSmoke.save(stream);
     }
 
-    stream.writeUint8(0); // reserved legacy legacy save byte
+    stream.writeUint8(scoutpostConversion ? 1 : 0);
 }
 
 void StructureBase::assignToMap(const Coord& pos) {
@@ -432,9 +433,11 @@ bool StructureBase::canSell() const {
 int StructureBase::getSaleRefund() const {
     const auto& settings = currentGame->getGameInitSettings();
     const auto& data = currentGame->objectData.data;
-    // Flamepost and Chemipost are Scoutpost conversions: their configured
-    // price is the extra conversion charge, not a replacement purchase price.
-    const bool convertedPost = itemID == Structure_Flamepost || itemID == Structure_Chemipost;
+    // Post conversions retain the initial Scoutpost investment. The marker
+    // distinguishes upgraded Slowposts from older directly built ones.
+    // A converted post's configured price is its extra conversion charge.
+    const bool convertedPost = itemID == Structure_Flamepost || itemID == Structure_Chemipost
+        || (itemID == Structure_Slowpost && scoutpostConversion);
     const int baseItem = convertedPost ? Structure_Scoutpost : itemID;
     std::int64_t value = std::max(0, settings.campaignPurchasePrice(
         data[baseItem][originalHouseID].price, owner->getHouseID()));

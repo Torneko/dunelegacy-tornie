@@ -11,6 +11,7 @@
 #include "Release543ExpansionSmoke.h"
 #include "Release543OptionsSmoke.h"
 #include "BuildingSaleUpgradeSmoke.h"
+#include "SlowpostUpgradeSmoke.h"
 
 inline void verifyRelease543Alliances(const std::string& output,const std::string& mod) {
     auto require=[](bool ok,const char* message){if(!ok)throw std::runtime_error(std::string("Release 543 alliances: ")+message);};
@@ -153,5 +154,6 @@ inline void verifyRelease543Rules(const std::string& output,const std::string& m
     verifyRelease543Alliances(output,mod);
     verifyRelease543Units(output,mod);
     verifyRelease543Expansion(output,mod);
+    verifySlowpostUpgrade(output,mod);
     SDL_Log("RELEASE 543 PASS: %s, rule defaults, 50%% selling, no-storage funds, evacuation, power, command replay and save/reload",mod.c_str());
 }

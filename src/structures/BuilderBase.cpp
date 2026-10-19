@@ -380,6 +380,11 @@ void BuilderBase::updateBuildList()
             }
         }
         const auto activeModName = ModManager::instance().getActiveModName();
+        // Also cover saved/custom object tables that still list direct Slowpost production.
+        if(itemID2Add == Structure_Slowpost && ModManager::instance().isTornieContentActive()) {
+            removeItem(buildList, iter, itemID2Add);
+            continue;
+        }
         const int technologyHouse = ModManager::instance().isTornieContentActive()
             ? getTechnologyHouseID() : owner->getFactionID();
         const bool specialChemicalCarryall = itemID2Add == Unit_ChemicalCarryall

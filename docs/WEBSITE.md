@@ -1,3 +1,7 @@
+# Correctifs 1.0.544 — préparation locale
+
+Site de départ récupéré sur `origin/gh-pages` : `69dec6d4c434fe275903493ec8f92d0fb5e29974` (site publié 1.0.544). La branche de correctifs du site décrit le Slowpost par conversion, son animation, la tourelle violette assombrie, les libellés Worfinery et les deux moissonneuses reconstruites depuis la base vanilla. Prévisualisation seulement : les téléchargements publiés restent ceux de la 1.0.544 initiale. Le moteur corrigé utilise le protocole 20 et les sauvegardes 9838. Les vérifications locales passent : 36 parcours et 96 fiches FR/EN sur ordinateur/mobile, 155 PNG d’origine conservés et cinq aperçus de rendu ajoutés. La compilation et CTest 2/2 passent ; les contrôles des sept modes sont enregistrés dans `release_notes/Validation-Correctifs-1.0.544.json`.
+
 # 1.0.544 — publiée
 
 Nouvelle [release Linux, Mint et Windows](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.544) publiée après réception des portraits originaux. Source du jeu et tag `v1.0.544` : `d979cea6ab8d2554ac7ab19d1444dcdf182ee245`. Site FR/EN : `69dec6d4c434fe275903493ec8f92d0fb5e29974`, préparé depuis `64a57fb5d912b65128a33aab0994f2b73e54343f` récupéré sur `origin/gh-pages`. Protocole **19**, nouvelles sauvegardes **9837**, anciennes lisibles. Tous les participants réseau doivent utiliser 1.0.544.

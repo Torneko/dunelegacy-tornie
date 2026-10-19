@@ -382,11 +382,11 @@ void BuilderList::drawOverlay(Point position) {
             return;
         }
 
-        const auto buildItemIter = std::next(pBuilder->getBuildList().begin(), btn);
+        const int itemID = getItemIDFromIndex(btn);
+        if(itemID == ItemID_Invalid) return;
+        std::string text = resolveItemName(itemID);
 
-        std::string text = resolveItemName(buildItemIter->itemID);
-
-        if(buildItemIter->itemID == pBuilder->getCurrentProducedItem() && pBuilder->isWaitingToPlace()) {
+        if(itemID == static_cast<int>(pBuilder->getCurrentProducedItem()) && pBuilder->isWaitingToPlace()) {
             text += " (Hotkey: P)";
         }
 

@@ -143,6 +143,9 @@ public:
     BuilderList& operator=(const BuilderList &) = delete;
     BuilderList& operator=(BuilderList &&) = delete;
 private:
+#ifdef DUNELEGACY_RUNTIME_TESTS
+    friend struct WorfineryLabelSmoke;
+#endif
     explicit BuilderList(Uint32 builderObjectID);
     virtual ~BuilderList();
 

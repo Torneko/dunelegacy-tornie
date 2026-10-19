@@ -45,15 +45,15 @@ void Scoutpost::init(int newItemID) {
     structureSize.y = 1;
 
     attackSound = Sound_RocketSmall;
-    bulletType = itemID == Structure_Chemipost
+    bulletType = itemID == Structure_Slowpost ? Bullet_Slow : itemID == Structure_Chemipost
         ? Bullet_Heal
         : (itemID == Structure_Flamepost ? Bullet_Flame : Bullet_SmallRocket);
 
-    graphicID = itemID == Structure_Chemipost
+    graphicID = itemID == Structure_Slowpost ? ObjPic_Slowpost : itemID == Structure_Chemipost
         ? ObjPic_Chemipost
         : (itemID == Structure_Flamepost ? ObjPic_Flamepost : ObjPic_Scoutpost);
     graphic = pGFXManager->getObjPic(graphicID, getOwner()->getHouseID());
-    numImagesX = 4;
+    numImagesX = itemID == Structure_Slowpost ? 10 : 4;
     numImagesY = 1;
     firstAnimFrame = 2;
     lastAnimFrame = 3;
@@ -64,6 +64,7 @@ void Scoutpost::init(int newItemID) {
 Scoutpost::~Scoutpost() = default;
 
 bool Scoutpost::canAttack(const ObjectBase* object) const {
+    if(itemID == Structure_Slowpost) return TurretBase::canAttack(object);
     if(itemID == Structure_Chemipost) {
         const auto* unit = dynamic_cast<const UnitBase*>(object);
         return unit != nullptr
@@ -87,6 +88,15 @@ ObjectInterface* Scoutpost::getInterfaceContainer() {
 }
 
 void Scoutpost::updateStructureSpecificStuff() {
+    if(itemID == Structure_Slowpost) {
+        // Keep the original Slowpost's turning, targeting and weapon timers.
+        // The supplied two views are animation states, not compass directions.
+        TurretBase::updateStructureSpecificStuff();
+        const int frame = 2 + ((currentGame->getGameCycleCount() / 16) % 2);
+        firstAnimFrame = lastAnimFrame = frame;
+        if(justPlacedTimer <= 0 || curAnimFrame != 0) curAnimFrame = frame;
+        return;
+    }
     if(justPlacedTimer <= 0 || curAnimFrame != 0) {
         curAnimFrame = 2 + ((currentGame->getGameCycleCount() / 16) % 2);
     }
@@ -142,6 +152,9 @@ void Scoutpost::setHealth(FixPoint newHealth) {
 }
 
 int Scoutpost::getProducedPower() const {
+    // Older directly placed Slowposts did not generate power. Conversions
+    // retain the Scoutpost's configured production, including after reload.
+    if(itemID == Structure_Slowpost && !scoutpostConversion) return 0;
     int nominal = abs(currentGame->objectData.data[itemID][originalHouseID].power);
     FixPoint ratio = getHealth() / getMaxHealth();
     return lround(ratio * nominal);
@@ -242,5 +255,45 @@ void Scoutpost::doUpgradeToChemipost() {
     bulletType = Bullet_Heal;
     graphicID = ObjPic_Chemipost;
     graphic = pGFXManager->getObjPic(graphicID, getOwner()->getHouseID());
+    setTarget(nullptr);
+}
+
+bool Scoutpost::isSlowpostUpgradeEligible() const {
+    return itemID == Structure_Scoutpost && owner && currentGame
+        && ModManager::instance().isTornieContentActive()
+        && currentGame->getGameInitSettings().getGameOptions().content.customUnitsAndBuildings
+        && isHouseFaction(static_cast<HOUSETYPE>(getTechnologyHouseID()), HOUSE_NEUTRAL)
+        && currentGame->objectData.data[Structure_Slowpost][getTechnologyHouseID()].enabled
+        && currentGame->techLevel >= currentGame->objectData.data[Structure_Slowpost][getTechnologyHouseID()].techLevel;
+}
+
+int Scoutpost::getSlowpostUpgradeCost() const {
+    return currentGame ? std::max(0, currentGame->objectData.data[Structure_Slowpost][getTechnologyHouseID()].price) : 0;
+}
+
+bool Scoutpost::canUpgradeToSlowpost() const {
+    return isSlowpostUpgradeEligible() && owner->getNumItems(Structure_IX) > 0
+        && owner->getCredits() >= getSlowpostUpgradeCost();
+}
+
+void Scoutpost::handleSlowpostUpgradeClick() {
+    if(currentGame && pLocalPlayer && currentGame->canControlHouse(owner))
+        currentGame->getCommandManager().addCommand(
+            Command(pLocalPlayer->getPlayerID(), CMD_SCOUTPOST_SLOWPOST_UPGRADE, objectID));
+}
+
+void Scoutpost::doUpgradeToSlowpost() {
+    if(!canUpgradeToSlowpost()) return;
+    const int powerBefore = getProducedPower();
+    owner->takeCredits(getSlowpostUpgradeCost());
+    owner->transformStructure(Structure_Scoutpost, Structure_Slowpost);
+    itemID = Structure_Slowpost;
+    scoutpostConversion = true;
+    bulletType = Bullet_Slow;
+    graphicID = ObjPic_Slowpost;
+    graphic = pGFXManager->getObjPic(graphicID, owner->getHouseID());
+    numImagesX = 10;
+    curAnimFrame = lastVisibleFrame = firstAnimFrame = lastAnimFrame = 2;
+    owner->setProducedPower(owner->getProducedPower() - powerBefore + getProducedPower());
     setTarget(nullptr);
 }
