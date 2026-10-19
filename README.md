@@ -1,5 +1,7 @@
 # Dune Legacy Tornie
 
+Prévu pour la prochaine version : [recherches au radar — concepts validés et paramètres à fixer](docs/RADAR-RESEARCH-NEXT-RELEASE.md). / Planned for the next release: approved Radar research concepts and open parameters. Implementation is pending.
+
 Correctifs 1.0.544 : Slowpost par amélioration du Scoutpost, animation, tourelle violette plus sombre, libellés Worfinery et deux moissonneuses bicolores reconstruites depuis la base vanilla. [FR](release_notes/Correctifs-1.0.544-FR.md) · [EN](release_notes/Correctifs-1.0.544-EN.md). Protocole 20 / nouvelles sauvegardes 9838. Retélécharger la 544 corrigée sur tous les postes d’une partie réseau.
 
 **[1.0.544 — Windows / Linux / Mint](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.544)** integrates all ten supplied PNGs: six clean portraits and four sprite sheets, with native editor sizes, house colours and exact 1×/2×/3× zooms. Kleshmersh keeps normal/Fast Harvesters and loses ordinary Harvestank production. Harvesting in Area Guard preserves pending navigation so enemy infantry no longer blocks collection. Building sales include completed upgrade costs, with 50% refunds or 75% for Easy allies. Scoutpost upgrades have short labels; Slowpost sits below Flamepost in the editor. Palace napalm burns only its impact area and joins expanded random Palace powers. Every participant needs **protocol 20**; new saves use **9838**, earlier saves remain readable.
