@@ -1,0 +1,18 @@
+{
+  "version": "1.0.544",
+  "source": "d979cea6ab8d2554ac7ab19d1444dcdf182ee245",
+  "passed": true,
+  "sourceArchive": {
+    "trackedFileCount": 7740,
+    "modFiles": 5623,
+    "originalArtwork": 10,
+    "taggedFileListMatches": true
+  },
+  "offlineArchive": {
+    "websiteCommit": "69dec6d4c434fe275903493ec8f92d0fb5e29974",
+    "allTrackedSiteFilesExact": true,
+    "siteFileCount": 331,
+    "embeddedPackagesMatchRelease": true,
+    "galleryImages": 155
+  }
+}

@@ -1,10 +1,19 @@
-# 1.0.544 — préparation de publication
+# 1.0.544 — publiée
 
-Publication d’une nouvelle version autorisée après réception de `tanks.tar.gz`. Les dix PNG originaux sont intégrés ; protocole **19**, nouvelles sauvegardes **9837**, anciennes lisibles. Les sources du jeu seront figées sous `v1.0.544` avant la publication des paquets vérifiés Linux/Windows ; les reçus suivent le tag, sans fusion de la branche principale.
+Nouvelle [release Linux, Mint et Windows](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.544) publiée après réception des portraits originaux. Source du jeu et tag `v1.0.544` : `d979cea6ab8d2554ac7ab19d1444dcdf182ee245`. Site FR/EN : `69dec6d4c434fe275903493ec8f92d0fb5e29974`, préparé depuis `64a57fb5d912b65128a33aab0994f2b73e54343f` récupéré sur `origin/gh-pages`. Protocole **19**, nouvelles sauvegardes **9837**, anciennes lisibles. Tous les participants réseau doivent utiliser 1.0.544.
 
-Site FR/EN préparé depuis `64a57fb5d912b65128a33aab0994f2b73e54343f` récupéré sur `origin/gh-pages`. Quarante fiches d’unités, 70 succès, 155 images de galerie dont les 145 précédentes inchangées, archive des dix PNG originaux. Vérifications locales : CTest 2/2, sept modes de règles, 52 cas de vente, 25 scénarios de moissonneuses, six modes de graphismes, 36 parcours de site et 144 contextes FR/EN ordinateur/mobile. Les versions installées Linux/Windows et les parcours publics/hors ligne sont vérifiés par la CI avant le rapport final.
+- Dix PNG originaux intégrés sans modification, dont les portraits blanc/violet ; 60 copies dans les six mods. Atlases adaptés en mémoire aux dimensions natives, couleurs de maison et zooms 1×/2×/3× ; Slowpost dans l’éditeur sous Flamepost.
+- Kleshmersh conserve les moissonneuses normale/rapide, sans production ordinaire du Harvestank. Récolte Area Guard corrigée avec recherche de chemin en attente et écrasement des fantassins ennemis.
+- Vente calculée sur le bâtiment et ses améliorations terminées : 50 %, ou 75 % pour les alliés en mode facile. Les crédits d’amélioration en cours sont remboursés séparément. Libellés Scoutpost courts.
+- Napalm limité à la zone d’impact 3×3, sans incendie pendant le vol ; disponible dans les palais aléatoires étendus et conservé en sauvegarde. Recharge Kleshmersh dix minutes.
+- Vérifications locales : **CTest 2/2, 142 cas / 10 647 assertions**, sept modes de règles, 52 cas de vente, 25 scénarios de moissonneuses, six modes de graphismes. CI Linux et Windows réussies, contrôles installés et menus FR/EN. Les trois paquets de jeu téléchargés contiennent les **5 623 fichiers de mods exacts** ; l’AppImage Mint démarre sans chemin de bibliothèques de développement, XRandR/PulseAudio présents.
+- Site : **40 unités, 70 succès et 155 images de galerie**, dont les 145 précédentes inchangées. **36 parcours locaux et 144 contextes**, puis **72 parcours publics/hors ligne** FR/EN ordinateur/mobile. Les 16 fichiers de la release et leurs SHA-256 sont contrôlés. Sources et archive hors ligne vérifiées : site identique à la branche publiée, PNG originaux et paquets Linux/Windows embarqués identiques à la release.
 
-Voir [FR](../release_notes/1.0.544-FR.md), [EN](../release_notes/1.0.544-EN.md), [spécification](RELEASE-1.0.544.md), [validation locale](../release_notes/Validation-1.0.544.json).
+CI Linux : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39181945708 — succès. Windows : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39181947407 — succès. Envoi des paquets : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39233510452 — succès. Pages : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39233733491 — succès. Documentation et contrôles public/hors ligne : https://github.com/Torneko/dunelegacy-tornie/actions/runs/39233870031 — succès.
+
+[Notes FR](../release_notes/1.0.544-FR.md) · [Notes EN](../release_notes/1.0.544-EN.md) · [Spécification](RELEASE-1.0.544.md) · [Validation](../release_notes/Validation-1.0.544.json) · [Audit final](../release_notes/Final-Publication-Audit-1.0.544.json) · [Audit des paquets](../release_notes/Package-Resources-Audit-1.0.544.json) · [Audit des archives](../release_notes/Archive-Resources-Audit-1.0.544.json) · [Reçus](../release_notes/Publication-Receipt-1.0.544.json).
+
+Les reçus suivent le tag figé sur la branche de préparation ; aucune fusion dans la branche principale. La 1.0.543 reste disponible. Les contrôles automatisés restent distincts d’une confirmation sur le PC Mint physique et en partie Internet humaine entre connexions indépendantes.
 
 # Remplacement étendu 1.0.543 — publié
 

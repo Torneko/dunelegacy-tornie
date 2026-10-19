@@ -1,7 +1,7 @@
 {
   "version": "1.0.544",
   "sourceRef": "v1.0.544",
-  "status": "local-validation-complete-ci-pending",
+  "status": "validated",
   "networkProtocol": 19,
   "saveVersion": 9837,
   "ctest": "2/2 PASS",
@@ -49,11 +49,206 @@
     "achievements": 70,
     "galleryImages": 155,
     "previousImagesPreserved": 145,
-    "offlineFileAndPublicChecks": "performed by publication CI"
+    "offlineFileAndPublicChecks": "performed by publication CI",
+    "publicAndOfflineRoutes": 72,
+    "publicAndOfflinePassed": true
   },
   "ci": {
-    "linux": "pending",
-    "windows": "pending"
+    "linux": {
+      "id": 39181945708,
+      "conclusion": "success",
+      "source": "d979cea6ab8d2554ac7ab19d1444dcdf182ee245",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39181945708",
+      "buildReport": {
+        "version": "1.0.544",
+        "source": "d979cea6ab8d2554ac7ab19d1444dcdf182ee245",
+        "workflowSource": "d979cea6ab8d2554ac7ab19d1444dcdf182ee245",
+        "run": 39181945708,
+        "graphicalStartup": {
+          "passed": true,
+          "languages": [
+            "en",
+            "fr"
+          ],
+          "images": [
+            "standard",
+            "Mint-compatible"
+          ],
+          "audio": "PulseAudio",
+          "videoCases": [
+            "window",
+            "fullscreen",
+            "stale-combined-desktop"
+          ],
+          "xrandr": true
+        },
+        "softwareFallback": true,
+        "engineAndNetworkTests": true,
+        "packagedRuntimeChecks": [
+          "expanded-coop",
+          "editor-owners",
+          "rebels-mentat",
+          "rebels-windtrap-upgrade",
+          "building-sales",
+          "normal-multiplayer-alliances",
+          "flame-and-gas-units",
+          "magenta-free-zooms",
+          "house-colours-and-blue-stars",
+          "neutral-saboteur-tier-seven",
+          "editor-terrain-blue-stars",
+          "original-flame-squad-portraits",
+          "precise-close-flame-quad",
+          "sales-destruction-and-concrete",
+          "sale-button-after-upgrade",
+          "easy-sales-75-percent",
+          "extended-fallback-units",
+          "movement-slowing",
+          "saved-chaos-worm-offer",
+          "elite-ornithopter",
+          "seventy-achievements",
+          "palace-napalm-and-saved-hazards",
+          "harvester-area-guard-crush",
+          "completed-upgrade-sales",
+          "native-slowpost-editor-icon",
+          "impact-only-and-random-palace-napalm",
+          "ten-original-artwork-files"
+        ],
+        "networkProtocol": 19,
+        "saveVersion": 9837
+      }
+    },
+    "windows": {
+      "id": 39181947407,
+      "conclusion": "success",
+      "source": "d979cea6ab8d2554ac7ab19d1444dcdf182ee245",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39181947407",
+      "buildReport": {
+        "saveVersion": 9837,
+        "engineAndNetworkTests": true,
+        "source": "d979cea6ab8d2554ac7ab19d1444dcdf182ee245",
+        "release543Checks": [
+          "building-sales",
+          "normal-multiplayer-alliances",
+          "flame-and-gas-units",
+          "magenta-free-zooms",
+          "house-colours-and-blue-stars",
+          "neutral-saboteur-tier-seven",
+          "editor-terrain-blue-stars",
+          "original-flame-squad-portraits",
+          "precise-close-flame-quad",
+          "sales-destruction-and-concrete",
+          "sale-button-after-upgrade",
+          "easy-sales-75-percent",
+          "extended-fallback-units",
+          "movement-slowing",
+          "saved-chaos-worm-offer",
+          "elite-ornithopter",
+          "seventy-achievements",
+          "palace-napalm-and-saved-hazards",
+          "harvester-area-guard-crush",
+          "completed-upgrade-sales",
+          "native-slowpost-editor-icon",
+          "impact-only-and-random-palace-napalm",
+          "ten-original-artwork-files"
+        ],
+        "version": "1.0.544",
+        "workflowSource": "d979cea6ab8d2554ac7ab19d1444dcdf182ee245",
+        "videoOptionsChecks": [
+          "fr",
+          "en"
+        ],
+        "networkProtocol": 19,
+        "menuStartupChecks": [
+          "fr",
+          "en"
+        ],
+        "package": "DuneLegacyTornie-1.0.544-Windows-x64.zip",
+        "sha256": "04bfbfaf51f9a7326844d33a55d9f20ba94aa5495583bd2d4c0d635727aa55e4",
+        "run": 39181947407,
+        "installedRuntimeChecks": [
+          "fr",
+          "en"
+        ]
+      }
+    }
   },
-  "physicalMintAndHumanInternet": "separate from automated validation"
+  "physicalMintAndHumanInternet": "separate from automated validation",
+  "sourceCommit": "d979cea6ab8d2554ac7ab19d1444dcdf182ee245",
+  "features": {
+    "achievements": 70,
+    "units": 40,
+    "galleryImages": 155,
+    "sixBundledMods": true
+  },
+  "packagePublicationRun": 39233510452,
+  "packageResourcesAudit": {
+    "version": "1.0.544",
+    "source": "d979cea6ab8d2554ac7ab19d1444dcdf182ee245",
+    "passed": true,
+    "packages": [
+      {
+        "name": "DuneLegacyTornie-1.0.544-Windows-x64.zip",
+        "allModFilesMatchSource": true,
+        "modFileCount": 5623,
+        "previousSuppliedPngCopies": 42,
+        "newOriginalPngCopies": 60,
+        "editableFallbackPngCopies": 78,
+        "sha256": "04bfbfaf51f9a7326844d33a55d9f20ba94aa5495583bd2d4c0d635727aa55e4"
+      },
+      {
+        "name": "DuneLegacyTornie-1.0.544-Linux-Mint-Compatible.AppImage",
+        "allModFilesMatchSource": true,
+        "modFileCount": 5623,
+        "previousSuppliedPngCopies": 42,
+        "newOriginalPngCopies": 60,
+        "editableFallbackPngCopies": 78,
+        "sha256": "af401e39c5e4ea067ada36380af23c95359c5e3f6a6aced99ddeae1a49004e79",
+        "xrandrCompiledAndBundled": true,
+        "pulseAudioCompiled": true
+      },
+      {
+        "name": "DuneLegacyTornie-1.0.544-Linux-x86_64.AppImage",
+        "allModFilesMatchSource": true,
+        "modFileCount": 5623,
+        "previousSuppliedPngCopies": 42,
+        "newOriginalPngCopies": 60,
+        "editableFallbackPngCopies": 78,
+        "sha256": "5e8bc0087747d697a38d79f84b8c64be2b927b93fd04811afb3dd487056125ce",
+        "xrandrCompiledAndBundled": true,
+        "pulseAudioCompiled": true
+      }
+    ],
+    "downloadedMintStartup": {
+      "passed": true,
+      "language": "fr",
+      "renderer": "software",
+      "developmentLibraryPathRemoved": true
+    }
+  },
+  "publication": {
+    "releaseId": 417135362,
+    "url": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.544",
+    "assets": 16,
+    "source": "d979cea6ab8d2554ac7ab19d1444dcdf182ee245",
+    "website": "69dec6d4c434fe275903493ec8f92d0fb5e29974",
+    "documentsRun": 39233870031
+  },
+  "archiveResourcesAudit": {
+    "version": "1.0.544",
+    "source": "d979cea6ab8d2554ac7ab19d1444dcdf182ee245",
+    "passed": true,
+    "sourceArchive": {
+      "trackedFileCount": 7740,
+      "modFiles": 5623,
+      "originalArtwork": 10,
+      "taggedFileListMatches": true
+    },
+    "offlineArchive": {
+      "websiteCommit": "69dec6d4c434fe275903493ec8f92d0fb5e29974",
+      "allTrackedSiteFilesExact": true,
+      "siteFileCount": 331,
+      "embeddedPackagesMatchRelease": true,
+      "galleryImages": 155
+    }
+  }
 }
