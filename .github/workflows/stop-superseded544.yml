@@ -1,0 +1,24 @@
+name: Stop superseded 544 staging build
+on:
+  push:
+    branches: [ publish/544-stop-superseded ]
+permissions:
+  actions: write
+  contents: read
+jobs:
+  stop-superseded:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Stop only the superseded staging run that ignored cancellation
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/39247372017" > /tmp/superseded-run.json
+          python3 - <<'PY'
+          import json,os,subprocess
+          data=json.load(open('/tmp/superseded-run.json'))
+          assert data['head_sha']=='9ef0e1355e74faadae69bb965d474e218fa6a641'
+          assert data['head_branch']=='publish/544-correctifs'
+          if data['status']!='completed':
+              subprocess.run(['gh','api','--method','POST','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/39247372017/force-cancel'],check=True)
+          PY
