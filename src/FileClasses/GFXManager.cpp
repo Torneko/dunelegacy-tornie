@@ -4527,7 +4527,8 @@ void GFXManager::reloadModDependentObjectGraphics() {
         // Rebuild both liveries from the untouched vanilla Harvester, rather
         // than the supplied montages. Split its painted armour in vehicle-local
         // coordinates, so the two halves rotate together through all eight views.
-        constexpr int facingX[]={-1,-1,0,1,1,1,0,-1};
+        // Native Harvester columns run E, NE, N, NW, W, SW, S, SE.
+        constexpr int facingX[]={1,1,0,-1,-1,-1,0,1};
         constexpr int facingY[]={0,-1,-1,-1,0,1,1,1};
         constexpr Uint8 red8[]={214,182,153,125,89,60,32};
         const auto harvesterShade=[&](Uint8 r,Uint8 g,Uint8 b) {

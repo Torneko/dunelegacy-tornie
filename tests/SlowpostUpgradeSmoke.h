@@ -26,7 +26,8 @@ inline void verifySlowpostUpgrade(const std::string& output,const std::string& m
     }
     require(!post->isSlowpostUpgradeEligible(),"Atreides gained Neutral's upgrade");
     // Captured/borrowed Neutral plans remain usable even in a Lite edition.
-    post->setOriginalHouseID(HOUSE_NEUTRAL);
+    const auto neutralTechnology=getRuntimeHouseForIdentity(HOUSE_NEUTRAL);
+    post->setOriginalHouseID(neutralTechnology);
     game->techLevel=6;require(!post->canUpgradeToSlowpost(),"upgrade below level seven");
     game->techLevel=7;require(!post->canUpgradeToSlowpost(),"upgrade without IX");
     owner->placeStructure(NONE_ID,Structure_IX,12,2,true,true);
@@ -45,7 +46,7 @@ inline void verifySlowpostUpgrade(const std::string& output,const std::string& m
         require(post->getObjectID()==id && post->getHealth()==health && owner->getProducedPower()==power,"upgrade lost object state/power");
         require(!post->canUpgradeToSlowpost() && !post->canBeCaptured(),"repeat upgrade/capture allowed");
         upgrade.executeCommand();require(owner->getCredits()==credits-price,"duplicate command charged twice");
-        const int refund=(game->objectData.data[Structure_Scoutpost][HOUSE_NEUTRAL].price+price)/2;
+        const int refund=(game->objectData.data[Structure_Scoutpost][neutralTechnology].price+price)/2;
         require(post->getSaleRefund()==refund,"sale omits Scoutpost investment");
         SlowpostSmokeFixture::ready(*post);
         std::set<int> frames;

@@ -799,6 +799,7 @@ int main(int argc, char *argv[]) {
         bool bVerifyRelease541 = false;
         bool bVerifyHarvesterCrush = false;
         bool bVerifyNextDraft = false;
+        bool bVerifyCorrections544 = false;
         bool bVerifyWindtrapPreview = false;
         bool bVerifyAchievements = false;
         bool bVerifyRelease538 = false;
@@ -821,6 +822,7 @@ int main(int argc, char *argv[]) {
             if(parameter == "--verify-release541" || parameter == "--verify-release542" || parameter == "--verify-release543") { bVerifyMods=true;bVerifyRelease541=true;continue; }
             if(parameter == "--verify-harvester-crush") { bVerifyMods=true;bVerifyHarvesterCrush=true;continue; }
             if((parameter == "--verify-next-draft" || parameter == "--verify-release544")) { bVerifyMods=true;bVerifyNextDraft=true;continue; }
+            if(parameter == "--verify-correctifs544") { bVerifyMods=true;bVerifyCorrections544=true;continue; }
             if(parameter == "--verify-coop-expanded") { bVerifyMods=true;bVerifyExpandedCoop=true;continue; }
             if(parameter == "--verify-startup") { bVerifyMods = true; bVerifyStartup = true; continue; }
             if(parameter == "--verify-video") { bVerifyMods = true; bVerifyStartup = true; bVerifyVideo = true; continue; }
@@ -1341,6 +1343,20 @@ int main(int argc, char *argv[]) {
                         if(!ModManager::instance().setActiveMod("ArcaKev"))throw std::runtime_error("Preview mod activation");
                         exportRebelsWindtrapPreview(output,getRuntimeHouseForIdentity(HOUSE_REBELS));
                         SDL_Log("WINDTRAP PREVIEW PASS: original blue and upgraded green, native rendered cycle");
+                    }
+                    else if(bVerifyCorrections544) {
+                        const char* output=std::getenv("DUNELEGACY_SMOKE_DIR");
+                        if(!output)throw std::runtime_error("Correction checks need an output directory");
+                        for(const std::string mod:{"Tornie","TornieLite","Jericho","JerichoLite","ArcaKev","ArcaKevLite","vanilla"}) {
+                            if(!ModManager::instance().setActiveMod(mod))throw std::runtime_error("Correction mod activation");
+                            effectiveGameOptions=ModManager::instance().loadEffectiveGameOptions(settings.gameOptions);
+                            verifySlowpostUpgrade(output,mod);
+                            if(mod!="vanilla") {
+                                verifyRelease544Artwork(output,mod);
+                                verifyWorfinerySquad(output,mod);
+                            }
+                        }
+                        SDL_Log("CORRECTIFS 544 COMPLETE: seven modes, upgrade/animation/save, Worfinery labels and native two-tone artwork");
                     }
                     else if(bVerifyNextDraft) {
                         const char* output=std::getenv("DUNELEGACY_SMOKE_DIR");
