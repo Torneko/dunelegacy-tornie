@@ -1,6 +1,10 @@
 # Dune Legacy Tornie 1.0.544
 
-Linux, Mint AppImage and Windows share the same rules. Every network participant needs **1.0.544 / protocol 19**. New saves use **9837**; earlier saves remain readable. Earlier engines reject new saves containing the sixth random Palace power.
+## Published fixes
+
+Slowpost is available only by upgrading a Scoutpost (level 7 + IX, 450 credits), with a two-state animation. Darker violet Ranged Tank turret and corrected Worfinery labels. Two Harvesters rebuilt from vanilla: Capacity has a violet front/house rear; Fast has a house front/cyan rear. See [the details](Correctifs-1.0.544-EN.md).
+
+Linux, Mint AppImage and Windows share the same rules. Every network participant needs **1.0.544 / protocol 20**. New saves use **9838**; earlier saves remain readable. Earlier engines reject new saves from the corrected engine.
 
 ## Artwork
 

@@ -1,6 +1,10 @@
 # Dune Legacy Tornie 1.0.544
 
-Linux, AppImage Mint et Windows partagent les mêmes règles. Tous les joueurs d’une partie réseau doivent utiliser **1.0.544 / protocole 19**. Les nouvelles sauvegardes portent la version **9837** ; les anciennes restent lisibles. Les moteurs précédents refusent les nouvelles sauvegardes contenant le sixième pouvoir de palais.
+## Correctifs publiés
+
+Slowpost uniquement par amélioration du Scoutpost (niveau 7 + IX, 450 crédits), animation à deux états, tourelle violette assombrie et libellés Worfinery corrigés. Deux moissonneuses reconstruites depuis la base vanilla : grande capacité avant violet/arrière maison ; rapide avant maison/arrière cyan. Voir [le détail](Correctifs-1.0.544-FR.md).
+
+Linux, AppImage Mint et Windows partagent les mêmes règles. Tous les joueurs d’une partie réseau doivent utiliser **1.0.544 / protocole 20**. Les nouvelles sauvegardes portent la version **9838** ; les anciennes restent lisibles. Les moteurs précédents refusent les nouvelles sauvegardes du moteur corrigé.
 
 ## Graphismes
 
