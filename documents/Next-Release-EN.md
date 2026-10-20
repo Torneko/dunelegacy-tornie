@@ -38,3 +38,17 @@ listening remains a separate human check. Native tests exercise actual SDL
 rendering, commands and saves. Real UDP and determinism checks do not replace
 an Internet match between people on independent connections. These are PC-game
 changes; “mobile” referred to another Codex Work conversation, not an Android port.
+
+Preparation validation (20 October 2026): engine source `fbe8b46270efc7635b9f3cc7446df90a3356e9c2`.
+**2/2 CTest suites, 143 cases / 10,868 assertions**, including real UDP with guest
+direct links blocked and Radar command transport up to eight players. Native
+checks: **1,606 scenarios**, achievements, seven rules/editor/Chaos modes, research
+for 55 house cases, **63 campaigns with three movies in each of French/English**.
+Browser: **120 routes/contexts**, FR/EN desktop/mobile; **161 recovered site PNGs**
+remain byte-identical.
+
+[Linux/Mint CI](https://github.com/Torneko/dunelegacy-tornie/actions/runs/39468276567) and [Windows CI](https://github.com/Torneko/dunelegacy-tornie/actions/runs/39468271577) passed on the same engine
+source, including installed-game, Radar and cinematic checks in both languages.
+Package publication was disabled. [Validation receipt](Validation-Next-Release.json).
+Audio checks are programmatic; human listening, physical Mint hardware and a human
+Internet match on independent connections remain separate checks.

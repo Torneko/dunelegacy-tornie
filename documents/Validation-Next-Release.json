@@ -1,0 +1,991 @@
+{
+  "stage": "unpublished preparation",
+  "publishedBase": {
+    "version": "1.0.544",
+    "source": "d6a29fd82906eb1f4856eced2dfb01fe3e74637e",
+    "protocol": 20,
+    "save": 9838
+  },
+  "source": "fbe8b46270efc7635b9f3cc7446df90a3356e9c2",
+  "siteSource": "ab62e6fb586faa1a28a3d67a35d79619b98963ee",
+  "protocol": 21,
+  "save": 9839,
+  "stableItemIds": true,
+  "timestampUtc": "2026-10-20T18:41:47.894516+00:00",
+  "publicationPerformed": false,
+  "local": {
+    "radar-en": {
+      "passed": true,
+      "source": "fbe8b46270efc7635b9f3cc7446df90a3356e9c2",
+      "markers": 7,
+      "logSha256": "bbd1ca2b2488119b9846e254a4c10c35589a9dd34423273cea53d19297598516"
+    },
+    "radar-fr": {
+      "passed": true,
+      "source": "b7ec090e58d7f14cab07cafcf4ec832b467c0b29",
+      "markers": 7,
+      "logSha256": "6f1c9625d023f8feaf884b8303de7e31e907ea2515e937b8a9eb01024e4991ce"
+    },
+    "editor-and-chaos": {
+      "passed": true,
+      "source": "66b73b13dcd068471a725306b0702f4b5b88e378",
+      "markers": 7,
+      "logSha256": "88b166a460246f8f8503840d92ff02f967cd16abef993a1ddd6780665b5f9a8b"
+    },
+    "chaos-defence": {
+      "passed": true,
+      "source": "66b73b13dcd068471a725306b0702f4b5b88e378",
+      "markers": 7,
+      "logSha256": "88b166a460246f8f8503840d92ff02f967cd16abef993a1ddd6780665b5f9a8b"
+    },
+    "native-artwork": {
+      "passed": true,
+      "source": "66b73b13dcd068471a725306b0702f4b5b88e378",
+      "markers": 6,
+      "logSha256": "88b166a460246f8f8503840d92ff02f967cd16abef993a1ddd6780665b5f9a8b"
+    },
+    "cinema-en": {
+      "passed": true,
+      "source": "b7ec090e58d7f14cab07cafcf4ec832b467c0b29",
+      "markers": 7,
+      "logSha256": "904e90277cc0c87334c26e8fa1d0014b8622d1c906269d8f56489fa52ca25dc7"
+    },
+    "cinema-fr": {
+      "passed": true,
+      "source": "b7ec090e58d7f14cab07cafcf4ec832b467c0b29",
+      "markers": 7,
+      "logSha256": "31bb877a069149284de30d4adb8d51a9312c9c0b078dc6f3bba971c463c95abd"
+    },
+    "original-cinema-en": {
+      "passed": true,
+      "source": "b7ec090e58d7f14cab07cafcf4ec832b467c0b29",
+      "markers": 1,
+      "logSha256": "904e90277cc0c87334c26e8fa1d0014b8622d1c906269d8f56489fa52ca25dc7"
+    },
+    "original-cinema-fr": {
+      "passed": true,
+      "source": "b7ec090e58d7f14cab07cafcf4ec832b467c0b29",
+      "markers": 1,
+      "logSha256": "31bb877a069149284de30d4adb8d51a9312c9c0b078dc6f3bba971c463c95abd"
+    },
+    "coop": {
+      "passed": true,
+      "source": "b7ec090e58d7f14cab07cafcf4ec832b467c0b29",
+      "markers": 7,
+      "logSha256": "d199a777112ba8607d278953ea5cf7678fefbd695e0baabdf36844fca3df700c"
+    },
+    "harvester": {
+      "passed": true,
+      "source": "b7ec090e58d7f14cab07cafcf4ec832b467c0b29",
+      "markers": 7,
+      "logSha256": "0db510a15e59bf325f63d49808871d5d7d9386e9e11ff2426757840c7cce74fa"
+    },
+    "full-mod-runtime": {
+      "passed": true,
+      "source": "b7ec090e58d7f14cab07cafcf4ec832b467c0b29",
+      "markers": 1,
+      "logSha256": "6ea9529c463b8638d08a3a08dea50289ad062d86ce6a1d9b711642de7146362f"
+    },
+    "achievements": {
+      "passed": true,
+      "source": "b7ec090e58d7f14cab07cafcf4ec832b467c0b29",
+      "markers": 1,
+      "logSha256": "6ea9529c463b8638d08a3a08dea50289ad062d86ce6a1d9b711642de7146362f"
+    },
+    "engine-and-real-udp": {
+      "passed": true,
+      "cases": 143,
+      "assertions": 10868,
+      "ctestSuites": 2,
+      "blockedGuestDirectLinks": true,
+      "players": 8,
+      "researchCommandsThroughRelay": true
+    }
+  },
+  "browser": {
+    "general": {
+      "passed": true,
+      "count": 36,
+      "results": [
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "fr",
+          "route": "accueil",
+          "heading": "Connaître ses unités.\nConstruire sa stratégie."
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "fr",
+          "route": "unites",
+          "heading": "Les unités"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "fr",
+          "route": "batiments",
+          "heading": "Les bâtiments"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "fr",
+          "route": "technologies",
+          "heading": "Les technologies, niveau par niveau"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "fr",
+          "route": "factions",
+          "heading": "Factions & modes"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "fr",
+          "route": "hauts-faits",
+          "heading": "Les hauts faits"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "fr",
+          "route": "guide",
+          "heading": "Le guide du joueur"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "fr",
+          "route": "galerie",
+          "heading": "Les PNG du jeu"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "fr",
+          "route": "projet",
+          "heading": "Dune Legacy Tornie"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "en",
+          "route": "accueil",
+          "heading": "Know your units.\nBuild your strategy."
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "en",
+          "route": "unites",
+          "heading": "Units"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "en",
+          "route": "batiments",
+          "heading": "Buildings"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "en",
+          "route": "technologies",
+          "heading": "Technologies, level by level"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "en",
+          "route": "factions",
+          "heading": "Factions & modes"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "en",
+          "route": "hauts-faits",
+          "heading": "Achievements"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "en",
+          "route": "guide",
+          "heading": "The player guide"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "en",
+          "route": "galerie",
+          "heading": "Game PNGs"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 1440,
+          "lang": "en",
+          "route": "projet",
+          "heading": "Dune Legacy Tornie"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "fr",
+          "route": "accueil",
+          "heading": "Connaître ses unités.\nConstruire sa stratégie."
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "fr",
+          "route": "unites",
+          "heading": "Les unités"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "fr",
+          "route": "batiments",
+          "heading": "Les bâtiments"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "fr",
+          "route": "technologies",
+          "heading": "Les technologies, niveau par niveau"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "fr",
+          "route": "factions",
+          "heading": "Factions & modes"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "fr",
+          "route": "hauts-faits",
+          "heading": "Les hauts faits"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "fr",
+          "route": "guide",
+          "heading": "Le guide du joueur"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "fr",
+          "route": "galerie",
+          "heading": "Les PNG du jeu"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "fr",
+          "route": "projet",
+          "heading": "Dune Legacy Tornie"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "en",
+          "route": "accueil",
+          "heading": "Know your units.\nBuild your strategy."
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "en",
+          "route": "unites",
+          "heading": "Units"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "en",
+          "route": "batiments",
+          "heading": "Buildings"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "en",
+          "route": "technologies",
+          "heading": "Technologies, level by level"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "en",
+          "route": "factions",
+          "heading": "Factions & modes"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "en",
+          "route": "hauts-faits",
+          "heading": "Achievements"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "en",
+          "route": "guide",
+          "heading": "The player guide"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "en",
+          "route": "galerie",
+          "heading": "Game PNGs"
+        },
+        {
+          "base": "http://127.0.0.1:31461/",
+          "width": 390,
+          "lang": "en",
+          "route": "projet",
+          "heading": "Dune Legacy Tornie"
+        }
+      ],
+      "errors": []
+    },
+    "research": {
+      "passed": true,
+      "count": 84,
+      "results": [
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "Vanilla",
+          "route": "technologies",
+          "roster": ""
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "Vanilla",
+          "route": "factions",
+          "roster": ""
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "Vanilla",
+          "route": "batiments",
+          "roster": ""
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "Tornie",
+          "route": "technologies",
+          "roster": "HAOFSMNRCWKT"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "Tornie",
+          "route": "factions",
+          "roster": "HAOFSMNRCWKT"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "Tornie",
+          "route": "batiments",
+          "roster": "HAOFSMNRCWKT"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "TornieLite",
+          "route": "technologies",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "TornieLite",
+          "route": "factions",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "TornieLite",
+          "route": "batiments",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "Jericho",
+          "route": "technologies",
+          "roster": "HAOFSMWKTNRC"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "Jericho",
+          "route": "factions",
+          "roster": "HAOFSMWKTNRC"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "Jericho",
+          "route": "batiments",
+          "roster": "HAOFSMWKTNRC"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "JerichoLite",
+          "route": "technologies",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "JerichoLite",
+          "route": "factions",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "JerichoLite",
+          "route": "batiments",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "ArcaKev",
+          "route": "technologies",
+          "roster": "HAOFSMKWRNTC"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "ArcaKev",
+          "route": "factions",
+          "roster": "HAOFSMKWRNTC"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "ArcaKev",
+          "route": "batiments",
+          "roster": "HAOFSMKWRNTC"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "ArcaKevLite",
+          "route": "technologies",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "ArcaKevLite",
+          "route": "factions",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 1440,
+          "mod": "ArcaKevLite",
+          "route": "batiments",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Vanilla",
+          "route": "technologies",
+          "roster": ""
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Vanilla",
+          "route": "factions",
+          "roster": ""
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Vanilla",
+          "route": "batiments",
+          "roster": ""
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Tornie",
+          "route": "technologies",
+          "roster": "HAOFSMNRCWKT"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Tornie",
+          "route": "factions",
+          "roster": "HAOFSMNRCWKT"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Tornie",
+          "route": "batiments",
+          "roster": "HAOFSMNRCWKT"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "TornieLite",
+          "route": "technologies",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "TornieLite",
+          "route": "factions",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "TornieLite",
+          "route": "batiments",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Jericho",
+          "route": "technologies",
+          "roster": "HAOFSMWKTNRC"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Jericho",
+          "route": "factions",
+          "roster": "HAOFSMWKTNRC"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Jericho",
+          "route": "batiments",
+          "roster": "HAOFSMWKTNRC"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "JerichoLite",
+          "route": "technologies",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "JerichoLite",
+          "route": "factions",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "JerichoLite",
+          "route": "batiments",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKev",
+          "route": "technologies",
+          "roster": "HAOFSMKWRNTC"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKev",
+          "route": "factions",
+          "roster": "HAOFSMKWRNTC"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKev",
+          "route": "batiments",
+          "roster": "HAOFSMKWRNTC"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKevLite",
+          "route": "technologies",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKevLite",
+          "route": "factions",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKevLite",
+          "route": "batiments",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "Vanilla",
+          "route": "technologies",
+          "roster": ""
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "Vanilla",
+          "route": "factions",
+          "roster": ""
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "Vanilla",
+          "route": "batiments",
+          "roster": ""
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "Tornie",
+          "route": "technologies",
+          "roster": "HAOFSMNRCWKT"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "Tornie",
+          "route": "factions",
+          "roster": "HAOFSMNRCWKT"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "Tornie",
+          "route": "batiments",
+          "roster": "HAOFSMNRCWKT"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "TornieLite",
+          "route": "technologies",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "TornieLite",
+          "route": "factions",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "TornieLite",
+          "route": "batiments",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "Jericho",
+          "route": "technologies",
+          "roster": "HAOFSMWKTNRC"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "Jericho",
+          "route": "factions",
+          "roster": "HAOFSMWKTNRC"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "Jericho",
+          "route": "batiments",
+          "roster": "HAOFSMWKTNRC"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "JerichoLite",
+          "route": "technologies",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "JerichoLite",
+          "route": "factions",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "JerichoLite",
+          "route": "batiments",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "ArcaKev",
+          "route": "technologies",
+          "roster": "HAOFSMKWRNTC"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "ArcaKev",
+          "route": "factions",
+          "roster": "HAOFSMKWRNTC"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "ArcaKev",
+          "route": "batiments",
+          "roster": "HAOFSMKWRNTC"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "ArcaKevLite",
+          "route": "technologies",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "ArcaKevLite",
+          "route": "factions",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 1440,
+          "mod": "ArcaKevLite",
+          "route": "batiments",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Vanilla",
+          "route": "technologies",
+          "roster": ""
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Vanilla",
+          "route": "factions",
+          "roster": ""
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Vanilla",
+          "route": "batiments",
+          "roster": ""
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Tornie",
+          "route": "technologies",
+          "roster": "HAOFSMNRCWKT"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Tornie",
+          "route": "factions",
+          "roster": "HAOFSMNRCWKT"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Tornie",
+          "route": "batiments",
+          "roster": "HAOFSMNRCWKT"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "TornieLite",
+          "route": "technologies",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "TornieLite",
+          "route": "factions",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "TornieLite",
+          "route": "batiments",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Jericho",
+          "route": "technologies",
+          "roster": "HAOFSMWKTNRC"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Jericho",
+          "route": "factions",
+          "roster": "HAOFSMWKTNRC"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Jericho",
+          "route": "batiments",
+          "roster": "HAOFSMWKTNRC"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "JerichoLite",
+          "route": "technologies",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "JerichoLite",
+          "route": "factions",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "JerichoLite",
+          "route": "batiments",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKev",
+          "route": "technologies",
+          "roster": "HAOFSMKWRNTC"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKev",
+          "route": "factions",
+          "roster": "HAOFSMKWRNTC"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKev",
+          "route": "batiments",
+          "roster": "HAOFSMKWRNTC"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKevLite",
+          "route": "technologies",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKevLite",
+          "route": "factions",
+          "roster": "HAOFSM"
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKevLite",
+          "route": "batiments",
+          "roster": "HAOFSM"
+        }
+      ],
+      "errors": []
+    },
+    "access": "local HTTP preview; managed browser disallows file URLs"
+  },
+  "preservedSiteImages": {
+    "base": "0e8430ddd317b7441058d33ee311b77b08ea97fd",
+    "originalPngFiles": 161,
+    "unchanged": true,
+    "publicVersion": "1.0.544",
+    "preview": "unpublished post-544 preparation"
+  },
+  "ci": {
+    "windows": {
+      "run": 39468271577,
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39468271577",
+      "source": "fbe8b46270efc7635b9f3cc7446df90a3356e9c2",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "linux": {
+      "run": 39468276567,
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39468276567",
+      "source": "fbe8b46270efc7635b9f3cc7446df90a3356e9c2",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  },
+  "limits": [
+    "Automated audio checks validate original decoded tracks, channel, mute, volume and cleanup; human listening remains separate.",
+    "Real UDP/command/save tests do not replace a human Internet match between independent connections.",
+    "Public Linux Mint hardware validation remains separate from hosted Ubuntu/Mint-compatible AppImage checks."
+  ],
+  "allPlatformChecksPassed": true
+}
