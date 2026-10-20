@@ -437,7 +437,12 @@ void UnitBase::destroy() {
             if(auto* crew=owner->createUnit(Unit_Trooper,false,owner->getFactionID())) {
                 const Coord spot=currentGameMap->findDeploySpot(crew,location,currentGame->randomGen,location);
                 if(spot.isValid() && currentGameMap->tileExists(spot))crew->deploy(spot);
-                else delete crew;
+                else {
+                    // Creation registers the unit before it has a deploy spot.
+                    owner->decrementUnits(Unit_Trooper);
+                    unitList.remove(crew);
+                    delete crew;
+                }
             }
         }
     } else if(isVisible()) {
