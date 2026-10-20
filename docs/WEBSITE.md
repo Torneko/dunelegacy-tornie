@@ -1,3 +1,22 @@
+# 1.0.545 — publication autorisée
+
+Source du jeu et tag : `ba003c2cc87e0cc2dbe43b36b235e4889641cf9f`, protocole 21, sauvegardes 9839.
+La publication utilise les artefacts des deux CI de cette source :
+[Windows](https://github.com/Torneko/dunelegacy-tornie/actions/runs/39510210888) et
+[Linux/Mint](https://github.com/Torneko/dunelegacy-tornie/actions/runs/39510214591).
+Les contrôles des paquets et des 16 PNG originaux précèdent l’envoi dans la release.
+Le même site FR/EN est déployé et archivé hors ligne, avec les paquets 545,
+les sources, les notes et les empreintes. Le site comporte 73 succès et les
+nouveaux portraits et cadres de campagne ; les 192 PNG/GIF préexistants restent intacts.
+
+[Validation 545](../release_notes/Validation-1.0.545.json) ·
+[Reçus](../release_notes/Publication-Receipt-1.0.545.json) ·
+[Audit final](../release_notes/Final-Publication-Audit-1.0.545.json).
+Les reçus portent les révisions et les résultats définitifs ; le tag du jeu
+reste figé, les rapports sont ajoutés ensuite à la branche de préparation.
+
+# Préparation précédente — historique
+
 # Préparation après la 1.0.544 corrigée — non publiée
 
 La préparation suit `d6a29fd` et le site `0e8430d` récupéré sur `origin/gh-pages`.

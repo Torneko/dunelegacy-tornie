@@ -1,8 +1,8 @@
 # Dune Legacy Tornie
 
-Préparation 1.0.545 depuis la 1.0.544 corrigée (non publiée) : [notes FR](release_notes/Next-Release-FR.md), [notes EN](release_notes/Next-Release-EN.md), [recherches radar](docs/RADAR-RESEARCH-NEXT-RELEASE.md). Les paquets publics 1.0.544 restent inchangés.
+**[1.0.545 — Windows / Linux / Mint](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.545)** : recherches radar, plans Chaos, éditeur, cinématiques originales, douze cadres dorés, portraits Fremen/Sardaukar et **73 succès**. Tous les participants réseau : protocole **21** ; nouvelles sauvegardes **9839**, anciennes lisibles. [Notes FR](release_notes/1.0.545-FR.md) · [Notes EN](release_notes/1.0.545-EN.md) · [Validation](release_notes/Validation-1.0.545.json).
 
-Préparé pour la 1.0.545 : [recherches radar](docs/RADAR-RESEARCH-NEXT-RELEASE.md), [portraits, cadres de campagne, introduction et succès](docs/RELEASE-1.0.545.md). / Prepared for 1.0.545: Radar research, faction artwork, replay intro and achievements; publication pending.
+Source figée du jeu : `ba003c2cc87e0cc2dbe43b36b235e4889641cf9f`. Les rapports suivent sur la branche de préparation sans déplacer ce tag. [Recherches radar](docs/RADAR-RESEARCH-NEXT-RELEASE.md) · [Graphismes et succès](docs/RELEASE-1.0.545.md) · [Reçus de publication](release_notes/Publication-Receipt-1.0.545.json).
 
 Correctifs 1.0.544 : Slowpost par amélioration du Scoutpost, animation, tourelle violette plus sombre, libellés Worfinery et deux moissonneuses bicolores reconstruites depuis la base vanilla. [FR](release_notes/Correctifs-1.0.544-FR.md) · [EN](release_notes/Correctifs-1.0.544-EN.md). Protocole 20 / nouvelles sauvegardes 9838. Retélécharger la 544 corrigée sur tous les postes d’une partie réseau.
 

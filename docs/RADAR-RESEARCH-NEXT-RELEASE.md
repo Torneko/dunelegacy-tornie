@@ -1,13 +1,12 @@
-# Recherches du radar / Radar research — préparation après 1.0.544
+# Recherches du radar / Radar research — 1.0.545
 
-Base : 1.0.544 corrigée, `d6a29fd82906eb1f4856eced2dfb01fe3e74637e`.
-Les paquets publics 1.0.544 ne contiennent pas ces recherches. Aucun nouveau tag
-ni publication n'est créé par cette préparation.
+Introduit dans la 1.0.545, source `ba003c2cc87e0cc2dbe43b36b235e4889641cf9f`.
+Protocole 21 / sauvegardes 9839 ; anciennes sauvegardes lisibles.
 
 ## Français
 
 Tornie a validé les réglages ci-dessous le 20 octobre 2026. Le système est
-implémenté dans la branche de préparation, pour Tornie, Jericho, ArcaKev et leurs
+implémenté dans la 1.0.545, pour Tornie, Jericho, ArcaKev et leurs
 éditions Lite. Vanilla conserve ses règles sans recherches.
 
 | Recherche | Prix | Durée simulée | Prérequis | Effet |
@@ -74,8 +73,8 @@ réponses explicites de Tornie :
 ## English
 
 Tornie approved these numbers on 20 October 2026. Research is implemented on the
-preparation branch for Tornie, Jericho, ArcaKev and all three Lite editions.
-Published 1.0.544 packages do not contain it. Vanilla has no research.
+1.0.545 for Tornie, Jericho, ArcaKev and all three Lite editions.
+Vanilla has no Radar research.
 
 Common research costs **500 credits / 45 simulated seconds / technology 4**.
 Specialization costs **750 / 60 seconds / technology 7 + IX**. All require a
@@ -125,7 +124,7 @@ Implementation choices, rather than separately approved details:
   direct weapon damage do not. Active fires receive it before fading. Additional
   lifetime survives a save made during the extension.
 
-New preparation compatibility: **protocol 21 / saves 9839**, stable item IDs and
-readers for old saves. This is not the published 544 protocol 20 / saves 9838.
+1.0.545 compatibility: **protocol 21 / saves 9839**, stable item IDs and
+readers for old saves. All network participants need 1.0.545.
 See [next-release notes](../release_notes/Next-Release-EN.md) and the validation
 receipt for executed checks and remaining limits.
