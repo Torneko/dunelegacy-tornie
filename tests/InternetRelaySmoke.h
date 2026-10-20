@@ -20,6 +20,10 @@ void NetworkManager::verifyInternetRelayTransport() {
     const auto require = [](bool value, const char* message) {
         if(!value) throw std::runtime_error(std::string("Internet relay regression: ") + message);
     };
+    const auto transportCommand=[](int player,Uint32 object,Uint32 cycle) {
+        return cycle%7==0?Command(player,CMD_RADAR_RESEARCH,object,cycle/7)
+                         :Command(player,CMD_TEST_SYNC,object);
+    };
     for(bool blocked : {false, true}) {
         NetworkManager server(0, "", true), first(0, "", true), second(0, "", true), extra(0, "", true);
         GameInitSettings lobby;
@@ -94,10 +98,11 @@ void NetworkManager::verifyInternetRelayTransport() {
                     const auto& entry = list.commandList[cycle];
                     const auto sender = std::find(std::begin(names), std::end(names), name);
                     require(sender != std::end(names), "unknown command sender");
+                    const auto expected=transportCommand(static_cast<int>(std::distance(std::begin(names),sender)),12345+static_cast<Uint32>(cycle),static_cast<Uint32>(cycle));
                     require(entry.cycle == 100 + cycle && entry.commands.size() == 1
                         && entry.commands[0].getPlayerID() == std::distance(std::begin(names), sender)
-                        && entry.commands[0].getCommandID() == CMD_TEST_SYNC
-                        && entry.commands[0].getParameter() == std::vector<Uint32>{12345 + static_cast<Uint32>(cycle)},
+                        && entry.commands[0].getCommandID() == expected.getCommandID()
+                        && entry.commands[0].getParameter() == expected.getParameter(),
                         "synchronization command cycle or parameters changed");
                 }
                 ++commands[i];
@@ -121,11 +126,11 @@ void NetworkManager::verifyInternetRelayTransport() {
         server.stopAnnouncing(); // Relay must survive the transition into the game.
         CommandList commandList;
         for(Uint32 cycle = 0; cycle < 20; ++cycle)
-            commandList.commandList.emplace_back(100 + cycle, std::vector<Command>{Command(1, CMD_TEST_SYNC, 12345 + cycle)});
+            commandList.commandList.emplace_back(100 + cycle, std::vector<Command>{transportCommand(1,12345+cycle,cycle)});
         for(int i = 0; i < 3; ++i) {
             participants[i]->sendChatMessage(names[i]);
             for(auto& entry : commandList.commandList)
-                entry.commands = {Command(i, CMD_TEST_SYNC, 12345 + entry.cycle - 100)};
+                entry.commands = {transportCommand(i,12345+entry.cycle-100,entry.cycle-100)};
             participants[i]->sendCommandList(commandList);
             participants[i]->sendSelectedList({42, 87}, 3);
         }
@@ -198,10 +203,11 @@ void NetworkManager::verifyInternetRelayTransport() {
                     require(sender!=eightNames.end() && name!=eightNames[i] && list.commandList.size()==20,"eight-player command source");
                     for(std::size_t cycle=0;cycle<20;++cycle) {
                         const auto& entry=list.commandList[cycle];
+                        const auto expected=transportCommand(static_cast<int>(std::distance(eightNames.begin(),sender)),9000+static_cast<Uint32>(cycle),static_cast<Uint32>(cycle));
                         require(entry.cycle==300+cycle && entry.commands.size()==1
                             && entry.commands[0].getPlayerID()==std::distance(eightNames.begin(),sender)
-                            && entry.commands[0].getCommandID()==CMD_TEST_SYNC
-                            && entry.commands[0].getParameter()==std::vector<Uint32>{9000+static_cast<Uint32>(cycle)},
+                            && entry.commands[0].getCommandID()==expected.getCommandID()
+                            && entry.commands[0].getParameter()==expected.getParameter(),
                             "eight-player synchronized command changed");
                     }
                     ++eightCommands[i];
@@ -222,7 +228,7 @@ void NetworkManager::verifyInternetRelayTransport() {
             for(int i=0;i<8;++i) {
                 CommandList list;
                 for(Uint32 cycle=0;cycle<20;++cycle)
-                    list.commandList.emplace_back(300+cycle,std::vector<Command>{Command(i,CMD_TEST_SYNC,9000+cycle)});
+                    list.commandList.emplace_back(300+cycle,std::vector<Command>{transportCommand(i,9000+cycle,cycle)});
                 eight[i]->sendCommandList(list);eight[i]->sendChatMessage(eightNames[i]);
             }
             until([&]{return std::all_of(eightCommands.begin(),eightCommands.end(),[](int count){return count==7;})
