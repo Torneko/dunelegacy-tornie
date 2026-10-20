@@ -1,0 +1,38 @@
+# Dune Legacy Tornie 1.0.545
+
+Radar research, campaigns, faction artwork and 73 achievements. Linux, Linux Mint
+and Windows. Every network participant needs this version: protocol 21.
+New saves use 9839; previous saves remain readable.
+
+- Radar research in every non-Vanilla mod, including Lite: two common upgrades
+  (construction range +2 tiles, ground vision +2) and one house specialization.
+  Common: 500 credits / 45 seconds / level 4. Specialization: 750 credits /
+  60 seconds / level 7 + IX. Powered Radar required; existing/future units,
+  saves, deterministic network commands and AI supported. See Radar-Research.md.
+- Raider Quad: all eight headings anchored to the vanilla Quad at 1×/2×/3×.
+- No blue editor star on Slowpost, in the palette or on the map.
+- Standard Rebels 2×2 Windtrap: editor pre-upgrade checkbox, immediate double
+  power and green animation; map save and undo/redo retain it. Outside Vanilla.
+- Chaos: standard 2×2 Windtrap and borrowed Rebels upgrade; Flamepost/Chemipost/
+  Slowpost conversions follow borrowed blueprints, including Lite. Older saved
+  draws retain their donors.
+- Original blue Westwood logo, palette, timing and signature audio. **Replay
+  Intro** button above co-op on the right of the main menu.
+- Original localized Dune II end credits, eleven illustrations and music.
+  Added campaign cutscenes follow CampaignPlan.ini roles, names and colours,
+  including Lite and bonus colours.
+- Twelve golden campaign selection/confirmation frames: correct identity after
+  mod changes, complete border and unchanged original files.
+- Supplied Fremen single/five and Sardaukar three/five portraits. No added
+  stars or numbers. Production artwork follows the blueprint house in Chaos.
+- Three new achievements and counters, **73 total**: win co-op after elimination
+  thanks to a surviving ally; survive and win for an eliminated ally; destroy
+  an enemy Palace with a Saboteur. Co-op supports two, three or four allied
+  factions; Archon controllers share their house outcome.
+- FR/EN website: research, campaigns, portraits, full achievement list, original
+  resources and a display crop for Tornie’s supplied Fremen banner.
+
+Existing achievement profiles are retained; the 100% indicator follows all 73.
+Game source: ba003c2cc87e0cc2dbe43b36b235e4889641cf9f.
+Sources, notes, checksums and the offline website accompany the release.
+Detailed results are recorded in Validation-1.0.545.json.

@@ -1,6 +1,4 @@
-# Dune Legacy Tornie 1.0.538 — 67 achievements
-
-Published release 1.0.538.
+# Dune Legacy Tornie 1.0.545 — 73 achievements
 
 ## Pacifism
 
@@ -126,9 +124,9 @@ Successfully activate a palace ability.
 
 Destroy 50 enemies with Flame Tanks in total.
 
-## Tornie Arsenal
+## Custom Arsenal
 
-Produce three different Tornie-exclusive unit types in one match.
+Produce three different custom unit types in one match in Tornie, Jericho or ArcaKev (including Lite).
 
 ## Against the Odds
 
@@ -270,7 +268,27 @@ Use 50 palace abilities in total.
 
 Launch 25 palace missiles in total.
 
+## Liquid assets
 
-## 1.0.543 draft — Liquid assets
+Sell your first building.
 
-Sell your first building. Lifetime statistic `StructuresSold`, target 1. Statistics also track buildings sold and refunded credits. Draft catalogue: 68 achievements.
+## Master of ArcaKev
+
+Complete all twelve campaigns in ArcaKev.
+
+## Master of ArcaKev Lite
+
+Complete all six campaigns in ArcaKev Lite.
+
+## Victory Beyond Defeat
+
+Be eliminated in co-op and have a surviving ally win the mission for your team.
+
+## No Ally Left Behind
+
+Survive and win a co-op mission after at least one ally has been eliminated.
+
+## Palace Infiltrator
+
+Destroy an enemy Palace with a Saboteur.
+

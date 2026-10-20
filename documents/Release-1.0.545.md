@@ -61,3 +61,6 @@ Radar/cinematics work. Current public downloads remain at 1.0.544.
 Co-op rescue achievements resolve at team victory and support all local
 perspectives with two, three or four allied factions; Archon controllers share
 their house outcome. Sabotage requires a local Saboteur destroying an enemy Palace.
+
+
+Validation finale : CTest 2/2, 145 cas / 10 891 assertions ; 1 606 scénarios et suites natives FR/EN. Les deux CI de la source ba003c2cc87e0cc2dbe43b36b235e4889641cf9f ont réussi. Publication autorisée. Voir Validation-1.0.545.json.

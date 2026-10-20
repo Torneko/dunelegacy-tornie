@@ -1,6 +1,4 @@
-# Dune Legacy Tornie 1.0.538 — 67 hauts faits
-
-Version 1.0.538 publiée.
+# Dune Legacy Tornie 1.0.545 — 73 hauts faits
 
 ## Pacifisme
 
@@ -126,9 +124,9 @@ Activer avec succès une capacité de palais.
 
 Détruire 50 ennemis avec des chars lance-flammes au total.
 
-## Arsenal Tornie
+## Arsenal personnalisé
 
-Produire trois types différents d’unités exclusives de Tornie dans une partie.
+Produire trois types d’unités personnalisées dans une partie de Tornie, Jericho ou ArcaKev (Lite compris).
 
 ## Contre toute attente
 
@@ -270,7 +268,27 @@ Utiliser 50 capacités de Palace au total.
 
 Lancer 25 missiles de Palace au total.
 
+## Liquidités
 
-## Préparation 1.0.543 — Liquidités
+Vendre votre premier bâtiment.
 
-Vendre votre premier bâtiment. Succès cumulatif `StructuresSold`, seuil 1. Les statistiques ajoutent les bâtiments vendus et les crédits remboursés. Catalogue en préparation : 68 succès.
+## Maître d’ArcaKev
+
+Terminer les douze campagnes dans ArcaKev.
+
+## Maître d’ArcaKev Lite
+
+Terminer les six campagnes dans ArcaKev Lite.
+
+## La victoire après la défaite
+
+Être éliminé en coop et remporter la mission grâce à un allié encore en vie.
+
+## Un allié ne tombe jamais seul
+
+Survivre et gagner une mission coop après l’élimination d’au moins un allié.
+
+## Sabotage royal
+
+Détruire un palais ennemi avec un Saboteur.
+
