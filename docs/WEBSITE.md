@@ -8,6 +8,15 @@ encore publics. Numéro, paquets, site public et archive hors ligne seront align
 lors d'une publication autorisée ; aucun tag ni remplacement des paquets publics
 n'est demandé pour cette étape. Les 155 PNG originaux de galerie sont préservés.
 
+Validation : 36 parcours généraux + 84 contextes radar/factions/technologies,
+FR/EN en 1440 et 390 pixels. Les 161 fichiers PNG du site récupéré sont intacts.
+[Rapport](../release_notes/Validation-Next-Release.json). Les deux CI valident les
+paquets installés sur la même source moteur, avec publication désactivée.
+Le numéro de version du site et ses liens publics restent ceux de la 544 publiée.
+La validation navigateur locale utilise HTTP ; les URL file sont bloquées par
+la politique du navigateur géré. L'archive de préparation conserve les chemins
+relatifs et les téléchargements 544 existants.
+
 # Correctifs 1.0.544 — publiés
 
 La [release 1.0.544 corrigée](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.544) remplace la publication initiale. Source et tag : `d6a29fd82906eb1f4856eced2dfb01fe3e74637e`. Site français/anglais : `0e8430ddd317b7441058d33ee311b77b08ea97fd`, préparé depuis `69dec6d4c434fe275903493ec8f92d0fb5e29974`. Protocole **20**, nouvelles sauvegardes **9838**, anciennes lisibles ; retélécharger sur tous les postes réseau.

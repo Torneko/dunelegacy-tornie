@@ -42,3 +42,17 @@ ils ne remplacent pas une écoute humaine. Le rendu SDL et les commandes/sauvega
 sont vérifiés par les contrôles natifs. Une partie humaine Internet entre réseaux
 indépendants reste distincte des tests UDP et de déterminisme. Les demandes
 concernent le jeu PC : « mobile » désignait une autre conversation Codex Work.
+
+Validation de préparation (20 octobre 2026) : source moteur `fbe8b46270efc7635b9f3cc7446df90a3356e9c2`.
+CTest **2/2**, **143 cas / 10 868 assertions**, dont UDP réel avec liens directs
+entre invités bloqués et transport des commandes radar jusqu'à huit joueurs.
+Contrôles natifs : **1 606 scénarios**, succès, sept modes de règles/éditeur/Chaos,
+recherches pour 55 cas de maisons, **63 campagnes et trois cinématiques par langue**
+FR/EN. Navigateur : **120 parcours/contextes** FR/EN ordinateur/mobile ; **161 PNG**
+du site récupéré conservés à l'identique.
+
+[CI Linux/Mint](https://github.com/Torneko/dunelegacy-tornie/actions/runs/39468276567) et [CI Windows](https://github.com/Torneko/dunelegacy-tornie/actions/runs/39468271577) réussies sur cette même source,
+avec tests du jeu installé, radar et cinématiques FR/EN. Publication des paquets
+désactivée. [Rapport de validation](Validation-Next-Release.json). Les vérifications
+audio sont programmatiques ; écoute humaine, PC Mint physique et partie Internet
+humaine entre réseaux indépendants restent des contrôles distincts.
