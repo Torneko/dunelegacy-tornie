@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 #include <CutScenes/OriginalCredits.h>
-#include <CutScenes/CutSceneMusicTrigger.h>
+#include <globals.h>
+#include <FileClasses/adl/sound_adlib.h>
+#include <FileClasses/music/MusicPlayer.h>
 #include <FileClasses/FileManager.h>
 #include <FileClasses/Palfile.h>
 #include <FileClasses/Shpfile.h>
+#include <FileClasses/Cpsfile.h>
 #include <FileClasses/TextManager.h>
-#include <globals.h>
 #include <misc/Scaler.h>
 #include <misc/draw_util.h>
 #include <algorithm>
@@ -40,7 +42,7 @@ struct CreditsFont {
     }
     void draw(SDL_Surface* surface, const std::string& value, int x, int y) const {
         const auto white = SDL_MapRGBA(surface->format, 255, 255, 255, 255);
-        const auto shadow = SDL_MapRGBA(surface->format, 48, 48, 48, 255);
+        const auto shadow = SDL_MapRGBA(surface->format, 0, 0, 0, 255);
         for(unsigned char c : value) {
             if(c >= count) continue;
             const int w = data.at(widths + c), top = data.at(lines + 2 * c);
@@ -58,14 +60,19 @@ struct CreditsFont {
 };
 }
 
-OriginalCredits::OriginalCredits() {
+OriginalCredits::OriginalCredits(int house) {
     startNewScene();
-    addVideoEvent(std::make_unique<OriginalCreditsVideoEvent>());
-    // Original music 33 is DUNE20, track 2, already mapped as GAMESTAT.
-    addTrigger(std::make_unique<CutSceneMusicTrigger>(0, MUSIC_GAMESTAT));
+    addVideoEvent(std::make_unique<OriginalCreditsVideoEvent>(house));
+    // The event plays DUNE20 track 2 directly, including with directory music selected.
 }
 
-OriginalCreditsVideoEvent::OriginalCreditsVideoEvent() {
+OriginalCreditsVideoEvent::OriginalCreditsVideoEvent(int house) {
+    if(musicPlayer)musicPlayer->stopMusic();
+    if(settings.audio.playMusic && (!musicPlayer || musicPlayer->isMusicOn()) && Mix_QuerySpec(nullptr,nullptr,nullptr)) {
+        SoundAdlibPC decoder(pFileManager->openFile("DUNE20.ADL").get());
+        music.reset(decoder.getSubsong(2));
+        if(!music)THROW(sdl_error,"Original credits music: %s",SDL_GetError());
+    }
     const CreditsFont small("NEW6P.FNT"), large("NEW8P.FNT");
     auto data = readOriginalFile("CREDITS." + _("LanguageFileExtension"));
     struct Line { std::string text; int x, y; bool large; };
@@ -101,6 +108,15 @@ OriginalCreditsVideoEvent::OriginalCreditsVideoEvent() {
     SDL_SetTextureBlendMode(text.get(), SDL_BLENDMODE_BLEND);
 
     const auto originalPalette = LoadPalette_RW(pFileManager->openFile("IBM.PAL").get());
+    auto planet=LoadCPS_RW(pFileManager->openFile("MAPPLAN.CPS").get());
+    if(!planet)THROW(std::runtime_error,"Missing original credits planet");
+    Palette planetPalette=originalPalette;
+    for(int shade=0;shade<8;++shade)planetPalette[houseToPaletteIndex[HOUSE_HARKONNEN]+shade]=getHouseColorSDL(getHouseVisualHouse(house),shade);
+    planetPalette.applyToSurface(planet.get());
+    auto scaledPlanet=Scaler::doubleSurfaceNN(planet.get());
+    initialPlanet.reset(SDL_CreateTextureFromSurface(renderer,scaledPlanet.get()));
+    if(!initialPlanet)THROW(sdl_error,"Original credits planet: %s",SDL_GetError());
+    SDL_SetTextureBlendMode(initialPlanet.get(),SDL_BLENDMODE_BLEND);
     for(int i = 1; i <= 11; ++i) {
         Shpfile file(pFileManager->openFile("CREDIT" + std::to_string(i) + ".SHP").get());
         auto image = file.getPicture(0);
@@ -112,7 +128,21 @@ OriginalCreditsVideoEvent::OriginalCreditsVideoEvent() {
     }
 }
 
+OriginalCreditsVideoEvent::~OriginalCreditsVideoEvent() {
+    if(channel>=0 && Mix_GetChunk(channel)==music.get()) {
+        Mix_HaltChannel(channel);Mix_Volume(channel,previousVolume);
+    }
+}
 int OriginalCreditsVideoEvent::draw() {
+    if(!audioStarted && music) {
+        audioStarted=true;
+        const int available=Mix_GroupAvailable(-1);
+        if(available>=0) {
+            previousVolume=Mix_Volume(available,-1);Mix_Volume(available,settings.audio.musicVolume);
+            channel=Mix_PlayChannel(available,music.get(),-1);
+            if(channel<0)Mix_Volume(available,previousVolume);
+        }
+    }
     // The original picture cycle fades separately from the white text.
     switch(stage) {
         case 0: pictureAlpha = 0; stage = 1; counter = 2; break;
@@ -142,13 +172,13 @@ int OriginalCreditsVideoEvent::draw() {
     SDL_RenderGetClipRect(renderer, &oldClip);
     SDL_RenderSetClipRect(renderer, &clip);
 
-    if(pictureAlpha > 0 && pictureIndex >= 0) {
-        auto* picture = pictures[pictureIndex].get();
+    if(pictureAlpha > 0) {
+        auto* picture = pictureIndex<0?initialPlanet.get():pictures[pictureIndex].get();
         int w, h; SDL_QueryTexture(picture, nullptr, nullptr, &w, &h);
         const bool right = positionIndex == 0 || positionIndex == 2 || positionIndex == 4;
         const int vertical = positionIndex % 3;
-        const SDL_Rect destination{clip.x + (right ? clip.w - w : 0),
-                                   clip.y + vertical * (clip.h - h) / 2, w, h};
+        const SDL_Rect destination=pictureIndex<0?SDL_Rect{x,y,w,h}
+            :SDL_Rect{clip.x + (right ? clip.w - w : 0),clip.y + vertical * (clip.h - h) / 2,w,h};
         SDL_SetTextureAlphaMod(picture, static_cast<Uint8>(pictureAlpha));
         SDL_RenderCopy(renderer, picture, nullptr, &destination);
     }

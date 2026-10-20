@@ -29,6 +29,7 @@
 #include <players/Player.h>
 
 #include <memory>
+#include <mod/RadarResearch.h>
 
 // forward declarations
 class UnitBase;
@@ -186,6 +187,20 @@ public:
     void updateBuildLists();
 
     void update();
+    bool hasRadarResearch(int kind) const;
+    bool hasRadarSpecialization(HOUSETYPE identity) const;
+    bool canStartRadarResearch(int kind) const;
+    bool startRadarResearch(int kind);
+    void updateRadarResearch();
+    int radarUnitPrice(int item,int price) const;
+    FixPoint radarSpeedFactor(int item) const;
+    int radarSightBonus(int item) const;
+    int radarWeaponRangeBonus(int item,int base) const;
+    int radarAttackDamage(int item,int damage) const;
+    int getRadarResearchActive() const { return radarResearch.active; }
+    int getRadarResearchRemaining() const { return radarResearch.remaining; }
+    void saveRadarResearch(OutputStream& stream) const;
+    void loadRadarResearch(InputStream& stream);
 
     void incrementUnits(int itemID);
     void decrementUnits(int itemID);
@@ -235,6 +250,7 @@ protected:
 
     std::list<std::unique_ptr<Player> > players;        ///< List of associated players that control this house
 
+    radar::State radarResearch;
     bool    ai;             ///< Is this an ai player?
 
     Uint8   houseID;        ///< The house number

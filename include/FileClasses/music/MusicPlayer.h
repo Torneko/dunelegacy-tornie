@@ -63,6 +63,8 @@ public:
         @param musicType type of music to be played
     */
     virtual void changeMusic(MUSICTYPE musicType) = 0;
+    /// Stop the stream without changing the user's music preference.
+    virtual void stopMusic() = 0;
 
     /*!
         sets current music to MUSIC_PEACE if there's no

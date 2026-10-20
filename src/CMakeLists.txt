@@ -247,6 +247,7 @@ target_sources(dunelegacy
         # Mod System
         mod/ModManager.cpp
         mod/ChaosMode.cpp
+        mod/RadarResearch.cpp
 
         # Structures
         structures/StructureBase.cpp
@@ -318,6 +319,7 @@ target_sources(dunelegacy
         CutScenes/Intro.cpp
         CutScenes/WestwoodLogoVideoEvent.cpp
         CutScenes/OriginalCredits.cpp
+        CutScenes/CampaignStory.cpp
         CutScenes/Meanwhile.cpp
         CutScenes/Finale.cpp
         CutScenes/VideoEvent.cpp

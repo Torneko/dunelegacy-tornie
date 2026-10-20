@@ -41,6 +41,7 @@ CutScene::~CutScene()
 void CutScene::run()
 {
     SDL_Event event;
+    bool windowClosed=false;
 
     while (!quiting)
     {
@@ -53,6 +54,9 @@ void CutScene::run()
             //check the events
             switch (event.type)
             {
+                case SDL_QUIT:
+                    quiting=true;windowClosed=true;
+                    break;
                 case (SDL_KEYDOWN): // Look for a keypress
                 {
                     if((event.key.keysym.sym == SDLK_SPACE) || (event.key.keysym.sym == SDLK_ESCAPE)) {
@@ -64,6 +68,7 @@ void CutScene::run()
                     }
                 }
             }
+            if(windowClosed)break;
         }
 
         const int frameTime = SDL_GetTicks() - frameStart;
@@ -71,6 +76,15 @@ void CutScene::run()
             SDL_Delay(nextFrameTime - frameTime);
         }
     }
+    if(windowClosed) {
+        SDL_Event quit{};quit.type=SDL_QUIT;SDL_PushEvent(&quit);
+    }
+}
+
+void CutScene::stopOwnedSound(Mix_Chunk* sound) {
+    if(!sound || !Mix_QuerySpec(nullptr,nullptr,nullptr))return;
+    for(int channel=0;channel<Mix_AllocateChannels(-1);++channel)
+        if(Mix_GetChunk(channel)==sound)Mix_HaltChannel(channel);
 }
 
 void CutScene::startNewScene() {

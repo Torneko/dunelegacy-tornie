@@ -187,6 +187,7 @@ public:
     inline FixPoint getUpgradeProgress() const { return upgradeProgress; }
 
     inline Uint32 getCurrentProducedItem() const { return currentProducedItem; }
+    int getCurrentProductionPrice() const;
     inline bool isOnHold() const { return bCurrentItemOnHold; }
     bool isWaitingToPlace() const;
     bool isUnitLimitReached(Uint32 itemID) const;

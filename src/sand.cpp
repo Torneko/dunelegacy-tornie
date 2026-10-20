@@ -30,6 +30,7 @@
 
 #include <CutScenes/Meanwhile.h>
 #include <CutScenes/Finale.h>
+#include <CutScenes/OriginalCredits.h>
 
 #include <Game.h>
 #include <GameInitSettings.h>
@@ -900,11 +901,11 @@ void startSinglePlayerGame(const GameInitSettings& init)
                         if(currentGameInitInfo.getGameType() == GameType::Campaign) {
                             const int level = missionNumberToLevelNumber(currentGameInitInfo.getMission());
 
-                            if(level == 4 && (houseID == HOUSE_HARKONNEN || houseID == HOUSE_ATREIDES || houseID == HOUSE_ORDOS)) {
+                            if(level == 4) {
                                 SDL_Log("Playing meanwhile...");
                                 Meanwhile meanwhile(houseID,true);
                                 meanwhile.run();
-                            } else if(level == 8 && (houseID == HOUSE_HARKONNEN || houseID == HOUSE_ATREIDES || houseID == HOUSE_ORDOS)) {
+                            } else if(level == 8) {
                                 SDL_Log("Playing meanwhile...");
                                 Meanwhile meanwhile(houseID,false);
                                 meanwhile.run();
@@ -912,6 +913,7 @@ void startSinglePlayerGame(const GameInitSettings& init)
                                 SDL_Log("Playing finale.....");
                                 Finale finale(houseID);
                                 finale.run();
+                                OriginalCredits credits(houseID);credits.run();
                             }
                         }
                     } break;

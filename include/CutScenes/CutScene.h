@@ -77,6 +77,7 @@ public:
     void addTrigger(std::unique_ptr<CutSceneTrigger> newTrigger);
 
 protected:
+    static void stopOwnedSound(Mix_Chunk* sound);
     /**
         This method draws the current frame. The drawing is deligated to Scene::draw() of the first scene in the scenes queue.
         If the first scene is finished it is dropped from the queue and the next scene is used. If the scenes queue is empty

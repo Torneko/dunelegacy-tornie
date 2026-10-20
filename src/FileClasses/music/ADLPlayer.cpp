@@ -239,7 +239,12 @@ void ADLPlayer::setMusic(bool value) {
 
 void ADLPlayer::setMusicVolume(int newVolume) {
     MusicPlayer::setMusicVolume(newVolume);
-    if(musicOn) {
+    if(musicOn && pSoundAdlibPC) {
         pSoundAdlibPC->setVolume(newVolume);
     }
+}
+
+void ADLPlayer::stopMusic() {
+    Mix_HookMusic(nullptr,nullptr);
+    delete pSoundAdlibPC;pSoundAdlibPC=nullptr;
 }

@@ -180,3 +180,7 @@ std::vector<std::string> DirectoryPlayer::getMusicFileNames(const std::string& d
 
     return files;
 }
+
+void DirectoryPlayer::stopMusic() {
+    if(music)Mix_HaltMusic();
+}

@@ -53,6 +53,9 @@ private:
     Uint32 damagerID = NONE_ID;
     int persistentDamage = 0;
     int damageRadius = 0;
+    int extraFireCycles=0;
+    bool fireExtensionGranted=false;
+    bool extendingFire=false;
 };
 
 

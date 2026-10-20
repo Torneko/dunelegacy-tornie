@@ -156,6 +156,7 @@ House::House(InputStream& stream) : choam(this) {
     if(currentGame && currentGame->getLoadedSavegameVersion()>=9835) {
         structuresSold=stream.readUint32();saleCredits=stream.readUint32();
     }
+    if(currentGame && currentGame->getLoadedSavegameVersion()>=9839)loadRadarResearch(stream);
 }
 
 
@@ -236,6 +237,7 @@ void House::save(OutputStream& stream) const {
         pPlayer->save(stream);
     }
     stream.writeUint32(structuresSold);stream.writeUint32(saleCredits);
+    saveRadarResearch(stream);
 }
 
 
@@ -404,6 +406,10 @@ void House::updateBuildLists() {
 
 
 void House::update() {
+    updateRadarResearch();
+    if(isAI() && radarResearch.active<0 && getCredits()>=2000) {
+        for(int kind=0;kind<radar::Count;++kind)if(startRadarResearch(kind))break;
+    }
     numVisibleEnemyUnits = 0;
     numVisibleFriendlyUnits = 0;
 

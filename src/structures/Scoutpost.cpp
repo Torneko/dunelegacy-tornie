@@ -202,6 +202,7 @@ void Scoutpost::doUpgradeToFlamepost() {
     owner->transformStructure(Structure_Scoutpost, Structure_Flamepost);
 
     itemID = Structure_Flamepost;
+    scoutpostConversion = true;
     bulletType = Bullet_Flame;
     graphicID = ObjPic_Flamepost;
     graphic = pGFXManager->getObjPic(graphicID, getOwner()->getHouseID());
@@ -215,8 +216,7 @@ bool Scoutpost::isChemipostUpgradeEligible() const {
         return false;
     }
 
-    const std::string& activeMod = ModManager::instance().getActiveModName();
-    return activeMod == "Tornie" || activeMod == "Jericho" || activeMod == "ArcaKev";
+    return ModManager::instance().isTornieContentActive();
 }
 
 int Scoutpost::getChemipostUpgradeCost() const {
@@ -252,6 +252,7 @@ void Scoutpost::doUpgradeToChemipost() {
     owner->transformStructure(Structure_Scoutpost, Structure_Chemipost);
 
     itemID = Structure_Chemipost;
+    scoutpostConversion = true;
     bulletType = Bullet_Heal;
     graphicID = ObjPic_Chemipost;
     graphic = pGFXManager->getObjPic(graphicID, getOwner()->getHouseID());

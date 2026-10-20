@@ -3,6 +3,7 @@
 #include <MapEditor/MapEditor.h>
 #include <MapEditor/MapEditorInterface.h>
 #include <fstream>
+#include "ChaosDefenceUpgradeSmoke.h"
 
 struct EditorWindtrapFixture {
     static void verify(const std::string& output,const std::string& mod) {
@@ -114,6 +115,7 @@ struct EditorWindtrapFixture {
             require(upgraded==(full?1:0),"save reload lost initial power upgrade");
             game.reset();currentGame=nullptr;pLocalHouse=nullptr;pLocalPlayer=nullptr;
         }
+        verifyChaosDefenceUpgrades(output,mod);
         SDL_Log("EDITOR WINDTRAP PASS: %s, checkbox, map persistence, undo, initial power/credits and saved upgrade",mod.c_str());
     }
 };

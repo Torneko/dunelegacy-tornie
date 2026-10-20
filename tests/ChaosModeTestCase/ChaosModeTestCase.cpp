@@ -98,3 +98,21 @@ TEST_CASE("Disabled Chaos Mode preserves the normal rules and option hash", "[ch
     chaos.load(input);
     REQUIRE_FALSE(chaos.isEnabled());
 }
+
+TEST_CASE("Chaos Mode keeps fifteen-building saves and appends only the standard Windtrap", "[chaos-mode][save-compat]") {
+    OMemoryStream old;old.open();old.writeBool(true);old.writeUint32(NUM_HOUSES);old.writeUint32(15);
+    for(size_t i=0;i<15;++i) {
+        old.writeUint32(ChaosMode::Structures[i]);
+        for(int house=0;house<NUM_HOUSES;++house)old.writeUint8((house+1)%NUM_HOUSES);
+    }
+    IMemoryStream input(old.getData(),old.getDataLength());ChaosMode loaded;loaded.load(input);
+    REQUIRE(loaded.isEnabled());
+    for(int house=0;house<NUM_HOUSES;++house) {
+        for(size_t i=0;i<15;++i)REQUIRE(loaded.getTechnologyHouse(house,ChaosMode::Structures[i])==(house+1)%NUM_HOUSES);
+        REQUIRE(loaded.getTechnologyHouse(house,Structure_WindTrap)==house);
+    }
+    REQUIRE(ChaosMode::includesStructure(Structure_WindTrap));
+    REQUIRE_FALSE(ChaosMode::includesStructure(Structure_AdvancedWindTrap));
+    REQUIRE_FALSE(ChaosMode::includesStructure(Structure_AdvancedWindTrapMK2));
+    REQUIRE_FALSE(ChaosMode::includesStructure(Structure_AdvancedWindTrapMK3));
+}

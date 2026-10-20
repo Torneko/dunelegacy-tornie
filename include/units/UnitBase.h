@@ -52,6 +52,7 @@ public:
     // the permanent owner used by unit counts and Deviator allegiance.
     int getProductionHouseID() const override { return productionHouseID; }
     virtual void setProductionHouseID(int houseID);
+    void refreshRadarResearch();
 
     void blitToScreen() override;
 
@@ -270,6 +271,7 @@ public:
 
     virtual void playAttackSound();
 
+    friend struct RadarResearchFixture;
 protected:
 
     void updateVisibleUnits();

@@ -309,4 +309,7 @@ Intro::Intro() {
     if(bEnableVoice) addTrigger(std::make_unique<CutSceneSoundTrigger>(68,voice[Voice_Now_Now].get()));
 }
 
-Intro::~Intro() = default;
+Intro::~Intro() {
+    for(const auto& chunk:voice)stopOwnedSound(chunk.get());
+    for(auto* chunk:{wind.get(),carryallLanding.get(),harvester.get(),gunshot.get(),glass.get(),missle.get(),blaster.get(),blowup1.get(),blowup2.get()})stopOwnedSound(chunk);
+}

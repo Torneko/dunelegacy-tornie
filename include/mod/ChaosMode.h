@@ -19,12 +19,13 @@ public:
     int getTechnologyHouse(int house, int structure) const;
     static bool includesStructure(int item);
 
-    static constexpr std::array<int, 15> Structures{{
+    static constexpr std::array<int, 16> Structures{{
         Structure_Barracks, Structure_WOR, Structure_LightFactory,
         Structure_HeavyFactory, Structure_HighTechFactory, Structure_StarPort,
         Structure_Worfinery, Structure_LoveFactory, Structure_ChaosFactory,
         Structure_Palace, Structure_GunTurret, Structure_RocketTurret,
-        Structure_Scoutpost, Structure_Flamepost, Structure_Chemipost
+        Structure_Scoutpost, Structure_Flamepost, Structure_Chemipost,
+        Structure_WindTrap // Append: retain the original fifteen donor draws and old saves.
     }};
 
 private:

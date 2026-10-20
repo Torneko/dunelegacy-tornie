@@ -320,7 +320,7 @@ void BuilderList::draw(Point position) {
                     SDL_RenderCopy(renderer, pAlreadyBuiltTextTexture.get(), nullptr, &drawLocationAlreadyBuilt);
                 } else if(buildItem.itemID == pBuilder->getCurrentProducedItem()) {
                     FixPoint progress = pBuilder->getProductionProgress();
-                    FixPoint price = buildItem.price;
+                    FixPoint price = pBuilder->getCurrentProductionPrice();
                     int max_x = lround((progress/price)*BUILDERBTN_WIDTH);
 
                     SDL_Rect progressBar = { dest.x, dest.y, max_x, BUILDERBTN_HEIGHT };
@@ -341,7 +341,7 @@ void BuilderList::draw(Point position) {
                 // These Trike portraits have a bright lower-left corner.
                 const auto priceColor = (buildItem.itemID == Unit_RaiderTrike
                     || buildItem.itemID == Unit_RocketTrike) ? COLOR_BLACK : COLOR_WHITE;
-                sdl2::texture_ptr pPriceTexture = pFontManager->createTextureWithText(fmt::sprintf("%d", buildItem.price), priceColor, 12);
+                sdl2::texture_ptr pPriceTexture = pFontManager->createTextureWithText(fmt::sprintf("%d",buildItem.itemID==pBuilder->getCurrentProducedItem()?pBuilder->getCurrentProductionPrice():buildItem.price), priceColor, 12);
                 SDL_Rect drawLocation = calcDrawingRect(pPriceTexture.get(), dest.x + 3,
                     dest.y + BUILDERBTN_HEIGHT - getHeight(pPriceTexture.get()) - 1);
                 SDL_RenderCopy(renderer, pPriceTexture.get(), nullptr, &drawLocation);

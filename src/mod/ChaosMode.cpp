@@ -67,10 +67,13 @@ void ChaosMode::save(OutputStream& stream) const {
 void ChaosMode::load(InputStream& stream) {
     reset();
     if(!stream.readBool()) return;
-    if(stream.readUint32() != NUM_HOUSES || stream.readUint32() != Structures.size())
-        throw std::runtime_error("Invalid Chaos Mode faction/building table");
+    if(stream.readUint32() != NUM_HOUSES)
+        throw std::runtime_error("Invalid Chaos Mode faction table");
+    const auto count=stream.readUint32();
+    if(count!=Structures.size() && count!=Structures.size()-1)
+        throw std::runtime_error("Invalid Chaos Mode building table");
     std::array<bool, Structures.size()> seen{};
-    for(size_t entry = 0; entry < Structures.size(); ++entry) {
+    for(size_t entry = 0; entry < count; ++entry) {
         const auto item = stream.readUint32();
         const auto found = std::find(Structures.begin(), Structures.end(), static_cast<int>(item));
         if(found == Structures.end()) throw std::runtime_error("Invalid Chaos Mode building");
@@ -83,5 +86,7 @@ void ChaosMode::load(InputStream& stream) {
             donors[house][index] = donor;
         }
     }
+    for(size_t index=0;index<Structures.size()-1;++index)
+        if(!seen[index])throw std::runtime_error("Missing legacy Chaos Mode building");
     enabled = true;
 }

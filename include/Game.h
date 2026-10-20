@@ -108,6 +108,7 @@ public:
     friend class INIMapLoader; // loading INI Maps is done with a INIMapLoader helper object
 #ifdef DUNELEGACY_RUNTIME_TESTS
     friend struct CaptureHuntGameFixture;
+    friend struct RadarResearchFixture;
 #endif
 
 

@@ -19,6 +19,7 @@
 
 #include <globals.h>
 #include <structures/WindTrap.h>
+#include <structures/Radar.h>
 
 #include <Game.h>
 #include <House.h>
@@ -117,7 +118,7 @@ void Command::save(OutputStream& stream) const {
 
 void Command::executeCommand() const {
     const bool objectCommand = (commandID >= CMD_PLACE_STRUCTURE && commandID <= CMD_TURRET_ATTACKOBJECT)
-        || (commandID >= CMD_TECHCENTER_SPAWN && commandID <= CMD_SCOUTPOST_SLOWPOST_UPGRADE);
+        || (commandID >= CMD_TECHCENTER_SPAWN && commandID <= CMD_RADAR_RESEARCH);
     if(objectCommand && !parameter.empty()) {
         auto* object = currentGame->getObjectManager().getObject(parameter[0]);
         auto* player = currentGame->getPlayerByID(playerID);
@@ -439,6 +440,13 @@ case CMD_INFANTRY_CAPTURE: {
             auto* structure=dynamic_cast<StructureBase*>(currentGame->getObjectManager().getObject(parameter[0]));
             auto* player=currentGame->getPlayerByID(playerID);
             if(structure && player && currentGame->canPlayerControlHouse(player->getHouse(),structure->getOwner()))structure->doSell();
+        } break;
+        case CMD_RADAR_RESEARCH: {
+            if(parameter.size()!=2)return;
+            auto* radar=dynamic_cast<Radar*>(currentGame->getObjectManager().getObject(parameter[0]));
+            auto* player=currentGame->getPlayerByID(playerID);
+            if(radar && player && currentGame->canPlayerControlHouse(player->getHouse(),radar->getOwner()))
+                radar->getOwner()->startRadarResearch(static_cast<int>(parameter[1]));
         } break;
         case CMD_WINDTRAP_POWER_UPGRADE: {
             if(parameter.size()!=1)return;

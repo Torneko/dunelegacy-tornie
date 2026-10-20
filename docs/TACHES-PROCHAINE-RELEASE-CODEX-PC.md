@@ -1,4 +1,8 @@
-# Tâches pour Codex PC — prochaine release Dune Legacy Tornie
+# Passage de relais archivé — prochaine release Dune Legacy Tornie
+
+> État historique du passage de relais, avant implémentation. Les paramètres
+> radar ont ensuite été approuvés ; suivre `RADAR-RESEARCH-NEXT-RELEASE.md` et
+> `../release_notes/Next-Release-FR.md` pour la préparation actuelle.
 
 Demandes validées par Tornie les 19 et 20 octobre 2026.
 

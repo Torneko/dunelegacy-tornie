@@ -21,7 +21,7 @@
 #define TEST_NETWORKPACKET_KEEPALIVE            19
 #define TEST_NETWORK_PROTOCOL_VERSION           21
 
-TEST_CASE("NetworkManager: Slowpost conversion requires protocol 20", "[network][protocol]") {
+TEST_CASE("NetworkManager: Radar research and Chaos upgrades require protocol 21", "[network][protocol]") {
     REQUIRE(NETWORK_PROTOCOL_VERSION == 21);
     REQUIRE(TEST_NETWORK_PROTOCOL_VERSION != 4);
     REQUIRE(NETWORKPACKET_COOP_READY == 20);

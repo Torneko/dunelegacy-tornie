@@ -250,7 +250,8 @@ bool UnitBase::attack() {
             }
 
             int currentBulletType = bulletType;
-            Sint32 currentWeaponDamage = currentGame->objectData.data[itemID][getProductionHouseID()].weapondamage;
+            Sint32 currentWeaponDamage = owner->radarAttackDamage(itemID,
+                currentGame->objectData.data[itemID][getProductionHouseID()].weapondamage);
 
             if(getItemID() == Unit_Trooper && !bAirBullet && currentBulletType != Bullet_Flame) {
                 // Troopers change weapon type depending on distance
@@ -431,7 +432,15 @@ void UnitBase::destroy() {
 
     unitList.remove(this);
 
-    if(isVisible()) {
+    if(getHealth()<=0 && owner->hasRadarSpecialization(HOUSE_SARDAUKAR) && radar::tank(itemID)) {
+        if(currentGame->randomGen.rand(1,100)<=35 && currentGameMap->tileExists(location)) {
+            if(auto* crew=owner->createUnit(Unit_Trooper,false,owner->getFactionID())) {
+                const Coord spot=currentGameMap->findDeploySpot(crew,location,currentGame->randomGen,location);
+                if(spot.isValid() && currentGameMap->tileExists(spot))crew->deploy(spot);
+                else delete crew;
+            }
+        }
+    } else if(isVisible()) {
         if(currentGame->randomGen.rand(1,100) <= getInfSpawnProp()) {
             UnitBase* pNewUnit = currentGame->getHouse(originalHouseID)->createUnit(Unit_Soldier, false, getProductionHouseID());
             pNewUnit->setHealth(pNewUnit->getMaxHealth()/2);
@@ -450,7 +459,7 @@ void UnitBase::destroy() {
 }
 
 void UnitBase::deviate(House* newOwner) {
-
+    const auto healthRatio=getHealth()/getMaxHealth();
     if(newOwner->getHouseID() == originalHouseID) {
         quitDeviation();
     } else {
@@ -466,6 +475,7 @@ void UnitBase::deviate(House* newOwner) {
         deviationTimer = DEVIATIONTIME;
     }
 
+    setHealth(getMaxHealth()*healthRatio);refreshRadarResearch();
     // Adding this in as a surrogate for damage inflicted upon deviation.. Still not sure what the best value
     // should be... going in with a 25% of the units value unless its a devastator which we can destruct or an ornithoper
     // which is likely to get killed
@@ -1348,7 +1358,10 @@ void UnitBase::applySlow() {
 }
 
 FixPoint UnitBase::getMaxSpeed() const {
-    return currentGame->objectData.data[itemID][getProductionHouseID()].maxspeed;
+    return currentGame->objectData.data[itemID][getProductionHouseID()].maxspeed * owner->radarSpeedFactor(itemID);
+}
+void UnitBase::refreshRadarResearch() {
+    if(currentGameMap->tileExists(location))setSpeeds();
 }
 
 void UnitBase::setSpeeds() {
@@ -1748,6 +1761,7 @@ void UnitBase::turnRight() {
 
 void UnitBase::quitDeviation() {
     if(wasDeviated()) {
+        const auto healthRatio=getHealth()/getMaxHealth();
         // revert back to real owner
         removeFromSelectionLists();
         setTarget(nullptr);
@@ -1756,6 +1770,7 @@ void UnitBase::quitDeviation() {
         owner = currentGame->getHouse(originalHouseID);
         graphic = pGFXManager->getObjPic(graphicID,getOwner()->getHouseID());
         deviationTimer = INVALID;
+        setHealth(getMaxHealth()*healthRatio);refreshRadarResearch();
     }
 }
 

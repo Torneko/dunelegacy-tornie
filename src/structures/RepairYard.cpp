@@ -133,9 +133,9 @@ void RepairYard::updateStructureSpecificStuff() {
         GroundUnit* pRepairUnit = static_cast<GroundUnit*>(repairUnit.getUnitPointer());
 
         if (pRepairUnit->getHealth() * 100 / pRepairUnit->getMaxHealth() < 100) {
-            if (owner->takeCredits(UNIT_REPAIRCOST) > 0) {
-                pRepairUnit->addHealth();
-            }
+            const int steps=owner->hasRadarSpecialization(HOUSE_NEUTRAL) && currentGame->getGameCycleCount()%4==0?2:1;
+            for(int i=0;i<steps && pRepairUnit->getHealth()<pRepairUnit->getMaxHealth();++i)
+                if(owner->takeCredits(UNIT_REPAIRCOST)>0)pRepairUnit->addHealth();
         } else {
             // Unit is fully repaired - handle deployment
             bool needsCarryall = blockDistance(location, pRepairUnit->getGuardPoint()) >= MIN_CARRYALL_LIFT_DISTANCE 

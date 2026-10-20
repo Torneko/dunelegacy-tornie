@@ -285,3 +285,7 @@ std::string XMIPlayer::getTmpFileName() {
     fnkdat("tmp.mid", tmp, FILENAME_MAX, FNKDAT_USER | FNKDAT_CREAT);
     return std::string(tmp);
 }
+
+void XMIPlayer::stopMusic() {
+    if(music)Mix_HaltMusic();
+}

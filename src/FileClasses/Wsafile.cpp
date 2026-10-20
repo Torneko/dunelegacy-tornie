@@ -120,7 +120,7 @@ sdl2::surface_ptr Wsafile::getPicture(Uint32 frameNumber) const {
         THROW(std::runtime_error, "Wsafile::getPicture(): Cannot create surface!");
     }
 
-    palette.applyToSurface(pic.get());
+    (paletteOverride?*paletteOverride:palette).applyToSurface(pic.get());
 
     const unsigned char* const RESTRICT pImage = &decodedFrames[frameNumber * sizeX * sizeY];
     unsigned char* const RESTRICT pixels = static_cast<unsigned char*>(pic->pixels);
@@ -152,7 +152,7 @@ sdl2::surface_ptr Wsafile::getAnimationAsPictureRow(int numFramesX) const {
         THROW(std::runtime_error, "Wsafile::getAnimationAsPictureRow(): Cannot create surface!");
     }
 
-    palette.applyToSurface(pic.get());
+    (paletteOverride?*paletteOverride:palette).applyToSurface(pic.get());
 
     char* const RESTRICT pixels = static_cast<char*>(pic->pixels);
 

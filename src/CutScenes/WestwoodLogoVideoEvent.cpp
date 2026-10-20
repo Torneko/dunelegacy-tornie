@@ -4,6 +4,7 @@
 #include <FileClasses/FileManager.h>
 #include <FileClasses/Palfile.h>
 #include <FileClasses/adl/sound_adlib.h>
+#include <FileClasses/music/MusicPlayer.h>
 #include <globals.h>
 #include <misc/Scaler.h>
 #include <misc/draw_util.h>
@@ -20,7 +21,8 @@ WestwoodLogoVideoEvent::WestwoodLogoVideoEvent()
 
     // Dune II plays music 0x24: DUNE0, track 4. Keep the original AdLib
     // signature even when the selected background-music source is a directory.
-    if(settings.audio.playMusic && Mix_QuerySpec(nullptr, nullptr, nullptr)) {
+    if(musicPlayer)musicPlayer->stopMusic();
+    if(settings.audio.playMusic && (!musicPlayer || musicPlayer->isMusicOn()) && Mix_QuerySpec(nullptr, nullptr, nullptr)) {
         SoundAdlibPC decoder(pFileManager->openFile("DUNE0.ADL").get());
         signature.reset(decoder.getSubsong(4));
         if(!signature) THROW(sdl_error, "Westwood signature: %s", SDL_GetError());

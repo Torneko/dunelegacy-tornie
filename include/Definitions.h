@@ -48,7 +48,8 @@
 // 9836: appended variants; persisted slowing, Worfinery offers and fire hazards.
 // 9837: sixth saved random Palace power (napalm); older engines must reject it.
 // 9838: the reserved structure byte preserves paid Slowpost conversions.
-#define SAVEGAMEVERSION     9838
+// 9839: persistent Radar research and the appended Chaos Windtrap donor.
+#define SAVEGAMEVERSION     9839
 
 // v1.0.0–v1.0.7 shipped SAVEGAMEVERSION 9810 with Num_ItemID=48.
 // v1.0.8–v1.0.10 also used 9810 but with Num_ItemID=52 (4 items added

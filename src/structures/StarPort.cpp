@@ -239,7 +239,7 @@ void StarPort::updateBuildList() {
         bool isOrnithopterInCampaign = (itemOrder[i] == Unit_Ornithopter && currentGame->gameType == GameType::Campaign);
 
         if(itemOrder[i] != Unit_ChemicalCarryall && objData.enabled && (choam.getNumAvailable(itemOrder[i]) != INVALID) && !isOrnithopterInCampaign) {
-            insertItem(buildList, iter, itemOrder[i], choam.getPrice(itemOrder[i]));
+            insertItem(buildList, iter, itemOrder[i], choam.getPrice(itemOrder[i],false));
         } else {
             removeItem(buildList, iter, itemOrder[i]);
         }

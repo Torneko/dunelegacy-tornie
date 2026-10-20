@@ -54,6 +54,7 @@ public:
         @param value when true the function turns music on
     */
     void setMusic(bool value) override;
+    void stopMusic() override;
 
     /**
         Sets the volume of the music channel

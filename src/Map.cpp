@@ -402,8 +402,9 @@ bool Map::okayToPlaceStructure(int x, int y, int buildingSizeX, int buildingSize
 }
 
 bool Map::isWithinBuildRange(int x, int y, const House* pHouse) const {
-    for (auto i = x - BUILDRANGE; i <= x + BUILDRANGE; i++) {
-        for (auto j = y - BUILDRANGE; j <= y + BUILDRANGE; j++) {
+    const int range=BUILDRANGE+(pHouse->hasRadarResearch(radar::BaseExpansion)?2:0);
+    for (auto i = x - range; i <= x + range; i++) {
+        for (auto j = y - range; j <= y + range; j++) {
             const auto tile = getTile_internal(i, j);
 
             if (tile && (tile->getOwner() == pHouse->getHouseID()

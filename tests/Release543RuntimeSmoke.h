@@ -13,6 +13,8 @@
 #include "BuildingSaleUpgradeSmoke.h"
 #include "SlowpostUpgradeSmoke.h"
 #include "EditorWindtrapSmoke.h"
+#include "RadarResearchSmoke.h"
+#include "CampaignCinemaSmoke.h"
 
 inline void verifyRelease543Alliances(const std::string& output,const std::string& mod) {
     auto require=[](bool ok,const char* message){if(!ok)throw std::runtime_error(std::string("Release 543 alliances: ")+message);};

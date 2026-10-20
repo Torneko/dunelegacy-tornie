@@ -186,20 +186,14 @@ ObjectInterface* BuilderBase::getInterfaceContainer() {
 }
 
 void BuilderBase::insertItem(std::list<BuildItem>& buildItemList, std::list<BuildItem>::iterator& iter, Uint32 itemID, int price) {
-    if(price != -1) price = currentGame->getGameInitSettings().campaignPurchasePrice(price, owner->getHouseID());
+    if(price==-1)price=currentGame->objectData.data[itemID][getTechnologyHouseID()].price;
+    price=owner->radarUnitPrice(itemID,currentGame->getGameInitSettings().campaignPurchasePrice(price, owner->getHouseID()));
     if(iter != buildItemList.end()) {
         if(iter->itemID == itemID) {
-            if(price != -1) {
-                iter->price = price;
-            }
+            iter->price=price;
             ++iter;
             return;
         }
-    }
-
-    if(price == -1) {
-        price = currentGame->getGameInitSettings().campaignPurchasePrice(
-            currentGame->objectData.data[itemID][getTechnologyHouseID()].price, owner->getHouseID());
     }
 
     buildItemList.insert(iter, BuildItem(itemID, price));
@@ -250,7 +244,7 @@ bool BuilderBase::isWaitingToPlace() const {
     if(tmp == nullptr) {
         return false;
     } else {
-        return (productionProgress >= tmp->price);
+        return (productionProgress >= getCurrentProductionPrice());
     }
 }
 
@@ -274,23 +268,30 @@ bool BuilderBase::isUnitLimitReached(Uint32 itemID) const {
 }
 
 
+int BuilderBase::getCurrentProductionPrice() const {
+    if(!currentProductionQueue.empty() && currentProductionQueue.front().itemID==currentProducedItem)
+        return currentProductionQueue.front().price;
+    const auto* item=getBuildItem(currentProducedItem);
+    return item?item->price:0;
+}
+
 void BuilderBase::updateProductionProgress() {
     if(currentProducedItem != ItemID_Invalid) {
         BuildItem* tmp = getBuildItem(currentProducedItem);
 
-        if((productionProgress < tmp->price) && (isOnHold() == false) && (isUnitLimitReached(currentProducedItem) == false) && (owner->getCredits() > 0)) {
+        if((productionProgress < getCurrentProductionPrice()) && (isOnHold() == false) && (isUnitLimitReached(currentProducedItem) == false) && (owner->getCredits() > 0)) {
 
             FixPoint oldProgress = productionProgress;
 
             if(currentGame->getGameInitSettings().getGameOptions().instantBuild == true) {
-                FixPoint totalBuildCosts = tmp->price;
+                FixPoint totalBuildCosts = getCurrentProductionPrice();
                 FixPoint buildCosts = totalBuildCosts - productionProgress;
 
                 productionProgress += owner->takeCredits(buildCosts);
             } else {
 
                 FixPoint buildSpeed = std::min( getHealth() / getMaxHealth(), buildSpeedLimit);
-                FixPoint totalBuildCosts = tmp->price;
+                FixPoint totalBuildCosts = getCurrentProductionPrice();
                 FixPoint totalBuildGameTicks = currentGame->objectData.data[currentProducedItem][getTechnologyHouseID()].buildtime*15;
                 FixPoint buildCosts = totalBuildCosts / totalBuildGameTicks;
 
@@ -310,7 +311,7 @@ void BuilderBase::updateProductionProgress() {
                 currentGame->addToNewsTicker(_("Not enough money"));
             }
 
-            if(productionProgress >= tmp->price) {
+            if(productionProgress >= getCurrentProductionPrice()) {
                 setWaitingToPlace();
             }
         }
@@ -571,7 +572,7 @@ bool BuilderBase::update() {
         return false;
     }
 
-    if(isUnit(currentProducedItem) && (productionProgress >= getBuildItem(currentProducedItem)->price)) {
+    if(isUnit(currentProducedItem) && (productionProgress >= getCurrentProductionPrice())) {
         deployTimer--;
         if(deployTimer == 0) {
             int finishedItemID = currentProducedItem;

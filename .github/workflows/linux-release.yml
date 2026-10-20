@@ -244,12 +244,47 @@ jobs:
           test "$(grep -c 'RELEASE 544 ARTWORK PASS:' "$PROFILE/--verify-release543.log")" -eq 6
           test "$(grep -c 'SLOWPOST UPGRADE PASS:' "$PROFILE/--verify-release543.log")" -eq 7
 
+      - name: Verify packaged radar, editor and original campaign movies in French and English
+        run: |
+          set -euo pipefail
+          PROFILE=$(mktemp -d)
+          IMAGE=$(find "$PWD/build" -maxdepth 1 -name '*Mint-Compatible.AppImage' -print -quit)
+          test -n "$IMAGE"
+          echo "POST544_RUNTIME_ROOT=$PROFILE" >> "$GITHUB_ENV"
+          for LANGUAGE in en fr; do
+            mkdir -p "$PROFILE/$LANGUAGE/profile/DuneLegacyTornie" "$PROFILE/$LANGUAGE/results"
+            printf '[General]\nLanguage=%s\nPlay Intro=false\n[Video]\nFullscreen=false\n[Audio]\nMusic Type=adl\nPlay Music=false\n' "$LANGUAGE" > "$PROFILE/$LANGUAGE/profile/DuneLegacyTornie/Dune Legacy.ini"
+            for CHECK in --verify-radar-research --verify-editor-followup --verify-campaign-cinema; do
+              LOG="$PROFILE/$LANGUAGE/$CHECK.log"
+              SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy SDL_RENDER_DRIVER=software \
+                XDG_CONFIG_HOME="$PROFILE/$LANGUAGE/profile" DUNELEGACY_PROFILE_DIR="$PROFILE/$LANGUAGE/profile" \
+                DUNELEGACY_SMOKE_DIR="$PROFILE/$LANGUAGE/results" FUSE_APPIMAGE_EXTRACT_AND_RUN=1 \
+                "$IMAGE" "$CHECK" --showlog --window > "$LOG" 2>&1 || { tail -n 120 "$LOG"; exit 1; }
+              grep 'PASS:' "$LOG"
+            done
+            test "$(grep -c 'RADAR RESEARCH PASS:' "$PROFILE/$LANGUAGE/--verify-radar-research.log")" -eq 7
+            test "$(grep -c 'EDITOR WINDTRAP PASS:' "$PROFILE/$LANGUAGE/--verify-editor-followup.log")" -eq 7
+            test "$(grep -c 'CHAOS DEFENCE UPGRADE PASS:' "$PROFILE/$LANGUAGE/--verify-editor-followup.log")" -eq 7
+            test "$(grep -c 'CAMPAIGN CINEMA PASS:' "$PROFILE/$LANGUAGE/--verify-campaign-cinema.log")" -eq 7
+            test "$(grep -c 'ORIGINAL CINEMA PASS:' "$PROFILE/$LANGUAGE/--verify-campaign-cinema.log")" -eq 1
+          done
+
+      - name: Upload next-release runtime evidence
+        if: always() && env.POST544_RUNTIME_ROOT != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: Post544-Linux-Runtime-Evidence
+          path: |
+            ${{ env.POST544_RUNTIME_ROOT }}/**/*.log
+            ${{ env.POST544_RUNTIME_ROOT }}/**/results/*.png
+            ${{ env.POST544_RUNTIME_ROOT }}/**/results/*.tsv
+
       - name: Record the exact packaged source
         run: |
           VERSION="$(sed -n 's/^project(DuneLegacyTornie VERSION \([0-9]*\.[0-9]*\.[0-9]*\).*/\1/p' CMakeLists.txt)"
           SOURCE_COMMIT="$(git rev-parse HEAD)" RELEASE_VERSION="$VERSION" python3 - <<'PYTHON'
           import json, os, pathlib
-          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio','videoCases':['window','fullscreen','stale-combined-desktop'],'xrandr':True},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat','rebels-windtrap-upgrade','building-sales','normal-multiplayer-alliances','flame-and-gas-units','magenta-free-zooms','house-colours-and-blue-stars','neutral-saboteur-tier-seven','editor-terrain-blue-stars','original-flame-squad-portraits','precise-close-flame-quad','sales-destruction-and-concrete','sale-button-after-upgrade','easy-sales-75-percent','extended-fallback-units','movement-slowing','saved-chaos-worm-offer','elite-ornithopter','seventy-achievements','palace-napalm-and-saved-hazards','harvester-area-guard-crush','completed-upgrade-sales','native-slowpost-editor-icon','impact-only-and-random-palace-napalm','ten-original-artwork-files','scoutpost-slowpost-upgrade','bicolour-vanilla-harvesters','worfinery-displayed-labels'],'networkProtocol':20,'saveVersion':9838}
+          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio','videoCases':['window','fullscreen','stale-combined-desktop'],'xrandr':True},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat','rebels-windtrap-upgrade','building-sales','normal-multiplayer-alliances','flame-and-gas-units','magenta-free-zooms','house-colours-and-blue-stars','neutral-saboteur-tier-seven','editor-terrain-blue-stars','original-flame-squad-portraits','precise-close-flame-quad','sales-destruction-and-concrete','sale-button-after-upgrade','easy-sales-75-percent','extended-fallback-units','movement-slowing','saved-chaos-worm-offer','elite-ornithopter','seventy-achievements','palace-napalm-and-saved-hazards','harvester-area-guard-crush','completed-upgrade-sales','native-slowpost-editor-icon','impact-only-and-random-palace-napalm','ten-original-artwork-files','scoutpost-slowpost-upgrade','bicolour-vanilla-harvesters','worfinery-displayed-labels'],'nextReleaseChecks':['radar-research-fr-en','chaos-defence-upgrades','editor-preupgraded-windtraps','original-westwood-audio','original-localized-credits','campaign-role-cinematics'],'networkProtocol':21,'saveVersion':9839}
           pathlib.Path('build/Linux-Build-'+report['version']+'.json').write_text(json.dumps(report,indent=2)+'\n')
           PYTHON
 

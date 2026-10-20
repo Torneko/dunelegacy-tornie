@@ -199,8 +199,16 @@ jobs:
             if ($process.ExitCode -ne 0) { Get-Content -LiteralPath $log -Tail 120 }
             if ($process.ExitCode -ne 0 -or -not (Select-String -LiteralPath $log -Pattern "MOD SMOKE COMPLETE:")) { throw "Installed $language mod runtime checks failed." }
             if (-not (Select-String -LiteralPath $log -Pattern "ACHIEVEMENT SMOKE COMPLETE:")) { throw "Installed $language achievement checks failed." }
-            foreach ($check in @(@("RELEASE 543 PASS:", 7), @("RELEASE 543 ALLIANCES PASS:", 7), @("RELEASE 543 UNITS PASS:", 6), @("RELEASE 543 GRAPHICS PASS:", 6), @("RELEASE 543 NEUTRAL SABOTEUR PASS:", 3), @("RELEASE 543 EDITOR TERRAIN PASS:", 6), @("RELEASE 543 FLAME PORTRAITS PASS:", 3), @("RELEASE 543 EXPANSION PASS:", 7), @("HARVESTER CRUSH PASS:", 7), @("UPGRADED SALE PASS:", 7), @("PALACE NAPALM PASS:", 7), @("RELEASE 544 ARTWORK PASS:", 6), @("SLOWPOST UPGRADE PASS:", 7))) {
+            foreach ($check in @(@("RELEASE 543 PASS:", 7), @("RELEASE 543 ALLIANCES PASS:", 7), @("RELEASE 543 UNITS PASS:", 6), @("RELEASE 543 GRAPHICS PASS:", 6), @("RELEASE 543 NEUTRAL SABOTEUR PASS:", 3), @("RELEASE 543 EDITOR TERRAIN PASS:", 6), @("RELEASE 543 FLAME PORTRAITS PASS:", 3), @("RELEASE 543 EXPANSION PASS:", 7), @("HARVESTER CRUSH PASS:", 7), @("UPGRADED SALE PASS:", 7), @("PALACE NAPALM PASS:", 7), @("RELEASE 544 ARTWORK PASS:", 6), @("SLOWPOST UPGRADE PASS:", 7), @("EDITOR WINDTRAP PASS:", 7), @("CHAOS DEFENCE UPGRADE PASS:", 7))) {
               if ((Select-String -LiteralPath $log -Pattern $check[0]).Count -ne $check[1]) { throw "Installed $language 543 checks failed: $($check[0])" }
+            }
+            foreach ($check in @(@("--verify-radar-research", "RADAR RESEARCH PASS:", 7), @("--verify-campaign-cinema", "CAMPAIGN CINEMA PASS:", 7))) {
+              $nextLog = Join-Path $env:RUNNER_TEMP "dunelegacy-installed-$language-$($check[0]).log"
+              $process = Start-Process -FilePath "install/dunelegacy.exe" -ArgumentList $check[0], "--showlog", "--window" -WindowStyle Hidden -Wait -PassThru -RedirectStandardError $nextLog
+              Get-Content -LiteralPath $nextLog | Select-String "PASS:|unhandled exception"
+              if ($process.ExitCode -ne 0) { Get-Content -LiteralPath $nextLog -Tail 120 }
+              if ($process.ExitCode -ne 0 -or (Select-String -LiteralPath $nextLog -Pattern $check[1]).Count -ne $check[2]) { throw "Installed $language next-release check failed: $($check[0])" }
+              if ($check[0] -eq "--verify-campaign-cinema" -and (Select-String -LiteralPath $nextLog -Pattern "ORIGINAL CINEMA PASS:").Count -ne 1) { throw "Original cinema check missing" }
             }
             if (Select-String -LiteralPath "../src/main.cpp" -Pattern 'parameter == "--verify-startup"') {
               $startupLog = Join-Path $env:RUNNER_TEMP "dunelegacy-startup-$language.log"
@@ -212,6 +220,19 @@ jobs:
             }
           }
           cpack -G ZIP -C Release
+
+      - name: Upload next-release Windows runtime evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Post544-Windows-Runtime-Evidence
+          if-no-files-found: ignore
+          path: |
+            ${{ runner.temp }}/dunelegacy-installed-*.log
+            ${{ runner.temp }}/dunelegacy-installed-*/*radar*.png
+            ${{ runner.temp }}/dunelegacy-installed-*/*campaign*.tsv
+            ${{ runner.temp }}/dunelegacy-installed-*/original-credits-*.png
+            ${{ runner.temp }}/dunelegacy-installed-*/westwood-blue-original.png
 
       - name: Record Windows package provenance
         if: inputs.windows_only || github.ref == 'refs/heads/publish/544-correctifs'
@@ -226,8 +247,9 @@ jobs:
             engineAndNetworkTests = $true
             installedRuntimeChecks = @("fr", "en")
             release543Checks = @("building-sales", "normal-multiplayer-alliances", "flame-and-gas-units", "magenta-free-zooms", "house-colours-and-blue-stars", "neutral-saboteur-tier-seven", "editor-terrain-blue-stars", "original-flame-squad-portraits", "precise-close-flame-quad", "sales-destruction-and-concrete", "sale-button-after-upgrade", "easy-sales-75-percent", "extended-fallback-units", "movement-slowing", "saved-chaos-worm-offer", "elite-ornithopter", "seventy-achievements", "palace-napalm-and-saved-hazards", "harvester-area-guard-crush", "completed-upgrade-sales", "native-slowpost-editor-icon", "impact-only-and-random-palace-napalm", "ten-original-artwork-files", "scoutpost-slowpost-upgrade", "bicolour-vanilla-harvesters", "worfinery-displayed-labels")
-            networkProtocol = 20
-            saveVersion = 9838
+            nextReleaseChecks = @("editor-native-quad-anchors", "editor-preupgraded-windtraps", "chaos-defence-upgrades", "saved-radar-research", "original-westwood-audio", "original-localized-credits", "campaign-role-cinematics")
+            networkProtocol = 21
+            saveVersion = 9839
             menuStartupChecks = @("fr", "en")
             videoOptionsChecks = @("fr", "en")
             package = $package.Name

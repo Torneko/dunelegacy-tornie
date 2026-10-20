@@ -1,113 +1,131 @@
-# Recherches du radar — prochaine version / Radar research — next release
+# Recherches du radar / Radar research — préparation après 1.0.544
+
+Base : 1.0.544 corrigée, `d6a29fd82906eb1f4856eced2dfb01fe3e74637e`.
+Les paquets publics 1.0.544 ne contiennent pas ces recherches. Aucun nouveau tag
+ni publication n'est créé par cette préparation.
 
 ## Français
 
-**État au 19 octobre 2026 : concepts validés par Tornie pour la prochaine version.**
-Ce document consigne le contenu demandé. Le système de recherche n'est pas encore
-implémenté ni testé ; les valeurs laissées ouvertes ci-dessous restent à définir.
-La 1.0.544 publiée ne contient pas ces recherches.
+Tornie a validé les réglages ci-dessous le 20 octobre 2026. Le système est
+implémenté dans la branche de préparation, pour Tornie, Jericho, ArcaKev et leurs
+éditions Lite. Vanilla conserve ses règles sans recherches.
 
-### Organisation validée
+| Recherche | Prix | Durée simulée | Prérequis | Effet |
+| --- | ---: | ---: | --- | --- |
+| Extension de la base | 500 | 45 s | Niveau 4, radar alimenté | Construction +2 cases |
+| Vision élargie | 500 | 45 s | Niveau 4, radar alimenté | Vision +2 cases, sauf aéronefs |
+| Spécialisation | 750 | 60 s | Niveau 7, IX, radar alimenté | Bonus de la maison ci-dessous |
 
-Chaque maison dispose de trois recherches au radar : deux recherches communes et
-une spécialisation de maison. Les noms descriptifs ci-dessous sont provisoires.
-
-| Recherche commune | Effet validé |
+| Maison | Spécialisation |
 | --- | --- |
-| Extension de la base | **+2 cases de portée de construction** autour de la base. |
-| Vision élargie | **+2 cases de champ de vision** pour toutes les unités et tous les bâtiments, **sauf les unités aériennes**. |
+| Harkonnen | Combat Tank, explosion du Devastator et missile du palais : dégâts +20 % |
+| Atreides | Troopers individuels et escouades : déplacement +15 % |
+| Ordos | Véhicules légers : déplacement +15 % |
+| Fremen | Troopers individuels et escouades : déplacement +15 % |
+| Sardaukar | À la destruction d'un char : 35 % de chance de sauver un Trooper de sa maison |
+| Mercenary | Infanterie, véhicules légers et aéronefs : prix −10 % |
+| Neutral | Réparation des bâtiments et au chantier : débit +25 %, même coût par PV |
+| Rebels | Véhicules armés au sol : portée +1 case |
+| Wildspade | Ornithoptères et Carryalls, variantes comprises : PV +25 % |
+| Kleshmersh | Incendies persistants : durée +2 s, même cadence de dégâts |
+| Corruptique | Chars classiques et variantes : dégâts subis −20 %, déplacement −10 % |
+| Tharpique | Éclaireurs et artillerie : vision +2, cumulée au +2 commun |
 
-### Spécialisations des douze maisons
+Les valeurs chiffrées et les concepts sont approuvés. Les listes exactes et les
+règles pratiques ci-dessous sont les choix d'implémentation, à distinguer des
+réponses explicites de Tornie :
 
-| Maison | Effet validé |
-| --- | --- |
-| Harkonnen | Augmenter les dégâts des **Combat Tanks**, de l'**explosion du Devastator** et du **missile du palais**. |
-| Atreides | Augmenter la **vitesse de déplacement des Troopers**, escouades comprises. |
-| Ordos | Augmenter la **vitesse des véhicules légers**. |
-| Fremen | Augmenter la **vitesse de déplacement des Troopers**, escouades comprises. |
-| Sardaukar | Chaque **char, lourd ou non**, a **35 % de chances** de faire apparaître **un Trooper de la même maison** à sa destruction. |
-| Mercenary | Réduire de **10 % le coût des unités non lourdes**. |
-| Neutres | Améliorer l'**efficacité des réparations**. Vitesse, coût ou combinaison des deux à préciser. |
-| Rebels | Augmenter de **1 case la portée des armes des véhicules**. |
-| Wildspade | Rendre les **unités aériennes plus robustes**, dont les Ornithopters et les Carryalls, variantes comprises. |
-| Kleshmersh | Prolonger les **dégâts de feu de 2 secondes**, avec les mêmes dégâts par seconde. |
-| Corruptique | Renforcer le **blindage de certains chars**, avec une **légère perte de vitesse**. |
-| Tharpique | Augmenter le **champ de vision des éclaireurs et de l'artillerie**. |
-
-**Cumul Tharpique expressément confirmé :** les unités concernées bénéficient à la
-fois du bonus propre à leur maison et du **+2 de vision commun**.
-
-### Points à fixer avant intégration
-
-- Valeurs non chiffrées : dégâts Harkonnen, vitesse Atreides/Fremen/Ordos,
-  robustesse Wildspade, blindage et ralentissement Corruptique, vision Tharpique.
-- Réparation neutre : vitesse, coût ou les deux ; types de réparations concernés.
-- Listes exactes des unités et des armes concernées : notamment chars Sardaukar,
-  unités non lourdes Mercenary, véhicules Rebels, chars Corruptique, éclaireurs et
-  artillerie Tharpique, ainsi que les effets de feu Kleshmersh.
-- Coût, durée, niveau technologique et prérequis de chaque recherche.
-- Répartition du système entre les mods et leurs éditions Lite.
-- Règles d'application et de conservation : unités existantes et futures,
-  conversion/capture, disparition du radar, Chaos Mode, Starport et Easy Mode.
-- Interaction des 35 % Sardaukar avec les éventuelles apparitions d'infanterie
-  déjà prévues par le moteur.
-
-L'interface du radar, les sauvegardes, les commandes réseau déterministes et les
-documents FR/EN devront être intégrés et vérifiés avant publication. Les valeurs
-et conditions non fixées ne constituent pas des décisions approuvées.
+- Une recherche active par maison, paiement au lancement, sans répétition. Tous
+  ses radars partagent la progression. Coupure d'énergie ou perte de tous les
+  radars : pause ; un radar de remplacement reprend la progression. Un bonus
+  terminé demeure jusqu'à la fin de la partie, même sans radar ou IX.
+- Les unités présentes et futures en profitent. La maison du propriétaire actuel
+  détermine les bonus ; les plans empruntés/capturés en Chaos ne changent pas la
+  spécialisation. Déviation et retour recalculent les bonus et conservent le
+  pourcentage de santé des aéronefs. Les postes archontes partagent la recherche
+  de leur maison. Le contrôle allié autorisé peut commander le radar allié ;
+  c'est sa maison propriétaire qui paie.
+- Les commandes sont déterministes, autorisées côté moteur et sérialisées. Aucun
+  générateur aléatoire n'est ajouté pour la progression. L'IA lance les recherches
+  dans l'ordre commun/base, vision, spécialisation lorsqu'elle a au moins 2000
+  crédits et remplit les prérequis.
+- Véhicules légers : Trike, Raider Trike, Quad, Raider Quad, Rocket Trike, Sonic
+  Trike, Flame Quad. Aéronefs : Carryall, Chemical Carryall, Ornithopter, Elite
+  Ornithopter ; la Frigate est exclue.
+- Chars classiques Corruptique : Combat, Siege, Elite Siege, Chemical Siege,
+  Flame, Ranged et Slow Tank. Les chars Sardaukar comprennent aussi Devastator,
+  Sonic Tank et Harvestank ; Launchers, Deviator et moissonneuses ordinaires sont
+  exclus. Le sauvetage remplace le tirage du Soldier habituel, sans cumul ; une
+  unité Trooper, jamais une escouade. Pas de sauvetage lors du nettoyage d'une
+  unité vivante en fin de partie.
+- Artillerie Tharpique : Launcher, Elite Launcher, Siege, Elite Siege, Chemical
+  Siege et Ranged Tank, en plus des véhicules légers. Les bâtiments ont seulement
+  le bonus commun ; les aéronefs n'ont aucun bonus de vision de ces recherches.
+- Le rabais Mercenary se cumule avec le prix Easy Mode, une seule fois, y compris
+  au Starport. Une commande déjà en file conserve son devis ; les commandes
+  suivantes utilisent le nouveau tarif. Les bâtiments ne sont pas remisés.
+- Le feu persistant couvre les impacts incendiaires et le napalm ; les flammes
+  purement visuelles ne sont pas prolongées. Les dégâts directs du lance-flammes
+  ne changent pas. Un incendie encore actif au moment de la recherche reçoit le
+  bonus, hors phase d'extinction. Sa durée supplémentaire est sauvegardée.
+- Les boutons affichent coût, durée et prérequis en infobulle, progression et
+  achèvement. Les noms courts sont descriptifs, pas des noms définitifs imposés.
 
 ## English
 
-**Status on 19 October 2026: concepts approved by Tornie for the next release.**
-This document records the requested content. Research has not been implemented or
-tested; the open parameters below still need to be defined. The published 1.0.544
-does not contain this system.
+Tornie approved these numbers on 20 October 2026. Research is implemented on the
+preparation branch for Tornie, Jericho, ArcaKev and all three Lite editions.
+Published 1.0.544 packages do not contain it. Vanilla has no research.
 
-### Approved structure
+Common research costs **500 credits / 45 simulated seconds / technology 4**.
+Specialization costs **750 / 60 seconds / technology 7 + IX**. All require a
+powered Radar. Common effects: **+2 build tiles** and **+2 sight, excluding
+all aircraft**. Three choices per house, including its specialization:
 
-Each house receives three Radar research options: two common upgrades and one
-house specialization. The descriptive names below are provisional.
-
-| Common research | Approved effect |
+| House | Specialization |
 | --- | --- |
-| Base expansion | **+2 tiles of building placement range** around the base. |
-| Extended vision | **+2 tiles of sight range** for all units and buildings, **excluding aircraft**. |
+| Harkonnen | Combat Tank, Devastator explosion and Palace missile: damage +20% |
+| Atreides / Fremen | Troopers, including squads: movement +15% |
+| Ordos | Light vehicles: movement +15% |
+| Sardaukar | Destroyed tanks: 35% chance to rescue one same-house Trooper |
+| Mercenary | Infantry, light vehicles and aircraft: purchase price −10% |
+| Neutral | Building/Repair Yard repair throughput +25%, same credits per HP |
+| Rebels | Armed ground vehicles: weapon range +1 tile |
+| Wildspade | Ornithopters/Carryalls and variants: health +25% |
+| Kleshmersh | Persistent fire lasts 2 seconds longer, unchanged damage cadence |
+| Corruptique | Conventional tanks/variants: incoming damage −20%, movement −10% |
+| Tharpique | Scouts/artillery: sight +2, stacking with common research |
 
-### Twelve house specializations
+Implementation choices, rather than separately approved details:
 
-| House | Approved effect |
-| --- | --- |
-| Harkonnen | Increase damage from **Combat Tanks**, the **Devastator explosion** and the **Palace missile**. |
-| Atreides | Increase **Trooper movement speed**, including squads. |
-| Ordos | Increase **light vehicle movement speed**. |
-| Fremen | Increase **Trooper movement speed**, including squads. |
-| Sardaukar | Each **tank, heavy or otherwise**, has a **35% chance** of spawning **one Trooper belonging to the same house** upon destruction. |
-| Mercenary | Reduce the **cost of non-heavy units by 10%**. |
-| Neutral | Improve **repair efficiency**. Speed, cost, or both remain to be specified. |
-| Rebels | Increase **vehicle weapon range by 1 tile**. |
-| Wildspade | Make **aircraft more durable**, including Ornithopters, Carryalls and their variants. |
-| Kleshmersh | Extend **fire damage duration by 2 seconds**, keeping damage per second unchanged. |
-| Corruptique | Strengthen the **armour of selected tanks**, with a **small movement speed penalty**. |
-| Tharpique | Increase the **sight range of scouts and artillery**. |
+- One prepaid active research per house; Radars share its progress. Power/Radar
+  loss pauses it. A replacement Radar resumes it. Completed bonuses last for
+  the match, including after losing Radar/IX; saves retain progress and completion.
+- Current owner determines the specialization, including deviation/reversion;
+  borrowed Chaos technology remains separate. Existing/future units benefit.
+  Aircraft retain their damage ratio. Archon players share their house's state.
+  Authorized allied control spends the Radar owner's credits.
+- AI research order is build range, sight, specialization, starting with at least
+  2000 credits. Tick progression uses no randomness and network commands validate
+  ownership, permissions, research index, prerequisites and price.
+- Light vehicles: Trike, Raider Trike, Quad, Raider Quad, Rocket/Sonic Trike and
+  Flame Quad. Aircraft: Carryall, Chemical Carryall, Ornithopter and Elite
+  Ornithopter; no Frigate. Non-heavy means infantry, these lights and aircraft.
+- Corruptique tanks: Combat, Siege, Elite Siege, Chemical Siege, Flame, Ranged,
+  Slow. Sardaukar also includes Devastator, Sonic Tank, Harvestank, excluding
+  Launchers/Deviator/ordinary Harvesters. Rescue replaces the normal Soldier roll;
+  it produces one Trooper, not a squad, and does not trigger on living-unit cleanup.
+- Tharpique scouts are the listed lights; artillery is Launcher, Elite Launcher,
+  Siege, Elite Siege, Chemical Siege, Ranged Tank. Buildings receive only common
+  sight; aircraft receive neither sight bonus.
+- Mercenary discount stacks once with Easy Mode, including Starport. Existing
+  production quotes stay fixed; new orders receive the reduction. No building
+  discounts. Repair throughput and payment scale together, preserving price/HP.
+- Persistent flame impacts and napalm gain the duration bonus; visual flames and
+  direct weapon damage do not. Active fires receive it before fading. Additional
+  lifetime survives a save made during the extension.
 
-**Tharpique stacking explicitly approved:** affected units receive both their
-house-specific sight bonus and the **common +2 sight upgrade**.
-
-### Parameters to settle before integration
-
-- Unspecified amounts: Harkonnen damage; Atreides/Fremen/Ordos speed; Wildspade
-  durability; Corruptique armour and speed penalty; Tharpique sight.
-- Neutral repairs: speed, cost or both, and the repair types affected.
-- Exact affected units and weapons, particularly Sardaukar tanks, Mercenary
-  non-heavy units, Rebels vehicles, Corruptique tanks, Tharpique scouts/artillery
-  and Kleshmersh fire effects.
-- Cost, duration, technology level and prerequisites for each research.
-- Availability across mods and Lite editions.
-- Application and persistence rules: existing and future units, conversion and
-  capture, loss of the Radar, Chaos Mode, Starport and Easy Mode.
-- Interaction between the Sardaukar 35% roll and any existing engine rules that
-  spawn infantry when vehicles are destroyed.
-
-The Radar interface, saves, deterministic network commands and French/English
-documentation must be integrated and verified before publication. Unspecified
-values and conditions are not approved design decisions.
+New preparation compatibility: **protocol 21 / saves 9839**, stable item IDs and
+readers for old saves. This is not the published 544 protocol 20 / saves 9838.
+See [next-release notes](../release_notes/Next-Release-EN.md) and the validation
+receipt for executed checks and remaining limits.

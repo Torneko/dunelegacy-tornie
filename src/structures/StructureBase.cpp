@@ -104,7 +104,8 @@ StructureBase::StructureBase(InputStream& stream): ObjectBase(stream) {
 
 int StructureBase::getTechnologyHouseID() const {
     if(currentGame && !currentGame->getGameInitSettings().getGameOptions().content.customUnitsAndBuildings) return HOUSE_NEUTRAL;
-    return currentGame ? currentGame->getChaosMode().getTechnologyHouse(originalHouseID, itemID) : originalHouseID;
+    return currentGame ? currentGame->getChaosMode().getTechnologyHouse(originalHouseID,
+        scoutpostConversion ? Structure_Scoutpost : itemID) : originalHouseID;
 }
 
 void StructureBase::init() {
@@ -554,8 +555,9 @@ bool StructureBase::update() {
             FixPoint repairprice = FixPoint(fraction * currentGame->objectData.data[itemID][originalHouseID].price) / 256;
 
             // Original dune is always repairing 5 hitpoints (for the costs of 2) but we are only repairing 1/30th of that
-            const auto repairHealth = 5_fix/30_fix;
-            owner->takeCredits(repairprice/30);
+            const auto factor=owner->hasRadarSpecialization(HOUSE_NEUTRAL)?1.25_fix:1_fix;
+            const auto repairHealth = 5_fix/30_fix*factor;
+            owner->takeCredits(repairprice/30*factor);
             FixPoint newHealth = getHealth() + repairHealth;
             if(newHealth >= getMaxHealth()) {
                 setHealth(getMaxHealth());

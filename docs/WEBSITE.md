@@ -1,3 +1,13 @@
+# Préparation après la 1.0.544 corrigée — non publiée
+
+La préparation suit `d6a29fd` et le site `0e8430d` récupéré sur `origin/gh-pages`.
+Les [notes FR](../release_notes/Next-Release-FR.md), [notes EN](../release_notes/Next-Release-EN.md)
+et la [spécification radar](RADAR-RESEARCH-NEXT-RELEASE.md) décrivent les changements.
+Le site de préparation distingue ces fonctions des téléchargements 1.0.544
+encore publics. Numéro, paquets, site public et archive hors ligne seront alignés
+lors d'une publication autorisée ; aucun tag ni remplacement des paquets publics
+n'est demandé pour cette étape. Les 155 PNG originaux de galerie sont préservés.
+
 # Correctifs 1.0.544 — publiés
 
 La [release 1.0.544 corrigée](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.544) remplace la publication initiale. Source et tag : `d6a29fd82906eb1f4856eced2dfb01fe3e74637e`. Site français/anglais : `0e8430ddd317b7441058d33ee311b77b08ea97fd`, préparé depuis `69dec6d4c434fe275903493ec8f92d0fb5e29974`. Protocole **20**, nouvelles sauvegardes **9838**, anciennes lisibles ; retélécharger sur tous les postes réseau.

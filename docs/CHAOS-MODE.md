@@ -15,3 +15,22 @@ The draw uses a separate deterministic random stream derived from the shared gam
 Save version 9826 adds the table; GameInit marker MOD4 adds the option. Older supported saves load with Chaos disabled and retain their saved ObjectData. Older executables cannot load new-format saves. The option hash is unchanged when Chaos is disabled.
 
 Normal unit and building technologies on the documentation website describe games with Chaos disabled.
+
+
+## Préparation après 1.0.544 / Next preparation
+
+Non publié : l'éolienne standard 2×2 rejoint la table des donneurs, en dernière
+position afin de conserver les quinze premiers tirages. Les éoliennes avancées
+restent exclues. Plans Rebels : amélioration verte/double puissance, niveau 7 + IX,
+150 crédits, une fois par bâtiment. Les conversions Scoutpost vers Flamepost,
+Chemipost et Slowpost conservent les plans du Scoutpost emprunté, même après
+conversion ou sauvegarde et en Lite. Les tables sauvegardées à quinze bâtiments
+sont relues ; leur éolienne standard garde ses propres plans.
+
+Unpublished: standard 2×2 Windtrap appended to the donor table, preserving the
+first fifteen draws. Advanced Windtraps excluded. Borrowed Rebels plans allow
+the green double-power upgrade at tech 7 + IX for 150 credits, once per building.
+Scoutpost conversions retain their borrowed source plans after conversion and
+reload, including Lite. Old fifteen-building saves keep their donor choices and
+use the standard Windtrap's own plans. Research specialization follows the owning
+house, independently of Chaos donors. New protocol 21 / save 9839.

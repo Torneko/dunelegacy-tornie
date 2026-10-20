@@ -19,6 +19,8 @@
 #define WSAFILE_H
 
 #include "Animation.h"
+#include <FileClasses/Palette.h>
+#include <optional>
 #include <misc/SDL2pp.h>
 
 #include <stdarg.h>
@@ -42,6 +44,7 @@ public:
     virtual ~Wsafile();
 
     sdl2::surface_ptr getPicture(Uint32 FrameNumber) const;
+    void setPaletteOverride(const Palette& value) { paletteOverride=value; }
     sdl2::surface_ptr getAnimationAsPictureRow(int numFramesX = std::numeric_limits<int>::max()) const;
     std::unique_ptr<Animation> getAnimation(unsigned int startindex, unsigned int endindex, bool bDoublePic=true, bool bSetColorKey=true) const;
 
@@ -77,6 +80,7 @@ private:
     void readdata(int numFiles, ...);
     void readdata(int numFiles, va_list args);
     std::vector<unsigned char> decodedFrames;
+    std::optional<Palette> paletteOverride;
 
     Uint16 numFrames = 0;
     Uint16 sizeX = 0;

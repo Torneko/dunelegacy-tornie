@@ -258,10 +258,13 @@ Coord ObjectBase::getClosestCenterPoint(const Coord& objectLocation) const {
 
 
 int ObjectBase::getMaxHealth() const {
-    return currentGame->objectData.data[itemID][getProductionHouseID()].hitpoints;
+    const int base=currentGame->objectData.data[itemID][getProductionHouseID()].hitpoints;
+    return owner && radar::aircraft(itemID) && owner->hasRadarSpecialization(HOUSE_WILDSPADE)?base*125/100:base;
 }
 
 void ObjectBase::handleDamage(int damage, Uint32 damagerID, House* damagerOwner) {
+    if(damage>0 && owner && owner->hasRadarSpecialization(HOUSE_CUSTOM) && radar::conventionalTank(itemID))
+        damage=std::max(1,damage*80/100);
     const bool wasAlive = getHealth() > 0;
     // Immortality guard: Human-controlled houses are invulnerable in single-player modes when option is enabled
     // This applies when ANY human player controls the house (not just AI players)
@@ -811,7 +814,8 @@ const ObjectBase* ObjectBase::findTarget() const {
 }
 
 int ObjectBase::getViewRange() const {
-    return currentGame->objectData.data[itemID][getProductionHouseID()].viewrange;
+    return currentGame->objectData.data[itemID][getProductionHouseID()].viewrange
+        +(owner?owner->radarSightBonus(itemID):0);
 }
 
 int ObjectBase::getAreaGuardRange() const {
@@ -819,7 +823,8 @@ int ObjectBase::getAreaGuardRange() const {
 }
 
 int ObjectBase::getWeaponRange() const {
-    return currentGame->objectData.data[itemID][getProductionHouseID()].weaponrange;
+    const int base=currentGame->objectData.data[itemID][getProductionHouseID()].weaponrange;
+    return base+(owner?owner->radarWeaponRangeBonus(itemID,base):0);
 }
 
 int ObjectBase::getWeaponReloadTime() const {
@@ -1050,5 +1055,5 @@ bool ObjectBase::targetInWeaponRange() const {
     Coord coord = (target.getObjPointer())->getClosestPoint(location);
     FixPoint dist = blockDistance(location,coord);
 
-    return ( dist <= currentGame->objectData.data[itemID][getProductionHouseID()].weaponrange);
+    return (dist<=getWeaponRange());
 }

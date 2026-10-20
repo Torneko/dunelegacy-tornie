@@ -331,7 +331,7 @@ void Palace::doLaunchDeathhand(int x, int y) {
     Coord dest( x * TILESIZE + TILESIZE/2 + deathOffX,
                 y * TILESIZE + TILESIZE/2 + deathOffY);
 
-    bulletList.push_back(new Bullet(objectID, &centerPoint, &dest, usesKleshmershNapalm()?Bullet_Napalm:Bullet_LargeRocket, usesKleshmershNapalm()?PALACE_DEATHHAND_WEAPONDAMAGE/2:PALACE_DEATHHAND_WEAPONDAMAGE, false, nullptr));
+    bulletList.push_back(new Bullet(objectID, &centerPoint, &dest, usesKleshmershNapalm()?Bullet_Napalm:Bullet_LargeRocket, owner->radarAttackDamage(Structure_Palace,usesKleshmershNapalm()?PALACE_DEATHHAND_WEAPONDAMAGE/2:PALACE_DEATHHAND_WEAPONDAMAGE), false, nullptr));
     AchievementEvents::missile(getOwner());
     soundPlayer->playSoundAt(Sound_Rocket, getLocation());
 

@@ -125,7 +125,7 @@ void Devastator::destroy()
             for(int j = 0; j < 3; j++) {
                 Coord realPos(lround(realX) + (i - 1)*TILESIZE, lround(realY) + (j - 1)*TILESIZE);
 
-                currentGameMap->damage(objectID, owner, realPos, itemID, 150, 16, false);
+                currentGameMap->damage(objectID, owner, realPos, itemID, owner->radarAttackDamage(itemID,150), 16, false);
 
                 Uint32 explosionID = currentGame->randomGen.getRandOf({Explosion_Large1, Explosion_Large2});
                 currentGame->getExplosionList().push_back(new Explosion(explosionID, realPos, owner->getHouseID()));
