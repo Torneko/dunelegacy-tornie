@@ -316,6 +316,8 @@ target_sources(dunelegacy
         CutScenes/CutScene.cpp
         CutScenes/Scene.cpp
         CutScenes/Intro.cpp
+        CutScenes/WestwoodLogoVideoEvent.cpp
+        CutScenes/OriginalCredits.cpp
         CutScenes/Meanwhile.cpp
         CutScenes/Finale.cpp
         CutScenes/VideoEvent.cpp

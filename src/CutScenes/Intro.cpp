@@ -18,6 +18,7 @@
 #include <globals.h>
 
 #include <CutScenes/Intro.h>
+#include <CutScenes/WestwoodLogoVideoEvent.h>
 #include <CutScenes/WSAVideoEvent.h>
 #include <CutScenes/HoldPictureVideoEvent.h>
 #include <CutScenes/FadeOutVideoEvent.h>
@@ -131,6 +132,9 @@ Intro::Intro() {
 
     Uint32 color = SDL2RGB(palette[PALCOLOR_HARKONNEN+1]);
     Uint32 sardaukarColor = SDL2RGB(palette[PALCOLOR_SARDAUKAR+1]);
+
+    startNewScene();
+    addVideoEvent(std::make_unique<WestwoodLogoVideoEvent>());
 
     startNewScene();
 

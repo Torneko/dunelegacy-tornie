@@ -1,0 +1,60 @@
+{
+  "version": "1.0.544",
+  "source": "d6a29fd82906eb1f4856eced2dfb01fe3e74637e",
+  "workflowSource": "d6a29fd82906eb1f4856eced2dfb01fe3e74637e",
+  "run": 39247482935,
+  "graphicalStartup": {
+    "passed": true,
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "images": [
+      "standard",
+      "Mint-compatible"
+    ],
+    "audio": "PulseAudio",
+    "videoCases": [
+      "window",
+      "fullscreen",
+      "stale-combined-desktop"
+    ],
+    "xrandr": true
+  },
+  "softwareFallback": true,
+  "engineAndNetworkTests": true,
+  "packagedRuntimeChecks": [
+    "expanded-coop",
+    "editor-owners",
+    "rebels-mentat",
+    "rebels-windtrap-upgrade",
+    "building-sales",
+    "normal-multiplayer-alliances",
+    "flame-and-gas-units",
+    "magenta-free-zooms",
+    "house-colours-and-blue-stars",
+    "neutral-saboteur-tier-seven",
+    "editor-terrain-blue-stars",
+    "original-flame-squad-portraits",
+    "precise-close-flame-quad",
+    "sales-destruction-and-concrete",
+    "sale-button-after-upgrade",
+    "easy-sales-75-percent",
+    "extended-fallback-units",
+    "movement-slowing",
+    "saved-chaos-worm-offer",
+    "elite-ornithopter",
+    "seventy-achievements",
+    "palace-napalm-and-saved-hazards",
+    "harvester-area-guard-crush",
+    "completed-upgrade-sales",
+    "native-slowpost-editor-icon",
+    "impact-only-and-random-palace-napalm",
+    "ten-original-artwork-files",
+    "scoutpost-slowpost-upgrade",
+    "bicolour-vanilla-harvesters",
+    "worfinery-displayed-labels"
+  ],
+  "networkProtocol": 20,
+  "saveVersion": 9838
+}

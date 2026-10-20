@@ -1,6 +1,16 @@
-# Correctifs 1.0.544 — publication
+# Correctifs 1.0.544 — publiés
 
-Site de départ récupéré sur `origin/gh-pages` : `69dec6d4c434fe275903493ec8f92d0fb5e29974` (site publié 1.0.544). La branche de correctifs du site décrit le Slowpost par conversion, son animation, la tourelle violette assombrie, les libellés Worfinery et les deux moissonneuses reconstruites depuis la base vanilla. Le remplacement des téléchargements est autorisé. Les cinq paquets Linux et le ZIP Windows seront publiés ensemble après les contrôles automatisés ; le site français/anglais et son archive hors ligne suivent le même moteur. Le moteur corrigé utilise le protocole 20 et les sauvegardes 9838. Les vérifications locales passent : 36 parcours et 96 fiches FR/EN sur ordinateur/mobile, 155 PNG d’origine conservés et cinq aperçus de rendu ajoutés. La compilation et CTest 2/2 passent ; les contrôles des sept modes sont enregistrés dans `release_notes/Validation-Correctifs-1.0.544.json`.
+La [release 1.0.544 corrigée](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.544) remplace la publication initiale. Source et tag : `d6a29fd82906eb1f4856eced2dfb01fe3e74637e`. Site français/anglais : `0e8430ddd317b7441058d33ee311b77b08ea97fd`, préparé depuis `69dec6d4c434fe275903493ec8f92d0fb5e29974`. Protocole **20**, nouvelles sauvegardes **9838**, anciennes lisibles ; retélécharger sur tous les postes réseau.
+
+- Slowpost disponible par conversion du Scoutpost uniquement : plans Neutral, niveau 7, IX et 450 crédits. Animation à deux états, commande sécurisée, investissement et consommation conservés après sauvegarde.
+- Tourelle du Ranged Tank violette assombrie ; libellés Worfinery alignés sur les unités affichées, après défilement et rechargement.
+- Moissonneuses reconstruites depuis la base vanilla dans les six mods : grande capacité avant violet/arrière maison ; rapide avant maison/arrière cyan. Huit silhouettes préservées, masques complémentaires et zooms entiers. Les 155 PNG originaux de la galerie restent identiques ; cinq aperçus PNG et une animation sont ajoutés.
+- Validation locale : **CTest 2/2, 142 cas / 10 647 assertions**, UDP réel, contrôles ciblés dans les sept modes et 96 fiches FR/EN ordinateur/mobile. CI Linux/Mint et Windows : moteur, réseau, jeu installé et menus FR/EN validés. Les ressources de mods des ZIP Windows et TAR Linux correspondent exactement à la source.
+- Site public et hors ligne : **72 parcours** FR/EN ordinateur/mobile. Sources, notes bilingues, archive locale et SHA-256 correspondent au remplacement publié. Les reçus et l’audit final sont enregistrés ci-dessous.
+
+[CI Linux/Mint](https://github.com/Torneko/dunelegacy-tornie/actions/runs/39247482935) · [CI Windows](https://github.com/Torneko/dunelegacy-tornie/actions/runs/39247482961) · [Publication et audit](https://github.com/Torneko/dunelegacy-tornie/actions/runs/39248316052) · [Pages](https://github.com/Torneko/dunelegacy-tornie/actions/runs/39273065470).
+
+[Notes FR](../release_notes/Correctifs-1.0.544-FR.md) · [Notes EN](../release_notes/Correctifs-1.0.544-EN.md) · [Validation](../release_notes/Validation-Correctifs-1.0.544.json) · [Audit final](../release_notes/Final-Publication-Audit-Correctifs-1.0.544.json) · [Audit des ressources](../release_notes/Package-Resources-Audit-Correctifs-1.0.544.json) · [Reçus](../release_notes/Publication-Receipt-Correctifs-1.0.544.json).
 
 # 1.0.544 initiale — historique
 

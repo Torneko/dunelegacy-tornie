@@ -1,0 +1,58 @@
+name: Publish verified 544 corrections
+
+on:
+  push:
+    branches: [ publish/544-promote ]
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: publish-correctifs-544
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 110
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PACKAGE_SOURCE: d6a29fd82906eb1f4856eced2dfb01fe3e74637e
+      WEBSITE_SOURCE: 3652cc6b4a8276df6fbdf2cbbf5f5605a11db84b
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install website checks
+        run: |
+          npm install --prefix "$RUNNER_TEMP/site-checks" playwright@1.56.1
+          echo "NODE_PATH=$RUNNER_TEMP/site-checks/node_modules" >> "$GITHUB_ENV"
+          echo "SITE_BROWSER=$(command -v google-chrome || command -v chromium)" >> "$GITHUB_ENV"
+      - name: Await the matching successful Windows and Linux builds
+        run: python scripts/publish-correctifs544.py gate
+      - name: Verify all staged packages and the offline website
+        run: python scripts/publish-correctifs544.py prepare
+      - name: Publish the verified game replacement
+        run: python scripts/publish-correctifs544.py packages
+      - name: Wait for the matching bilingual Pages publication
+        run: python scripts/publish-correctifs544.py wait-site
+      - name: Verify public and offline pages and publish documents
+        run: python scripts/publish-correctifs544.py finalize
+      - name: Download and verify every release asset
+        run: python scripts/publish-correctifs544.py audit
+      - name: Preserve publication receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Correctifs-544-Publication-Receipts
+          path: |
+            .publish544/state.json
+            .publish544/supporting/*.json
+            .publish544/supporting/SHA256SUMS-*.txt
