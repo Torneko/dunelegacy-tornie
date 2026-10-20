@@ -78,7 +78,8 @@
 // Version 18: 75% Easy Mode sales, gas range and Elite Ornithopter.
 // Version 19: total upgraded-building refunds, harvest navigation and random napalm.
 // Version 20: Slowpost conversion command and upgrade-only production.
-#define NETWORK_PROTOCOL_VERSION            20
+// Version 21: editor-authored, pre-upgraded Windtraps in scenario maps.
+#define NETWORK_PROTOCOL_VERSION            21
 
 /**
  * Reject an incompatible config-hash handshake and dispatch its disconnect cause.

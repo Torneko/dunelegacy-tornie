@@ -42,6 +42,16 @@ inline void verifyRelease544Artwork(const std::string& output, const std::string
                     for(int frame=0;frame<8;++frame)
                         require(fixedHalf[frame]>0 && houseHalf[frame]>0,"Harvester direction lost a fixed or house-colour half");
                 if(zoom==0) {
+                    if(atlas.id==ObjPic_RaiderQuad) {
+                        SDL_RenderClear(renderer);
+                        SDL_RenderCopy(renderer,pGFXManager->getZoomedObjPic(ObjPic_Quad,house,0),nullptr,&rect);
+                        auto vanilla=sdl2::surface_ptr{SDL_CreateRGBSurfaceWithFormat(0,w,h,32,SDL_PIXELFORMAT_RGBA32)};
+                        require(SDL_RenderReadPixels(renderer,&rect,vanilla->format->format,vanilla->pixels,vanilla->pitch)==0,"vanilla Quad anchor readback");
+                        const auto background=SDL_MapRGBA(image->format,7,11,13,255);
+                        for(int y=0;y<h;++y)for(int x=0;x<w;++x)
+                            require((getPixel(image.get(),x,y)!=background)==(getPixel(vanilla.get(),x,y)!=background),
+                                "Raider Quad ground anchor differs from vanilla for a heading");
+                    }
                     base=image.release();
                     require(SavePNG(base,(std::filesystem::path(output)/(mod+"-art544-atlas-"+std::to_string(atlas.id)+"-"+std::to_string(house)+".png")).string().c_str())==0,"atlas export");
                 }

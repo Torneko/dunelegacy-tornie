@@ -12,6 +12,7 @@
 #include "Release543OptionsSmoke.h"
 #include "BuildingSaleUpgradeSmoke.h"
 #include "SlowpostUpgradeSmoke.h"
+#include "EditorWindtrapSmoke.h"
 
 inline void verifyRelease543Alliances(const std::string& output,const std::string& mod) {
     auto require=[](bool ok,const char* message){if(!ok)throw std::runtime_error(std::string("Release 543 alliances: ")+message);};
@@ -70,6 +71,7 @@ inline void verifyRelease543Alliances(const std::string& output,const std::strin
 
 inline void verifyRelease543Rules(const std::string& output,const std::string& mod) {
     auto require=[](bool ok,const std::string& message){if(!ok)throw std::runtime_error("Release 543: "+message);};
+    EditorWindtrapFixture::verify(output,mod);
     if(mod!="vanilla")verifyEditorUnitScrolling(output,mod);
     verifyUpgradedBuildingSales(output,mod);
     Release543OptionsFixture::verify(output,mod);

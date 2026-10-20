@@ -51,3 +51,9 @@ msgstr "Dark Green"
 
 msgid "Doublefinery"
 msgstr "Doublefinery"
+
+msgid "Pre-upgraded"
+msgstr "Pre-upgraded"
+
+msgid "Start with double power and green animation."
+msgstr "Start with double power and green animation."

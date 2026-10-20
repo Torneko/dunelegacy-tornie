@@ -2422,7 +2422,7 @@ GFXManager::GFXManager() {
             auto frame=getColoredEditorFrame(item.second,colorSlot,post?2:0,worm?5:0,worm?1:post?10:8,worm?9:1);
             uiGraphicTex[item.first][colorSlot].reset();
             // A one-tile post must keep the same native canvas as the other posts.
-            uiGraphic[item.first][colorSlot]=post ? overlayEditorStar(frame.get(),customMapEditorStar.get())
+            uiGraphic[item.first][colorSlot]=post ? std::move(frame)
                 : decorateNewUnitEditorIcon(frame.get(),customMapEditorStar.get());
         }
         for(const bool slow:{false,true}) {
@@ -4492,6 +4492,7 @@ void GFXManager::reloadModDependentObjectGraphics() {
             auto source=sdl2::surface_ptr{SDL_ConvertSurfaceFormat(raw.get(),SDL_PIXELFORMAT_RGBA32,0)};
             auto atlas=sdl2::surface_ptr{SDL_CreateRGBSurfaceWithFormat(0,128,16,32,SDL_PIXELFORMAT_RGBA32)};
             SDL_FillRect(atlas.get(),nullptr,0);
+            auto native=sdl2::surface_ptr{SDL_ConvertSurfaceFormat(reference,SDL_PIXELFORMAT_RGBA32,0)};
             constexpr int views[]={2,1,0,1,2,3,4,3},starts[]={0,18,36,53,71};
             for(int col=0;col<8;++col) {
                 const int view=views[col],width=(view==2 || view==4)?17:18;
@@ -4503,9 +4504,17 @@ void GFXManager::reloadModDependentObjectGraphics() {
                 }
                 const int w=right-left,h=bottom-top;
                 if(w<=0 || h<=0 || w>16 || h>16)throw std::runtime_error("Raider Quad view does not fit its native tile");
+                // The supplied silhouettes match vanilla. Keep its per-heading
+                // ground anchor instead of centring each different-height view.
+                int anchorX=16,anchorY=16;
+                for(int y=0;y<16;++y)for(int x=0;x<16;++x) {
+                    Uint8 r,g,b,a;SDL_GetRGBA(getPixel(native.get(),col*16+x,y),native->format,&r,&g,&b,&a);
+                    if(a){anchorX=std::min(anchorX,x);anchorY=std::min(anchorY,y);}
+                }
+                if(anchorX+w>16 || anchorY+h>16)throw std::runtime_error("Raider Quad exceeds its native ground anchor");
                 for(int y=top;y<bottom;++y)for(int x=left;x<right;++x) {
                     const int dx=(col>=3 && col<=5)?w-1-(x-left):x-left;
-                    putPixel(atlas.get(),col*16+(16-w+1)/2+dx,(16-h)/2+y-top,
+                    putPixel(atlas.get(),col*16+anchorX+dx,anchorY+y-top,
                         getPixel(source.get(),starts[view]+x,21+y));
                 }
             }
@@ -4857,7 +4866,7 @@ void GFXManager::rebuildModDependentEditorGraphics() {
             auto frame=getRuntimeEditorFrame(item.second,colorSlot,post?2:0,worm?5:0,worm?1:post?10:8,worm?9:1);
             uiGraphicTex[item.first][colorSlot].reset();
             // A one-tile post must keep the same native canvas as the other posts.
-            uiGraphic[item.first][colorSlot]=post ? overlayEditorStar(frame.get(),customStar.get())
+            uiGraphic[item.first][colorSlot]=post ? std::move(frame)
                 : decorateNewUnitEditorIcon(frame.get(),customStar.get());
         }
         for(const bool slow:{false,true}) {

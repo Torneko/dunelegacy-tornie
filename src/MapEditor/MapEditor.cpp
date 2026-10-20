@@ -796,6 +796,7 @@ void MapEditor::saveMap(const std::string& filepath) {
     }
 
     loadedINIFile->clearSection("STRUCTURES");
+    loadedINIFile->removeSection("WINDTRAPUPGRADES");
     for(const Structure& structure : structures) {
         int position = (logicalOffsetY+structure.position.y) * logicalSizeX + (logicalOffsetX+structure.position.x);
 
@@ -813,6 +814,8 @@ void MapEditor::saveMap(const std::string& filepath) {
             std::string structureValue = house2housename[structure.house] + "," + getItemNameByID(structure.itemID) + "," + std::to_string(structure.health) + "," + std::to_string(position);
 
             loadedINIFile->setStringValue("STRUCTURES", structureKey, structureValue, false);
+            if(structure.itemID==Structure_WindTrap && structure.powerUpgraded)
+                loadedINIFile->setBoolValue("WINDTRAPUPGRADES",structureKey,true);
         }
     }
 
@@ -1739,7 +1742,10 @@ void MapEditor::drawMap(ScreenBorder* pScreenborder, bool bCompleteMap) {
                 default:                            objectPic = 0;                          break;
             }
 
-            SDL_Texture* ObjectSprite = pGFXManager->getZoomedObjPic(objectPic, structure.house, currentZoomlevel);
+            const bool greenWindtrap=structure.itemID==Structure_WindTrap && structure.powerUpgraded;
+            SDL_Texture* ObjectSprite = greenWindtrap
+                ? pGFXManager->getObjPic(objectPic,structure.house,true)[currentZoomlevel]
+                : pGFXManager->getZoomedObjPic(objectPic, structure.house, currentZoomlevel);
 
             Coord frameSize = world2zoomedWorld(getStructureSize(structure.itemID)*TILESIZE);
 
@@ -1754,7 +1760,7 @@ void MapEditor::drawMap(ScreenBorder* pScreenborder, bool bCompleteMap) {
 
             bool structureDrawn = false;
             const auto editorStructureUIGraphic = getMapEditorStructureUIGraphic(structure.itemID);
-            if(editorStructureUIGraphic != NUM_UIGRAPHICS) {
+            if(editorStructureUIGraphic != NUM_UIGRAPHICS && !greenWindtrap) {
                 if(SDL_Texture* uiStructureTexture = pGFXManager->getUIGraphic(editorStructureUIGraphic, structure.house)) {
                     SDL_RenderCopy(renderer, uiStructureTexture, nullptr, &dest);
                     structureDrawn = true;
@@ -1775,11 +1781,6 @@ void MapEditor::drawMap(ScreenBorder* pScreenborder, bool bCompleteMap) {
                 SDL_RenderCopy(renderer, ObjectSprite, &source, &dest);
             }
 
-            if(structure.itemID==Structure_Slowpost) {
-                const int scale=currentZoomlevel+1,right=dest.x+dest.w-1,bottom=dest.y+dest.h-1;
-                renderDrawHLine(renderer,right-5*scale,bottom-3*scale,right,COLOR_RGB(0,0,170));
-                renderDrawVLine(renderer,right-3*scale,bottom-5*scale,bottom,COLOR_RGB(85,255,255));
-            }
             selectionDest = dest;
         }
 

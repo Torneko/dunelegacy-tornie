@@ -19,6 +19,7 @@
 #include <RadarView.h>
 
 #include <structures/StructureBase.h>
+#include <structures/WindTrap.h>
 #include <units/UnitBase.h>
 #include <units/TankBase.h>
 
@@ -1123,6 +1124,10 @@ void INIMapLoader::loadStructures()
                     continue;
                 } else {
                     newStructure->setHealth(newStructure->getMaxHealth() * percentHealth);
+                    if(auto* trap=dynamic_cast<WindTrap*>(newStructure);
+                       trap && WindTrap::supportsPowerUpgrade(static_cast<HOUSETYPE>(trap->getTechnologyHouseID()))
+                            && inifile->getBoolValue("WINDTRAPUPGRADES",tmpkey,false))
+                        trap->inheritPowerUpgrade(true);
                 }
             }
         } else {

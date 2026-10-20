@@ -94,10 +94,12 @@ int WindTrap::getProducedPower() const {
 
 void WindTrap::save(OutputStream& stream) const { StructureBase::save(stream);stream.writeBool(powerUpgraded); }
 
+bool WindTrap::supportsPowerUpgrade(HOUSETYPE house) {
+    return ModManager::instance().isTornieContentActive() && isHouseFaction(house,HOUSE_REBELS);
+}
 bool WindTrap::isPowerUpgradeEligible() const {
     return !powerUpgraded && currentGame && owner
-        && ModManager::instance().isTornieContentActive()
-        && isHouseFaction(static_cast<HOUSETYPE>(getTechnologyHouseID()),HOUSE_REBELS)
+        && supportsPowerUpgrade(static_cast<HOUSETYPE>(getTechnologyHouseID()))
         && currentGame->techLevel>=7 && owner->getNumItems(Structure_IX)>0;
 }
 void WindTrap::handlePowerUpgradeClick() {

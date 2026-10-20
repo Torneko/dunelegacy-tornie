@@ -3,6 +3,7 @@
 #include <FileClasses/FileManager.h>
 
 #include <MapEditor/MapEditor.h>
+#include <structures/WindTrap.h>
 #include <MapEditor/ReinforcementInfo.h>
 #include <AITeamInfo.h>
 
@@ -588,7 +589,9 @@ void INIMapEditorLoader::loadStructures()
                 continue;
             }
 
-            pMapEditor->structures.emplace_back(structureID, houseID, itemID, iHealth, Coord(getXPos(pos),getYPos(pos)));
+            const bool powerUpgraded=itemID==Structure_WindTrap && WindTrap::supportsPowerUpgrade(houseID)
+                && inifile->getBoolValue("WINDTRAPUPGRADES",tmpkey,false);
+            pMapEditor->structures.emplace_back(structureID, houseID, itemID, iHealth, Coord(getXPos(pos),getYPos(pos)),powerUpgraded);
         } else {
             logWarning(key.getLineNumber(), "Invalid structure key: '" + tmpkey + "'!");
             continue;

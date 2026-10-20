@@ -30,6 +30,7 @@
 #include <GUI/PictureLabel.h>
 #include <GUI/DropDownBox.h>
 #include <GUI/Label.h>
+#include <GUI/Checkbox.h>
 #include <GUI/ScrollView.h>
 
 #include <DataTypes.h>
@@ -42,6 +43,7 @@ public:
 #ifdef DUNELEGACY_RUNTIME_TESTS
     friend void verifyEditorUnitScrolling(const std::string&, const std::string&);
     friend struct EditorOwnershipFixture;
+    friend struct EditorWindtrapFixture;
     friend void verifyEditorSpiceDefaults(const std::string&, const std::string&);
 #endif
     /// default constructor
@@ -115,6 +117,7 @@ private:
     void onUnitButton(int unitType);
 
     void onStructureHealthDropDown(bool bInteractive);
+    void onStructurePowerUpgrade();
     void onUnitHealthDropDown(bool bInteractive);
     void onUnitAttackModeDropDown(bool bInteractive);
     void onSelectedUnitRotateLeft();
@@ -323,6 +326,7 @@ private:
     PictureLabel        bottomBar;
 
     HBox                structureDetailsHBox;
+    Checkbox            structureDetailsPowerUpgradeCheckbox;
     Label               structureDetailsHealthLabel;
     DropDownBox         structureDetailsHealthDropDownBox;
 

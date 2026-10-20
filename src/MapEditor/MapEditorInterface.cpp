@@ -19,6 +19,7 @@
 #include <mod/ModManager.h>
 #include <misc/SpiceGeneration.h>
 #include <MapEditor/MapEditor.h>
+#include <structures/WindTrap.h>
 #include <MapEditor/NewMapWindow.h>
 #include <MapEditor/LoadMapWindow.h>
 #include <MapEditor/PlayerSettingsWindow.h>
@@ -942,6 +943,11 @@ MapEditorInterface::MapEditorInterface(MapEditor* pMapEditor)
     structureDetailsHealthDropDownBox.setOnSelectionChange(std::bind(&MapEditorInterface::onStructureHealthDropDown, this, std::placeholders::_1));
 
     structureDetailsHBox.addWidget(&structureDetailsHealthDropDownBox, 120);
+    structureDetailsPowerUpgradeCheckbox.setText(_("Pre-upgraded"));
+    structureDetailsPowerUpgradeCheckbox.setTooltipText(_("Start with double power and green animation."));
+    structureDetailsPowerUpgradeCheckbox.setOnClick([this]{onStructurePowerUpgrade();});
+    structureDetailsPowerUpgradeCheckbox.setVisible(false);
+    structureDetailsHBox.addWidget(&structureDetailsPowerUpgradeCheckbox,180);
     structureDetailsHBox.addWidget(Spacer::create(), 1.0);
 
     // bottom bar (unit edit)
@@ -1070,6 +1076,9 @@ void MapEditorInterface::onObjectSelected() {
                                 Point(getRendererWidth() - sideBar.getSize().x, 24));
 
         structureDetailsHealthDropDownBox.setSelectedItem(pStructure->health - 1);
+        structureDetailsPowerUpgradeCheckbox.setVisible(pStructure->itemID==Structure_WindTrap
+            && WindTrap::supportsPowerUpgrade(pStructure->house));
+        structureDetailsPowerUpgradeCheckbox.setChecked(pStructure->powerUpgraded);
 
         changeHouseDropDown(pStructure->house);
     }
@@ -1432,6 +1441,19 @@ void MapEditorInterface::onUnitButton(int unitType) {
     }
 }
 
+void MapEditorInterface::onStructurePowerUpgrade() {
+    const auto* selected=pMapEditor->getSelectedStructure();
+    if(!selected || selected->itemID!=Structure_WindTrap || !WindTrap::supportsPowerUpgrade(selected->house))return;
+    pMapEditor->startOperation();
+    currentEditStructureID=currentEditUnitID=INVALID;
+    for(const int id:pMapEditor->getMirrorStructures(selected->id)) {
+        auto* trap=pMapEditor->getStructure(id);
+        if(!trap || trap->itemID!=Structure_WindTrap || !WindTrap::supportsPowerUpgrade(trap->house))continue;
+        MapEditorEditStructureOperation op(id,trap->health,structureDetailsPowerUpgradeCheckbox.isChecked());
+        pMapEditor->addUndoOperation(op.perform(pMapEditor));
+    }
+}
+
 void MapEditorInterface::onStructureHealthDropDown(bool bInteractive) {
 
     if(bInteractive) {
@@ -1727,6 +1749,7 @@ void MapEditorInterface::changeInterfaceColor(HOUSETYPE newHouse) {
     editorModeUnits_Ornithopter.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_Ornithopter, newHouse));
 
 
+    structureDetailsPowerUpgradeCheckbox.setTextColor(color);
     structureDetailsHealthLabel.setTextColor(color);
     structureDetailsHealthDropDownBox.setColor(color);
 

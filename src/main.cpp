@@ -799,6 +799,7 @@ int main(int argc, char *argv[]) {
         bool bVerifyRelease541 = false;
         bool bVerifyHarvesterCrush = false;
         bool bVerifyNextDraft = false;
+        bool bVerifyEditorFollowup = false;
         bool bVerifyCorrections544 = false;
         bool bVerifyWindtrapPreview = false;
         bool bVerifyAchievements = false;
@@ -822,6 +823,7 @@ int main(int argc, char *argv[]) {
             if(parameter == "--verify-release541" || parameter == "--verify-release542" || parameter == "--verify-release543") { bVerifyMods=true;bVerifyRelease541=true;continue; }
             if(parameter == "--verify-harvester-crush") { bVerifyMods=true;bVerifyHarvesterCrush=true;continue; }
             if((parameter == "--verify-next-draft" || parameter == "--verify-release544")) { bVerifyMods=true;bVerifyNextDraft=true;continue; }
+            if(parameter == "--verify-editor-followup") { bVerifyMods=true;bVerifyEditorFollowup=true;continue; }
             if(parameter == "--verify-correctifs544") { bVerifyMods=true;bVerifyCorrections544=true;continue; }
             if(parameter == "--verify-coop-expanded") { bVerifyMods=true;bVerifyExpandedCoop=true;continue; }
             if(parameter == "--verify-startup") { bVerifyMods = true; bVerifyStartup = true; continue; }
@@ -1357,6 +1359,16 @@ int main(int argc, char *argv[]) {
                             }
                         }
                         SDL_Log("CORRECTIFS 544 COMPLETE: seven modes, upgrade/animation/save, Worfinery labels and native two-tone artwork");
+                    }
+                    else if(bVerifyEditorFollowup) {
+                        const char* output=std::getenv("DUNELEGACY_SMOKE_DIR");
+                        if(!output)throw std::runtime_error("Editor follow-up needs an output directory");
+                        for(const std::string mod:{"Tornie","TornieLite","Jericho","JerichoLite","ArcaKev","ArcaKevLite","vanilla"}) {
+                            if(!ModManager::instance().setActiveMod(mod))throw std::runtime_error("Editor follow-up mod activation");
+                            effectiveGameOptions=ModManager::instance().loadEffectiveGameOptions(settings.gameOptions);
+                            EditorWindtrapFixture::verify(output,mod);
+                            if(mod!="vanilla")verifyRelease544Artwork(output,mod);
+                        }
                     }
                     else if(bVerifyNextDraft) {
                         const char* output=std::getenv("DUNELEGACY_SMOKE_DIR");

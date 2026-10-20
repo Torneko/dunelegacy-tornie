@@ -2769,3 +2769,9 @@ msgstr "Vert foncé"
 
 msgid "Doublefinery"
 msgstr "Doublefinery"
+
+msgid "Pre-upgraded"
+msgstr "Améliorée au départ"
+
+msgid "Start with double power and green animation."
+msgstr "Énergie doublée et animation verte dès le départ."

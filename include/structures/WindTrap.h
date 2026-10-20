@@ -38,6 +38,7 @@ public:
     void setHealth(FixPoint newHealth) override;
     void save(OutputStream& stream) const override;
     bool isPowerUpgraded() const { return powerUpgraded; }
+    static bool supportsPowerUpgrade(HOUSETYPE house);
     bool isPowerUpgradeEligible() const;
     void handlePowerUpgradeClick();
     bool doPowerUpgrade();
