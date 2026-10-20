@@ -227,7 +227,7 @@ jobs:
           foreach ($path in @((Join-Path $env:RUNNER_TEMP "dunelegacy-mod-smoke.log"), "build/Testing/Temporary/LastTest.log")) {
             if (Test-Path -LiteralPath $path) {
               $tail = (Get-Content -LiteralPath $path -Tail 60) -join "`n"
-              if ($tail.Length -gt 6000) { $tail = $tail.Substring($tail.Length - 6000) }
+              if ($tail.Length -gt 3000) { $tail = $tail.Substring($tail.Length - 3000) }
               $escaped = $tail.Replace('%','%25').Replace("`r",'%0D').Replace("`n",'%0A')
               Write-Output "::notice title=Native validation detail::$escaped"
             }
