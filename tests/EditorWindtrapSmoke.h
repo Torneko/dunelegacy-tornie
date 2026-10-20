@@ -43,7 +43,8 @@ struct EditorWindtrapFixture {
                 editor.getStructure(id)->powerUpgraded=true;
             }
             editor.saveMap(path);
-            std::ifstream input(path);map.assign(std::istreambuf_iterator<char>(input),{});
+            // Close the reader before overwriting the map (required on Windows).
+            {std::ifstream input(path);map.assign(std::istreambuf_iterator<char>(input),{});}
             require(map.find("WINDTRAPUPGRADES")!=std::string::npos,"map has no persistent upgrade property");
             editor.loadMap(path);
             require(editor.getStructure(id)->powerUpgraded==full,"map roundtrip or unsupported flag policy");
