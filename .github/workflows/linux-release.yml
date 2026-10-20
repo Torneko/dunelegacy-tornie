@@ -254,7 +254,7 @@ jobs:
           for LANGUAGE in en fr; do
             mkdir -p "$PROFILE/$LANGUAGE/profile/DuneLegacyTornie" "$PROFILE/$LANGUAGE/results"
             printf '[General]\nLanguage=%s\nPlay Intro=false\n[Video]\nFullscreen=false\n[Audio]\nMusic Type=adl\nPlay Music=false\n' "$LANGUAGE" > "$PROFILE/$LANGUAGE/profile/DuneLegacyTornie/Dune Legacy.ini"
-            for CHECK in --verify-radar-research --verify-editor-followup --verify-campaign-cinema; do
+            for CHECK in --verify-radar-research --verify-editor-followup --verify-release545 --verify-campaign-cinema; do
               LOG="$PROFILE/$LANGUAGE/$CHECK.log"
               SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy SDL_RENDER_DRIVER=software \
                 XDG_CONFIG_HOME="$PROFILE/$LANGUAGE/profile" DUNELEGACY_PROFILE_DIR="$PROFILE/$LANGUAGE/profile" \
@@ -267,6 +267,7 @@ jobs:
             test "$(grep -c 'CHAOS DEFENCE UPGRADE PASS:' "$PROFILE/$LANGUAGE/--verify-editor-followup.log")" -eq 7
             test "$(grep -c 'CAMPAIGN CINEMA PASS:' "$PROFILE/$LANGUAGE/--verify-campaign-cinema.log")" -eq 7
             test "$(grep -c 'ORIGINAL CINEMA PASS:' "$PROFILE/$LANGUAGE/--verify-campaign-cinema.log")" -eq 1
+            test "$(grep -c 'RELEASE 545 COMPLETE:' "$PROFILE/$LANGUAGE/--verify-release545.log")" -eq 1
           done
 
       - name: Upload next-release runtime evidence
@@ -284,7 +285,7 @@ jobs:
           VERSION="$(sed -n 's/^project(DuneLegacyTornie VERSION \([0-9]*\.[0-9]*\.[0-9]*\).*/\1/p' CMakeLists.txt)"
           SOURCE_COMMIT="$(git rev-parse HEAD)" RELEASE_VERSION="$VERSION" python3 - <<'PYTHON'
           import json, os, pathlib
-          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio','videoCases':['window','fullscreen','stale-combined-desktop'],'xrandr':True},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat','rebels-windtrap-upgrade','building-sales','normal-multiplayer-alliances','flame-and-gas-units','magenta-free-zooms','house-colours-and-blue-stars','neutral-saboteur-tier-seven','editor-terrain-blue-stars','original-flame-squad-portraits','precise-close-flame-quad','sales-destruction-and-concrete','sale-button-after-upgrade','easy-sales-75-percent','extended-fallback-units','movement-slowing','saved-chaos-worm-offer','elite-ornithopter','seventy-achievements','palace-napalm-and-saved-hazards','harvester-area-guard-crush','completed-upgrade-sales','native-slowpost-editor-icon','impact-only-and-random-palace-napalm','ten-original-artwork-files','scoutpost-slowpost-upgrade','bicolour-vanilla-harvesters','worfinery-displayed-labels'],'nextReleaseChecks':['radar-research-fr-en','chaos-defence-upgrades','editor-preupgraded-windtraps','original-westwood-audio','original-localized-credits','campaign-role-cinematics'],'networkProtocol':21,'saveVersion':9839}
+          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio','videoCases':['window','fullscreen','stale-combined-desktop'],'xrandr':True},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat','rebels-windtrap-upgrade','building-sales','normal-multiplayer-alliances','flame-and-gas-units','magenta-free-zooms','house-colours-and-blue-stars','neutral-saboteur-tier-seven','editor-terrain-blue-stars','original-flame-squad-portraits','precise-close-flame-quad','sales-destruction-and-concrete','sale-button-after-upgrade','easy-sales-75-percent','extended-fallback-units','movement-slowing','saved-chaos-worm-offer','elite-ornithopter','seventy-three-achievements','palace-napalm-and-saved-hazards','harvester-area-guard-crush','completed-upgrade-sales','native-slowpost-editor-icon','impact-only-and-random-palace-napalm','ten-original-artwork-files','scoutpost-slowpost-upgrade','bicolour-vanilla-harvesters','worfinery-displayed-labels'],'nextReleaseChecks':['radar-research-fr-en','chaos-defence-upgrades','editor-preupgraded-windtraps','original-westwood-audio','original-localized-credits','campaign-role-cinematics','faction-portraits-and-golden-campaign-frames','coop-rescue-two-three-four-factions','palace-saboteur-achievement','main-menu-replay-intro'],'networkProtocol':21,'saveVersion':9839}
           pathlib.Path('build/Linux-Build-'+report['version']+'.json').write_text(json.dumps(report,indent=2)+'\n')
           PYTHON
 
