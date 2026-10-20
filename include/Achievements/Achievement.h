@@ -24,7 +24,7 @@ struct MatchInfo {
     int mission = 0;
     int color = 0, defaultColor = 0;
     bool enabled = true, highDifficulty = false, hadEnemies = false;
-    bool chaosCampaignEligible = false, coopCompletionEligible = false;
+    bool chaosCampaignEligible = false, coopCompletionEligible = false, cooperative = false;
     std::string coopSession;
     std::uint64_t initialRefinedSpice = 0, roadkillWindow = 125;
 };

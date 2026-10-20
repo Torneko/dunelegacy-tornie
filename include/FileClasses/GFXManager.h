@@ -560,6 +560,7 @@ typedef enum {
     UI_MapEditor_FastHarvester,
     UI_MapEditor_TameSandworm,
     UI_MapEditor_Slowpost,
+    UI_CampaignHeraldLarge,
     NUM_UIGRAPHICS
 } UIGraphics_Enum;
 
@@ -673,6 +674,7 @@ public:
     Animation* getMentatMouthAnimation(int house);
     SDL_Texture* getMentatForeground(int house);
 
+    SDL_Texture*     getFactionTrooperPortrait(int itemID, int technologyHouse);
     SDL_Texture*     getSmallDetailPic(unsigned int id);
     SDL_Texture*     getSmallDetailPic(unsigned int id, int house);
     SDL_Texture*     getTinyPicture(unsigned int id);
@@ -706,6 +708,7 @@ private:
     void                loadCustomHouseHerald();
     void                reloadModDependentObjectGraphics();
     void                reloadRuntimeModPortraits();
+    void                reloadCampaignHeralds();
     void                rebuildModDependentEditorGraphics();
 
     struct HDObjPicOverride {
@@ -740,6 +743,7 @@ private:
     std::array<std::array<sdl2::texture_ptr,NUM_ZOOMLEVEL>,NUM_HOUSE_COLOR_SLOTS> greenWindtrapTex;
     std::array<HDObjPicOverride, NUM_OBJPICS> hdObjPicOverrides;
     std::array<sdl2::texture_ptr, NUM_SMALLDETAILPICS> smallDetailPicTex;
+    std::array<std::array<sdl2::texture_ptr, 3>, 2> factionTrooperPortraits;
     std::array<sdl2::texture_ptr, NUM_TINYPICTURE> tinyPictureTex;
     std::array<std::array<sdl2::texture_ptr, NUM_HOUSE_COLOR_SLOTS>, NUM_UIGRAPHICS> uiGraphicTex;
     std::array<std::array<sdl2::texture_ptr, NUM_HOUSE_COLOR_SLOTS>, NUM_MAPCHOICEPIECES> mapChoicePiecesTex;

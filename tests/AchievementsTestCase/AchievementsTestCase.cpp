@@ -141,7 +141,7 @@ TEST_CASE_METHOD(Fixture,"A damaged or newer profile is preserved rather than ov
     std::ifstream in(path);const std::string text(std::istreambuf_iterator<char>(in),{});REQUIRE(text.find("Protected=original")!=std::string::npos);
 }
 TEST_CASE_METHOD(Fixture,"Catalog ships every proposed achievement and notifications fire once","[achievements]"){
-    REQUIRE(manager.definitions().size()==70);REQUIRE(manager.unlock("PACIFISM"));REQUIRE_FALSE(manager.unlock("PACIFISM"));
+    REQUIRE(manager.definitions().size()==73);REQUIRE(manager.unlock("PACIFISM"));REQUIRE_FALSE(manager.unlock("PACIFISM"));
     REQUIRE(manager.takeNotification()=="PACIFISM");REQUIRE(manager.takeNotification().empty());REQUIRE_FALSE(manager.unlock("UNKNOWN"));
 }
 TEST_CASE_METHOD(Fixture,"Extra factions complete a campaign without replacing the eight required houses","[achievements]"){
@@ -379,4 +379,39 @@ TEST_CASE_METHOD(Fixture,"ArcaKev campaign awards separate full and Lite progres
     REQUIRE(manager.unlocked("ARCAKEV_LITE_MASTER"));REQUIRE(manager.save());
     AchievementManager loaded;REQUIRE(loaded.configure("",(dir/"achievements.ini").u8string()));
     REQUIRE(loaded.unlocked("ARCAKEV_MASTER"));REQUIRE(loaded.unlocked("ARCAKEV_LITE_MASTER"));
+}
+
+TEST_CASE_METHOD(Fixture,"Co-op rescue awards require team victory and the right survival outcome","[achievements]") {
+    info.cooperative=true;manager.begin(info);
+    SECTION("eliminated local player rescued by a surviving ally") {
+        manager.finish(true,false,true,false,true);
+        REQUIRE(manager.unlocked("COOP_RESCUED"));REQUIRE_FALSE(manager.unlocked("COOP_RESCUER"));
+        manager.finish(true,false,true,false,true);REQUIRE(manager.statistic("CoopVictoriesRescued")==1);
+    }
+    SECTION("survivor wins for at least one defeated ally in larger teams") {
+        manager.finish(true,false,false,true,true);
+        REQUIRE(manager.unlocked("COOP_RESCUER"));REQUIRE_FALSE(manager.unlocked("COOP_RESCUED"));
+    }
+    SECTION("loss grants neither") {
+        manager.finish(false,false,true,true,true);
+        REQUIRE_FALSE(manager.unlocked("COOP_RESCUER"));REQUIRE_FALSE(manager.unlocked("COOP_RESCUED"));
+    }
+    SECTION("no eliminated ally grants neither") {
+        manager.finish(true,false,false,false,true);
+        REQUIRE_FALSE(manager.unlocked("COOP_RESCUER"));REQUIRE_FALSE(manager.unlocked("COOP_RESCUED"));
+    }
+    SECTION("no surviving ally cannot rescue local player") {
+        manager.finish(true,false,true,true,false);REQUIRE_FALSE(manager.unlocked("COOP_RESCUED"));
+    }
+    SECTION("ordinary allied matches are not co-op campaigns") {
+        info.cooperative=false;manager.begin(info);manager.finish(true,false,true,true,true);
+        REQUIRE_FALSE(manager.unlocked("COOP_RESCUER"));REQUIRE_FALSE(manager.unlocked("COOP_RESCUED"));
+    }
+}
+
+TEST_CASE_METHOD(Fixture,"Palace sabotage is tracked and disabled matches are excluded","[achievements]") {
+    manager.palaceSabotaged();REQUIRE(manager.unlocked("PALACE_SABOTEUR"));
+    REQUIRE(manager.statistic("PalacesSabotaged")==1);
+    manager.finish(true,false);manager.palaceSabotaged();REQUIRE(manager.statistic("PalacesSabotaged")==1);
+    info.enabled=false;manager.begin(info);manager.palaceSabotaged();REQUIRE(manager.statistic("PalacesSabotaged")==1);
 }

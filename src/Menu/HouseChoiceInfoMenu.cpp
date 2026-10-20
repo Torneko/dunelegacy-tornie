@@ -50,10 +50,8 @@ HouseChoiceInfoMenu::HouseChoiceInfoMenu(int newHouse) : MentatMenu(HOUSE_INVALI
         } break;
     }
 
-    if((newHouse >= HOUSE_CUSTOM || displayHouse == HOUSE_FREMEN
-        || displayHouse == HOUSE_NEUTRAL || displayHouse == HOUSE_REBELS)
-       && anim != nullptr) {
-        SDL_Surface* registeredHerald = pGFXManager->getUIGraphicSurface(UI_Herald_ColoredLarge, static_cast<HOUSETYPE>(newHouse));
+    if(anim != nullptr) {
+        SDL_Surface* registeredHerald = pGFXManager->getUIGraphicSurface(UI_CampaignHeraldLarge, static_cast<HOUSETYPE>(newHouse));
         auto opaqueHerald = copySurface(registeredHerald);
         if(opaqueHerald != nullptr) {
             SDL_SetColorKey(opaqueHerald.get(), SDL_FALSE, 0);
@@ -75,13 +73,13 @@ HouseChoiceInfoMenu::HouseChoiceInfoMenu(int newHouse) : MentatMenu(HOUSE_INVALI
                     customFrame = std::move(trueColorFrame);
                 }
 
-                SDL_Rect sourceRect{0, 0,
-                                    std::min(opaqueHerald->w, customFrame->w - 12),
-                                    std::min(126, opaqueHerald->h)};
-                SDL_Rect destinationRect{12, 66, sourceRect.w, sourceRect.h};
-                if(sourceRect.w > 0 && sourceRect.h > 0) {
-                    SDL_BlitSurface(opaqueHerald.get(), &sourceRect, customFrame.get(), &destinationRect);
-                }
+                // Fit the complete square frame in the original 166x126 plaque
+                // area; never crop its gold border or overwrite the planet.
+                SDL_Rect previousPlaque{12, 66, 166, 126};
+                SDL_FillRect(customFrame.get(), &previousPlaque, SDL_MapRGB(customFrame->format,0,0,0));
+                SDL_Rect sourceRect{0, 8, 166, 166};
+                SDL_Rect destinationRect{32, 66, 126, 126};
+                SDL_BlitScaled(opaqueHerald.get(), &sourceRect, customFrame.get(), &destinationRect);
                 customPlanetAnimation->addFrame(std::move(customFrame));
             }
             customPlanetAnimation->setFrameDurationTime(anim->getFrameDurationTime());

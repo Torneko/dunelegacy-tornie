@@ -1,6 +1,6 @@
-# Prochaine version — préparation depuis la 1.0.544 corrigée
+# 1.0.545 — préparation depuis la 1.0.544 corrigée
 
-**Non publiée ; numéro et date de publication à confirmer.** Les téléchargements
+**Non publiée ; ajouts du 20 octobre en cours de validation.** Les téléchargements
 publics restent la 1.0.544 corrigée (`d6a29fd`), protocole 20, sauvegardes 9838.
 Cette branche de préparation utilise le protocole 21 et écrit des sauvegardes
 9839 ; elle lit les anciennes sauvegardes. Aucun ID d'unité n'est déplacé.
@@ -43,7 +43,7 @@ sont vérifiés par les contrôles natifs. Une partie humaine Internet entre ré
 indépendants reste distincte des tests UDP et de déterminisme. Les demandes
 concernent le jeu PC : « mobile » désignait une autre conversation Codex Work.
 
-Validation de préparation (20 octobre 2026) : source moteur `fbe8b46270efc7635b9f3cc7446df90a3356e9c2`.
+Validation du lot précédent, avant les ajouts ci-dessous (20 octobre 2026) : source moteur `fbe8b46270efc7635b9f3cc7446df90a3356e9c2`.
 CTest **2/2**, **143 cas / 10 868 assertions**, dont UDP réel avec liens directs
 entre invités bloqués et transport des commandes radar jusqu'à huit joueurs.
 Contrôles natifs : **1 606 scénarios**, succès, sept modes de règles/éditeur/Chaos,
@@ -56,3 +56,28 @@ avec tests du jeu installé, radar et cinématiques FR/EN. Publication des paque
 désactivée. [Rapport de validation](Validation-Next-Release.json). Les vérifications
 audio sont programmatiques ; écoute humaine, PC Mint physique et partie Internet
 humaine entre réseaux indépendants restent des contrôles distincts.
+
+## Ajouts du 20 octobre — 1.0.545
+
+- Portraits fournis : Fremen seul et groupe de cinq ; Sardaukar groupes de trois
+  et cinq. Originaux conservés, sans étoile ni nombre superposé. Les portraits
+  de production suivent la maison des plans, y compris en Chaos.
+- Douze cadres dorés pour les choix et confirmations de campagne. Le cadre
+  entier reste visible, avec la bonne identité après un changement de mod ;
+  les bannières ordinaires des escarmouches restent disponibles.
+- Bouton **Rejouer l’intro**, à droite du menu principal, au-dessus de la coop.
+  Même introduction que celle du démarrage, avec retour au menu et respect
+  des réglages audio.
+- Trois nouveaux succès, soit **73** : être éliminé en coop et gagner grâce
+  à un allié survivant ; survivre et gagner pour au moins un allié éliminé ;
+  détruire un palais ennemi avec un Saboteur. Statistiques associées. Les succès
+  coop couvrent deux, trois et quatre factions alliées, depuis chaque poste ;
+  les contrôleurs archontes partagent l’état de leur maison. Abandon ou
+  déconnexion ne suffit pas.
+- Site FR/EN de préparation : ressources et succès annoncés séparément des
+  téléchargements 544. Bannière Fremen de Tornie recadrée à l’affichage,
+  original PNG inchangé.
+
+La validation Windows/Linux ci-dessus concerne le lot précédent, pas ces ajouts.
+Le [suivi 1.0.545](../docs/RELEASE-1.0.545.md) précise leur état. Aucun tag,
+paquet public ni déploiement du site n’est créé à cette étape.

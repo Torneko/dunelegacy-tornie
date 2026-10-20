@@ -45,9 +45,13 @@ public:
     virtual void onChildWindowClose(Window* pChildWindow) override;
 
 private:
+#ifdef DUNELEGACY_RUNTIME_TESTS
+    friend struct Release545Smoke;
+#endif
     void onSinglePlayer() const;
     void onMultiPlayer() const;
     void onCooperativeCampaign() const;
+    void onReplayIntro() const;
     void onMapEditor() const;
     void onMods() const;
     void onOptions();
@@ -67,6 +71,7 @@ private:
     TextButton      singlePlayerButton;
     TextButton      multiPlayerButton;
     TextButton      cooperativeCampaignButton;
+    TextButton      replayIntroButton;
     TextButton      mapEditorButton;
     TextButton      modsButton;
     TextButton      optionsButton;

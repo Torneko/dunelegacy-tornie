@@ -1,6 +1,6 @@
-# Next release — preparation from corrected 1.0.544
+# 1.0.545 — preparation from corrected 1.0.544
 
-**Unpublished; version number and publication date remain to be chosen.** Public
+**Unpublished; 20 October additions are being validated.** Public
 packages remain corrected 1.0.544 (`d6a29fd`), protocol 20 / saves 9838. This
 preparation uses protocol 21 / saves 9839, reads previous saves and preserves
 stable item IDs. No tag or release is created by this preparation.
@@ -39,7 +39,7 @@ rendering, commands and saves. Real UDP and determinism checks do not replace
 an Internet match between people on independent connections. These are PC-game
 changes; “mobile” referred to another Codex Work conversation, not an Android port.
 
-Preparation validation (20 October 2026): engine source `fbe8b46270efc7635b9f3cc7446df90a3356e9c2`.
+Previous batch validation, before the additions below (20 October 2026): engine source `fbe8b46270efc7635b9f3cc7446df90a3356e9c2`.
 **2/2 CTest suites, 143 cases / 10,868 assertions**, including real UDP with guest
 direct links blocked and Radar command transport up to eight players. Native
 checks: **1,606 scenarios**, achievements, seven rules/editor/Chaos modes, research
@@ -52,3 +52,23 @@ source, including installed-game, Radar and cinematic checks in both languages.
 Package publication was disabled. [Validation receipt](Validation-Next-Release.json).
 Audio checks are programmatic; human listening, physical Mint hardware and a human
 Internet match on independent connections remain separate checks.
+
+## 20 October additions — 1.0.545
+
+- Original supplied Fremen single/five and Sardaukar three/five portraits, with
+  no overlaid stars or numbers. Production artwork follows the blueprint house.
+- Twelve golden campaign selection/confirmation frames, matched by faction
+  identity across mod changes, with the complete square border visible.
+- Replay Intro button above co-op on the right of the main menu; normal intro,
+  menu return and unchanged audio preferences.
+- Three achievements (**73 total**): win co-op after your elimination thanks
+  to a survivor; survive and win for an eliminated ally; destroy an enemy Palace
+  with a Saboteur. New statistics. Co-op covers two, three and four allied
+  factions and each local perspective; Archon controllers share house survival.
+  Quitting or disconnecting alone does not qualify.
+- FR/EN preview documentation keeps these additions separate from public 544
+  downloads. Tornie Fremen banner cropped for display; original PNG unchanged.
+
+The earlier Windows/Linux CI evidence applies to the previous preparation
+source, before these additions. See [1.0.545 tracking](../docs/RELEASE-1.0.545.md).
+No tag, public package or website deployment is created at this stage.

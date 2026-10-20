@@ -140,7 +140,9 @@ void AchievementManager::missileResult(bool hitObject, std::uint64_t buildings) 
 }
 void AchievementManager::palace(){if(running&&!active.completed){increment("PalaceAbilitiesUsed");evaluate();}}
 
-void AchievementManager::finish(bool won,bool enemiesRemain) {
+void AchievementManager::palaceSabotaged(){if(running&&!active.completed){increment("PalacesSabotaged");evaluate();}}
+
+void AchievementManager::finish(bool won,bool enemiesRemain,bool localEliminated,bool allyEliminated,bool allySurvives) {
     if(!running||active.completed)return;
     const auto& record=state["Run:"+active.runID];
     const bool counted=record.count(won?"GamesWon":"GamesLost");
@@ -154,6 +156,10 @@ void AchievementManager::finish(bool won,bool enemiesRemain) {
         if(state["CoopCampaigns"].emplace(identity, "1").second) {
             increment("CoopCampaignsCompleted"); dirty = true;
         }
+    }
+    if(won && active.info.cooperative) {
+        if(localEliminated && allySurvives) increment("CoopVictoriesRescued");
+        if(!localEliminated && allyEliminated) increment("CoopVictoriesRescuing");
     }
     evaluate(won,enemiesRemain);active.completed=true;save();
 }

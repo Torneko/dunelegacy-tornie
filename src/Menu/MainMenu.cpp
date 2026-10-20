@@ -16,6 +16,7 @@
  */
 
 #include <Menu/MainMenu.h>
+#include <CutScenes/Intro.h>
 #include <Achievements/AchievementEvents.h>
 #include <Achievements/AchievementManager.h>
 #include <Menu/MainMenuButtonColor.h>
@@ -148,6 +149,12 @@ MainMenu::MainMenu()
     windowWidget.addWidget(&cooperativeCampaignButton,
         Point(getRendererWidth() - 200, getRendererHeight() - 106), Point(182,26));
 
+    replayIntroButton.setText(settings.general.language == "fr" ? "REJOUER L'INTRO" : "REPLAY INTRO");
+    MainMenuButtonColor::apply(replayIntroButton);
+    replayIntroButton.setOnClick(std::bind(&MainMenu::onReplayIntro, this));
+    windowWidget.addWidget(&replayIntroButton,
+        Point(getRendererWidth() - 200, getRendererHeight() - 140), Point(182,26));
+
     // Identify the project, then its version and the active mod.
     {
         modVersionLabel.setTextFontSize(16);
@@ -173,6 +180,7 @@ void MainMenu::refreshModVersionLabel()
     MainMenuButtonColor::apply(singlePlayerButton);
     MainMenuButtonColor::apply(multiPlayerButton);
     MainMenuButtonColor::apply(cooperativeCampaignButton);
+    MainMenuButtonColor::apply(replayIntroButton);
     MainMenuButtonColor::apply(mapEditorButton);
     MainMenuButtonColor::apply(modsButton);
     MainMenuButtonColor::apply(optionsButton);
@@ -308,6 +316,12 @@ void MainMenu::onMultiPlayer() const
 {
     MultiPlayerMenu multiPlayerMenu;
     multiPlayerMenu.showMenu();
+}
+
+void MainMenu::onReplayIntro() const
+{
+    Intro().run();
+    musicPlayer->changeMusic(MUSIC_MENU);
 }
 
 void MainMenu::onCooperativeCampaign() const

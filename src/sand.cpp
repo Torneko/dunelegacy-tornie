@@ -49,6 +49,7 @@
     \return the surface corresponding. This surface should not be freed or modified. nullptr on error.
 */
 SDL_Texture* resolveItemPicture(int itemID, HOUSETYPE house) {
+    if(auto* portrait = pGFXManager->getFactionTrooperPortrait(itemID, house)) return portrait;
     int newPicID;
 
     switch(itemID) {

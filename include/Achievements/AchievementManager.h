@@ -28,7 +28,9 @@ public:
     void palace();
     void missile();
     void missileResult(bool hitObject, std::uint64_t enemyBuildingsDestroyed);
-    void finish(bool won, bool enemiesRemain);
+    void palaceSabotaged();
+    void finish(bool won, bool enemiesRemain, bool localEliminated = false,
+                bool allyEliminated = false, bool allySurvives = false);
     void campaignScore(int score);
     bool unlock(const std::string& id);
     bool save();

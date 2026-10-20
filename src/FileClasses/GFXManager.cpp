@@ -1961,6 +1961,8 @@ GFXManager::GFXManager() {
 
     loadCustomHouseHerald();
 
+    reloadCampaignHeralds();
+
     uiGraphic[UI_Herald_ArrowLeft][HOUSE_HARKONNEN] = LoadPNG_RW(pFileManager->openFile("ArrowLeft.png").get());
     uiGraphic[UI_Herald_ArrowLeftLarge][HOUSE_HARKONNEN] = Scaler::defaultDoubleSurface(uiGraphic[UI_Herald_ArrowLeft][HOUSE_HARKONNEN].get());
     uiGraphic[UI_Herald_ArrowLeftHighlight][HOUSE_HARKONNEN] = LoadPNG_RW(pFileManager->openFile("ArrowLeftHighlight.png").get());
@@ -4633,6 +4635,32 @@ void GFXManager::reloadModDependentObjectGraphics() {
 
 }
 
+void GFXManager::reloadCampaignHeralds() {
+    // Supplied golden frames represent campaign identities, independently of
+    // runtime slot order, bonus colours and the ordinary skirmish banners.
+    const char* campaignNames[] = {"Harkonnen", "Atreides", "Ordos", "Fremen",
+        "Sardaukar", "Mercenary", "Neutral", "Rebels", "Corruptique", "Wildspade",
+        "Kleshmersh", "Tharpique"};
+    for(int runtime = 0; runtime < NUM_HOUSES; ++runtime) {
+        uiGraphicTex[UI_CampaignHeraldLarge][runtime].reset();
+        const auto identity = getHouseFactionIdentity(static_cast<HOUSETYPE>(runtime));
+        if(identity < 0 || identity >= NUM_HOUSES) continue;
+        const std::string filename = std::string("CampaignHerald") + campaignNames[identity] + ".png";
+        auto herald = pFileManager->exists(filename) ? LoadPNG_RW(pFileManager->openFile(filename).get()) : nullptr;
+        if(herald) {
+            auto fitted = sdl2::surface_ptr(SDL_CreateRGBSurfaceWithFormat(0,166,182,32,SDL_PIXELFORMAT_ARGB8888));
+            if(fitted) {
+                SDL_FillRect(fitted.get(),nullptr,SDL_MapRGB(fitted->format,0,0,0));
+                SDL_Rect square{0,8,166,166};
+                SDL_BlitScaled(herald.get(),nullptr,fitted.get(),&square);
+                uiGraphic[UI_CampaignHeraldLarge][runtime] = std::move(fitted);
+                continue;
+            }
+        }
+        uiGraphic[UI_CampaignHeraldLarge][runtime] = copySurface(uiGraphic[UI_Herald_ColoredLarge][runtime].get());
+    }
+}
+
 void GFXManager::reloadRuntimeModPortraits() {
     constexpr int portraitWidth = 91;
     constexpr int portraitHeight = 55;
@@ -4671,6 +4699,19 @@ void GFXManager::reloadRuntimeModPortraits() {
         ? ModManager::instance().getActiveModName()
         : std::string();
     const bool tornieGraphicsVisible = isTornieGraphicsVisible();
+
+    const char* troopFiles[2][3] = {
+        {"Troopers_Fremen_alone.png", nullptr, "Troopers_Fremen_5.png"},
+        {nullptr, "Troopers_Sardaukar_3.png", "Troopers_Sardaukar_5.png"}};
+    for(int faction=0; faction<2; ++faction) for(int size=0; size<3; ++size) {
+        auto& texture = factionTrooperPortraits[faction][size];
+        texture.reset();
+        const auto* name = troopFiles[faction][size];
+        if(name && pFileManager->exists(name)) {
+            auto surface = LoadPNG_RW(pFileManager->openFile(name).get());
+            if(surface) texture = convertSurfaceToTexture(std::move(surface));
+        }
+    }
 
     loadPortrait(Picture_FlameQuad,"FlameQuadIcon.png","QUAD.WSA",tornieGraphicsVisible);
     loadPortrait(Picture_GasInfantry,"ProductionTrooperGazInfantry.png","HYINFY.WSA",tornieGraphicsVisible);
@@ -5120,6 +5161,8 @@ void GFXManager::reloadModDependentUiGraphics() {
     }
     reloadRuntimeModPortraits();
     loadCustomHouseHerald();
+
+    reloadCampaignHeralds();
     loadMentatGraphics();
 }
 
@@ -5374,6 +5417,14 @@ zoomable_texture GFXManager::getObjPic(unsigned int id, int house,bool greenWind
 }
 
 
+SDL_Texture* GFXManager::getFactionTrooperPortrait(int itemID, int technologyHouse) {
+    const int size = itemID == Unit_Trooper ? 0 : itemID == Unit_Troopers ? 1 : itemID == Unit_Troopers5 ? 2 : -1;
+    if(size < 0 || technologyHouse < 0 || technologyHouse >= NUM_HOUSES) return nullptr;
+    const auto identity = getHouseFactionIdentity(static_cast<HOUSETYPE>(technologyHouse));
+    const int faction = identity == HOUSE_FREMEN ? 0 : identity == HOUSE_SARDAUKAR ? 1 : -1;
+    return faction < 0 ? nullptr : factionTrooperPortraits[faction][size].get();
+}
+
 SDL_Texture* GFXManager::getSmallDetailPic(unsigned int id) {
     if(id >= NUM_SMALLDETAILPICS) {
         return nullptr;
@@ -5417,6 +5468,7 @@ SDL_Surface* GFXManager::getUIGraphicSurface(unsigned int id, int house) {
     const bool useHouseIdentity =
         id == UI_Herald_Colored
         || id == UI_Herald_ColoredLarge
+        || id == UI_CampaignHeraldLarge
         || id == UI_Herald_Grey
         || id == UI_MentatBackground
         || id == UI_MentatHouseChoiceInfoQuestion;
@@ -5514,6 +5566,7 @@ SDL_Texture* GFXManager::getUIGraphic(unsigned int id, int house) {
     const bool useHouseIdentity =
         id == UI_Herald_Colored
         || id == UI_Herald_ColoredLarge
+        || id == UI_CampaignHeraldLarge
         || id == UI_Herald_Grey
         || id == UI_MentatBackground
         || id == UI_MentatHouseChoiceInfoQuestion;

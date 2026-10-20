@@ -68,6 +68,7 @@
 #include "../tests/AchievementRuntimeSmoke.h"
 #include "../tests/Release538Smoke.h"
 #include "../tests/SelectedPortraitSmoke.h"
+#include "../tests/Release545Smoke.h"
 #include "../tests/HarvesterCrushSmoke.h"
 #endif
 
@@ -801,6 +802,7 @@ int main(int argc, char *argv[]) {
         bool bVerifyNextDraft = false;
         bool bVerifyEditorFollowup = false;
         bool bVerifyRadarResearch = false;
+        bool bVerifyRelease545 = false;
         bool bVerifyCampaignCinema = false;
         bool bVerifyCorrections544 = false;
         bool bVerifyWindtrapPreview = false;
@@ -826,6 +828,7 @@ int main(int argc, char *argv[]) {
             if(parameter == "--verify-harvester-crush") { bVerifyMods=true;bVerifyHarvesterCrush=true;continue; }
             if((parameter == "--verify-next-draft" || parameter == "--verify-release544")) { bVerifyMods=true;bVerifyNextDraft=true;continue; }
             if(parameter == "--verify-campaign-cinema") { bVerifyMods=true;bVerifyCampaignCinema=true;continue; }
+            if(parameter == "--verify-release545") {bVerifyMods=true;bVerifyRelease545=true;continue;}
             if(parameter == "--verify-radar-research") { bVerifyMods=true;bVerifyRadarResearch=true;continue; }
             if(parameter == "--verify-editor-followup") { bVerifyMods=true;bVerifyEditorFollowup=true;continue; }
             if(parameter == "--verify-correctifs544") { bVerifyMods=true;bVerifyCorrections544=true;continue; }
@@ -1441,10 +1444,12 @@ int main(int argc, char *argv[]) {
                         }
                         ModManager::instance().setActiveMod(previousMod);
                     }
+                    else if(bVerifyRelease545) Release545Smoke::run(std::getenv("DUNELEGACY_SMOKE_DIR"));
                     else if(bVerifyPortraits) runSelectedPortraitSmoke();
                     else if(bVerifyRelease538) runRelease538Smoke();
                     else {
                         runModRuntimeSmoke();
+                        Release545Smoke::run(std::getenv("DUNELEGACY_SMOKE_DIR"));
                         if(bVerifyAchievements) {runRelease538Smoke();runAchievementRuntimeSmoke();}
                     }
                     bExitGame = true;

@@ -1,8 +1,8 @@
 # Dune Legacy Tornie
 
-Préparation après la 1.0.544 corrigée (non publiée) : [notes FR](release_notes/Next-Release-FR.md), [notes EN](release_notes/Next-Release-EN.md), [recherches radar](docs/RADAR-RESEARCH-NEXT-RELEASE.md). Les paquets publics 1.0.544 restent inchangés.
+Préparation 1.0.545 depuis la 1.0.544 corrigée (non publiée) : [notes FR](release_notes/Next-Release-FR.md), [notes EN](release_notes/Next-Release-EN.md), [recherches radar](docs/RADAR-RESEARCH-NEXT-RELEASE.md). Les paquets publics 1.0.544 restent inchangés.
 
-Prévu pour la prochaine version : [recherches au radar — concepts validés et paramètres à fixer](docs/RADAR-RESEARCH-NEXT-RELEASE.md). / Planned for the next release: approved Radar research concepts and open parameters. Implementation is pending.
+Préparé pour la 1.0.545 : [recherches radar](docs/RADAR-RESEARCH-NEXT-RELEASE.md), [portraits, cadres de campagne, introduction et succès](docs/RELEASE-1.0.545.md). / Prepared for 1.0.545: Radar research, faction artwork, replay intro and achievements; publication pending.
 
 Correctifs 1.0.544 : Slowpost par amélioration du Scoutpost, animation, tourelle violette plus sombre, libellés Worfinery et deux moissonneuses bicolores reconstruites depuis la base vanilla. [FR](release_notes/Correctifs-1.0.544-FR.md) · [EN](release_notes/Correctifs-1.0.544-EN.md). Protocole 20 / nouvelles sauvegardes 9838. Retélécharger la 544 corrigée sur tous les postes d’une partie réseau.
 

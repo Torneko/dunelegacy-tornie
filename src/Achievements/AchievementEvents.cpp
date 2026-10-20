@@ -64,6 +64,12 @@ void begin(Game& game,const std::string& key,bool resumed,bool eligible){
     if(const auto context = coop::readContext(setup.getFiledata()); context && pLocalHouse) {
         const int slot = coop::mapSlotForHouse(*context, pLocalHouse->getHouseID());
         info.coopSession = context->sessionId;
+        info.cooperative = slot >= 1 && slot <= static_cast<int>(context->slots.size())
+            && context->isAlliedSlot(slot-1) && context->slots[slot-1].active()
+            && [&] { unsigned allies=0;
+                for(std::size_t i=0;i<context->slots.size();++i)
+                    if(context->isAlliedSlot(i) && context->slots[i].active()) ++allies;
+                return allies>=2; }();
         info.coopCompletionEligible = slot >= 1 && slot <= static_cast<int>(context->slots.size())
             && context->isAlliedSlot(slot-1) && context->slots[slot-1].active() && context->stage == coop::StageCount
             && context->completedMask == (1u << (coop::StageCount - 1)) - 1u;
@@ -78,7 +84,19 @@ void begin(Game& game,const std::string& key,bool resumed,bool eligible){
     manager().begin(info,key,resumed);
     for(auto* unit:unitList)if(unit->getItemID()==Unit_FlameTank)manager().flameSource(unit->getObjectID());
 }
-void finish(bool won){manager().finish(won,enemiesRemain());}
+void finish(bool won){
+    bool allyEliminated=false, allySurvives=false;
+    if(currentGame && pLocalHouse && manager().match().info.cooperative) {
+        if(const auto context=coop::readContext(currentGame->getGameInitSettings().getFiledata()))
+            for(std::size_t index=0; index<context->slots.size(); ++index) {
+                if(!context->isAlliedSlot(index) || !context->slots[index].active()) continue;
+                auto* house=currentGame->getHouse(context->slots[index].house);
+                if(!house || house==pLocalHouse) continue;
+                if(house->isAlive()) allySurvives=true; else allyEliminated=true;
+            }
+    }
+    manager().finish(won,enemiesRemain(),pLocalHouse && !pLocalHouse->isAlive(),allyEliminated,allySurvives);
+}
 void pump(Game& game){
     static std::uint32_t lastNotification=0,lastSave=0;const auto now=SDL_GetTicks();
     if(now-lastSave>=5000){manager().save();lastSave=now;}
@@ -100,6 +118,9 @@ void damage(ObjectBase* victim,std::uint32_t attackerID,House* attacker,bool let
     if(!currentGame||!victim||!local(attacker)||!enemy(victim->getOwner()))return;
     const auto* source=currentGame->getObjectManager().getObject(attackerID);
     if(source&&source->getItemID()==Unit_Sandworm)return;
+    if(lethal && source && source->getItemID()==Unit_Saboteur && victim->getItemID()==Structure_Palace
+       && !manager().match().destroyed.count(victim->getObjectID()))
+        manager().palaceSabotaged();
     manager().enemyDamage();
     // Worm defeats are resolved at the game's half-health retreat threshold.
     if(lethal&&victim->getItemID()!=Unit_Sandworm)manager().enemyDestroyed(victim->getObjectID(),victim->isAStructure(),false,flame);

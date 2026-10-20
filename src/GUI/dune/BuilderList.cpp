@@ -270,6 +270,8 @@ void BuilderList::draw(Point position) {
                    && portrait==productionPortraits.end()
                    && isHouseFaction(static_cast<HOUSETYPE>(pBuilder->getTechnologyHouseID()),HOUSE_KLESHMERSH))
                     pTexture=pGFXManager->getSmallDetailPic(Picture_FlameTrooper);
+                if(auto* factionPortrait = pGFXManager->getFactionTrooperPortrait(buildItem.itemID, pBuilder->getTechnologyHouseID()))
+                    pTexture = factionPortrait;
                 const SDL_Rect dest = {position.x + getButtonPosition(i - currentListPos).x,
                     position.y + getButtonPosition(i - currentListPos).y, BUILDERBTN_WIDTH, BUILDERBTN_HEIGHT};
 

@@ -686,5 +686,32 @@ Rule=ModCampaignCount
 Statistic=ArcaKevLite
 Target=6
 Secret=false
+
+[COOP_RESCUED]
+Name=Victory Beyond Defeat
+NameFr=La victoire après la défaite
+Description=Be eliminated in co-op and have a surviving ally win the mission for your team.
+DescriptionFr=Être éliminé en coop et remporter la mission grâce à un allié encore en vie.
+Rule=Lifetime
+Statistic=CoopVictoriesRescued
+Target=1
+
+[COOP_RESCUER]
+Name=No Ally Left Behind
+NameFr=Un allié ne tombe jamais seul
+Description=Survive and win a co-op mission after at least one ally has been eliminated.
+DescriptionFr=Survivre et gagner une mission coop après l’élimination d’au moins un allié.
+Rule=Lifetime
+Statistic=CoopVictoriesRescuing
+Target=1
+
+[PALACE_SABOTEUR]
+Name=Palace Infiltrator
+NameFr=Sabotage royal
+Description=Destroy an enemy Palace with a Saboteur.
+DescriptionFr=Détruire un palais ennemi avec un Saboteur.
+Rule=Lifetime
+Statistic=PalacesSabotaged
+Target=1
 )ACHIEVEMENTS";
 }
