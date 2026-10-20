@@ -25,9 +25,11 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           lines=Path('/tmp/validation-failure.log').read_text(errors='replace').splitlines()
-          tail='\n'.join(lines[-100:])[-3000:]
+          tail='\n'.join(lines[-100:])[-14000:]
           print(tail)
-          print('::notice title=Validation failure detail::'+tail.replace('%','%25').replace('\r','%0D').replace('\n','%0A'))
+          for i in range(0,len(tail),3000):
+              part=tail[i:i+3000]
+              print('::notice title=Validation failure detail '+str(i//3000+1)+'::'+part.replace('%','%25').replace('\r','%0D').replace('\n','%0A'))
           PY
       - uses: actions/upload-artifact@v4
         with:
