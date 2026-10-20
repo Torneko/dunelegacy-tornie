@@ -1,5 +1,7 @@
 name: Inspect validation diagnostics
 on:
+  push:
+    branches: [ diagnostics/post-544-engine ]
   workflow_dispatch:
     inputs:
       run_id:
@@ -16,7 +18,7 @@ jobs:
       - name: Retrieve failed validation output
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUN_ID: ${{ inputs.run_id }}
+          RUN_ID: ${{ inputs.run_id || '39449801275' }}
         run: |
           [[ "$RUN_ID" =~ ^[0-9]+$ ]]
           gh run view "$RUN_ID" --repo "$GITHUB_REPOSITORY" --log-failed > /tmp/validation-failure.log
