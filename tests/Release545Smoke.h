@@ -69,6 +69,19 @@ struct Release545Smoke {
         require(mods.setActiveMod("Tornie"),"co-op fixture mod");
         const auto playerName=settings.general.playerName;
         auto& manager=achievements::AchievementManager::instance();
+        AchievementEvents::initializeProfile();
+        const auto previousLosses=manager.statistic("UnitsLost");
+        const auto previousSabotages=manager.statistic("PalacesSabotaged");
+        unsigned profileSerial=0;
+        const auto beginIsolated=[&](achievements::MatchInfo info) {
+            // begin(Game) has switched back to the user's smoke profile. Each
+            // explicit achievement fixture gets its own independent profile.
+            const auto path=std::filesystem::path(output)/("achievements-545-"+std::to_string(++profileSerial)+".ini");
+            std::error_code error;std::filesystem::remove(path,error);
+            require(!error,"reset isolated achievement fixture");
+            require(manager.configure(getDuneLegacyDataDir()+"/config/Achievements.ini",path.string()),"isolated achievement fixture");
+            info.enabled=true;manager.begin(info);
+        };
         const auto roster=getFactionSelectionOrder();
         for(int count=2;count<=4;++count) {
             auto session=coop::CoopCampaignSession::create("545-achievement-"+std::to_string(count),"Tornie",roster,
@@ -96,7 +109,7 @@ struct Release545Smoke {
                     }
                     require(!defeated->isAlive(),"defeated co-op army still alive");
                     AchievementEvents::begin(*game,"",false,true);auto info=manager.match().info;
-                    require(info.cooperative,"active allied context not detected");info.enabled=true;manager.begin(info);
+                    require(info.cooperative,"active allied context not detected");beginIsolated(info);
                     game->setGameWon();
                     const auto& counters=manager.match().counts;
                     require(counters.count(perspective==0?"CoopVictoriesRescued":"CoopVictoriesRescuing"),"wrong local co-op outcome");
@@ -116,7 +129,7 @@ struct Release545Smoke {
             auto* palace=enemy->placeStructure(NONE_ID,Structure_Palace,22,22,true,true);require(palace,"sabotage palace");
             auto* saboteur=pLocalHouse->createUnit(Unit_Saboteur);require(saboteur,"sabotage attacker");
             saboteur->deploy(Coord(21,22));palace->setVisible(pLocalHouse->getTeamID(),true);
-            AchievementEvents::begin(*game,"",false,true);auto info=manager.match().info;info.enabled=true;manager.begin(info);
+            AchievementEvents::begin(*game,"",false,true);auto info=manager.match().info;beginIsolated(info);
             const auto before=manager.statistic("PalacesSabotaged");saboteur->doAttackObject(palace,true);saboteur->update();
             require(manager.statistic("PalacesSabotaged")==before+1,"real Saboteur palace detonation not credited");
             require(manager.match().counts.at("EnemyStructuresDestroyed")==1,"sabotage destruction attribution");
@@ -131,6 +144,8 @@ struct Release545Smoke {
             SDL_Event escape{};escape.type=SDL_KEYDOWN;escape.key.keysym.sym=SDLK_ESCAPE;SDL_PushEvent(&escape);
             menu.onReplayIntro();require(settings.audio.playMusic==enabled&&settings.audio.musicVolume==volume,"replay changed audio preferences");
         }
+        require(manager.statistic("UnitsLost")==previousLosses && manager.statistic("PalacesSabotaged")==previousSabotages,
+            "native achievement fixtures modified the shared profile");
         require(mods.setActiveMod(previous),"restore mod");
         SDL_Log("RELEASE 545 COMPLETE: portraits, 63 campaign frames, 2/3/4-player rescue, real palace sabotage and intro replay");
     }
