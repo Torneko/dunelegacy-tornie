@@ -330,7 +330,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.release_tag }}
+          ref: ${{ inputs.source_ref || inputs.release_tag }}
       - name: Verify and publish both staged platforms
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -375,8 +375,21 @@ jobs:
           git fetch --depth=1 origin "${{ github.sha }}"
           git show FETCH_HEAD:scripts/audit-staged-release.py > "$RUNNER_TEMP/audit-staged-release.py"
           python3 "$RUNNER_TEMP/audit-staged-release.py" --staged staged --version "${RELEASE_TAG#v}" --output "staged/Package-Resources-Audit-${RELEASE_TAG#v}.json"
-          gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
+          SOURCE_COMMIT=$(git rev-parse HEAD)
+          NEW_RELEASE=false
+          if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            test "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" --jq '.object.sha')" = "$SOURCE_COMMIT"
+          else
+            cat "release_notes/${RELEASE_TAG#v}-FR.md" > "$RUNNER_TEMP/release-notes.md"
+            printf '\n---\n\n' >> "$RUNNER_TEMP/release-notes.md"
+            cat "release_notes/${RELEASE_TAG#v}-EN.md" >> "$RUNNER_TEMP/release-notes.md"
+            gh release create "$RELEASE_TAG" --target "$SOURCE_COMMIT" --draft --title "Dune Legacy Tornie ${RELEASE_TAG#v}" --notes-file "$RUNNER_TEMP/release-notes.md" --repo "$GITHUB_REPOSITORY"
+            NEW_RELEASE=true
+          fi
           gh release upload "$RELEASE_TAG" staged/linux/* staged/windows/* "staged/Package-Resources-Audit-${RELEASE_TAG#v}.json" --repo "$GITHUB_REPOSITORY" --clobber
+          if [[ "$NEW_RELEASE" == true ]]; then
+            gh release edit "$RELEASE_TAG" --draft=false --latest --repo "$GITHUB_REPOSITORY"
+          fi
 
   release-documents:
     if: ${{ inputs.documentation_only && !inputs.replace_packages }}
@@ -486,6 +499,10 @@ jobs:
           (root / ('Publication-Validation-'+report['version']+'.json')).write_text(json.dumps(report,indent=2)+'\n')
           site = pathlib.Path('offline/DuneLegacyTornie-Site-Local/dist')
           (site/'documents'/('Publication-Validation-'+report['version']+'.json')).write_text(json.dumps(report,indent=2)+'\n')
+          # Offline checksums describe its embedded files; the public manifest
+          # is generated afterwards and also covers the website ZIP itself.
+          sums = ''.join(hashlib.sha256(path.read_bytes()).hexdigest()+'  '+path.name+'\n' for path in sorted(root.iterdir()) if path.is_file() and not path.name.startswith('SHA256SUMS-'))
+          (site/'documents'/('SHA256SUMS-'+report['version']+'.txt')).write_text(sums)
           with zipfile.ZipFile(root / ('DuneLegacyTornie-Site-Local-'+report['version']+'.zip'),'w',zipfile.ZIP_DEFLATED) as archive:
               for path in sorted(pathlib.Path('offline').rglob('*')):
                   if path.is_file(): archive.write(path,path.relative_to('offline'))
