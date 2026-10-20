@@ -378,7 +378,12 @@ jobs:
           SOURCE_COMMIT=$(git rev-parse HEAD)
           NEW_RELEASE=false
           if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            test "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" --jq '.object.sha')" = "$SOURCE_COMMIT"
+            if [[ "$(gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq '.isDraft')" == true ]]; then
+              test "$(gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json targetCommitish --jq '.targetCommitish')" = "$SOURCE_COMMIT"
+              NEW_RELEASE=true
+            else
+              test "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" --jq '.object.sha')" = "$SOURCE_COMMIT"
+            fi
           else
             cat "release_notes/${RELEASE_TAG#v}-FR.md" > "$RUNNER_TEMP/release-notes.md"
             printf '\n---\n\n' >> "$RUNNER_TEMP/release-notes.md"
