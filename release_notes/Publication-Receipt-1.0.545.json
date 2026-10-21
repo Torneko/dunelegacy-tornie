@@ -1,17 +1,17 @@
 {
   "version": "1.0.545",
-  "source": "ba4c6255a8e96e7c88c348a77e464b17514c9867",
-  "previousSource": "89f8fee66ba0abdc2555d696455b4805e6aae15c",
-  "previousSourceArchive": "archive/releases/v1.0.545-ui-refinements",
-  "websiteSource": "63860501ef2d02af647ffa764489446f969e4cf4",
+  "source": "e8cf3e3cbc21be1b77dc05efc80d9f003b6bc469",
+  "previousSource": "ba4c6255a8e96e7c88c348a77e464b17514c9867",
+  "previousSourceArchive": "archive/releases/v1.0.545-trooper-portraits",
+  "websiteSource": "8a7fdd2b0d60ddfc588eee0fd82561345f03bda2",
   "release": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.545",
   "ciRuns": {
-    "windows": 39665675743,
-    "linux": 39665682397
+    "linux": 39689610155,
+    "windows": 39689606486
   },
-  "promotionRun": 39668011339,
-  "pagesRun": 39668142522,
-  "documentsRun": 39668475174,
+  "promotionRun": 39691377168,
+  "pagesRun": 39691517510,
+  "documentsRun": 39691653693,
   "published": true,
   "replacement": true,
   "assetCount": 17,
