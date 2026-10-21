@@ -1,4 +1,4 @@
-# Cadres de faction — correctif en préparation
+# Cadres de faction — 1.0.545 corrigée
 
 Les douze cadres dorés fournis représentent les factions dans les scores de
 campagne et sur la carte des régions. Ils ne remplacent pas les bannières de
@@ -19,8 +19,8 @@ teintes de Neutral et des autres factions personnalisées.
 
 Le site FR/EN passe les 36 contrôles de navigation et les 84 contextes de
 recherches/factions, sur ordinateur et mobile. Il présente ce déplacement comme
-un correctif préparé pour une prochaine publication. Les téléchargements et le
-tag de la 1.0.545 n’ont pas été remplacés.
+un correctif publié dans la 1.0.545 corrigée. Les paquets, les sources et le
+site hors ligne ont été remplacés ensemble. La source précédente reste archivée.
 
 [Rapport de validation](FACTION-FRAMES-VALIDATION.json).
 
@@ -30,8 +30,8 @@ The twelve supplied golden faction frames belong in campaign scores and region
 selection screens. Campaign selection and confirmation keep their ordinary
 banners. The complete frame fits the old emblem slots without distortion;
 faction identity is independent of player colours and mod slot order. Original
-PNGs are retained. This correction is being prepared for a forthcoming release.
+PNGs are retained. This correction is included in the replacement 1.0.545 packages.
 Compilation, both CTest suites and native French/English rendering checks passed
 for all seven modes and 63 campaign identities, including bonus colours. Indexed
 campaign banners retain their original colours. All 120 website contexts passed.
-The published 1.0.545 tag and downloads remain unchanged.
+The replacement 1.0.545 tag points to the corrected source; the initial source is archived.

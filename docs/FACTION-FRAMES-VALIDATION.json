@@ -1,8 +1,7 @@
 {
-  "status": "prepared-not-released",
+  "status": "released",
   "checkedAtUtc": "2026-10-21T01:09:50.002129+00:00",
   "publishedVersionUnchanged": "1.0.545",
-  "publishedTagUnchanged": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
   "networkProtocolUnchanged": 21,
   "saveFormatUnchanged": 9839,
   "native": {
@@ -80,5 +79,11 @@
     "src/Menu/MapChoice.cpp": "93b3b1dc63783d61f33cc4497c3a27bc72f717bad4ecd79747b0b5f2da9b99da",
     "tests/ChaosModeSmoke.h": "87cc6c456ce757dd3d334abe28be462a29e4cc8bfedadfbce1e77fdd0223b6b6",
     "tests/Release545Smoke.h": "1fa4bd5d2f308f4d309f148a6d9aa18d317a115b3f949b3001a6df999897e6d1"
+  },
+  "publishedSource": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
+  "previousPublishedSource": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
+  "ciRuns": {
+    "windows": 39525729369,
+    "linux": 39527092821
   }
 }

@@ -21,8 +21,11 @@ New saves use 9839; previous saves remain readable.
 - Original localized Dune II end credits, eleven illustrations and music.
   Added campaign cutscenes follow CampaignPlan.ini roles, names and colours,
   including Lite and bonus colours.
-- Twelve golden campaign selection/confirmation frames: correct identity after
-  mod changes, complete border and unchanged original files.
+- Twelve golden faction frames in campaign scores and region selection: correct
+  identity across mod and bonus-colour changes, complete borders and unchanged
+  original files. Campaign selection/confirmation retain ordinary banners,
+  including Neutral’s original colours. This correction replaces the initial
+  1.0.545 packages.
 - Supplied Fremen single/five and Sardaukar three/five portraits. No added
   stars or numbers. Production artwork follows the blueprint house in Chaos.
 - Three new achievements and counters, **73 total**: win co-op after elimination
@@ -33,6 +36,6 @@ New saves use 9839; previous saves remain readable.
   resources and a display crop for Tornie’s supplied Fremen banner.
 
 Existing achievement profiles are retained; the 100% indicator follows all 73.
-Game source: ba003c2cc87e0cc2dbe43b36b235e4889641cf9f.
+Game source: 1c70cd44313b6405994e00b0e06b25b462ce42f4.
 Sources, notes, checksums and the offline website accompany the release.
 Detailed results are recorded in Validation-1.0.545.json.

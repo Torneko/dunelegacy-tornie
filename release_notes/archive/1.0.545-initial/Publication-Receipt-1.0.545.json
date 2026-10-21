@@ -1,0 +1,16 @@
+{
+  "version": "1.0.545",
+  "source": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
+  "websiteSource": "68768fb040375076ae9ca72c083f76df2b97eeb2",
+  "release": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.545",
+  "ciRuns": {
+    "windows": 39510210888,
+    "linux": 39510214591
+  },
+  "promotionRun": 39520319103,
+  "pagesRun": 39520442153,
+  "documentsRun": 39521040960,
+  "published": true,
+  "assetCount": 17,
+  "finalAuditInRepository": "release_notes/Final-Publication-Audit-1.0.545.json"
+}

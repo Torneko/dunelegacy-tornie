@@ -29,8 +29,9 @@ a réussi depuis la branche principale après vérification des 120 contextes du
 site français/anglais. Les 36 anciennes branches ont ensuite été supprimées
 en une opération atomique, après contrôle de leurs tags d’archive et de leurs
 derniers commits. Les cinq anciens dossiers de travail locaux sont conservés,
-avec leurs éventuelles modifications. Les tags et téléchargements des versions
-1.0.544 et 1.0.545 restent inchangés.
+avec leurs éventuelles modifications. Le regroupement avait conservé les tags et téléchargements des versions
+1.0.544 et 1.0.545. Le remplacement ultérieur de la 1.0.545, demandé par la
+propriétaire, archive sa source initiale puis publie le correctif des cadres.
 
 [Rapport de validation](SINGLE-BRANCH-VALIDATION.json).
 

@@ -22,8 +22,11 @@ Nouvelles sauvegardes 9839 ; anciennes sauvegardes lisibles.
 - Finale : générique Dune II d’origine, localisé, onze illustrations et musique
   originale. Les cinématiques des campagnes ajoutées suivent les rôles, noms
   et couleurs réels de CampaignPlan.ini, Lite et couleurs bonus compris.
-- Douze cadres dorés pour les choix et confirmations de campagne : identité
-  correcte après changement de mod, cadre entier visible, originaux conservés.
+- Douze cadres dorés dans les scores de campagne et sur la carte des régions :
+  identité correcte après changement de mod ou de couleur bonus, bordure entière
+  et fichiers originaux conservés. Les choix et confirmations de campagne
+  retrouvent leurs bannières habituelles, avec les couleurs originales de Neutral.
+  Ce correctif remplace les paquets initiaux de la 1.0.545.
 - Portraits fournis : Fremen seul/cinq ; Sardaukar trois/cinq. Aucune étoile
   ni chiffre ajouté ; production selon la maison des plans, y compris Chaos.
 - Trois nouveaux succès et statistiques, **73 au total** : être éliminé en
@@ -34,6 +37,6 @@ Nouvelles sauvegardes 9839 ; anciennes sauvegardes lisibles.
   ressources originales et bannière Fremen de Tornie recadrée à l’affichage.
 
 Les profils de succès restent conservés ; l’indicateur 100 % suit les 73 succès.
-Source du jeu : ba003c2cc87e0cc2dbe43b36b235e4889641cf9f.
+Source du jeu : 1c70cd44313b6405994e00b0e06b25b462ce42f4.
 Les sources, notes, empreintes et site hors ligne accompagnent la publication.
 Les résultats détaillés figurent dans Validation-1.0.545.json.

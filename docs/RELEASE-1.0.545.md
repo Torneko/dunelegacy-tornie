@@ -1,9 +1,8 @@
-# Préparation 1.0.545 / 1.0.545 preparation
+# 1.0.545 corrigée / Corrected 1.0.545
 
-La publication précédente reste la 1.0.544 corrigée, source `d6a29fd`,
-site public `0e8430d`. Cette préparation comprend le lot radar/Chaos/cinématiques
-déjà vérifié sur `fbe8b46`, puis les ajouts autorisés le 20 octobre.
-Aucun tag ni publication ne doit être créé sans instruction de publication.
+La publication remplace les paquets initiaux de la 1.0.545, sans nouveau numéro.
+Source du jeu : `1c70cd44313b6405994e00b0e06b25b462ce42f4`. Protocole 21, sauvegardes 9839.
+La publication initiale est conservée sous `archive/releases/v1.0.545-initial`.
 
 ## Ressources et interface
 
@@ -11,13 +10,14 @@ Aucun tag ni publication ne doit être créé sans instruction de publication.
   les fiches d’unités et les commandes de production correspondantes, par identité
   de faction (plans en production, provenance pour les unités sélectionnées).
   Aucune étoile d’éditeur ni chiffre supplémentaire n’est ajouté aux portraits.
-- Douze cadres dorés de campagne. Sélection et confirmation utilisent l’identité
-  réelle de la maison, indépendamment du slot, du mod et de la couleur bonus.
+- Douze cadres dorés dans les scores et les régions : identité réelle de la
+  maison, indépendamment du slot, du mod et de la couleur bonus. Les bannières
+  habituelles restent dans les choix et confirmations de campagne.
   Mise à l’échelle en mémoire, cadre entier sans découpe, originaux inchangés.
 - Rejouer l’intro : bouton à droite, immédiatement au-dessus de la coop ;
   réutilise la vraie introduction puis restaure la musique du menu.
 - Bannière Fremen du site Tornie : recadrage visuel du PNG original conservé.
-  Le site FR/EN de préparation annonce les ajouts sans changer les liens 544.
+  Le site FR/EN et son archive hors ligne accompagnent les paquets 545 corrigés.
 
 [Provenance et empreintes des ressources](RELEASE-1.0.545-assets.json).
 Les documents de l’archive fournie servent uniquement de références de provenance.
@@ -54,10 +54,10 @@ Les résultats de cette révision sont enregistrés après exécution.
 
 ---
 
-Unpublished 1.0.545 preparation. Original artwork is preserved byte-for-byte.
-Four requested Fremen/Sardaukar portraits, twelve campaign-only golden frames,
+Corrected 1.0.545. Original artwork is preserved byte-for-byte.
+Four requested Fremen/Sardaukar portraits, twelve golden score/region frames,
 Replay Intro and three achievements are integrated after the previous validated
-Radar/cinematics work. Current public downloads remain at 1.0.544.
+Radar/cinematics work. Corrected Windows/Linux/Mint downloads retain version 1.0.545.
 Co-op rescue achievements resolve at team victory and support all local
 perspectives with two, three or four allied factions; Archon controllers share
 their house outcome. Sabotage requires a local Saboteur destroying an enemy Palace.

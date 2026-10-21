@@ -1,3 +1,12 @@
+# Remplacement 1.0.545 — cadres dans les scores et les régions
+
+La propriétaire a autorisé le remplacement des paquets 1.0.545. Nouvelle source
+exacte : `1c70cd44313b6405994e00b0e06b25b462ce42f4` ; source initiale conservée sous
+`archive/releases/v1.0.545-initial`. Le protocole 21 et les sauvegardes 9839 sont
+conservés. Site public et archive locale correspondent aux paquets corrigés.
+Les reçus et la validation courants décrivent ce remplacement ; les reçus
+initiaux restent dans `release_notes/archive/1.0.545-initial/`.
+
 # Organisation actuelle — branche unique
 
 Le code et le site sont réunis sur `dunelegacy-tornie`. Le site français/anglais
@@ -9,7 +18,7 @@ anciens états. Voir [SINGLE-BRANCH.md](SINGLE-BRANCH.md).
 Les mentions de branches séparées dans les comptes rendus historiques ci-dessous
 décrivent l’organisation utilisée lors de ces publications.
 
-# 1.0.545 — publication autorisée
+# 1.0.545 initiale — historique de publication
 
 Source du jeu et tag : `ba003c2cc87e0cc2dbe43b36b235e4889641cf9f`, protocole 21, sauvegardes 9839.
 La publication utilise les artefacts des deux CI de cette source :

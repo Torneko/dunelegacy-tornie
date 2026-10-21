@@ -1,49 +1,50 @@
 {
   "version": "1.0.545",
-  "source": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
+  "source": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
   "networkProtocol": 21,
   "saveVersion": 9839,
   "passed": true,
+  "replacement": {
+    "initialSource": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
+    "archiveTag": "archive/releases/v1.0.545-initial",
+    "changes": [
+      "faction frames in scores and regions",
+      "ordinary campaign banners restored",
+      "Neutral banner palette retained"
+    ]
+  },
   "local": {
-    "engineCases": 145,
-    "assertions": 10891,
     "ctest": "2/2",
-    "campaignScenarios": 1606,
-    "native545": [
+    "unitCases": 145,
+    "assertions": 10891,
+    "nativeFrameLanguages": [
       "fr",
       "en"
     ],
-    "coopFactions": [
-      2,
-      3,
-      4
-    ],
-    "goldenCampaignContextsPerLanguage": 63,
+    "campaignIdentitiesPerLanguage": 63,
+    "bonusColourBackgroundsPerLanguage": 126,
     "originalArtworkFiles": 16,
-    "originalWebsitePngAndGifPreserved": 192,
     "browserContexts": 264,
-    "achievementFixtureIsolation": true
+    "originalWebsiteImagesPreserved": 208
   },
   "ci": {
     "windows": {
-      "run": 39510210888,
-      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39510210888",
-      "source": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
+      "run": 39525729369,
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39525729369",
+      "workflowSource": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
+      "source": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
       "conclusion": "success"
     },
     "linux": {
-      "run": 39510214591,
-      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39510214591",
-      "source": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
+      "run": 39527092821,
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39527092821",
+      "workflowSource": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
+      "source": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
       "conclusion": "success"
     }
   },
-  "previousPreparation": {
-    "source": "fbe8b46270efc7635b9f3cc7446df90a3356e9c2",
-    "report": "Validation-Next-Release.json"
-  },
+  "previousReleaseValidation": "archive/1.0.545-initial/Validation-1.0.545.json",
   "limits": [
-    "Audio checked programmatically; human listening remains separate.",
-    "Physical Mint display and human Internet match across separate connections remain separate from automated checks."
+    "Physical Mint display and a human Internet match across separate connections remain separate from automated checks."
   ]
 }
