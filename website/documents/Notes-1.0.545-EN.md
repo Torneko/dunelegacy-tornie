@@ -4,6 +4,12 @@ Radar research, campaigns, faction artwork and 73 achievements. Linux, Linux Min
 and Windows. Every network participant needs this version: protocol 21.
 New saves use 9839; previous saves remain readable.
 
+- Right score frame: corrected one-pixel alignment clears the old logo through
+  its final inclusive edge. The regression now checks that column explicitly.
+- Fremen/Sardaukar Troopers: six separate production icons (1/3/5 soldiers per
+  faction) and two dedicated selected-unit portraits, following Troopers.zip
+  filenames. All eight PNGs remain unchanged, without added tint or stars.
+  WOR, Worfinery and Chaos blueprints use the corresponding production artwork.
 - Radar research in every non-Vanilla mod, including Lite: two common upgrades
   (construction range +2 tiles, ground vision +2) and one house specialization.
   Common: 500 credits / 45 seconds / level 4. Specialization: 750 credits /
@@ -33,8 +39,8 @@ New saves use 9839; previous saves remain readable.
   original files. Campaign selection/confirmation retain ordinary banners,
   including Neutral’s original colours. This correction replaces the initial
   1.0.545 packages.
-- Supplied Fremen single/five and Sardaukar three/five portraits. No added
-  stars or numbers. Production artwork follows the blueprint house in Chaos.
+- Supplied Fremen/Sardaukar single/three/five production portraits and separate
+  selected-unit artwork. No added stars or numbers; Chaos follows the blueprint house.
 - Three new achievements and counters, **73 total**: win co-op after elimination
   thanks to a surviving ally; survive and win for an eliminated ally; destroy
   an enemy Palace with a Saboteur. Co-op supports two, three or four allied
@@ -43,6 +49,6 @@ New saves use 9839; previous saves remain readable.
   resources and a display crop for Tornie’s supplied Fremen banner.
 
 Existing achievement profiles are retained; the 100% indicator follows all 73.
-Game source: 89f8fee66ba0abdc2555d696455b4805e6aae15c.
+Game source: ba4c6255a8e96e7c88c348a77e464b17514c9867.
 Sources, notes, checksums and the offline website accompany the release.
 Detailed results are recorded in Validation-1.0.545.json.

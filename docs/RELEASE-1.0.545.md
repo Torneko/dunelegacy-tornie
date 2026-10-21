@@ -1,14 +1,14 @@
 # 1.0.545 corrigée / Corrected 1.0.545
 
 La publication remplace les paquets initiaux de la 1.0.545, sans nouveau numéro.
-Source du jeu : `89f8fee66ba0abdc2555d696455b4805e6aae15c`. Protocole 21, sauvegardes 9839.
+Source du jeu : `ba4c6255a8e96e7c88c348a77e464b17514c9867`. Protocole 21, sauvegardes 9839.
 La publication initiale est conservée sous `archive/releases/v1.0.545-initial`.
 
 ## Ressources et interface
 
-- Quatre portraits originaux : Fremen 1/5 ; Sardaukar 3/5. Utilisés dans
-  les fiches d’unités et les commandes de production correspondantes, par identité
-  de faction (plans en production, provenance pour les unités sélectionnées).
+- Huit portraits originaux : Fremen et Sardaukar 1/3/5 en production,
+  plus un portrait de sélection dédié par faction. Identité des plans pour les
+  achats ; provenance de l’unité pour la sélection, indépendamment de sa couleur.
   Aucune étoile d’éditeur ni chiffre supplémentaire n’est ajouté aux portraits.
 - Douze cadres dorés dans les scores et les régions : identité réelle de la
   maison, indépendamment du slot, du mod et de la couleur bonus. Les bannières
@@ -26,8 +26,8 @@ La publication initiale est conservée sous `archive/releases/v1.0.545-initial`.
 
 [Provenance et empreintes des ressources](RELEASE-1.0.545-assets.json).
 Les documents de l’archive fournie servent uniquement de références de provenance.
-Les deux portraits supplémentaires Fremen 3 et Sardaukar seul sont conservés dans
-l’archive reçue ; les quatre variantes demandées sont les ressources actives.
+Les huit PNG nommés de Troopers.zip sont actifs et intacts. Les fichiers 3 Fremen
+et Sardaukar seul sont désormais utilisés ; les portraits de sélection sont distincts.
 
 ## Succès
 
@@ -73,3 +73,10 @@ ne répètent pas les 1 606 scénarios historiques. [Validation](UI-545-REFINEME
 
 UI-only replacement: frame background blending, separate Radar prices and house
 colours, and dark green/grey/reddish-orange mod menu text, including Lite.
+
+Cadre droit des scores : le logo hérité occupe aussi la colonne finale cx+317.
+Le nettoyage et le nouveau cadre partent de cx+212, alignés sur ses 106 pixels.
+Le test a échoué avant correction et passe avec la bonne limite inclusive.
+
+English: six production icons and two dedicated selected-unit portraits follow
+Troopers.zip names. Right-score cleanup includes the former logo’s final column.

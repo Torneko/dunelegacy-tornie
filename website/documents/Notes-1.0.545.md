@@ -4,6 +4,12 @@ Radar, campagnes, portraits et 73 succès. Linux, Linux Mint et Windows.
 Tous les participants réseau doivent utiliser cette version : protocole 21.
 Nouvelles sauvegardes 9839 ; anciennes sauvegardes lisibles.
 
+- Cadre droit des scores : alignement corrigé d’un pixel pour effacer jusqu’au
+  dernier bord de l’ancien logo. Le contrôle vérifie désormais cette colonne.
+- Troopers Fremen et Sardaukar : six icônes de production distinctes (1/3/5
+  soldats par faction) et deux portraits dédiés à la sélection des unités,
+  selon les noms de Troopers.zip. Les huit PNG sont conservés sans modification,
+  sans teinte ni étoile ajoutée. WOR, Worfinery et plans Chaos suivent ces usages.
 - Radar hors Vanilla, Lite compris : deux recherches communes (construction
   +2 cases, vision au sol +2) et une spécialisation par maison. Communes :
   500 crédits, 45 secondes, niveau 4. Spécialisation : 750 crédits, 60 secondes,
@@ -34,8 +40,8 @@ Nouvelles sauvegardes 9839 ; anciennes sauvegardes lisibles.
   et fichiers originaux conservés. Les choix et confirmations de campagne
   retrouvent leurs bannières habituelles, avec les couleurs originales de Neutral.
   Ce correctif remplace les paquets initiaux de la 1.0.545.
-- Portraits fournis : Fremen seul/cinq ; Sardaukar trois/cinq. Aucune étoile
-  ni chiffre ajouté ; production selon la maison des plans, y compris Chaos.
+- Portraits fournis : Fremen et Sardaukar seuls/trois/cinq en production,
+  et un portrait de sélection dédié par faction. Aucune étoile ni chiffre ajouté.
 - Trois nouveaux succès et statistiques, **73 au total** : être éliminé en
   coop puis gagner grâce à un allié survivant ; survivre et gagner pour un
   allié éliminé ; détruire un palais ennemi avec un Saboteur. Coop à deux,
@@ -44,6 +50,6 @@ Nouvelles sauvegardes 9839 ; anciennes sauvegardes lisibles.
   ressources originales et bannière Fremen de Tornie recadrée à l’affichage.
 
 Les profils de succès restent conservés ; l’indicateur 100 % suit les 73 succès.
-Source du jeu : 89f8fee66ba0abdc2555d696455b4805e6aae15c.
+Source du jeu : ba4c6255a8e96e7c88c348a77e464b17514c9867.
 Les sources, notes, empreintes et site hors ligne accompagnent la publication.
 Les résultats détaillés figurent dans Validation-1.0.545.json.

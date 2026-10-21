@@ -1,0 +1,19 @@
+{
+  "version": "1.0.545",
+  "source": "89f8fee66ba0abdc2555d696455b4805e6aae15c",
+  "previousSource": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
+  "previousSourceArchive": "archive/releases/v1.0.545-faction-frames",
+  "websiteSource": "6089e7df36633f01d8c8a625189d0dfeedb4f8d9",
+  "release": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.545",
+  "ciRuns": {
+    "windows": 39659402739,
+    "linux": 39659394927
+  },
+  "promotionRun": 39661690543,
+  "pagesRun": 39661866101,
+  "documentsRun": 39662038157,
+  "published": true,
+  "replacement": true,
+  "assetCount": 17,
+  "finalAuditInRepository": "release_notes/Final-Publication-Audit-1.0.545.json"
+}

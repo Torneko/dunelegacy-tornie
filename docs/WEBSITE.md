@@ -1,3 +1,11 @@
+# Remplacement 1.0.545 — bord droit et Troopers
+
+Source du jeu : `ba4c6255a8e96e7c88c348a77e464b17514c9867`. Source précédente conservée sous
+`archive/releases/v1.0.545-ui-refinements`. Notes FR/EN et huit portraits originaux
+mis à jour ; variantes 1/3/5 en production, portraits distincts pour la sélection.
+Le cadre droit des scores est aligné sur toute l’emprise de l’ancien logo.
+Protocole 21 et sauvegardes 9839 conservés.
+
 # Remplacement 1.0.545 — ajustements d’interface
 
 Source exacte : `89f8fee66ba0abdc2555d696455b4805e6aae15c`. Les cadres dorés sont fondus dans le fond des
