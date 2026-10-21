@@ -1,0 +1,84 @@
+{
+  "status": "prepared-not-released",
+  "checkedAtUtc": "2026-10-21T01:09:50.002129+00:00",
+  "publishedVersionUnchanged": "1.0.545",
+  "publishedTagUnchanged": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
+  "networkProtocolUnchanged": 21,
+  "saveFormatUnchanged": 9839,
+  "native": {
+    "en": {
+      "passed": true,
+      "mods": [
+        "Tornie",
+        "Jericho",
+        "ArcaKev",
+        "TornieLite",
+        "JerichoLite",
+        "ArcaKevLite",
+        "vanilla"
+      ],
+      "campaignIdentities": 63,
+      "bonusColourBackgrounds": 126,
+      "renderedScoreScreens": 1,
+      "renderedRegionScreens": 7,
+      "ordinaryBannerScreens": 7,
+      "logSha256": "c2775cc05131275bab77c9b1fe5a4f1befcc78eb3adf6d25b8165582aa20859a"
+    },
+    "fr": {
+      "passed": true,
+      "mods": [
+        "Tornie",
+        "Jericho",
+        "ArcaKev",
+        "TornieLite",
+        "JerichoLite",
+        "ArcaKevLite",
+        "vanilla"
+      ],
+      "campaignIdentities": 63,
+      "bonusColourBackgrounds": 126,
+      "renderedScoreScreens": 1,
+      "renderedRegionScreens": 7,
+      "ordinaryBannerScreens": 7,
+      "logSha256": "88d43d22a626c97fb7486c35f5637f671acfd8cb98922c1e850fb00d53f73211"
+    }
+  },
+  "ctest": {
+    "passed": true,
+    "tests": 2,
+    "unitCases": 145,
+    "assertions": 10891,
+    "networkPermissionRequiredForUdpTest": true
+  },
+  "website": {
+    "generalContexts": 36,
+    "researchContexts": 84,
+    "passed": true
+  },
+  "originalPngsUnchanged": {
+    "data/CampaignHeraldAtreides.png": "9eb7bf16f7f6bc02c17e3f17ad8a6e0ac87a8190252b23addfc1dda4bfc8c5bd",
+    "data/CampaignHeraldCorruptique.png": "c076452c6eaab1fa361bf75d0af9088ae789e9af2eb7b97ee1572d1db34ad317",
+    "data/CampaignHeraldFremen.png": "3f77cadb70eef158df7dfa5af2dabf02729e57990638377c43fb4cdaafedcdd9",
+    "data/CampaignHeraldHarkonnen.png": "91b83f993957168c2e08f9328f6d0bcd9ac7e7bb75488d6ede084e262500fa8b",
+    "data/CampaignHeraldKleshmersh.png": "59665370704297d29cfc7f31b091e16a8399adafc5c9c5c96be9072658c6a86a",
+    "data/CampaignHeraldMercenary.png": "f35c079a44c6db39acf127d9af426c7d5eab5f97b396394ff00b2fbd4a860872",
+    "data/CampaignHeraldNeutral.png": "a2eac847e245c17319bd2fe14771df7804cd0353e85d2a7eb4382ef5b4eb9ed4",
+    "data/CampaignHeraldOrdos.png": "9e6baf73d96885bf2e83fcedd90779791fa768dae9fbded25b6c9cfd4cdd7725",
+    "data/CampaignHeraldRebels.png": "6b0c922371f7f0cf04dd3eb03b7b8f1399f57f047701a14b1b77fa42beb2a164",
+    "data/CampaignHeraldSardaukar.png": "f71ffdb664e0f39740933b195dd132c5c841495dec898a1fd46ca05e98667c78",
+    "data/CampaignHeraldTharpique.png": "762abf8f71f7af8b2b2f7f96b3ffe395135aee3f35044c8f00408d6b567080e1",
+    "data/CampaignHeraldWildspade.png": "844a3cc1af59e94a2748c3112f88d7d724f3b978039d5f2e27e434bc2b3e3c87"
+  },
+  "testedSourceSha256": {
+    "include/FileClasses/GFXManager.h": "8b2ccc37f1a1b14f815769638931b2fbc4f266802a3b57fcc68c7c39215af0c8",
+    "include/Menu/CampaignStatsMenu.h": "f48b8420102069d6c5687e40d2851341199d8e157f62e184100611821d581058",
+    "include/Menu/MapChoice.h": "10fdab8864057b28a8efd6de4bb84da755680fe37ce29a18bb7aabc6d9660915",
+    "src/FileClasses/GFXManager.cpp": "babb1e133ab0f6f4dda67b6e2f3bda5264084f3e29dce236fb74b332c7214c98",
+    "src/Menu/CampaignStatsMenu.cpp": "479a7a5c4122f126f3fb1fa5d44f1134b41cf32734d0085b5a374aa9361e2adb",
+    "src/Menu/HouseChoiceInfoMenu.cpp": "e43d1254f27f519da7d01878656adafd408b0c8451dbdcd05aa4c35d1214c832",
+    "src/Menu/HouseChoiceMenu.cpp": "a032787f73e16b390872cdf0332de15d55b46b7165ae0fda7533c1d346cea1ab",
+    "src/Menu/MapChoice.cpp": "93b3b1dc63783d61f33cc4497c3a27bc72f717bad4ecd79747b0b5f2da9b99da",
+    "tests/ChaosModeSmoke.h": "87cc6c456ce757dd3d334abe28be462a29e4cc8bfedadfbce1e77fdd0223b6b6",
+    "tests/Release545Smoke.h": "1fa4bd5d2f308f4d309f148a6d9aa18d317a115b3f949b3001a6df999897e6d1"
+  }
+}

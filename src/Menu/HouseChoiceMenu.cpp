@@ -237,13 +237,13 @@ void HouseChoiceMenu::onHouseButton(int button) {
 
 void HouseChoiceMenu::updateHouseChoice() {
     // House1 button
-    house1Button.setTextures(pGFXManager->getUIGraphic(UI_CampaignHeraldLarge, getHouseOrder()[currentHouseChoiceScrollPos+0]));
+    house1Button.setTextures(pGFXManager->getUIGraphic(UI_Herald_ColoredLarge, getHouseOrder()[currentHouseChoiceScrollPos+0]));
 
     // House2 button
-    house2Button.setTextures(pGFXManager->getUIGraphic(UI_CampaignHeraldLarge, getHouseOrder()[currentHouseChoiceScrollPos+1]));
+    house2Button.setTextures(pGFXManager->getUIGraphic(UI_Herald_ColoredLarge, getHouseOrder()[currentHouseChoiceScrollPos+1]));
 
     // House3 button
-    house3Button.setTextures(pGFXManager->getUIGraphic(UI_CampaignHeraldLarge, getHouseOrder()[currentHouseChoiceScrollPos+2]));
+    house3Button.setTextures(pGFXManager->getUIGraphic(UI_Herald_ColoredLarge, getHouseOrder()[currentHouseChoiceScrollPos+2]));
 }
 
 void HouseChoiceMenu::onHouseLeft()

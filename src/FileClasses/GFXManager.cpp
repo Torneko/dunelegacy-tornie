@@ -1961,7 +1961,7 @@ GFXManager::GFXManager() {
 
     loadCustomHouseHerald();
 
-    reloadCampaignHeralds();
+    reloadFactionFrames();
 
     uiGraphic[UI_Herald_ArrowLeft][HOUSE_HARKONNEN] = LoadPNG_RW(pFileManager->openFile("ArrowLeft.png").get());
     uiGraphic[UI_Herald_ArrowLeftLarge][HOUSE_HARKONNEN] = Scaler::defaultDoubleSurface(uiGraphic[UI_Herald_ArrowLeft][HOUSE_HARKONNEN].get());
@@ -4635,14 +4635,14 @@ void GFXManager::reloadModDependentObjectGraphics() {
 
 }
 
-void GFXManager::reloadCampaignHeralds() {
-    // Supplied golden frames represent campaign identities, independently of
-    // runtime slot order, bonus colours and the ordinary skirmish banners.
+void GFXManager::reloadFactionFrames() {
+    // Supplied golden frames identify factions in scores and region screens,
+    // independently of runtime slot order, bonus colours and campaign banners.
     const char* campaignNames[] = {"Harkonnen", "Atreides", "Ordos", "Fremen",
         "Sardaukar", "Mercenary", "Neutral", "Rebels", "Corruptique", "Wildspade",
         "Kleshmersh", "Tharpique"};
     for(int runtime = 0; runtime < NUM_HOUSES; ++runtime) {
-        uiGraphicTex[UI_CampaignHeraldLarge][runtime].reset();
+        uiGraphicTex[UI_FactionFrame][runtime].reset();
         const auto identity = getHouseFactionIdentity(static_cast<HOUSETYPE>(runtime));
         if(identity < 0 || identity >= NUM_HOUSES) continue;
         const std::string filename = std::string("CampaignHerald") + campaignNames[identity] + ".png";
@@ -4653,11 +4653,11 @@ void GFXManager::reloadCampaignHeralds() {
                 SDL_FillRect(fitted.get(),nullptr,SDL_MapRGB(fitted->format,0,0,0));
                 SDL_Rect square{0,8,166,166};
                 SDL_BlitScaled(herald.get(),nullptr,fitted.get(),&square);
-                uiGraphic[UI_CampaignHeraldLarge][runtime] = std::move(fitted);
+                uiGraphic[UI_FactionFrame][runtime] = std::move(fitted);
                 continue;
             }
         }
-        uiGraphic[UI_CampaignHeraldLarge][runtime] = copySurface(uiGraphic[UI_Herald_ColoredLarge][runtime].get());
+        uiGraphic[UI_FactionFrame][runtime] = copySurface(uiGraphic[UI_Herald_ColoredLarge][runtime].get());
     }
 }
 
@@ -5162,7 +5162,7 @@ void GFXManager::reloadModDependentUiGraphics() {
     reloadRuntimeModPortraits();
     loadCustomHouseHerald();
 
-    reloadCampaignHeralds();
+    reloadFactionFrames();
     loadMentatGraphics();
 }
 
@@ -5460,6 +5460,36 @@ void GFXManager::invalidateMapChoiceGraphics(int house) {
         mapChoicePieces, mapChoicePiecesTex, house, HOUSE_HARKONNEN);
 }
 
+sdl2::surface_ptr GFXManager::createFactionFrameBackground(unsigned int id, int house) {
+    if(id != UI_GameStatsBackground && id != UI_MapChoiceScreen) {
+        THROW(std::invalid_argument, "Faction frames require a score or region background");
+    }
+    auto background = sdl2::surface_ptr(SDL_ConvertSurfaceFormat(
+        getUIGraphicSurface(id, house), SDL_PIXELFORMAT_ARGB8888, 0));
+    if(!background) {
+        THROW(sdl_error, "Cannot create faction frame background: %s", SDL_GetError());
+    }
+    auto* frame = getUIGraphicSurface(UI_FactionFrame, house);
+    const int centerX = background->w / 2;
+    const int centerY = background->h / 2;
+    const bool scores = id == UI_GameStatsBackground;
+    const int y = scores ? centerY - 184 : centerY + 90;
+    const int left = scores ? centerX - 318 : centerX - 316;
+    const int right = scores ? centerX + 211 : centerX + 212;
+    SDL_Rect source{0, 8, 166, 166};
+    for(const int x : {left, right}) {
+        // Original logos occupy 106x108. Keep the complete square gold border
+        // centred inside that slot, without remnants of the previous emblem.
+        SDL_Rect slot{x, y, 106, 108};
+        SDL_FillRect(background.get(), &slot, SDL_MapRGB(background->format, 0, 0, 0));
+        SDL_Rect target{x, y + 1, 106, 106};
+        if(SDL_BlitScaled(frame, &source, background.get(), &target) != 0) {
+            THROW(sdl_error, "Cannot draw faction frame: %s", SDL_GetError());
+        }
+    }
+    return background;
+}
+
 SDL_Surface* GFXManager::getUIGraphicSurface(unsigned int id, int house) {
     if(id >= NUM_UIGRAPHICS) {
         THROW(std::invalid_argument, "GFXManager::getUIGraphicSurface(): UI Graphic with ID %u is not available!", id);
@@ -5468,7 +5498,7 @@ SDL_Surface* GFXManager::getUIGraphicSurface(unsigned int id, int house) {
     const bool useHouseIdentity =
         id == UI_Herald_Colored
         || id == UI_Herald_ColoredLarge
-        || id == UI_CampaignHeraldLarge
+        || id == UI_FactionFrame
         || id == UI_Herald_Grey
         || id == UI_MentatBackground
         || id == UI_MentatHouseChoiceInfoQuestion;
@@ -5566,7 +5596,7 @@ SDL_Texture* GFXManager::getUIGraphic(unsigned int id, int house) {
     const bool useHouseIdentity =
         id == UI_Herald_Colored
         || id == UI_Herald_ColoredLarge
-        || id == UI_CampaignHeraldLarge
+        || id == UI_FactionFrame
         || id == UI_Herald_Grey
         || id == UI_MentatBackground
         || id == UI_MentatHouseChoiceInfoQuestion;

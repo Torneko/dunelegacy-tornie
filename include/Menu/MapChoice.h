@@ -71,6 +71,7 @@ public:
     bool doInput(SDL_Event &event) override;
 
 private:
+    sdl2::texture_ptr framedBackground;
     void createMapSurfaceWithPieces(unsigned int scenario);
     void loadINI();
 

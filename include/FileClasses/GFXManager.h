@@ -560,7 +560,7 @@ typedef enum {
     UI_MapEditor_FastHarvester,
     UI_MapEditor_TameSandworm,
     UI_MapEditor_Slowpost,
-    UI_CampaignHeraldLarge,
+    UI_FactionFrame,
     NUM_UIGRAPHICS
 } UIGraphics_Enum;
 
@@ -682,6 +682,7 @@ public:
     SDL_Texture*     getMapChoicePiece(unsigned int num, int house);
 
     SDL_Surface*     getUIGraphicSurface(unsigned int id, int house=HOUSE_HARKONNEN);
+    sdl2::surface_ptr createFactionFrameBackground(unsigned int id, int house);
     SDL_Surface*     getMapChoicePieceSurface(unsigned int num, int house);
     void             invalidateMapChoiceGraphics(int house);
 
@@ -708,7 +709,7 @@ private:
     void                loadCustomHouseHerald();
     void                reloadModDependentObjectGraphics();
     void                reloadRuntimeModPortraits();
-    void                reloadCampaignHeralds();
+    void                reloadFactionFrames();
     void                rebuildModDependentEditorGraphics();
 
     struct HDObjPicOverride {

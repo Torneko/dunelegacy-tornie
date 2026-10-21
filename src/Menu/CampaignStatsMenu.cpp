@@ -50,7 +50,9 @@ CampaignStatsMenu::CampaignStatsMenu(int level) : MenuBase()
         : SDL2RGB(palette[PALCOLOR_SARDAUKAR + 1]);
 
     // set up window
-    SDL_Texture *pBackground = pGFXManager->getUIGraphic(UI_GameStatsBackground);
+    framedBackground = convertSurfaceToTexture(
+        pGFXManager->createFactionFrameBackground(UI_GameStatsBackground, localHouseID));
+    SDL_Texture *pBackground = framedBackground.get();
     setBackground(pBackground);
     resize(getTextureSize(pBackground));
 

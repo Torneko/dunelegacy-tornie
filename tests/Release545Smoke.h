@@ -2,6 +2,8 @@
 #include <Menu/MainMenu.h>
 #include <Menu/HouseChoiceInfoMenu.h>
 #include <Menu/HouseChoiceMenu.h>
+#include <Menu/CampaignStatsMenu.h>
+#include <Menu/MapChoice.h>
 #include <Campaign/CoopCampaignRuntime.h>
 #include <Achievements/AchievementEvents.h>
 #include <Achievements/AchievementManager.h>
@@ -12,6 +14,22 @@
 struct Release545Smoke {
     static void require(bool value,const std::string& text) {
         if(!value) throw std::runtime_error("Release 545: "+text);
+    }
+    static void verifyFrames(SDL_Surface* background,SDL_Surface* artwork,unsigned int screen) {
+        auto expected=sdl2::surface_ptr(SDL_CreateRGBSurfaceWithFormat(0,106,106,32,SDL_PIXELFORMAT_ARGB8888));
+        SDL_Rect crop{0,8,166,166};
+        require(SDL_BlitScaled(artwork,&crop,expected.get(),nullptr)==0,"gold frame scaling");
+        const int cx=background->w/2,cy=background->h/2;
+        const bool scores=screen==UI_GameStatsBackground;
+        const int top=scores?cy-184:cy+90;
+        for(const int left: {scores?cx-318:cx-316,scores?cx+211:cx+212}) {
+            for(int y=0;y<106;++y)for(int x=0;x<106;++x)
+                require((getPixel(background,left+x,top+1+y)&0xffffff)==(getPixel(expected.get(),x,y)&0xffffff),
+                    "wrong faction, cropped border or changed colours in score/region frame");
+            for(int x=0;x<106;++x)
+                require((getPixel(background,left+x,top)&0xffffff)==0
+                    &&(getPixel(background,left+x,top+107)&0xffffff)==0,"old emblem remains outside square frame");
+        }
     }
     static void run(const std::string& output) {
         auto& mods=ModManager::instance();const auto previous=mods.getActiveModName();
@@ -33,22 +51,32 @@ struct Release545Smoke {
                 auto expected=sdl2::surface_ptr(SDL_CreateRGBSurfaceWithFormat(0,166,182,32,SDL_PIXELFORMAT_ARGB8888));
                 SDL_FillRect(expected.get(),nullptr,SDL_MapRGB(expected->format,0,0,0));SDL_Rect square{0,8,166,166};
                 SDL_BlitScaled(png.get(),nullptr,expected.get(),&square);
-                auto* actual=pGFXManager->getUIGraphicSurface(UI_CampaignHeraldLarge,runtime);
-                require(actual&&actual->w==166&&actual->h==182,"campaign frame dimensions");
+                auto* actual=pGFXManager->getUIGraphicSurface(UI_FactionFrame,runtime);
+                require(actual&&actual->w==166&&actual->h==182,"faction frame dimensions");
                 for(int y=0;y<182;++y)for(int x=0;x<166;++x)
                     require((getPixel(actual,x,y)&0xffffff)==(getPixel(expected.get(),x,y)&0xffffff),"wrong identity after switch: "+mod+names[identity]);
+                const int previousColour=getHouseVisualHouse(runtime);
+                setHouseVisualHouse(house,NUM_HOUSES+runtime%(NUM_HOUSE_COLOR_SLOTS-NUM_HOUSES));
+                for(const unsigned int screen: {UI_GameStatsBackground,UI_MapChoiceScreen}) {
+                    auto background=pGFXManager->createFactionFrameBackground(screen,runtime);
+                    verifyFrames(background.get(),expected.get(),screen);
+                }
+                setHouseVisualHouse(house,previousColour);
                 HouseChoiceInfoMenu menu(runtime);auto* anim=menu.getPlanetAnimation();
                 require(anim&&!anim->getFrames().empty(),"campaign confirmation animation");
                 auto* frame=anim->getFrames().front().get();
-                auto plaque=sdl2::surface_ptr(SDL_CreateRGBSurfaceWithFormat(0,126,126,32,SDL_PIXELFORMAT_ARGB8888));
-                SDL_Rect crop{0,8,166,166};SDL_BlitScaled(actual,&crop,plaque.get(),nullptr);
-                for(int y=0;y<126;++y)for(int x=0;x<126;++x)
-                    require((getPixel(frame,32+x,66+y)&0xffffff)==(getPixel(plaque.get(),x,y)&0xffffff),"campaign gold frame cropped or absent");
-                for(int y=0;y<126;++y)for(int x: {12,31,158,177})
-                    require((getPixel(frame,x,66+y)&0xffffff)==0,"old campaign plaque still visible beside golden frame");
+                auto* banner=pGFXManager->getUIGraphicSurface(UI_Herald_ColoredLarge,runtime);
+                auto ordinary=sdl2::surface_ptr(SDL_ConvertSurfaceFormat(banner,SDL_PIXELFORMAT_ARGB8888,0));
+                auto confirmation=sdl2::surface_ptr(SDL_ConvertSurfaceFormat(frame,SDL_PIXELFORMAT_ARGB8888,0));
+                for(int y=0;y<126;++y)for(int x=0;x<166;++x)
+                    require((getPixel(confirmation.get(),12+x,66+y)&0xffffff)==(getPixel(ordinary.get(),x,y)&0xffffff),
+                        "ordinary campaign banner replaced by a golden frame or another faction: "+mod+names[identity]);
                 if(identity==HOUSE_FREMEN) {
                     SDL_RenderClear(renderer);menu.setText("");menu.onMentatTextFinished();menu.draw();
-                    auto screen=renderReadSurface(renderer);SavePNG(screen.get(),(std::filesystem::path(output)/(mod+"-gold-campaign.png")).string().c_str());
+                    auto screen=renderReadSurface(renderer);SavePNG(screen.get(),(std::filesystem::path(output)/(mod+"-ordinary-campaign.png")).string().c_str());
+                    MapChoice regions(runtime,1,0);regions.draw();screen=renderReadSurface(renderer);
+                    verifyFrames(screen.get(),expected.get(),UI_MapChoiceScreen);
+                    SavePNG(screen.get(),(std::filesystem::path(output)/(mod+"-gold-regions.png")).string().c_str());
                 }
             }
             struct Portrait {int identity,item;const char* filename;};
@@ -64,7 +92,7 @@ struct Release545Smoke {
                     require(getPixel(actual.get(),x,y)==getPixel(expected.get(),x,y),"portrait altered/incorrect/starred");
                 require(pGFXManager->getFactionTrooperPortrait(p.item,HOUSE_ATREIDES)==nullptr,"faction portrait leaked to Atreides");
             }
-            SDL_Log("RELEASE 545 PRESENTATION PASS: %s, identity frames, complete confirmations and four original portraits",mod.c_str());
+            SDL_Log("RELEASE 545 PRESENTATION PASS: %s, score/region identity frames, ordinary campaign banners and four original portraits",mod.c_str());
         }
         require(mods.setActiveMod("Tornie"),"co-op fixture mod");
         const auto playerName=settings.general.playerName;
@@ -133,6 +161,9 @@ struct Release545Smoke {
             const auto before=manager.statistic("PalacesSabotaged");saboteur->doAttackObject(palace,true);saboteur->update();
             require(manager.statistic("PalacesSabotaged")==before+1,"real Saboteur palace detonation not credited");
             require(manager.match().counts.at("EnemyStructuresDestroyed")==1,"sabotage destruction attribution");
+            CampaignStatsMenu scores(1);scores.draw();auto screen=renderReadSurface(renderer);
+            verifyFrames(screen.get(),pGFXManager->getUIGraphicSurface(UI_FactionFrame,pLocalHouse->getHouseID()),UI_GameStatsBackground);
+            SavePNG(screen.get(),(std::filesystem::path(output)/"gold-scores.png").string().c_str());
         }
         currentGame=nullptr;pLocalHouse=nullptr;pLocalPlayer=nullptr;
         {
@@ -147,6 +178,6 @@ struct Release545Smoke {
         require(manager.statistic("UnitsLost")==previousLosses && manager.statistic("PalacesSabotaged")==previousSabotages,
             "native achievement fixtures modified the shared profile");
         require(mods.setActiveMod(previous),"restore mod");
-        SDL_Log("RELEASE 545 COMPLETE: portraits, 63 campaign frames, 2/3/4-player rescue, real palace sabotage and intro replay");
+        SDL_Log("RELEASE 545 COMPLETE: portraits, 63 faction score/region frames, original campaign banners, 2/3/4-player rescue, real palace sabotage and intro replay");
     }
 };

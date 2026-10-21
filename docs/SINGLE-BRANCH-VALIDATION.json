@@ -1,0 +1,20 @@
+{
+  "completed": true,
+  "checkedAtUtc": "2026-10-21T01:09:50.002129+00:00",
+  "remainingBranch": "dunelegacy-tornie",
+  "removedRemoteBranches": 36,
+  "archiveInventory": "BRANCH-ARCHIVES.json",
+  "archiveTipsVerifiedBeforeDeletion": true,
+  "atomicDeletionWithExactLeases": true,
+  "websiteDeployment": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39524996205",
+  "websiteSource": "0465f5f02214441b359902c3d6ed93ff270bfa67",
+  "websiteContextsCheckedInCi": 120,
+  "publicHttpCheck": "Not run: this workspace proxy does not allow torneko.github.io. Deployment and 120 website contexts passed in GitHub Actions.",
+  "localBranchesRemoved": 12,
+  "localWorktreesPreserved": 5,
+  "openPullRequests": 0,
+  "releaseTagsUnchanged": {
+    "v1.0.544": "d6a29fd82906eb1f4856eced2dfb01fe3e74637e",
+    "v1.0.545": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f"
+  }
+}

@@ -52,7 +52,8 @@ MapChoice::MapChoice(int newHouse, unsigned int lastMission, Uint32 oldAlreadyPl
     pGFXManager->invalidateMapChoiceGraphics(house);
 
     // set up window
-    SDL_Texture *pBackground = pGFXManager->getUIGraphic(UI_MapChoiceScreen, house);
+    framedBackground = convertSurfaceToTexture(pGFXManager->createFactionFrameBackground(UI_MapChoiceScreen, house));
+    SDL_Texture *pBackground = framedBackground.get();
     setBackground(pBackground);
     resize(getTextureSize(pBackground));
 

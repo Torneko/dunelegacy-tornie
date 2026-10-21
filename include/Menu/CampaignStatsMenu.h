@@ -23,6 +23,7 @@
 #include <GUI/StaticContainer.h>
 #include <GUI/Label.h>
 #include <GUI/ProgressBar.h>
+#include <misc/SDL2pp.h>
 
 #include <string>
 
@@ -58,6 +59,7 @@ private:
     } CampaignStatsState;
 
 
+    sdl2::texture_ptr framedBackground;
     StaticContainer windowWidget;
     Label scoreLabel;
     Label timeLabel;

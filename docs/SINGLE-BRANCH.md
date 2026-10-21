@@ -22,3 +22,22 @@ Le site a été importé sans modification depuis
 commit de regroupement. Le code et les reçus proviennent de
 `72eb0f07a39167123b95407c9d4edf0d0b35a3a5`, descendant de l’ancienne branche
 principale `0274018acd8d78b9b54cc4263116990773c0478f`.
+
+Le regroupement a été terminé le 21 octobre 2026 (UTC). Le déploiement
+[GitHub Actions](https://github.com/Torneko/dunelegacy-tornie/actions/runs/39524996205)
+a réussi depuis la branche principale après vérification des 120 contextes du
+site français/anglais. Les 36 anciennes branches ont ensuite été supprimées
+en une opération atomique, après contrôle de leurs tags d’archive et de leurs
+derniers commits. Les cinq anciens dossiers de travail locaux sont conservés,
+avec leurs éventuelles modifications. Les tags et téléchargements des versions
+1.0.544 et 1.0.545 restent inchangés.
+
+[Rapport de validation](SINGLE-BRANCH-VALIDATION.json).
+
+## English
+
+The game, website and publication records now share the sole
+`dunelegacy-tornie` branch. GitHub Actions deploys `website/` from this branch.
+All 36 former branch tips remain available as archive tags. Their branches were
+removed only after the new deployment succeeded. Existing release tags,
+downloads and local working files were preserved.

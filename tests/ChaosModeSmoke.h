@@ -24,19 +24,17 @@ inline void verifyFremenConfirmation(const std::string& output, const std::strin
     menu.onMentatTextFinished();
     auto* animation = menu.getPlanetAnimation();
     auto* frame = animation ? animation->getFrame() : nullptr;
-    auto* herald = pGFXManager->getUIGraphicSurface(UI_CampaignHeraldLarge, HOUSE_FREMEN);
+    auto* herald = pGFXManager->getUIGraphicSurface(UI_Herald_ColoredLarge, HOUSE_FREMEN);
     if(!frame || !herald) throw std::runtime_error("Fremen confirmation check: missing banner/animation");
-    auto expected = sdl2::surface_ptr(SDL_CreateRGBSurfaceWithFormat(0,126,126,32,SDL_PIXELFORMAT_RGB888));
-    SDL_Rect crop{0,8,166,166};
-    SDL_BlitScaled(herald,&crop,expected.get(),nullptr);
+    auto expected = sdl2::surface_ptr(SDL_ConvertSurfaceFormat(herald, SDL_PIXELFORMAT_RGB888, 0));
     auto actual = sdl2::surface_ptr(SDL_ConvertSurfaceFormat(frame, SDL_PIXELFORMAT_RGB888, 0));
     int visible = 0;
     for(int y = 0; y < std::min(126, expected->h); ++y) {
-        for(int x = 0; x < std::min(expected->w, actual->w - 32); ++x) {
+        for(int x = 0; x < std::min(expected->w, actual->w - 12); ++x) {
             const auto a = getPixel(expected.get(), x, y) & 0xffffff;
             if(a == 0) continue;
-            if(a != (getPixel(actual.get(), x + 32, y + 66) & 0xffffff))
-                throw std::runtime_error("Fremen confirmation check: complete golden frame not composited");
+            if(a != (getPixel(actual.get(), x + 12, y + 66) & 0xffffff))
+                throw std::runtime_error("Fremen confirmation check: original banner not composited");
             ++visible;
         }
     }
@@ -52,7 +50,7 @@ inline void verifyFremenConfirmation(const std::string& output, const std::strin
     int rendered = 0;
     for(int y = 0; y < std::min(126, expected->h); ++y) for(int x = 0; x < expected->w; ++x) {
         const auto colour = getPixel(expected.get(), x, y) & 0xffffff;
-        const int sx = menu.getPosition().x + 256 + 32 + x;
+        const int sx = menu.getPosition().x + 256 + 12 + x;
         const int sy = menu.getPosition().y + 96 + 66 + y;
         if(colour && sx >= 0 && sy >= 0 && sx < screen->w && sy < screen->h
            && (getPixel(screen.get(), sx, sy) & 0xffffff) == colour) ++rendered;
@@ -62,7 +60,7 @@ inline void verifyFremenConfirmation(const std::string& output, const std::strin
     auto file = sdl2::RWops_ptr(SDL_RWFromFile(filename.c_str(), "wb"));
     auto png = sdl2::surface_ptr(SDL_ConvertSurfaceFormat(screen.get(), SDL_PIXELFORMAT_RGBA32, 0));
     if(!file || !png || SavePNG_RW(png.get(), file.get()) != 0) throw std::runtime_error("Fremen confirmation check: PNG export");
-    SDL_Log("FREMEN CONFIRMATION PASS: %s, complete golden frame in actual menu (%d pixels)", stage.c_str(), rendered);
+    SDL_Log("FREMEN CONFIRMATION PASS: %s, original banner in actual menu (%d pixels)", stage.c_str(), rendered);
 }
 
 inline std::string chaosSmokeMap() {
