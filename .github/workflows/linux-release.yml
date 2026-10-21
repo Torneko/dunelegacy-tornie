@@ -341,6 +341,7 @@ jobs:
           set -euo pipefail
           [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
           [[ "$VERIFIED_LINUX_RUN" =~ ^[0-9]+$ && "$VERIFIED_WINDOWS_RUN" =~ ^[0-9]+$ ]]
+          exec > >(tee "$RUNNER_TEMP/publication-stage.log") 2>&1
           bash scripts/bump-version.sh --check
           mkdir -p staged/linux staged/windows
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$VERIFIED_LINUX_RUN" > staged/linux-run.json
@@ -395,6 +396,18 @@ jobs:
           if [[ "$NEW_RELEASE" == true ]]; then
             gh release edit "$RELEASE_TAG" --draft=false --latest --repo "$GITHUB_REPOSITORY"
           fi
+
+      - name: Preserve publication failure details
+        if: failure()
+        run: |
+          python3 - <<'PYTHON'
+          import os, pathlib
+          path = pathlib.Path(os.environ['RUNNER_TEMP'])/'publication-stage.log'
+          if path.exists():
+              detail = path.read_text(errors='replace')[-3500:]
+              detail = detail.replace('%','%25').replace('\r','%0D').replace('\n','%0A')
+              print('::error title=Publication stage detail::'+detail)
+          PYTHON
 
   release-documents:
     if: ${{ inputs.documentation_only && !inputs.replace_packages }}
