@@ -28,14 +28,16 @@ def record(staged, version, source, protocol, save_version):
                    for step in windows['steps']), name
     package = package_root / ('DuneLegacyTornie-' + version + '-Windows-x64.zip')
     assert list(package_root.iterdir()) == [package], 'Unexpected Windows artifact inventory'
+    checksum = hashlib.sha256()
     with package.open('rb') as stream:
-        checksum = hashlib.file_digest(stream, 'sha256').hexdigest()
+        for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+            checksum.update(chunk)
     report = {
         'version': version, 'source': source, 'workflowSource': run['head_sha'],
         'run': run['id'], 'engineAndNetworkTests': True,
         'installedRuntimeChecks': ['fr', 'en'], 'menuStartupChecks': ['fr', 'en'],
         'videoOptionsChecks': ['fr', 'en'], 'networkProtocol': protocol,
-        'saveVersion': save_version, 'package': package.name, 'sha256': checksum,
+        'saveVersion': save_version, 'package': package.name, 'sha256': checksum.hexdigest(),
         'provenanceOrigin': 'verified-main-branch-artifact',
         'verifiedJob': windows['id'],
     }
