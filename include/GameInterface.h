@@ -23,6 +23,7 @@
 #include <GUI/StaticContainer.h>
 #include <GUI/Spacer.h>
 #include <GUI/TextButton.h>
+#include <GUI/AircraftCountButton.h>
 #include <GUI/PictureButton.h>
 #include <GUI/PictureLabel.h>
 #include <GUI/Label.h>
@@ -106,6 +107,8 @@ public:
     virtual void updateObjectInterface();
 
 private:
+    friend struct AircraftShortcutFixture;
+    void refreshAircraftButtons();
     void removeOldContainer();
 
 
@@ -125,8 +128,8 @@ private:
     RadarView           radarView;              ///< This is the minimap/radar in the side bar
 
     ChatManager         chatManager;            ///< Manages chat manages shown overlayed with the main map
-    TextButton          ornithopterSelectButton;///< Button that selects all owned ornithopters
-    TextButton          chemicalCarryallSelectButton;///< Button that selects all owned chemical carryalls
+    AircraftCountButton ornithopterSelectButton;///< Select all controllable, responding ornithopters
+    AircraftCountButton chemicalCarryallSelectButton;///< Select all controllable, responding chemical carryalls
 
     Label               harvesterCountLabel;    ///< Local house count, independent of watermark visibility.
     int                 displayedHarvesterCount = -1;

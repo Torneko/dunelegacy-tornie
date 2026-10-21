@@ -19,8 +19,10 @@ struct RadarResearchFixture {
         const auto colour=getHouseColorRGB(getHouseVisualHouse(pLocalHouse->getHouseID()),3);
         for(int kind=0;kind<radar::Count;++kind) {
             auto& button=radarUI->researchButtons[kind];
-            if(button.isVisible()!=(mod!="vanilla") || button.getPrice()!=radar::cost(kind) || button.getTextColor()!=colour)
-                throw std::runtime_error("Radar price/house colour/Vanilla visibility mismatch");
+            if(button.isVisible()!=(mod!="vanilla" && currentGame->techLevel>=radar::level(kind)) || button.getPrice()!=radar::cost(kind) || button.getTextColor()!=colour)
+                throw std::runtime_error("Radar price/house colour/technology visibility mismatch");
+            if(stage=="level-7-no-ix" && kind==radar::Specialization && button.isEnabled())
+                throw std::runtime_error("Radar specialization enabled without IX");
             if(!button.isVisible())continue;
             button.resize(119,38);
             if(button.getLabelFontSize()<10)throw std::runtime_error("Radar label no longer readable at sidebar width");
@@ -75,7 +77,13 @@ struct RadarResearchFixture {
             auto radarID=building->getObjectID();
             game->techLevel=3;
             require(!owner->startRadarResearch(radar::BaseExpansion),"research below level four");
+            verifyButtons(building,output,mod,house,"level-3-hidden");
+            for(int level:{4,6}) {
+                game->techLevel=level;
+                verifyButtons(building,output,mod,house,"level-"+std::to_string(level));
+            }
             game->techLevel=7;
+            verifyButtons(building,output,mod,house,"level-7-no-ix");
             require(!owner->startRadarResearch(radar::Specialization),"specialization without IX");
             if(mod=="vanilla") {
                 verifyButtons(building,output,mod,house,"hidden");

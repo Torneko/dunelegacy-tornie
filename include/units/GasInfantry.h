@@ -23,6 +23,9 @@ public:
     bool canHeal() const override { return true; }
     void playAttackSound() override;
 private:
+#ifdef DUNELEGACY_RUNTIME_TESTS
+    friend struct HealingBalanceFixture;
+#endif
     void init();
     bool isValidHealTarget(const ObjectBase* object) const;
     UnitBase* findDamagedAlly() const;

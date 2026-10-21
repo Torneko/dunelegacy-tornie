@@ -8,6 +8,7 @@
  */
 
 #include <units/GasInfantry.h>
+#include <mod/HealingBalance.h>
 #include <FileClasses/GFXManager.h>
 #include <globals.h>
 #include <Game.h>
@@ -77,7 +78,7 @@ void GasInfantry::fireHealingMissile(UnitBase* pTarget)
     Coord destination = pTarget->getCenterPoint();
     bulletList.push_back(new Bullet(objectID, &source, &destination, Bullet_Heal,
                                     GAS_INFANTRY_HEAL_AMOUNT, pTarget->isAFlyingUnit(), pTarget));
-    healingReloadTimer = GAS_INFANTRY_HEAL_RELOAD;
+    healingReloadTimer = healing::reload(GAS_INFANTRY_HEAL_RELOAD, getProductionHouseID());
 }
 
 void GasInfantry::doAttackObject(Uint32 targetObjectID, bool bForced)

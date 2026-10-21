@@ -36,6 +36,10 @@ on:
         description: Successful Windows package run ID (optional for documentation_only)
         type: string
         default: ''
+      followup_545:
+        description: Targeted Tharpique, aircraft counters, Radar and Westwood corrections for 545
+        type: boolean
+        default: false
       ui_only:
         description: UI-only replacement (CTest, startup and packaged FR/EN frames, menus and radar)
         type: boolean
@@ -220,7 +224,7 @@ jobs:
           grep 'STARTUP CHECK PASSED.*renderer=software' "$PROFILE/fallback.log"
 
       - name: Verify packaged co-op construction, editor ownership and Rebels mentat
-        if: ${{ !inputs.ui_only }}
+        if: ${{ !(inputs.ui_only || inputs.followup_545) }}
         run: |
           set -euo pipefail
           PROFILE=$(mktemp -d)
@@ -262,7 +266,7 @@ jobs:
             mkdir -p "$PROFILE/$LANGUAGE/profile/DuneLegacyTornie" "$PROFILE/$LANGUAGE/results"
             printf '[General]\nLanguage=%s\nPlay Intro=false\n[Video]\nFullscreen=false\n[Audio]\nMusic Type=adl\nPlay Music=false\n' "$LANGUAGE" > "$PROFILE/$LANGUAGE/profile/DuneLegacyTornie/Dune Legacy.ini"
             CHECKS=(--verify-radar-research --verify-release545)
-            if [[ "${{ inputs.ui_only }}" != true ]]; then CHECKS+=(--verify-editor-followup --verify-campaign-cinema); fi
+            if [[ "${{ inputs.ui_only || inputs.followup_545 }}" != true ]]; then CHECKS+=(--verify-editor-followup --verify-campaign-cinema); fi
             for CHECK in "${CHECKS[@]}"; do
               LOG="$PROFILE/$LANGUAGE/$CHECK.log"
               SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy SDL_RENDER_DRIVER=software \
@@ -272,7 +276,7 @@ jobs:
               grep 'PASS:' "$LOG"
             done
             test "$(grep -c 'RADAR RESEARCH PASS:' "$PROFILE/$LANGUAGE/--verify-radar-research.log")" -eq 7
-            if [[ "${{ inputs.ui_only }}" != true ]]; then
+            if [[ "${{ inputs.ui_only || inputs.followup_545 }}" != true ]]; then
             test "$(grep -c 'EDITOR WINDTRAP PASS:' "$PROFILE/$LANGUAGE/--verify-editor-followup.log")" -eq 7
             test "$(grep -c 'CHAOS DEFENCE UPGRADE PASS:' "$PROFILE/$LANGUAGE/--verify-editor-followup.log")" -eq 7
             test "$(grep -c 'CAMPAIGN CINEMA PASS:' "$PROFILE/$LANGUAGE/--verify-campaign-cinema.log")" -eq 7
@@ -280,6 +284,9 @@ jobs:
             fi
             test "$(grep -c 'RELEASE 545 COMPLETE:' "$PROFILE/$LANGUAGE/--verify-release545.log")" -eq 1
             test "$(grep -c 'RELEASE 545 TROOPER PORTRAITS PASS:' "$PROFILE/$LANGUAGE/--verify-release545.log")" -eq 7
+            test "$(grep -c 'RELEASE 545 HEALING PASS:' "$PROFILE/$LANGUAGE/--verify-release545.log")" -eq 7
+            test "$(grep -c 'RELEASE 545 AIRCRAFT PASS:' "$PROFILE/$LANGUAGE/--verify-release545.log")" -eq 7
+            test "$(grep -c 'ORIGINAL CINEMA PASS:' "$PROFILE/$LANGUAGE/--verify-release545.log")" -eq 1
           done
 
       - name: Upload next-release runtime evidence
@@ -295,13 +302,16 @@ jobs:
       - name: Record the exact packaged source
         run: |
           VERSION="$(sed -n 's/^project(DuneLegacyTornie VERSION \([0-9]*\.[0-9]*\.[0-9]*\).*/\1/p' CMakeLists.txt)"
-          SOURCE_COMMIT="$(git rev-parse HEAD)" RELEASE_VERSION="$VERSION" UI_ONLY="${{ inputs.ui_only }}" python3 - <<'PYTHON'
+          SOURCE_COMMIT="$(git rev-parse HEAD)" RELEASE_VERSION="$VERSION" UI_ONLY="${{ inputs.ui_only || inputs.followup_545 }}" python3 - <<'PYTHON'
           import json, os, pathlib
-          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio','videoCases':['window','fullscreen','stale-combined-desktop'],'xrandr':True},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat','rebels-windtrap-upgrade','building-sales','normal-multiplayer-alliances','flame-and-gas-units','magenta-free-zooms','house-colours-and-blue-stars','neutral-saboteur-tier-seven','editor-terrain-blue-stars','original-flame-squad-portraits','precise-close-flame-quad','sales-destruction-and-concrete','sale-button-after-upgrade','easy-sales-75-percent','extended-fallback-units','movement-slowing','saved-chaos-worm-offer','elite-ornithopter','seventy-three-achievements','palace-napalm-and-saved-hazards','harvester-area-guard-crush','completed-upgrade-sales','native-slowpost-editor-icon','impact-only-and-random-palace-napalm','ten-original-artwork-files','scoutpost-slowpost-upgrade','bicolour-vanilla-harvesters','worfinery-displayed-labels'],'nextReleaseChecks':['radar-research-fr-en','chaos-defence-upgrades','editor-preupgraded-windtraps','original-westwood-audio','original-localized-credits','campaign-role-cinematics','faction-portraits-and-golden-campaign-frames','coop-rescue-two-three-four-factions','palace-saboteur-achievement','main-menu-replay-intro'],'networkProtocol':21,'saveVersion':9839}
+          report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio','videoCases':['window','fullscreen','stale-combined-desktop'],'xrandr':True},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat','rebels-windtrap-upgrade','building-sales','normal-multiplayer-alliances','flame-and-gas-units','magenta-free-zooms','house-colours-and-blue-stars','neutral-saboteur-tier-seven','editor-terrain-blue-stars','original-flame-squad-portraits','precise-close-flame-quad','sales-destruction-and-concrete','sale-button-after-upgrade','easy-sales-75-percent','extended-fallback-units','movement-slowing','saved-chaos-worm-offer','elite-ornithopter','seventy-three-achievements','palace-napalm-and-saved-hazards','harvester-area-guard-crush','completed-upgrade-sales','native-slowpost-editor-icon','impact-only-and-random-palace-napalm','ten-original-artwork-files','scoutpost-slowpost-upgrade','bicolour-vanilla-harvesters','worfinery-displayed-labels'],'nextReleaseChecks':['radar-research-fr-en','chaos-defence-upgrades','editor-preupgraded-windtraps','original-westwood-audio','original-localized-credits','campaign-role-cinematics','faction-portraits-and-golden-campaign-frames','coop-rescue-two-three-four-factions','palace-saboteur-achievement','main-menu-replay-intro'],'networkProtocol':22,'saveVersion':9839}
           report['validationScope'] = 'ui-refinements' if os.environ['UI_ONLY'] == 'true' else 'full'
           if report['validationScope'] == 'ui-refinements':
               report['packagedRuntimeChecks'] = ['radar-price-overlays-and-house-colours-fr-en', 'faction-frame-background-blending-fr-en', 'mod-menu-colours-fr-en', 'inclusive-right-score-frame-edge-fr-en', 'separate-trooper-production-selection-portraits-fr-en']
               report['nextReleaseChecks'] = list(report['packagedRuntimeChecks'])
+          if '${{ inputs.followup_545 }}' == 'true':
+              report['validationScope'] = 'targeted-545-corrections'
+              report['nextReleaseChecks'] += ['tharpique-healing-cadence', 'aircraft-shortcuts-parenthesized-counts-no-selection', 'aircraft-shortcut-faction-colours', 'radar-level-visibility', 'westwood-louder-synchronized-signature']
           pathlib.Path('build/Linux-Build-'+report['version']+'.json').write_text(json.dumps(report,indent=2)+'\n')
           PYTHON
 

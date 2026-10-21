@@ -29,6 +29,9 @@ public:
     void playAttackSound() override;
 
 private:
+#ifdef DUNELEGACY_RUNTIME_TESTS
+    friend struct HealingBalanceFixture;
+#endif
     UnitBase* findDamagedAlly() const;
     bool isValidHealTarget(const ObjectBase* pObject) const;
     void fireHealingMissile(UnitBase* pTarget);

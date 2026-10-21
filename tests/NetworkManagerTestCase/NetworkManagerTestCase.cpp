@@ -19,10 +19,10 @@
 #define TEST_NETWORKPACKET_SENDGAMEINFO         1
 #define TEST_NETWORKPACKET_CLIENTSTATS          13
 #define TEST_NETWORKPACKET_KEEPALIVE            19
-#define TEST_NETWORK_PROTOCOL_VERSION           21
+#define TEST_NETWORK_PROTOCOL_VERSION           22
 
-TEST_CASE("NetworkManager: Radar research and Chaos upgrades require protocol 21", "[network][protocol]") {
-    REQUIRE(NETWORK_PROTOCOL_VERSION == 21);
+TEST_CASE("NetworkManager: Tharpique healing balance requires protocol 22", "[network][protocol]") {
+    REQUIRE(NETWORK_PROTOCOL_VERSION == 22);
     REQUIRE(TEST_NETWORK_PROTOCOL_VERSION != 4);
     REQUIRE(NETWORKPACKET_COOP_READY == 20);
     REQUIRE(NETWORKPACKET_COOP_ADVANCE == 21);

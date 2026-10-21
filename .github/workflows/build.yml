@@ -24,6 +24,10 @@ on:
         description: Attach the verified Windows package to the release
         type: boolean
         default: true
+      followup_545:
+        description: Targeted Tharpique, aircraft counters, Radar and Westwood corrections for 545
+        type: boolean
+        default: false
       ui_only:
         description: UI-only replacement (CTest and installed FR/EN frames, menus and radar)
         type: boolean
@@ -164,8 +168,8 @@ jobs:
         run: |
           ctest --test-dir build -C Release --output-on-failure
           if ($LASTEXITCODE -ne 0) { throw "Engine/network CTest failed." }
-          # Pure presentation changes use the installed FR/EN checks below.
-          if ("${{ inputs.ui_only }}" -eq "true") { exit 0 }
+          # Targeted replacements use the installed FR/EN regression checks below.
+          if ("${{ inputs.ui_only || inputs.followup_545 }}" -eq "true") { exit 0 }
           $env:DUNELEGACY_USER_DIR = Join-Path $env:RUNNER_TEMP "dunelegacy-smoke-profile"
           New-Item -ItemType Directory -Force -Path $env:DUNELEGACY_USER_DIR | Out-Null
           $env:DUNELEGACY_SMOKE_DIR = $env:DUNELEGACY_USER_DIR
@@ -194,7 +198,7 @@ jobs:
           $env:SDL_VIDEODRIVER = "dummy"
           $env:SDL_AUDIODRIVER = "dummy"
           $env:SDL_RENDER_DRIVER = "software"
-          $uiOnly = "${{ inputs.ui_only }}" -eq "true"
+          $uiOnly = "${{ inputs.ui_only || inputs.followup_545 }}" -eq "true"
           foreach ($language in @("fr", "en")) {
             $env:DUNELEGACY_USER_DIR = Join-Path $env:RUNNER_TEMP "dunelegacy-installed-$language"
             New-Item -ItemType Directory -Force -Path $env:DUNELEGACY_USER_DIR | Out-Null
@@ -224,6 +228,12 @@ jobs:
               if ($process.ExitCode -ne 0 -or (Select-String -LiteralPath $nextLog -Pattern $check[1]).Count -ne $check[2]) { throw "Installed $language next-release check failed: $($check[0])" }
               if ($check[0] -eq "--verify-campaign-cinema" -and (Select-String -LiteralPath $nextLog -Pattern "ORIGINAL CINEMA PASS:").Count -ne 1) { throw "Original cinema check missing" }
               if ($check[0] -eq "--verify-release545" -and (Select-String -LiteralPath $nextLog -Pattern "RELEASE 545 TROOPER PORTRAITS PASS:").Count -ne 7) { throw "Installed $language Trooper portrait contexts failed." }
+              if ($check[0] -eq "--verify-release545") {
+                foreach ($marker in @("RELEASE 545 HEALING PASS:", "RELEASE 545 AIRCRAFT PASS:")) {
+                  if ((Select-String -LiteralPath $nextLog -Pattern $marker).Count -ne 7) { throw "Installed $language follow-up contexts failed: $marker" }
+                }
+                if ((Select-String -LiteralPath $nextLog -Pattern "ORIGINAL CINEMA PASS:").Count -ne 1) { throw "Westwood synchronization/volume checks missing" }
+              }
             }
             if (Select-String -LiteralPath "../src/main.cpp" -Pattern 'parameter == "--verify-startup"') {
               $startupLog = Join-Path $env:RUNNER_TEMP "dunelegacy-startup-$language.log"
@@ -279,17 +289,21 @@ jobs:
             installedRuntimeChecks = @("fr", "en")
             release543Checks = @("building-sales", "normal-multiplayer-alliances", "flame-and-gas-units", "magenta-free-zooms", "house-colours-and-blue-stars", "neutral-saboteur-tier-seven", "editor-terrain-blue-stars", "original-flame-squad-portraits", "precise-close-flame-quad", "sales-destruction-and-concrete", "sale-button-after-upgrade", "easy-sales-75-percent", "extended-fallback-units", "movement-slowing", "saved-chaos-worm-offer", "elite-ornithopter", "seventy-achievements", "palace-napalm-and-saved-hazards", "harvester-area-guard-crush", "completed-upgrade-sales", "native-slowpost-editor-icon", "impact-only-and-random-palace-napalm", "ten-original-artwork-files", "scoutpost-slowpost-upgrade", "bicolour-vanilla-harvesters", "worfinery-displayed-labels")
             nextReleaseChecks = @("editor-native-quad-anchors", "editor-preupgraded-windtraps", "chaos-defence-upgrades", "saved-radar-research", "original-westwood-audio", "original-localized-credits", "campaign-role-cinematics")
-            networkProtocol = 21
+            networkProtocol = 22
             saveVersion = 9839
             menuStartupChecks = @("fr", "en")
             videoOptionsChecks = @("fr", "en")
             package = $package.Name
             sha256 = (Get-FileHash $package.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
           }
-          $report.validationScope = if ("${{ inputs.ui_only }}" -eq "true") { "ui-refinements" } else { "full" }
-          if ("${{ inputs.ui_only }}" -eq "true") {
+          $report.validationScope = if ("${{ inputs.ui_only || inputs.followup_545 }}" -eq "true") { "ui-refinements" } else { "full" }
+          if ("${{ inputs.ui_only || inputs.followup_545 }}" -eq "true") {
             $report.release543Checks = @()
             $report.nextReleaseChecks = @("faction-frame-background-blending", "mod-menu-colours", "radar-price-overlays-and-house-colours", "inclusive-right-score-frame-edge", "separate-trooper-production-selection-portraits")
+          }
+          if ("${{ inputs.followup_545 }}" -eq "true") {
+            $report.validationScope = "targeted-545-corrections"
+            $report.nextReleaseChecks += @("tharpique-healing-cadence", "aircraft-shortcuts-parenthesized-counts-no-selection", "aircraft-shortcut-faction-colours", "radar-level-visibility", "westwood-louder-synchronized-signature")
           }
           $report | ConvertTo-Json -Depth 5 | Set-Content "build/Windows-Build-$version.json" -Encoding utf8
 

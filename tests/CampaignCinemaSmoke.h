@@ -9,6 +9,7 @@
 #include <SoundPlayer.h>
 #include <FileClasses/INIFile.h>
 #include <fstream>
+#include <FileClasses/adl/sound_adlib.h>
 
 struct IntroLogoFixture {
     static void verify(const std::string& output) {
@@ -39,12 +40,34 @@ struct IntroLogoFixture {
         int channel=-1,previous=-1;
         {
             WestwoodLogoVideoEvent logo;require(logo.signature && logo.signature->alen>44100,"original DUNE0/4 signature missing");
-            for(int i=0;i<11;++i){SDL_RenderClear(renderer);logo.draw();}
+            for(int i=0;i<10;++i) {
+                SDL_RenderClear(renderer);logo.draw();
+                require(logo.channel<0,"signature starts before the first animated/full-opacity frame");
+            }
+            SDL_RenderClear(renderer);logo.draw();
+            SoundAdlibPC baseline(pFileManager->openFile("DUNE0.ADL").get());
+            auto quiet=sdl2::mix_chunk_ptr(baseline.getSubsong(4));
+            require(quiet && quiet->alen==logo.signature->alen,"louder signature changed track duration");
+            long double oldEnergy=0,newEnergy=0;
+            for(Uint32 i=0;i+1<quiet->alen;i+=2) {
+                Sint16 a,b;std::memcpy(&a,quiet->abuf+i,2);std::memcpy(&b,logo.signature->abuf+i,2);
+                oldEnergy+=static_cast<long double>(a)*a;newEnergy+=static_cast<long double>(b)*b;
+            }
+            require(oldEnergy>0 && newEnergy>oldEnergy*3.5 && newEnergy<oldEnergy*4.5,
+                "signature is not approximately twice as loud (+6 dB)");
             channel=logo.channel;previous=logo.previousVolume;
             require(channel>=0 && Mix_GetChunk(channel)==logo.signature.get() && Mix_Playing(channel),"signature timing or channel");
+            logo.draw();require(logo.channel==channel,"signature restarts after its cue");
             require(Mix_Volume(channel,-1)==37 && settings.audio.playMusic && musicPlayer->isMusicOn(),"signature volume or user preference");
         }
         require(!Mix_Playing(channel) && Mix_Volume(channel,-1)==previous,"skipped logo left its audio playing or volume changed");
+        settings.audio.musicVolume=0;
+        {
+            WestwoodLogoVideoEvent logo;
+            for(int i=0;i<11;++i)logo.draw();
+            require(logo.channel>=0 && Mix_Volume(logo.channel,-1)==0,"signature ignores zero music volume");
+        }
+        settings.audio.musicVolume=37;
         {
             OriginalCreditsVideoEvent credits;
             require(credits.music && credits.music->alen>44100,"original DUNE20/2 credits music missing");

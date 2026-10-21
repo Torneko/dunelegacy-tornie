@@ -60,6 +60,7 @@ protected:
 
 
         for(int kind=0;kind<radar::Count;++kind) {
+            researchButtons[kind].setVisible(false);
             researchButtons[kind].setTextColor(color);
             researchButtons[kind].setPrice(radar::cost(kind));
             researchButtons[kind].setOnClick([objectID,kind] {
@@ -93,7 +94,7 @@ protected:
         const bool french=settings.general.language=="fr";
         for(int kind=0;kind<radar::Count;++kind) {
             auto& button=researchButtons[kind];
-            button.setVisible(ModManager::instance().isTornieContentActive());
+            button.setVisible(ModManager::instance().isTornieContentActive() && currentGame->techLevel >= radar::level(kind));
             std::string name=kind==radar::BaseExpansion?"Base +2":kind==radar::ExtendedVision?"Vision +2":specialName(pOwner,french);
             std::string status;
             if(pOwner->hasRadarResearch(kind))status="OK";

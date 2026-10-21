@@ -34,6 +34,7 @@
 
 #include <SpecialVehicle.h>
 #include <mod/ModManager.h>
+#include <mod/HealingBalance.h>
 
 //structures
 #include <structures/Barracks.h>
@@ -828,7 +829,9 @@ int ObjectBase::getWeaponRange() const {
 }
 
 int ObjectBase::getWeaponReloadTime() const {
-    return currentGame->objectData.data[itemID][getProductionHouseID()].weaponreloadtime;
+    const int base = currentGame->objectData.data[itemID][getProductionHouseID()].weaponreloadtime;
+    return itemID == Structure_Chemipost
+        ? healing::reload(base, static_cast<const StructureBase*>(this)->getTechnologyHouseID()) : base;
 }
 
 int ObjectBase::getInfSpawnProp() const {

@@ -79,7 +79,8 @@
 // Version 19: total upgraded-building refunds, harvest navigation and random napalm.
 // Version 20: Slowpost conversion command and upgrade-only production.
 // Version 21: initial Windtrap upgrades, Chaos upgrade plans and Radar research.
-#define NETWORK_PROTOCOL_VERSION            21
+// Version 22: Tharpique healing cadence; reject older simulation rules.
+#define NETWORK_PROTOCOL_VERSION            22
 
 /**
  * Reject an incompatible config-hash handshake and dispatch its disconnect cause.

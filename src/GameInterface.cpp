@@ -23,6 +23,7 @@
 #include <FileClasses/FontManager.h>
 #include <House.h>
 #include <Game.h>
+#include <units/UnitBase.h>
 
 #include <ObjectBase.h>
 #include <GUI/ObjectInterfaces/ObjectInterface.h>
@@ -99,7 +100,7 @@ GameInterface::GameInterface() : Window(0,0,0,0) {
     radarView.setOnRadarClick(std::bind(&Game::onRadarClick, currentGame, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
     // add ornithopter selection shortcut button just below the radar
-    ornithopterSelectButton.setText(_("Ornithopter"));
+    refreshAircraftButtons();
     ornithopterSelectButton.setTooltipText(_("Select all ornithopters (Hotkey: O)"));
     ornithopterSelectButton.setOnClick(std::bind(&Game::selectAllOrnithopters, currentGame));
 
@@ -112,7 +113,6 @@ GameInterface::GameInterface() : Window(0,0,0,0) {
     );
     ornithopterSelectButton.resize(ornithopterButtonSize.x, ornithopterButtonSize.y);
     windowWidget.addWidget(&ornithopterSelectButton, ornithopterButtonPos, ornithopterButtonSize);
-    chemicalCarryallSelectButton.setText(_("Chemical Carryall"));
     chemicalCarryallSelectButton.setTooltipText(_("Select all chemical carryalls"));
     chemicalCarryallSelectButton.setOnClick(std::bind(&Game::selectAllChemicalCarryalls, currentGame));
     const int chemicalCarryallButtonHeight = std::max(chemicalCarryallSelectButton.getMinimumSize().y, 36);
@@ -190,7 +190,22 @@ GameInterface::~GameInterface() {
     removeOldContainer();
 }
 
+void GameInterface::refreshAircraftButtons() {
+    int ornithopters = 0, chemicalCarryalls = 0;
+    for(const auto* unit : unitList) {
+        if(!currentGame->canControlHouse(unit->getOwner()) || !unit->isRespondable()) continue;
+        if(isOrnithopterUnit(unit->getItemID())) ++ornithopters;
+        else if(unit->getItemID() == Unit_ChemicalCarryall) ++chemicalCarryalls;
+    }
+    const auto colour = getHouseColorRGB(getHouseVisualHouse(pLocalHouse->getHouseID()),3);
+    ornithopterSelectButton.setTextColor(colour);
+    chemicalCarryallSelectButton.setTextColor(colour);
+    ornithopterSelectButton.setCountedText(_("Ornithopter"),ornithopters);
+    chemicalCarryallSelectButton.setCountedText(_("Chemical Carryall"),chemicalCarryalls);
+}
+
 void GameInterface::draw(Point position) {
+    if(currentGame->getSelectedList().empty()) refreshAircraftButtons();
     const int harvesterCount = pLocalHouse != nullptr ? (pLocalHouse->getNumItems(Unit_Harvester) + pLocalHouse->getNumItems(Unit_RebelHarvester) + pLocalHouse->getNumItems(Unit_CapacityHarvester) + pLocalHouse->getNumItems(Unit_FastHarvester)) : 0;
     if (harvesterCount != displayedHarvesterCount) {
         displayedHarvesterCount = harvesterCount;
@@ -273,6 +288,7 @@ void GameInterface::updateObjectInterface() {
     const auto& selection = currentGame->getSelectedList();
 
     if(selection.empty()) {
+        refreshAircraftButtons();
         ornithopterSelectButton.setVisible(true);
         chemicalCarryallSelectButton.setVisible(true);
         removeOldContainer();

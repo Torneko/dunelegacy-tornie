@@ -8,6 +8,7 @@
  */
 
 #include <units/ChemicalSiegeTank.h>
+#include <mod/HealingBalance.h>
 
 
 #include <Bullet.h>
@@ -136,7 +137,7 @@ void ChemicalSiegeTank::fireHealingMissile(UnitBase* pTarget)
     Coord destination = pTarget->getCenterPoint();
     bulletList.push_back(new Bullet(objectID, &source, &destination, Bullet_Heal,
                                     CHEMICAL_SIEGE_HEAL_AMOUNT, pTarget->isAFlyingUnit(), pTarget));
-    healingReloadTimer = CHEMICAL_SIEGE_HEAL_RELOAD;
+    healingReloadTimer = healing::reload(CHEMICAL_SIEGE_HEAL_RELOAD, getProductionHouseID());
 }
 
 void ChemicalSiegeTank::doAttackObject(Uint32 targetObjectID, bool bForced)

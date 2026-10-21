@@ -12,6 +12,7 @@
 #include <structures/Palace.h>
 #include <units/Saboteur.h>
 #include <FileClasses/LoadSavePNG.h>
+#include "Release545FollowupSmoke.h"
 
 struct Release545Smoke {
     static void require(bool value,const std::string& text) {
@@ -173,8 +174,11 @@ struct Release545Smoke {
                 }
             }
             verifyTrooperPortraits(mod,output);
+            HealingBalanceFixture::verify(mod);
+            AircraftShortcutFixture::verify(output,mod);
             SDL_Log("RELEASE 545 PRESENTATION PASS: %s, score/region identity frames, ordinary campaign banners and eight original Trooper portraits",mod.c_str());
         }
+        IntroLogoFixture::verify(output);
         require(mods.setActiveMod("Tornie"),"co-op fixture mod");
         const auto playerName=settings.general.playerName;
         auto& manager=achievements::AchievementManager::instance();
