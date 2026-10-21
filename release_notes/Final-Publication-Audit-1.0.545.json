@@ -1,76 +1,78 @@
 {
   "version": "1.0.545",
-  "source": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
-  "tagSource": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
-  "websiteSource": "68768fb040375076ae9ca72c083f76df2b97eeb2",
+  "source": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
+  "tagSource": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
+  "previousSource": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
+  "previousSourceArchive": "archive/releases/v1.0.545-initial",
+  "websiteSource": "32d50cc30e3cf15f3508f0b0dc67cd0af07d9929",
   "ciRuns": {
-    "windows": 39510210888,
-    "linux": 39510214591
+    "windows": 39525729369,
+    "linux": 39527092821
   },
-  "promotionRun": 39520319103,
-  "pagesRun": 39520442153,
-  "documentsRun": 39521040960,
+  "promotionRun": 39532609862,
+  "pagesRun": 39532689226,
+  "documentsRun": 39532801401,
   "allPublishedAssetsVerified": true,
   "sourceArchiveMatchesGitBlobs": true,
-  "sourceBlobCount": 7804,
+  "sourceBlobCount": 8179,
   "offlineWebsiteMatchesPublishedCommit": true,
   "manifestPublishedByCI": true,
   "assets": [
     {
       "name": "DuneLegacyTornie-1.0.545-Linux-Mint-Compatible.AppImage",
-      "sha256": "0148f02dd816198d57cf763f4f185a42f2206a616932d2089d7bda95bd730e14"
+      "sha256": "799babaaa70c5a7f006afaa73be0dd0185a6e242e09dffae62ca2e6e52f03892"
     },
     {
       "name": "DuneLegacyTornie-1.0.545-Linux-x64.deb",
-      "sha256": "20a7eba8c6cd075a9a3672886a9f1fa591eaa00f080c724833b9b4f0f513ac95"
+      "sha256": "ced01fcd725bf4bcbc8406e68e43d7ab91712a2e69755e1cde60e0298d54ce27"
     },
     {
       "name": "DuneLegacyTornie-1.0.545-Linux-x64.rpm",
-      "sha256": "6339386134afe2509f8733129967323c06348bee991a3bf9e5fb6dc0cab47466"
+      "sha256": "edef6de009ddc33e73902e3381b13f7e55335726f887b622f8b9d7d2ed352d96"
     },
     {
       "name": "DuneLegacyTornie-1.0.545-Linux-x64.tar.gz",
-      "sha256": "9da38125d4568551801ce3fb33ecb26e5c008b915f51502925412cdea94d5387"
+      "sha256": "f60f7c7738ad992e8d7929a760d8bf4936c54f9d9d3430c6a1887731b31433d4"
     },
     {
       "name": "DuneLegacyTornie-1.0.545-Linux-x86_64.AppImage",
-      "sha256": "9e753059f794981809833eada47a0b43ca3f5ef817acf1a417319e5b39a3ccf7"
+      "sha256": "ec8cb01218a264e85f9ad3bfda131dd5ba0ee072bcb663c2320c4bd4d85af2d2"
     },
     {
       "name": "DuneLegacyTornie-1.0.545-Sources.zip",
-      "sha256": "9eade91f2bb1e2161ad1b5d2584e9af4288edd1ceb55623cb5e3f9680c382752"
+      "sha256": "f58ee95442374defbbd1949757b34605484bc03edf89fd465a4f826b34c9209b"
     },
     {
       "name": "DuneLegacyTornie-1.0.545-Windows-x64.zip",
-      "sha256": "bd1961fc5dda6ab8377699dd17862542e9b616dc4e40a8ce2bff101334afab58"
+      "sha256": "3b21bf7aaafe78b1126b49ab12cc3ef587b1ae36afc45842a0ea1e45d9c6a894"
     },
     {
       "name": "DuneLegacyTornie-Site-Local-1.0.545.zip",
-      "sha256": "ca62f8c34cf87d16f83377fc0c90fd1a0756ab3c197c80bc1c9f3b158c533840"
+      "sha256": "6db997e5b2547659dfa61bf080c9b1003f57215b8c5722ad27d1a1c8c29b2bbd"
     },
     {
       "name": "Linux-Build-1.0.545.json",
-      "sha256": "2bfb594aa8fae91c4288cd157e047eb1a59b63267638fdb6d14e6509ec5798d7"
+      "sha256": "b763bf31120e75df694366a55dcb770c9e2fae9f33e9b14025f27b914e48081f"
     },
     {
       "name": "Package-Resources-Audit-1.0.545.json",
-      "sha256": "5746c22400299d96c92e29ddbd7782cb39e9e144d71b5919a7ab63566cf5c8f4"
+      "sha256": "aeffed96192da526bb3f5fe164536b0ecf65240be96cdb8078407853bbb420aa"
     },
     {
       "name": "Publication-Validation-1.0.545.json",
-      "sha256": "837cc23a3ca8ab1f4570f0057726aae0fba1b0ead95ff9e54dceef10e6fe7b19"
+      "sha256": "cbd75b7bc0a156a6e212f8c84074e970d485cc54dc6addc46920df51060fc40e"
     },
     {
       "name": "Release-Notes-1.0.545-EN.md",
-      "sha256": "fca085c7cd928bdbf01705a30cf9fc0185f1f292956980794bfde60210ccd3af"
+      "sha256": "db1aefc092bb4b0c454aecdc2c2f4ab2406200440759ddf79e03b518446fab1c"
     },
     {
       "name": "Release-Notes-1.0.545-FR.md",
-      "sha256": "1fd3a8a6524211f350b7a763078432d47c579d2a048c03c5de0060cc779e80e4"
+      "sha256": "28b3c1ae994fb0c399556c5c8f11a9e2064e6dc5d6f1edeb0bd5b4a696941d5c"
     },
     {
       "name": "Validation-1.0.545.json",
-      "sha256": "aa126ac99bc7d3d7b336af539b2a07f9a8d779fbcb9f2003998e98a9c85b051f"
+      "sha256": "678c4e49daf8ad3331134fb1cfac0151b34404189fe9f8ef28a5fd484650fc87"
     },
     {
       "name": "Website-Validation-1.0.545.json",
@@ -78,7 +80,7 @@
     },
     {
       "name": "Windows-Build-1.0.545.json",
-      "sha256": "edfca0387abd79d74a4f7b5db5c9d24270ff2ca467a9d1afdc051bfcb85da2c0"
+      "sha256": "bc1001174d03e134a4bb6dca8bdbb613b5ae711a2f2c272047fa696cca9e2f4a"
     }
   ]
 }
