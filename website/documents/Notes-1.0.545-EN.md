@@ -9,6 +9,13 @@ New saves use 9839; previous saves remain readable.
   Common: 500 credits / 45 seconds / level 4. Specialization: 750 credits /
   60 seconds / level 7 + IX. Powered Radar required; existing/future units,
   saves, deterministic network commands and AI supported. See Radar-Research.md.
+- UI refinements: golden frames blend into the actual score/region background,
+  without rectangular backing or black fringes; original PNG files retained.
+  White Radar price overlays (500 / 500 / 750) are separate from research names
+  and progress; labels follow the house colour.
+- Main and section menu buttons, including Lite: dark green for Tornie,
+  dark grey for Jericho, darker reddish orange for ArcaKev for easier reading.
+  These refinements replace the 1.0.545 downloads; download them again.
 - Raider Quad: all eight headings anchored to the vanilla Quad at 1×/2×/3×.
 - No blue editor star on Slowpost, in the palette or on the map.
 - Standard Rebels 2×2 Windtrap: editor pre-upgrade checkbox, immediate double
@@ -36,6 +43,6 @@ New saves use 9839; previous saves remain readable.
   resources and a display crop for Tornie’s supplied Fremen banner.
 
 Existing achievement profiles are retained; the 100% indicator follows all 73.
-Game source: 1c70cd44313b6405994e00b0e06b25b462ce42f4.
+Game source: 89f8fee66ba0abdc2555d696455b4805e6aae15c.
 Sources, notes, checksums and the offline website accompany the release.
 Detailed results are recorded in Validation-1.0.545.json.

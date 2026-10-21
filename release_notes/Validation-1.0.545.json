@@ -1,49 +1,140 @@
 {
   "version": "1.0.545",
-  "source": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
+  "source": "89f8fee66ba0abdc2555d696455b4805e6aae15c",
   "networkProtocol": 21,
   "saveVersion": 9839,
   "passed": true,
   "replacement": {
-    "initialSource": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
-    "archiveTag": "archive/releases/v1.0.545-initial",
+    "previousSource": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
+    "archiveTag": "archive/releases/v1.0.545-faction-frames",
     "changes": [
-      "faction frames in scores and regions",
-      "ordinary campaign banners restored",
-      "Neutral banner palette retained"
+      "faction-frame background blending",
+      "separate radar price overlays and house-coloured labels",
+      "dark green/grey/reddish-orange mod menu text, including Lite"
     ]
   },
   "local": {
-    "ctest": "2/2",
-    "unitCases": 145,
-    "assertions": 10891,
-    "nativeFrameLanguages": [
-      "fr",
-      "en"
-    ],
-    "campaignIdentitiesPerLanguage": 63,
-    "bonusColourBackgroundsPerLanguage": 126,
-    "originalArtworkFiles": 16,
-    "browserContexts": 264,
-    "originalWebsiteImagesPreserved": 208
-  },
-  "ci": {
-    "windows": {
-      "run": 39525729369,
-      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39525729369",
-      "workflowSource": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
-      "source": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
-      "conclusion": "success"
+    "status": "verified-local",
+    "checkedAtUtc": "2026-10-21T19:10:00.210333+00:00",
+    "version": "1.0.545",
+    "previousPublishedSource": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
+    "networkProtocol": 21,
+    "saveVersion": 9839,
+    "scope": "UI refinements; gameplay and save/network formats unchanged",
+    "menuColours": {
+      "Tornie": [
+        20,
+        68,
+        28
+      ],
+      "Jericho": [
+        52,
+        52,
+        52
+      ],
+      "ArcaKev": [
+        176,
+        64,
+        24
+      ],
+      "Lite": "same as full mod"
     },
-    "linux": {
-      "run": 39527092821,
-      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39527092821",
-      "workflowSource": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
-      "source": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
-      "conclusion": "success"
+    "radar": {
+      "priceOverlays": [
+        500,
+        500,
+        750
+      ],
+      "labelColour": "faction shade 3",
+      "priceColour": "white with black shadow",
+      "states": [
+        "available",
+        "active",
+        "complete"
+      ],
+      "locales": [
+        "en",
+        "fr"
+      ]
+    },
+    "originalArtworkFiles": 16,
+    "originalArtworkPreserved": true,
+    "ctest": {
+      "passed": true,
+      "tests": 2,
+      "unitCases": 145,
+      "assertions": 10891
+    },
+    "testedSourceSha256": {
+      "src/Menu/MainMenuButtonColor.h": "029330b9fd9023eeea63b869b49a69be5f6aa0ec45e5b5035ef9d1db236d903e",
+      "include/GUI/TextButton.h": "7c74aed4b264911d368cd0d075016c7bd2eeeda888e776e2428319b4f7c7c8ff",
+      "include/GUI/ResearchButton.h": "f4b21e28f22140c93da62bc2d2d17ff888b24b6af7ce9b3982b589366d4662fc",
+      "include/GUI/ObjectInterfaces/RadarInterface.h": "9e100bec0243e5dcbad3f46d59ec925e9b0b25fdb87b969f2fcf4e898ea2cb5c",
+      "src/FileClasses/GFXManager.cpp": "e64481d967cbb5e62d965afa8a85f3808c1189e8617062320e2e7b1c99aee2b5",
+      "tests/Release545Smoke.h": "061249fec899fe60bf09bc41c269a4ae0c50e929d8bd304ea59de30bde6697ad",
+      "tests/RadarResearchSmoke.h": "fa24c8934469c261974560010eb7e27685bc73a773c1f768d17b6b6023428bd4"
+    },
+    "source": "89f8fee66ba0abdc2555d696455b4805e6aae15c",
+    "native": {
+      "en": {
+        "passed": true,
+        "mods": 7,
+        "campaignIdentities": 63,
+        "bonusColourBackgrounds": 126,
+        "radarHouseCases": 55,
+        "logSha256": {
+          "release545": "b3e5756844baac535dbf20950ac3c8c0131d4b745331492d7ece8f05be468417",
+          "radar-research": "500e5d543b358203c17ae2a2a061b30ff40648509d8dc042844901377689d0af"
+        }
+      },
+      "fr": {
+        "passed": true,
+        "mods": 7,
+        "campaignIdentities": 63,
+        "bonusColourBackgrounds": 126,
+        "radarHouseCases": 55,
+        "logSha256": {
+          "release545": "400fc8defaa2d9eff3441e15eea8f3f56574f593a88ff7e33caaf8df389dce94",
+          "radar-research": "f81b550c5db21ec7b2f71ad77456a3327cafd48e24321c451db2c4e795457e86"
+        }
+      }
     }
   },
-  "previousReleaseValidation": "archive/1.0.545-initial/Validation-1.0.545.json",
+  "browser": {
+    "site-general.json": {
+      "passed": true,
+      "contexts": 36
+    },
+    "next-website-validation.json": {
+      "passed": true,
+      "contexts": 84
+    },
+    "release-site-validation.json": {
+      "passed": true,
+      "contexts": 144
+    }
+  },
+  "originalWebsiteImagesPreserved": 208,
+  "ci": {
+    "windows": {
+      "run": 39659402739,
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39659402739",
+      "workflowSource": "89f8fee66ba0abdc2555d696455b4805e6aae15c",
+      "source": "89f8fee66ba0abdc2555d696455b4805e6aae15c",
+      "conclusion": "success",
+      "validationScope": "ui-refinements"
+    },
+    "linux": {
+      "run": 39659394927,
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39659394927",
+      "workflowSource": "89f8fee66ba0abdc2555d696455b4805e6aae15c",
+      "source": "89f8fee66ba0abdc2555d696455b4805e6aae15c",
+      "conclusion": "success",
+      "validationScope": "ui-refinements"
+    }
+  },
+  "previousReleaseValidation": "archive/1.0.545-faction-frames/Validation-1.0.545.json",
+  "scope": "UI-only: CTest plus packaged FR/EN presentation, research and startup checks. Previous exhaustive campaign checks are archived, not claimed for this run.",
   "limits": [
     "Physical Mint display and a human Internet match across separate connections remain separate from automated checks."
   ]

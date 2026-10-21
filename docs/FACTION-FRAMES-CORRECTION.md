@@ -5,7 +5,10 @@ campagne et sur la carte des régions. Ils ne remplacent pas les bannières de
 sélection ni celles de confirmation de campagne.
 
 Le correctif conserve les PNG originaux. Les cadres sont affichés entièrement,
-sans déformer leur bordure, dans les deux emplacements des anciens emblèmes.
+sans déformer leur cadre gravé, dans les deux emplacements des anciens emblèmes.
+Le fond extérieur est remplacé par la texture exacte du menu, avec un bord
+progressivement transparent ; les quatre rivets sont conservés. Aucun rectangle
+doré importé ni bande noire ne reste autour du cadre.
 L’identité de la faction détermine le cadre, indépendamment de la couleur bonus
 et de l’ordre des maisons dans chaque mod. Les bannières ordinaires reprennent
 leur place dans le choix et la confirmation de campagne.
@@ -22,7 +25,8 @@ recherches/factions, sur ordinateur et mobile. Il présente ce déplacement comm
 un correctif publié dans la 1.0.545 corrigée. Les paquets, les sources et le
 site hors ligne ont été remplacés ensemble. La source précédente reste archivée.
 
-[Rapport de validation](FACTION-FRAMES-VALIDATION.json).
+[Validation du placement initial](FACTION-FRAMES-VALIDATION.json) ·
+[Validation des ajustements actuels](UI-545-REFINEMENTS.json).
 
 ## English
 
@@ -35,3 +39,8 @@ Compilation, both CTest suites and native French/English rendering checks passed
 for all seven modes and 63 campaign identities, including bonus colours. Indexed
 campaign banners retain their original colours. All 120 website contexts passed.
 The replacement 1.0.545 tag points to the corrected source; the initial source is archived.
+
+The current 1.0.545 replacement blends the outer backing into the actual menu
+texture with feathered edges, preserving the carved frame and its four studs.
+The original artwork files remain unchanged. See UI-545-REFINEMENTS.json for
+the current source and targeted FR/EN package validation.

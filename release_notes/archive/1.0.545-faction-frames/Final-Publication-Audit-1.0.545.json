@@ -1,0 +1,86 @@
+{
+  "version": "1.0.545",
+  "source": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
+  "tagSource": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
+  "previousSource": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
+  "previousSourceArchive": "archive/releases/v1.0.545-initial",
+  "websiteSource": "32d50cc30e3cf15f3508f0b0dc67cd0af07d9929",
+  "ciRuns": {
+    "windows": 39525729369,
+    "linux": 39527092821
+  },
+  "promotionRun": 39532609862,
+  "pagesRun": 39532689226,
+  "documentsRun": 39532801401,
+  "allPublishedAssetsVerified": true,
+  "sourceArchiveMatchesGitBlobs": true,
+  "sourceBlobCount": 8179,
+  "offlineWebsiteMatchesPublishedCommit": true,
+  "manifestPublishedByCI": true,
+  "assets": [
+    {
+      "name": "DuneLegacyTornie-1.0.545-Linux-Mint-Compatible.AppImage",
+      "sha256": "799babaaa70c5a7f006afaa73be0dd0185a6e242e09dffae62ca2e6e52f03892"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.545-Linux-x64.deb",
+      "sha256": "ced01fcd725bf4bcbc8406e68e43d7ab91712a2e69755e1cde60e0298d54ce27"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.545-Linux-x64.rpm",
+      "sha256": "edef6de009ddc33e73902e3381b13f7e55335726f887b622f8b9d7d2ed352d96"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.545-Linux-x64.tar.gz",
+      "sha256": "f60f7c7738ad992e8d7929a760d8bf4936c54f9d9d3430c6a1887731b31433d4"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.545-Linux-x86_64.AppImage",
+      "sha256": "ec8cb01218a264e85f9ad3bfda131dd5ba0ee072bcb663c2320c4bd4d85af2d2"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.545-Sources.zip",
+      "sha256": "f58ee95442374defbbd1949757b34605484bc03edf89fd465a4f826b34c9209b"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.545-Windows-x64.zip",
+      "sha256": "3b21bf7aaafe78b1126b49ab12cc3ef587b1ae36afc45842a0ea1e45d9c6a894"
+    },
+    {
+      "name": "DuneLegacyTornie-Site-Local-1.0.545.zip",
+      "sha256": "6db997e5b2547659dfa61bf080c9b1003f57215b8c5722ad27d1a1c8c29b2bbd"
+    },
+    {
+      "name": "Linux-Build-1.0.545.json",
+      "sha256": "b763bf31120e75df694366a55dcb770c9e2fae9f33e9b14025f27b914e48081f"
+    },
+    {
+      "name": "Package-Resources-Audit-1.0.545.json",
+      "sha256": "aeffed96192da526bb3f5fe164536b0ecf65240be96cdb8078407853bbb420aa"
+    },
+    {
+      "name": "Publication-Validation-1.0.545.json",
+      "sha256": "cbd75b7bc0a156a6e212f8c84074e970d485cc54dc6addc46920df51060fc40e"
+    },
+    {
+      "name": "Release-Notes-1.0.545-EN.md",
+      "sha256": "db1aefc092bb4b0c454aecdc2c2f4ab2406200440759ddf79e03b518446fab1c"
+    },
+    {
+      "name": "Release-Notes-1.0.545-FR.md",
+      "sha256": "28b3c1ae994fb0c399556c5c8f11a9e2064e6dc5d6f1edeb0bd5b4a696941d5c"
+    },
+    {
+      "name": "Validation-1.0.545.json",
+      "sha256": "678c4e49daf8ad3331134fb1cfac0151b34404189fe9f8ef28a5fd484650fc87"
+    },
+    {
+      "name": "Website-Validation-1.0.545.json",
+      "sha256": "080f5230df454c028eeb6042eb2a2cef37ff5a75eea6c7f61d966bb96c00e03c"
+    },
+    {
+      "name": "Windows-Build-1.0.545.json",
+      "sha256": "bc1001174d03e134a4bb6dca8bdbb613b5ae711a2f2c272047fa696cca9e2f4a"
+    }
+  ]
+}

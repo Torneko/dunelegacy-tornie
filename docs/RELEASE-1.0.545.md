@@ -1,7 +1,7 @@
 # 1.0.545 corrigée / Corrected 1.0.545
 
 La publication remplace les paquets initiaux de la 1.0.545, sans nouveau numéro.
-Source du jeu : `1c70cd44313b6405994e00b0e06b25b462ce42f4`. Protocole 21, sauvegardes 9839.
+Source du jeu : `89f8fee66ba0abdc2555d696455b4805e6aae15c`. Protocole 21, sauvegardes 9839.
 La publication initiale est conservée sous `archive/releases/v1.0.545-initial`.
 
 ## Ressources et interface
@@ -13,7 +13,12 @@ La publication initiale est conservée sous `archive/releases/v1.0.545-initial`.
 - Douze cadres dorés dans les scores et les régions : identité réelle de la
   maison, indépendamment du slot, du mod et de la couleur bonus. Les bannières
   habituelles restent dans les choix et confirmations de campagne.
-  Mise à l’échelle en mémoire, cadre entier sans découpe, originaux inchangés.
+  Mise à l’échelle en mémoire ; cadre gravé et rivets conservés, fond extérieur
+  fondu dans la texture du menu par transparence progressive. Originaux inchangés.
+- Radar : coûts blancs en surimpression séparés des noms et de la progression,
+  libellés aux couleurs de la maison, états disponible/en cours/terminé lisibles.
+- Menus et sections, Lite compris : Tornie vert foncé, Jericho gris foncé,
+  ArcaKev orange foncé rougeâtre (176, 64, 24), plus lisible.
 - Rejouer l’intro : bouton à droite, immédiatement au-dessus de la coop ;
   réutilise la vraie introduction puis restaure la musique du menu.
 - Bannière Fremen du site Tornie : recadrage visuel du PNG original conservé.
@@ -61,3 +66,10 @@ Radar/cinematics work. Corrected Windows/Linux/Mint downloads retain version 1.0
 Co-op rescue achievements resolve at team victory and support all local
 perspectives with two, three or four allied factions; Archon controllers share
 their house outcome. Sabotage requires a local Saboteur destroying an enemy Palace.
+
+Les ajustements d’interface sont vérifiés en FR/EN dans les paquets Windows et
+Linux/Mint, avec CTest moteur/réseau et contrôles de démarrage. Leurs tests ciblés
+ne répètent pas les 1 606 scénarios historiques. [Validation](UI-545-REFINEMENTS.json).
+
+UI-only replacement: frame background blending, separate Radar prices and house
+colours, and dark green/grey/reddish-orange mod menu text, including Lite.

@@ -1,4 +1,14 @@
-# Remplacement 1.0.545 — cadres dans les scores et les régions
+# Remplacement 1.0.545 — ajustements d’interface
+
+Source exacte : `89f8fee66ba0abdc2555d696455b4805e6aae15c`. Les cadres dorés sont fondus dans le fond des
+scores/régions ; le radar affiche ses prix en surimpression ; les menus suivent
+les couleurs des trois familles de mods, avec l’orange rougeâtre assombri d’ArcaKev.
+Les paquets Windows, Linux/Mint, les sources et le site FR/EN hors ligne sont
+alignés. Protocole 21 et sauvegardes 9839 conservés. La source du précédent
+correctif est conservée sous `archive/releases/v1.0.545-faction-frames` ; ses
+rapports sont dans `release_notes/archive/1.0.545-faction-frames/`.
+
+# Correctif précédent — cadres dans les scores et les régions
 
 La propriétaire a autorisé le remplacement des paquets 1.0.545. Nouvelle source
 exacte : `1c70cd44313b6405994e00b0e06b25b462ce42f4` ; source initiale conservée sous

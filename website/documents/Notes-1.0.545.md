@@ -9,6 +9,13 @@ Nouvelles sauvegardes 9839 ; anciennes sauvegardes lisibles.
   500 crédits, 45 secondes, niveau 4. Spécialisation : 750 crédits, 60 secondes,
   niveau 7 + IX. Radar alimenté requis ; bonus des unités présentes et futures,
   sauvegardés et synchronisés. IA compatible. Détail : Radar-Research.md.
+- Ajustements d’interface : fond des cadres dorés fondu dans la texture des
+  scores et régions, sans bordure rectangulaire ni frange noire. PNG originaux
+  conservés. Coûts du radar en surimpression blanche (500 / 500 / 750), séparés
+  des noms et de la progression ; libellés à la couleur de la maison.
+- Boutons du menu principal et des sections, Lite compris : vert foncé Tornie,
+  gris foncé Jericho, orange foncé tirant vers le rouge ArcaKev, plus lisible.
+  Ces ajustements remplacent les téléchargements 1.0.545 ; retéléchargez-les.
 - Raider Quad : huit directions ancrées sur le Quad vanilla aux zooms 1×/2×/3×.
 - Slowpost sans étoile dans la palette et sur le terrain de l’éditeur.
 - Éolienne Rebels 2×2 : option « Améliorée au départ » dans l’éditeur,
@@ -37,6 +44,6 @@ Nouvelles sauvegardes 9839 ; anciennes sauvegardes lisibles.
   ressources originales et bannière Fremen de Tornie recadrée à l’affichage.
 
 Les profils de succès restent conservés ; l’indicateur 100 % suit les 73 succès.
-Source du jeu : 1c70cd44313b6405994e00b0e06b25b462ce42f4.
+Source du jeu : 89f8fee66ba0abdc2555d696455b4805e6aae15c.
 Les sources, notes, empreintes et site hors ligne accompagnent la publication.
 Les résultats détaillés figurent dans Validation-1.0.545.json.

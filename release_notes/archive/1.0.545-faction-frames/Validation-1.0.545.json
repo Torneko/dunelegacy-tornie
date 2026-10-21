@@ -1,0 +1,50 @@
+{
+  "version": "1.0.545",
+  "source": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
+  "networkProtocol": 21,
+  "saveVersion": 9839,
+  "passed": true,
+  "replacement": {
+    "initialSource": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
+    "archiveTag": "archive/releases/v1.0.545-initial",
+    "changes": [
+      "faction frames in scores and regions",
+      "ordinary campaign banners restored",
+      "Neutral banner palette retained"
+    ]
+  },
+  "local": {
+    "ctest": "2/2",
+    "unitCases": 145,
+    "assertions": 10891,
+    "nativeFrameLanguages": [
+      "fr",
+      "en"
+    ],
+    "campaignIdentitiesPerLanguage": 63,
+    "bonusColourBackgroundsPerLanguage": 126,
+    "originalArtworkFiles": 16,
+    "browserContexts": 264,
+    "originalWebsiteImagesPreserved": 208
+  },
+  "ci": {
+    "windows": {
+      "run": 39525729369,
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39525729369",
+      "workflowSource": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
+      "source": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
+      "conclusion": "success"
+    },
+    "linux": {
+      "run": 39527092821,
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39527092821",
+      "workflowSource": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
+      "source": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
+      "conclusion": "success"
+    }
+  },
+  "previousReleaseValidation": "archive/1.0.545-initial/Validation-1.0.545.json",
+  "limits": [
+    "Physical Mint display and a human Internet match across separate connections remain separate from automated checks."
+  ]
+}
