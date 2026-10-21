@@ -1,0 +1,1857 @@
+{
+  "version": "1.0.543",
+  "status": "validated",
+  "sourceCommit": "c47c8f4069ab3f5fadc17cee5ef4bcfad5ca4c17",
+  "sourceBranch": "prepare/1.0.543-selling-allied-options",
+  "networkProtocol": 18,
+  "saveVersion": 9836,
+  "previousPublicationSource": "8a7a9980110979ba619c746d952c243631104071",
+  "engine": {
+    "ctest": "2/2 PASS",
+    "testCases": 141,
+    "assertions": 10646,
+    "scenarios": 1606,
+    "complete": true,
+    "achievements": true,
+    "frenchRuntime": {
+      "scenarios": 1606,
+      "complete": true,
+      "achievements": true,
+      "previous9835SaveLoaded": true
+    }
+  },
+  "runtime": {
+    "RELEASE 543 PASS:": 7,
+    "RELEASE 543 ALLIANCES PASS:": 7,
+    "RELEASE 543 UNITS PASS:": 6,
+    "RELEASE 543 GRAPHICS PASS:": 6,
+    "RELEASE 543 EDITOR TERRAIN PASS:": 6,
+    "RELEASE 543 FLAME PORTRAITS PASS:": 3,
+    "RELEASE 543 NEUTRAL SABOTEUR PASS:": 3,
+    "RELEASE 543 EXPANSION PASS:": 7
+  },
+  "features": {
+    "allNonVanillaSalesDefault": true,
+    "easyModeRefundPercent": 75,
+    "normalRefundPercent": 50,
+    "customAndMultiplayerAlliedRules": true,
+    "exactVanillaQuadAnchors": true,
+    "gasRange": 8,
+    "gasSight": 5,
+    "allThreeHarvesterTypesLevel": 7,
+    "allThreeHarvesterTypesRequireIX": true,
+    "neutralVerticalWindtrap": true,
+    "savedChaosWorfineryWormOfferPercent": 10,
+    "tameWormPrice": 950,
+    "napalmDamageAndHazardsPersist": true,
+    "editorOnlyStars": true,
+    "achievements": 70,
+    "vanillaFallbackWhenCustomContentDisabled": true
+  },
+  "artwork": {
+    "status": "PASS",
+    "archive": "Images.tar.gz",
+    "originalFilesPreserved": true,
+    "files": [
+      {
+        "file": "FlameQuadIcon.png",
+        "size": [
+          91,
+          55
+        ],
+        "sha256": "f995f882a45f3538bdecd4733651a194e759aa0f27326f15239243878e4b5d59",
+        "sourceOpaqueMagenta": 0,
+        "identicalCopies": [
+          "Tornie",
+          "TornieLite",
+          "Jericho",
+          "JerichoLite",
+          "ArcaKev",
+          "ArcaKevLite"
+        ]
+      },
+      {
+        "file": "FlameQuadTiles.png",
+        "size": [
+          88,
+          58
+        ],
+        "sha256": "4bc35bdb13118bc350def4c8788a87e1e53e12839044c9baf579f9c7bd478531",
+        "sourceOpaqueMagenta": 0,
+        "identicalCopies": [
+          "Tornie",
+          "TornieLite",
+          "Jericho",
+          "JerichoLite",
+          "ArcaKev",
+          "ArcaKevLite"
+        ]
+      },
+      {
+        "file": "Gaz_Infantry_sprites.png",
+        "size": [
+          101,
+          42
+        ],
+        "sha256": "bf1638b7ef4b4aa146a396bc0ba3b6744c459d410c32518b905f770c5f39de8f",
+        "sourceOpaqueMagenta": 2397,
+        "identicalCopies": [
+          "Tornie",
+          "TornieLite",
+          "Jericho",
+          "JerichoLite",
+          "ArcaKev",
+          "ArcaKevLite"
+        ]
+      },
+      {
+        "file": "ProductionTrooperFlames.png",
+        "size": [
+          91,
+          55
+        ],
+        "sha256": "aec900d2e8f0b101047e803be9a1dffbb1daa46e9d1298bd0a9126deaa084cfc",
+        "sourceOpaqueMagenta": 0,
+        "identicalCopies": [
+          "Tornie",
+          "TornieLite",
+          "Jericho",
+          "JerichoLite",
+          "ArcaKev",
+          "ArcaKevLite"
+        ]
+      },
+      {
+        "file": "ProductionTrooperGazInfantry.png",
+        "size": [
+          91,
+          55
+        ],
+        "sha256": "f0634d9178918764ba10d65ed95f5e2ccc265d9c0eb23f966d055d4bd1386f73",
+        "sourceOpaqueMagenta": 0,
+        "identicalCopies": [
+          "Tornie",
+          "TornieLite",
+          "Jericho",
+          "JerichoLite",
+          "ArcaKev",
+          "ArcaKevLite"
+        ]
+      },
+      {
+        "file": "ProductionTroopersFlames3.png",
+        "size": [
+          91,
+          55
+        ],
+        "sha256": "97d43b2db4127bb75f470b24e027b293e23c5785816b187c11506caa7144133c",
+        "identicalCopies": [
+          "Tornie",
+          "TornieLite",
+          "Jericho",
+          "JerichoLite",
+          "ArcaKev",
+          "ArcaKevLite"
+        ],
+        "sourceOpaqueMagenta": 0
+      },
+      {
+        "file": "ProductionTroopersFlames5.png",
+        "size": [
+          91,
+          55
+        ],
+        "sha256": "d6507ab6468871c34271b2fc4d811a181e7786a78dc298a5d0e83d79e7a86f44",
+        "identicalCopies": [
+          "Tornie",
+          "TornieLite",
+          "Jericho",
+          "JerichoLite",
+          "ArcaKev",
+          "ArcaKevLite"
+        ],
+        "sourceOpaqueMagenta": 0
+      }
+    ],
+    "archives": [
+      "Images.tar.gz",
+      "troopers_flames.tar.gz"
+    ]
+  },
+  "editableFallbacks": [
+    {
+      "file": "EliteOrnithopter.png",
+      "sha256": "789488cc13292b2105a7dabdbb67b2c61530ece3a9102ad924dccae8761b0d65"
+    },
+    {
+      "file": "FlameQuadAtlas.png",
+      "sha256": "7984a880a841e03372dc2d73b5ee6f974e54d2b53185f50b6e4e13180df18e00"
+    },
+    {
+      "file": "Harvester-Capacity.png",
+      "sha256": "f8a10b3a8bbdcbbb21933926fdc99f630585a7f02195aeac6a31699994c6b233"
+    },
+    {
+      "file": "Harvester-Fast.png",
+      "sha256": "f8a10b3a8bbdcbbb21933926fdc99f630585a7f02195aeac6a31699994c6b233"
+    },
+    {
+      "file": "NapalmRocket.png",
+      "sha256": "2ab5064e08a57d1732deff5b798f79b398f8551500ccd2ec84954b0ebd2d85c7"
+    },
+    {
+      "file": "Quad-Vanilla.png",
+      "sha256": "7232076a2288305edc394d318395a4a4fc4f21906c8316914d400e6cb02a408f"
+    },
+    {
+      "file": "RaiderQuad.png",
+      "sha256": "9a6877d16af5ee51582c75fb4ac13e7547890507be791461327fd15e9a64c1b1"
+    },
+    {
+      "file": "RangedTank-Base.png",
+      "sha256": "03b4020ff5f9353cdd8bb49d85cd47d649cf65b50e2b48905ea586585851a064"
+    },
+    {
+      "file": "RangedTank-Turret.png",
+      "sha256": "f0161c97461bac14122cfd0fa20be0feba546914b1ef694d3d1430ff03b33cfa"
+    },
+    {
+      "file": "SlowRocket.png",
+      "sha256": "7291efed6b023416396e9a5599da51f735fa6416b14021780509ee4d2bf80973"
+    },
+    {
+      "file": "SlowTank-Base.png",
+      "sha256": "03b4020ff5f9353cdd8bb49d85cd47d649cf65b50e2b48905ea586585851a064"
+    },
+    {
+      "file": "SlowTank-Turret.png",
+      "sha256": "f0161c97461bac14122cfd0fa20be0feba546914b1ef694d3d1430ff03b33cfa"
+    },
+    {
+      "file": "Slowpost.png",
+      "sha256": "8e552eaa42d03a0cd59051ba5b15adf70ae13710a8945d25bc452e86ab2b7056"
+    },
+    {
+      "file": "TameSandworm.png",
+      "sha256": "69da1e3694a748e78867092aede80bbd3b451eb50b704de1f3f75dfe9aff8885"
+    }
+  ],
+  "website": {
+    "base": "0769ffbcb9167520342e8f577ddf58606e1876bb",
+    "units": 40,
+    "achievements": 70,
+    "galleryImages": 145,
+    "originalGalleryFilesPreserved": 131,
+    "localRoutes": 36,
+    "featureContexts": 144,
+    "editableZip": "assets/downloads/Fallbacks-543.zip",
+    "expansionBrowserReport": {
+      "passed": true,
+      "count": 144,
+      "results": [
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "Tornie",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "Tornie",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "Tornie",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "Tornie",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "Tornie",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "Tornie",
+          "id": "elite-ornithopter",
+          "house": "W",
+          "level": 8,
+          "upgrade": 3,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "Tornie",
+          "id": "slow-tank",
+          "house": "C",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "TornieLite",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "TornieLite",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "TornieLite",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "TornieLite",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "TornieLite",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "Jericho",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "Jericho",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "Jericho",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "Jericho",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "Jericho",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "Jericho",
+          "id": "elite-ornithopter",
+          "house": "W",
+          "level": 8,
+          "upgrade": 3,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "Jericho",
+          "id": "slow-tank",
+          "house": "C",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "JerichoLite",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "JerichoLite",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "JerichoLite",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "JerichoLite",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "JerichoLite",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "ArcaKev",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "ArcaKev",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "ArcaKev",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "ArcaKev",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "ArcaKev",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "ArcaKev",
+          "id": "elite-ornithopter",
+          "house": "W",
+          "level": 8,
+          "upgrade": 3,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "ArcaKev",
+          "id": "slow-tank",
+          "house": "C",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "ArcaKevLite",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "ArcaKevLite",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "ArcaKevLite",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "ArcaKevLite",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 1280,
+          "mod": "ArcaKevLite",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Tornie",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Tornie",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Tornie",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Tornie",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Tornie",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Tornie",
+          "id": "elite-ornithopter",
+          "house": "W",
+          "level": 8,
+          "upgrade": 3,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Tornie",
+          "id": "slow-tank",
+          "house": "C",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "TornieLite",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "TornieLite",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "TornieLite",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "TornieLite",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "TornieLite",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Jericho",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Jericho",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Jericho",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Jericho",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Jericho",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Jericho",
+          "id": "elite-ornithopter",
+          "house": "W",
+          "level": 8,
+          "upgrade": 3,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "Jericho",
+          "id": "slow-tank",
+          "house": "C",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "JerichoLite",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "JerichoLite",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "JerichoLite",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "JerichoLite",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "JerichoLite",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKev",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKev",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKev",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKev",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKev",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKev",
+          "id": "elite-ornithopter",
+          "house": "W",
+          "level": 8,
+          "upgrade": 3,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKev",
+          "id": "slow-tank",
+          "house": "C",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKevLite",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKevLite",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKevLite",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKevLite",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "fr",
+          "width": 390,
+          "mod": "ArcaKevLite",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "Tornie",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "Tornie",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "Tornie",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "Tornie",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "Tornie",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "Tornie",
+          "id": "elite-ornithopter",
+          "house": "W",
+          "level": 8,
+          "upgrade": 3,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "Tornie",
+          "id": "slow-tank",
+          "house": "C",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "TornieLite",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "TornieLite",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "TornieLite",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "TornieLite",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "TornieLite",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "Jericho",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "Jericho",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "Jericho",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "Jericho",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "Jericho",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "Jericho",
+          "id": "elite-ornithopter",
+          "house": "W",
+          "level": 8,
+          "upgrade": 3,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "Jericho",
+          "id": "slow-tank",
+          "house": "C",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "JerichoLite",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "JerichoLite",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "JerichoLite",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "JerichoLite",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "JerichoLite",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "ArcaKev",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "ArcaKev",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "ArcaKev",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "ArcaKev",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "ArcaKev",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "ArcaKev",
+          "id": "elite-ornithopter",
+          "house": "W",
+          "level": 8,
+          "upgrade": 3,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "ArcaKev",
+          "id": "slow-tank",
+          "house": "C",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "ArcaKevLite",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "ArcaKevLite",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "ArcaKevLite",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "ArcaKevLite",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 1280,
+          "mod": "ArcaKevLite",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Tornie",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Tornie",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Tornie",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Tornie",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Tornie",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Tornie",
+          "id": "elite-ornithopter",
+          "house": "W",
+          "level": 8,
+          "upgrade": 3,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Tornie",
+          "id": "slow-tank",
+          "house": "C",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "TornieLite",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "TornieLite",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "TornieLite",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "TornieLite",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "TornieLite",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Jericho",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Jericho",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Jericho",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Jericho",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Jericho",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Jericho",
+          "id": "elite-ornithopter",
+          "house": "W",
+          "level": 8,
+          "upgrade": 3,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "Jericho",
+          "id": "slow-tank",
+          "house": "C",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "JerichoLite",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "JerichoLite",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "JerichoLite",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "JerichoLite",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "JerichoLite",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKev",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKev",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKev",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKev",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKev",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKev",
+          "id": "elite-ornithopter",
+          "house": "W",
+          "level": 8,
+          "upgrade": 3,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKev",
+          "id": "slow-tank",
+          "house": "C",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKevLite",
+          "id": "raider-quad",
+          "house": "O",
+          "level": 4,
+          "upgrade": 1,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKevLite",
+          "id": "ranged-tank",
+          "house": "A",
+          "level": 5,
+          "upgrade": 2,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKevLite",
+          "id": "fast-harvester",
+          "house": "A",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKevLite",
+          "id": "capacity-harvester",
+          "house": "M",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        },
+        {
+          "lang": "en",
+          "width": 390,
+          "mod": "ArcaKevLite",
+          "id": "gas-infantry",
+          "house": "O",
+          "level": 7,
+          "upgrade": 0,
+          "passed": true
+        }
+      ],
+      "editableZip": true
+    },
+    "galleryPreservation": {
+      "passed": true,
+      "base": "0769ffbcb9167520342e8f577ddf58606e1876bb",
+      "originalPngGifFiles": 131,
+      "additionalEditablePngFiles": 14
+    }
+  },
+  "publication": {
+    "authorized": true,
+    "replaceExistingRelease": true,
+    "newVersion544": false,
+    "mergeDefaultBranch": false,
+    "linuxRun": 39155815209,
+    "windowsRun": 39155817228,
+    "status": "packages-published",
+    "linuxPackageChecks": "success",
+    "windowsPackageChecks": "success",
+    "packagePublicationRun": 39175275550
+  },
+  "limits": [
+    "Automated tests do not replace confirmation on the affected Mint physical monitors or a human Internet match across independent connections."
+  ],
+  "source": "c47c8f4069ab3f5fadc17cee5ef4bcfad5ca4c17",
+  "validationStage": "verified-ci-and-local-runtime",
+  "deliveredPackages": {
+    "version": "1.0.543",
+    "source": "c47c8f4069ab3f5fadc17cee5ef4bcfad5ca4c17",
+    "passed": true,
+    "packages": [
+      {
+        "name": "DuneLegacyTornie-1.0.543-Windows-x64.zip",
+        "allModFilesMatchSource": true,
+        "modFileCount": 5587,
+        "suppliedOriginalPngCopies": 42,
+        "editableFallbackPngCopies": 78,
+        "sha256": "d855754edd325cdc5ce8e4697bcf057db59bab03821bee0bd985c4a391d4b6e2"
+      },
+      {
+        "name": "DuneLegacyTornie-1.0.543-Linux-Mint-Compatible.AppImage",
+        "allModFilesMatchSource": true,
+        "modFileCount": 5587,
+        "suppliedOriginalPngCopies": 42,
+        "editableFallbackPngCopies": 78,
+        "sha256": "a3603b75977e5f69a4e09c72d5b42ef39662099ecb033a40ea418db62a349e1a",
+        "xrandrCompiledAndBundled": true,
+        "pulseAudioCompiled": true
+      },
+      {
+        "name": "DuneLegacyTornie-1.0.543-Linux-x86_64.AppImage",
+        "allModFilesMatchSource": true,
+        "modFileCount": 5587,
+        "suppliedOriginalPngCopies": 42,
+        "editableFallbackPngCopies": 78,
+        "sha256": "343100c6012a03582fe02810af746eb6296fcf4bd8ca6559e93b5a42328497c7",
+        "xrandrCompiledAndBundled": true,
+        "pulseAudioCompiled": true
+      }
+    ],
+    "downloadedMintStartup": {
+      "passed": true,
+      "language": "fr",
+      "renderer": "software",
+      "developmentLibraryPathRemoved": true
+    }
+  },
+  "packagedBuildProvenance": {
+    "Linux": {
+      "version": "1.0.543",
+      "source": "c47c8f4069ab3f5fadc17cee5ef4bcfad5ca4c17",
+      "workflowSource": "c47c8f4069ab3f5fadc17cee5ef4bcfad5ca4c17",
+      "run": 39155815209,
+      "graphicalStartup": {
+        "passed": true,
+        "languages": [
+          "en",
+          "fr"
+        ],
+        "images": [
+          "standard",
+          "Mint-compatible"
+        ],
+        "audio": "PulseAudio",
+        "videoCases": [
+          "window",
+          "fullscreen",
+          "stale-combined-desktop"
+        ],
+        "xrandr": true
+      },
+      "softwareFallback": true,
+      "engineAndNetworkTests": true,
+      "packagedRuntimeChecks": [
+        "expanded-coop",
+        "editor-owners",
+        "rebels-mentat",
+        "rebels-windtrap-upgrade",
+        "building-sales",
+        "normal-multiplayer-alliances",
+        "flame-and-gas-units",
+        "magenta-free-zooms",
+        "house-colours-and-blue-stars",
+        "neutral-saboteur-tier-seven",
+        "editor-terrain-blue-stars",
+        "original-flame-squad-portraits",
+        "precise-close-flame-quad",
+        "sales-destruction-and-concrete",
+        "sale-button-after-upgrade",
+        "easy-sales-75-percent",
+        "extended-fallback-units",
+        "movement-slowing",
+        "saved-chaos-worm-offer",
+        "elite-ornithopter",
+        "seventy-achievements",
+        "palace-napalm-and-saved-hazards"
+      ],
+      "networkProtocol": 18,
+      "saveVersion": 9836
+    },
+    "Windows": {
+      "installedRuntimeChecks": [
+        "fr",
+        "en"
+      ],
+      "workflowSource": "c47c8f4069ab3f5fadc17cee5ef4bcfad5ca4c17",
+      "package": "DuneLegacyTornie-1.0.543-Windows-x64.zip",
+      "saveVersion": 9836,
+      "menuStartupChecks": [
+        "fr",
+        "en"
+      ],
+      "version": "1.0.543",
+      "videoOptionsChecks": [
+        "fr",
+        "en"
+      ],
+      "release543Checks": [
+        "building-sales",
+        "normal-multiplayer-alliances",
+        "flame-and-gas-units",
+        "magenta-free-zooms",
+        "house-colours-and-blue-stars",
+        "neutral-saboteur-tier-seven",
+        "editor-terrain-blue-stars",
+        "original-flame-squad-portraits",
+        "precise-close-flame-quad",
+        "sales-destruction-and-concrete",
+        "sale-button-after-upgrade",
+        "easy-sales-75-percent",
+        "extended-fallback-units",
+        "movement-slowing",
+        "saved-chaos-worm-offer",
+        "elite-ornithopter",
+        "seventy-achievements",
+        "palace-napalm-and-saved-hazards"
+      ],
+      "engineAndNetworkTests": true,
+      "networkProtocol": 18,
+      "run": 39155817228,
+      "source": "c47c8f4069ab3f5fadc17cee5ef4bcfad5ca4c17",
+      "sha256": "d855754edd325cdc5ce8e4697bcf057db59bab03821bee0bd985c4a391d4b6e2"
+    }
+  }
+}

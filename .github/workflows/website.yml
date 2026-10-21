@@ -1,0 +1,68 @@
+name: Deploy bilingual website
+
+on:
+  push:
+    branches: [ dunelegacy-tornie ]
+    paths:
+      - 'website/**'
+      - '.github/workflows/website.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/configure-pages@v5
+      - name: Verify both website languages
+        run: |
+          set -euo pipefail
+          npm install --prefix "$RUNNER_TEMP/site-checks" playwright@1.56.1
+          export NODE_PATH="$RUNNER_TEMP/site-checks/node_modules"
+          export SITE_BROWSER="$(command -v google-chrome || command -v chromium)"
+          export NEXT_SITE_OUTPUT="$RUNNER_TEMP/website-checks"
+          mkdir -p "$NEXT_SITE_OUTPUT"
+          node - <<'JAVASCRIPT'
+          const fs=require('fs'),vm=require('vm'),context={window:{}};
+          vm.createContext(context);
+          vm.runInContext(fs.readFileSync('website/assets/site-data.js','utf8'),context);
+          const data=context.window.SITE_DATA;
+          const rules=data['rules'+data.version.split('.').pop()];
+          if(!rules || !Number.isInteger(rules.protocol))throw Error('Missing release protocol metadata');
+          fs.appendFileSync(process.env.GITHUB_ENV,`RELEASE_VERSION=${data.version}\nNETWORK_PROTOCOL=${rules.protocol}\nREQUIRE_WINDOWS_VERSION=${data.version}\n`);
+          JAVASCRIPT
+      - name: Check navigation, images, factions and research
+        env:
+          NODE_PATH: ${{ runner.temp }}/site-checks/node_modules
+          NEXT_SITE_OUTPUT: ${{ runner.temp }}/website-checks
+          SITE_VALIDATION_OUTPUT: ${{ runner.temp }}/website-checks/general.json
+        run: |
+          export SITE_BROWSER="$(command -v google-chrome || command -v chromium)"
+          node scripts/check-documentation-site.cjs "file://$GITHUB_WORKSPACE/website/"
+          node scripts/check-next-preparation-site.cjs "file://$GITHUB_WORKSPACE/website/"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: website
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-22.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4

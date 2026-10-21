@@ -1,0 +1,42 @@
+# 1.0.543 — Units, alliances and building sales
+
+Replacement of the existing release, without creating 1.0.544. Linux, Mint AppImage and Windows share one source. Every participant must download **1.0.543 / protocol 18** again. New saves use **9836**; earlier saves remain readable, without retroactively adding new offers or units. Saved match rules are preserved.
+
+## Expanded replacement
+
+
+- Selling defaults **on in every non-Vanilla mod**. Refund **50%**, or **75% for Easy Mode allied houses**, of the discounted construction price, without storage. Saved match rules remain preserved.
+- Move Concrete Required to the left of general rules. Custom, multiplayer and co-op lobbies expose independent allied-control and allied-land-building rules.
+- Flame Quad: complete **128×16** atlas, eight **16×16** cells aligned to the exact vanilla Quad direction anchors without resampling. Original supplied PNGs stay intact. Gas Infantry range **8** (+3), sight **5**, matching Deviator sight.
+- Neutral gains the vertical **2×3 Windtrap** outside Vanilla, retaining its existing prerequisites.
+- **Raider Quad**: Ordos/Sardaukar, Light Factory level **4**, upgrade **1**, 300 credits, +25% speed over the Quad.
+- **Ranged Tank**: Atreides/Fremen, Heavy Factory level **5**, upgrade **2**, matching Launcher progression; 450 credits, range 7, sight 5.
+- Neutral **Slowpost** and Corruptique **Slow Tank**: level **7 + IX**, Construction Yard / Heavy Factory, 450/750 credits, range 7. Missile slows movement only, including allies caught by it: −50% speed for 4 s, Rebels −75% for 8 s, Kleshmersh immune. No direct damage.
+- **Fast Harvester**: Atreides/Kleshmersh, +25% speed. **Capacity Harvester**: Wildspade/Mercenary, **1,050** cargo instead of 700. Both cost **350**, Heavy Factory **level 7 + IX**. **Harvestank also moves to level 7 + IX**. HUD, limits, transport, unloading, interface and saved cargo recognize the variants.
+- Non-Vanilla Kleshmersh Palace: **Napalm missile**, Harkonnen **10-minute** recharge, half direct damage with persistent fire along its path and impact area, preserved exactly across save/load; replaces the old Fremen call.
+- **Tame Sandworm**: Chaos only. Each new Worfinery gets one deterministic draw, a **10%** chance of offering production at **950 credits**. Save/load retains the offer and queue. Controllable, sand-bound, does not attack allies or disappear after three meals.
+- Wildspade **Elite Ornithopter**: **level 8**, Hightech Factory **upgrade 3 + IX**, 825 credits, **32 HP / 56 damage** (about +25%, rounded to integers), ordinary speed/range.
+- Complete editable vanilla-derived fallback sheets in `graphics/fallbacks-543/`, loaded from each mod's files; transparency, house colours and exact 1×/2×/3× scales. Blue stars in editor buttons and on editor terrain only; no portrait overlays.
+- Update French/English How to Play for all **seven modes**, four allied factions, eight Archon controllers, spice palettes, sale/alliance rules and ArcaKev mentions.
+- **Master of ArcaKev** (12 campaigns), **Master of ArcaKev Lite** (6): **70 achievements** total. Custom arsenal includes new units across the three mod families. Co-op guests 3/4 can earn campaign completion too. Existing unlocks remain; 100% tracks the complete catalogue.
+- Keep **1.0.543**, network protocol **18**, new saves **9836**. Every participant needs the same replacement; earlier saves remain readable, without retroactively adding new offers or units.
+
+
+
+## Retained fixes
+
+- Building sales play destruction effects and sound, then leave owned concrete across the footprint without rubble. The `$` button follows the Upgrade slot and matches Repair size. Contained units evacuate; undelivered production is refunded separately. The sale achievement and statistics remain.
+- Kleshmersh retains default flame Troopers; Chaos donor technology determines weapons and prices. Harkonnen retains ordinary Troopers and separately produces flame Troopers at level 7 + IX. Infantry is excluded from Special vehicle draws.
+- Kleshmersh: Rocket Trike at level 3 / Light Factory upgrade 1; Flame Quad at level 5 / upgrade 2, replacing Sonic Trike. Flame Quad costs 300 with two 12-damage shots, normal short-range accuracy and fire effects; ordinary Quad costs 200 with two 7-damage shots.
+- Ordos/Tharpique Gas Infantry: WOR and Worfinery, IX, 250 credits. Heals allies (15 per missile), Deviator effect on enemies; range 8, sight 5.
+- All seven supplied PNGs remain unchanged in the six mods, including single/three/five flame-Trooper portraits. Magenta is removed at load time, opaque black preserved, with house tint and integer zooms. No blue stars or number 5 are added to portraits.
+- Neutral is brighter white in Tornie and ArcaKev. Saboteur production at the Worfinery, level 7 + IX, 500 credits, campaign and multiplayer in full mods. Other Palace Saboteur powers remain.
+- Jericho/Lite and ArcaKev/Lite offer the exact Tornie Rebels dark green as a bonus colour. Default faction colours are retained.
+- Optional local-house Harvester HUD counter, off by default in Tornie/Lite, includes the new variants.
+- Linux AppImages verify XRandR and PulseAudio support, fit old combined-desktop dimensions to one monitor, restore smaller video resolutions, preserve window size and retain software-renderer fallback.
+
+## Verification
+
+Local engine and network: **CTest 2/2**, **141 cases / 10,646 assertions**. Native checks cover all seven modes, production prerequisites, saved Chaos offers, napalm damage across save/load, sale refunds and editor markers. The French/English website and offline archive follow this revision; publication receipts record CI results and audits of delivered packages.
+
+[Full specifications](https://github.com/Torneko/dunelegacy-tornie/blob/v1.0.543/docs/UNITS-1.0.543.md) · [Editable sheets](https://torneko.github.io/dunelegacy-tornie/assets/downloads/Fallbacks-543.zip) · [FR/EN website](https://torneko.github.io/dunelegacy-tornie/index-en.html)

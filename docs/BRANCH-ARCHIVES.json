@@ -1,0 +1,223 @@
+{
+  "retainedBranch": "dunelegacy-tornie",
+  "gameHistory": "72eb0f07a39167123b95407c9d4edf0d0b35a3a5",
+  "websiteHistory": "68768fb040375076ae9ca72c083f76df2b97eeb2",
+  "archives": [
+    {
+      "branch": "agent/release-1.0.520",
+      "sha": "a88adbfbaf9c661aebaf0f8988d60f5330c6fd97",
+      "archiveTag": "archive/branches/2026-10-20/agent/release-1.0.520",
+      "kind": "remote"
+    },
+    {
+      "branch": "agent/release-1.0.521",
+      "sha": "288a070b490a86c92a07a5e43396c38041465d26",
+      "archiveTag": "archive/branches/2026-10-20/agent/release-1.0.521",
+      "kind": "remote"
+    },
+    {
+      "branch": "agent/release-1.0.522",
+      "sha": "1f346dbcbe0e18df9338605995736926a1850c9d",
+      "archiveTag": "archive/branches/2026-10-20/agent/release-1.0.522",
+      "kind": "remote"
+    },
+    {
+      "branch": "codex/538-followup",
+      "sha": "3cfecb67788208aeb0b14a2a68ba7b0e188c65f5",
+      "archiveTag": "archive/branches/2026-10-20/codex/538-followup",
+      "kind": "remote"
+    },
+    {
+      "branch": "codex/release-1.0.537",
+      "sha": "2e54898202b13bd238064d6920c8bbea5253342d",
+      "archiveTag": "archive/branches/2026-10-20/codex/release-1.0.537",
+      "kind": "remote"
+    },
+    {
+      "branch": "codex/release-1.0.538",
+      "sha": "c39a276e1bb4a8749b055d6283df3e067dec7e71",
+      "archiveTag": "archive/branches/2026-10-20/codex/release-1.0.538",
+      "kind": "remote"
+    },
+    {
+      "branch": "compat/linux-mint-22-retro-1538",
+      "sha": "0acddb4727efdf945522edbc72eec9457d6cfec0",
+      "archiveTag": "archive/branches/2026-10-20/compat/linux-mint-22-retro-1538",
+      "kind": "remote"
+    },
+    {
+      "branch": "diagnostics/post-544-engine",
+      "sha": "3119e4b4616b24b22b01fde47addb3662362b41b",
+      "archiveTag": "archive/branches/2026-10-20/diagnostics/post-544-engine",
+      "kind": "remote"
+    },
+    {
+      "branch": "diagnostics/video-543",
+      "sha": "684e3743d0ce3241473c21228b3cbb3a9f754718",
+      "archiveTag": "archive/branches/2026-10-20/diagnostics/video-543",
+      "kind": "remote"
+    },
+    {
+      "branch": "docs/1.0.542-draft",
+      "sha": "33b9edb2631edcf77efe1d5d5b976fadaf2b4cb6",
+      "archiveTag": "archive/branches/2026-10-20/docs/1.0.542-draft",
+      "kind": "remote"
+    },
+    {
+      "branch": "docs/1.0.543-draft",
+      "sha": "64a57fb5d912b65128a33aab0994f2b73e54343f",
+      "archiveTag": "archive/branches/2026-10-20/docs/1.0.543-draft",
+      "kind": "remote"
+    },
+    {
+      "branch": "docs/post-544-radar-cinematics",
+      "sha": "68768fb040375076ae9ca72c083f76df2b97eeb2",
+      "archiveTag": "archive/branches/2026-10-20/docs/post-544-radar-cinematics",
+      "kind": "remote"
+    },
+    {
+      "branch": "download/kleshmersh-mentat-husky",
+      "sha": "5ca02b51cbebd27d2bdad557a0ea27e917d7883a",
+      "archiveTag": "archive/branches/2026-10-20/download/kleshmersh-mentat-husky",
+      "kind": "remote"
+    },
+    {
+      "branch": "feature/original-westwood-intro",
+      "sha": "0dc86075c18b79533a320e0e3fa00faf7a108801",
+      "archiveTag": "archive/branches/2026-10-20/feature/original-westwood-intro",
+      "kind": "remote"
+    },
+    {
+      "branch": "fix/1.0.541-allied-building-editor-owner",
+      "sha": "d8726a38f9dc0a9879de567edf1547b3d9b47318",
+      "archiveTag": "archive/branches/2026-10-20/fix/1.0.541-allied-building-editor-owner",
+      "kind": "remote"
+    },
+    {
+      "branch": "fix/1.0.541-coop-funds",
+      "sha": "06a2b495a86c525780a6e20aaf70de3988ba375f",
+      "archiveTag": "archive/branches/2026-10-20/fix/1.0.541-coop-funds",
+      "kind": "remote"
+    },
+    {
+      "branch": "fix/544-site-posts-turret",
+      "sha": "3652cc6b4a8276df6fbdf2cbbf5f5605a11db84b",
+      "archiveTag": "archive/branches/2026-10-20/fix/544-site-posts-turret",
+      "kind": "remote"
+    },
+    {
+      "branch": "fix/544-slowpost-ranged-worfinery",
+      "sha": "2bc852167b50880f90b7c91e53326c069892af82",
+      "archiveTag": "archive/branches/2026-10-20/fix/544-slowpost-ranged-worfinery",
+      "kind": "remote"
+    },
+    {
+      "branch": "gh-pages",
+      "sha": "68768fb040375076ae9ca72c083f76df2b97eeb2",
+      "archiveTag": "archive/branches/2026-10-20/gh-pages",
+      "kind": "remote"
+    },
+    {
+      "branch": "plan/radar-research-next-release",
+      "sha": "427190d452d4d2d2fcb9d92275a5ab18e72891f6",
+      "archiveTag": "archive/branches/2026-10-20/plan/radar-research-next-release",
+      "kind": "remote"
+    },
+    {
+      "branch": "prepare/1.0.534",
+      "sha": "327f95aeb93ac107a28a6a6b895df731dc210df5",
+      "archiveTag": "archive/branches/2026-10-20/prepare/1.0.534",
+      "kind": "remote"
+    },
+    {
+      "branch": "prepare/1.0.535",
+      "sha": "0b029dff34408f0a6264d0a674b8ad1123e6e6dd",
+      "archiveTag": "archive/branches/2026-10-20/prepare/1.0.535",
+      "kind": "remote"
+    },
+    {
+      "branch": "prepare/1.0.536",
+      "sha": "4c26d6cc6887ab9fd0735269366829b057a52a63",
+      "archiveTag": "archive/branches/2026-10-20/prepare/1.0.536",
+      "kind": "remote"
+    },
+    {
+      "branch": "prepare/1.0.542-mod-rules-lobbies",
+      "sha": "e951dbea2da4e1e6bbec00b6ed2e505ae1229c8d",
+      "archiveTag": "archive/branches/2026-10-20/prepare/1.0.542-mod-rules-lobbies",
+      "kind": "remote"
+    },
+    {
+      "branch": "prepare/1.0.543-selling-allied-options",
+      "sha": "df3a5bf76e483bd9603d57ae5e95ce454bef2659",
+      "archiveTag": "archive/branches/2026-10-20/prepare/1.0.543-selling-allied-options",
+      "kind": "remote"
+    },
+    {
+      "branch": "prepare/1.0.544",
+      "sha": "51f9e2b4c1ed937d827782e7770577c42683213a",
+      "archiveTag": "archive/branches/2026-10-20/prepare/1.0.544",
+      "kind": "remote"
+    },
+    {
+      "branch": "prepare/post-544-radar-cinematics",
+      "sha": "72eb0f07a39167123b95407c9d4edf0d0b35a3a5",
+      "archiveTag": "archive/branches/2026-10-20/prepare/post-544-radar-cinematics",
+      "kind": "remote"
+    },
+    {
+      "branch": "prepare/site-1.0.534",
+      "sha": "5f1525c6bf6e00068661524d87e60fea0396ea43",
+      "archiveTag": "archive/branches/2026-10-20/prepare/site-1.0.534",
+      "kind": "remote"
+    },
+    {
+      "branch": "prepare/site-1.0.535",
+      "sha": "4a81b5d2fddc1f18b5950d1c1c3f31de05120375",
+      "archiveTag": "archive/branches/2026-10-20/prepare/site-1.0.535",
+      "kind": "remote"
+    },
+    {
+      "branch": "publish/544-correctifs",
+      "sha": "d6a29fd82906eb1f4856eced2dfb01fe3e74637e",
+      "archiveTag": "archive/branches/2026-10-20/publish/544-correctifs",
+      "kind": "remote"
+    },
+    {
+      "branch": "publish/544-promote",
+      "sha": "901d660ce63851c4011c53e79262b3d467247c83",
+      "archiveTag": "archive/branches/2026-10-20/publish/544-promote",
+      "kind": "remote"
+    },
+    {
+      "branch": "publish/544-stop-superseded",
+      "sha": "49b476d5719efa084870e62a84bdcbd089242d93",
+      "archiveTag": "archive/branches/2026-10-20/publish/544-stop-superseded",
+      "kind": "remote"
+    },
+    {
+      "branch": "publish/linux-mint-22-retro-1538",
+      "sha": "46fcb1f845bedace204fdd36038c54d16db1a17e",
+      "archiveTag": "archive/branches/2026-10-20/publish/linux-mint-22-retro-1538",
+      "kind": "remote"
+    },
+    {
+      "branch": "release/1.0.517-tornie",
+      "sha": "1dd7614af123c47be50c82325617d8204fa06bb2",
+      "archiveTag": "archive/branches/2026-10-20/release/1.0.517-tornie",
+      "kind": "remote"
+    },
+    {
+      "branch": "release/1.0.541-arcakev",
+      "sha": "51048cab01c055bdefb5fb9717e619f22241ee9a",
+      "archiveTag": "archive/branches/2026-10-20/release/1.0.541-arcakev",
+      "kind": "remote"
+    },
+    {
+      "branch": "work",
+      "sha": "c75fe689dc58979e2eac8c1350824b3e91b513f5",
+      "archiveTag": "archive/branches/2026-10-20/work",
+      "kind": "remote"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+# 1.0.543 — Unités, alliances et vente
+
+Remplacement de la release existante, sans créer de 1.0.544. Linux, AppImage Mint et Windows utilisent la même source. Tous les participants doivent retélécharger **1.0.543 / protocole 18**. Nouvelles sauvegardes **9836** ; les anciennes restent lisibles, sans ajout rétroactif des nouvelles offres ou unités. Les règles des parties enregistrées sont conservées.
+
+## Extension du remplacement 1.0.543
+
+- Vente activée par défaut dans **tous les mods hors Vanilla**. Remboursement de **50 %**, ou **75 % pour les maisons alliées du mode facile**, calculé sur le prix de construction après réduction ; aucun stockage nécessaire. Les règles enregistrées dans les sauvegardes restent conservées.
+- Option « Béton requis » déplacée à gauche des options générales. Contrôle des alliés et construction sur leurs terres disponibles séparément dans les lobbies personnalisés, multijoueurs et coop.
+- Flame Quad : nouvelle feuille complète **128×16**, huit cases de **16×16** alignées sur les huit repères du Quad vanilla, sans rééchantillonnage. Les PNG fournis restent intacts. Portée de l’infanterie à gaz : **8** (+3) ; vision **5**, comme le Deviator.
+- Neutral : éolienne verticale **2×3**, hors Vanilla, avec les prérequis existants de cette éolienne.
+- **Raider Quad** : Ordos/Sardaukar, usine légère niveau **4**, amélioration **1**, 300 crédits, vitesse +25 % par rapport au Quad.
+- **Tank longue portée** : Atreides/Fremen, usine lourde niveau **5**, amélioration **2**, comme le Launcher ; 450 crédits, portée 7, vision 5.
+- **Slowpost Neutral** et **Slow Tank Corruptique** : niveau **7 + IX**, respectivement chantier et usine lourde. Prix 450/750 crédits, portée 7. Le missile ralentit uniquement le déplacement, y compris les alliés touchés : vitesse −50 % pendant 4 s ; Rebels −75 % pendant 8 s ; Kleshmersh immunisé. Pas de dégâts directs.
+- Moissonneuse **rapide** : Atreides/Kleshmersh, vitesse +25 %. Moissonneuse **grande capacité** : Wildspade/Mercenary, **1 050** au lieu de 700. Toutes deux à **350 crédits, usine lourde niveau 7 + IX**. Le **Harvestank passe également au niveau 7 + IX**. Compteur, plafonds, transport, déchargement, interface et sauvegardes reconnaissent les variantes.
+- Palais Kleshmersh hors Vanilla : **missile au napalm**, délai Harkonnen **10 minutes**, dégâts directs réduits de moitié, traînée et zone d’impact incendiaires persistantes, conservées exactement après sauvegarde/reprise. Remplace l’ancien appel de Fremen.
+- **Ver apprivoisé** : mode Chaos uniquement, tirage déterministe unique à la création de chaque Worfinery, **10 %** de chance de proposer sa production à **950 crédits**. Le tirage et la file sont conservés à la reprise. Ver contrôlable, limité au sable, n’attaque pas les alliés et ne disparaît pas après trois repas.
+- **Ornithoptère élite Wildspade** : niveau **8**, **troisième amélioration de l’usine high-tech + IX**, 825 crédits, **32 PV et 56 dégâts** (environ +25 %, arrondis entiers), vitesse/portée normales.
+- Planches de remplacement complètes issues des graphismes vanilla, modifiables dans `graphics/fallbacks-543/` et chargées depuis les fichiers de chaque mod. Transparence et couleurs de maison conservées, zooms entiers 1×/2×/3×. Étoiles bleues dans les boutons et sur le terrain de l’éditeur ; aucun ajout sur les portraits.
+- Aide « How to Play » FR/EN actualisée pour les **sept modes**, la coop à quatre factions, l’archonte à huit, les épices et les règles d’alliance/vente. ArcaKev et Lite figurent dans les mentions des mods.
+- Succès **Maître d’ArcaKev** (12 campagnes) et **Maître d’ArcaKev Lite** (6 campagnes) : **70 succès** au total. L’arsenal personnalisé compte les nouvelles unités dans les trois familles de mods. Les invités coop 3 et 4 peuvent aussi valider la campagne coop. Les succès précédemment obtenus restent acquis ; le 100 % suit le catalogue complet.
+- Même numéro **1.0.543**, **protocole 18**, nouvelles sauvegardes **9836**. Tous les participants devront installer le même remplacement ; anciennes sauvegardes lisibles, unités/offres nouvelles non ajoutées rétroactivement.
+
+
+
+
+## Autres correctifs conservés
+
+- Vente : explosions et son de destruction, puis béton appartenant au propriétaire sur toute l’emprise, sans texture de ruine. Bouton `$` après l’emplacement d’amélioration, de la taille de Réparer. Évacuation des unités contenues, remboursement séparé des productions non livrées, succès « Liquidités » et statistiques conservés.
+- Troopers lance-flammes Kleshmersh par défaut ; technologies et prix suivent le donneur Chaos. Harkonnen conserve ses Troopers ordinaires et produit séparément la version lance-flammes au niveau 7 + IX. Cette infanterie ne compte pas comme véhicule Special.
+- Kleshmersh : Rocket Trike niveau 3 / usine légère amélioration 1 ; Flame Quad niveau 5 / amélioration 2, sans Sonic Trike. Flame Quad à 300 crédits, deux tirs de 12 dégâts, précision normale à courte portée et effet de feu ; Quad normal à 200 crédits et deux tirs de 7 dégâts.
+- Infanterie à gaz Ordos/Tharpique : WOR et Worfinery, IX, 250 crédits. Soigne les alliés (15 par missile), effet Deviator sur les ennemis ; portée 8, vision 5.
+- Les sept PNG fournis restent intacts dans les six mods, dont les portraits lance-flammes individuels/3/5. Magenta retiré au chargement, noir opaque conservé, teintes par maison et zooms entiers. Aucune étoile ni chiffre 5 ajouté aux portraits.
+- Neutral : blanc plus clair dans Tornie et ArcaKev ; Saboteur à la Worfinery, niveau 7 + IX, 500 crédits, campagne et multijoueur dans les mods complets. Les pouvoirs Saboteur des autres palais sont conservés.
+- Jericho/Lite et ArcaKev/Lite : couleur bonus vert foncé identique aux Rebels de Tornie. Les couleurs par défaut des factions sont conservées.
+- Compteur de moissonneuses local optionnel, désactivé par défaut dans Tornie/Lite ; inclut les nouvelles variantes.
+- Linux : prise en charge XRandR et PulseAudio contrôlée dans les AppImages ; dimensions limitées au moniteur de la fenêtre, résolutions plus petites rétablies, taille choisie conservée et repli logiciel disponible.
+
+## Vérifications
+
+Moteur et réseau : **CTest 2/2**, **141 cas / 10 646 assertions** en local. Les vérifications natives couvrent les sept modes, les productions et prérequis, les offres Chaos sauvegardées, le napalm et ses dégâts après reprise, les remboursements et les marqueurs de l’éditeur. Le site FR/EN et son archive hors ligne suivent cette même révision ; les reçus de publication indiquent les résultats CI et l’audit des paquets effectivement livrés.
+
+[Spécifications complètes](https://github.com/Torneko/dunelegacy-tornie/blob/v1.0.543/docs/UNITS-1.0.543.md) · [Planches modifiables](https://torneko.github.io/dunelegacy-tornie/assets/downloads/Fallbacks-543.zip) · [Site FR/EN](https://torneko.github.io/dunelegacy-tornie/)

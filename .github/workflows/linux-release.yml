@@ -1,8 +1,6 @@
 name: Linux release packages
 
 on:
-  push:
-    branches: [ publish/544-correctifs ]
   workflow_dispatch:
     inputs:
       release_tag:
@@ -18,6 +16,10 @@ on:
         description: Optional source revision to stage before replacing an existing release
         type: string
         default: ''
+      website_ref:
+        description: Website snapshot ref (defaults to the website/ directory on dunelegacy-tornie)
+        type: string
+        default: dunelegacy-tornie
       publish_packages:
         description: Attach the built Linux packages to the release
         type: boolean
@@ -423,6 +425,7 @@ jobs:
           RELEASE_TAG: ${{ inputs.release_tag || 'v1.0.544' }}
           VERIFIED_LINUX_RUN: ${{ inputs.verified_linux_run }}
           VERIFIED_WINDOWS_RUN: ${{ inputs.verified_windows_run }}
+          WEBSITE_REF: ${{ inputs.website_ref || 'dunelegacy-tornie' }}
         run: |
           set -euo pipefail
           [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
@@ -453,9 +456,15 @@ jobs:
           assert run['path'] == '.github/workflows/build.yml', 'Unexpected Windows workflow'
           PYTHON
           fi
-          git fetch --depth=1 origin gh-pages
+          git fetch --depth=1 origin "$WEBSITE_REF"
+          git rev-parse FETCH_HEAD > "$RUNNER_TEMP/website-source.txt"
           mkdir -p offline/DuneLegacyTornie-Site-Local/dist supporting
-          git archive FETCH_HEAD | tar -x -C offline/DuneLegacyTornie-Site-Local/dist
+          if git cat-file -e FETCH_HEAD:website/index.html 2>/dev/null; then
+            git archive FETCH_HEAD website | tar -x --strip-components=1 -C offline/DuneLegacyTornie-Site-Local/dist
+          else
+            # Explicit historical archive tags retain the former root layout.
+            git archive FETCH_HEAD | tar -x -C offline/DuneLegacyTornie-Site-Local/dist
+          fi
           RELEASE_VERSION="${RELEASE_TAG#v}" node - <<'JAVASCRIPT'
           const fs=require('fs'),vm=require('vm'),c={window:{}};vm.createContext(c);
           vm.runInContext(fs.readFileSync('offline/DuneLegacyTornie-Site-Local/dist/assets/site-data.js','utf8'),c);
@@ -468,7 +477,6 @@ jobs:
           # workflow revision used for this dispatch.
           git fetch --depth=1 origin "${{ github.sha }}"
           git show FETCH_HEAD:scripts/check-documentation-site.cjs > /tmp/check-documentation-site.cjs
-          git fetch --depth=1 origin gh-pages
           npm install --prefix "$RUNNER_TEMP/site-checks" playwright@1.56.1
 
       - name: Assemble and attach release documents
@@ -510,7 +518,8 @@ jobs:
           python3 - <<'PYTHON'
           import hashlib, json, os, pathlib, subprocess, zipfile
           root = pathlib.Path('supporting')
-          report = {'version': os.environ['RELEASE_TAG'][1:], 'source': subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(), 'website': subprocess.check_output(['git','rev-parse','FETCH_HEAD'],text=True).strip(), 'linuxRun': int(os.environ['VERIFIED_LINUX_RUN']), 'assets': []}
+          website_source = (pathlib.Path(os.environ['RUNNER_TEMP'])/'website-source.txt').read_text().strip()
+          report = {'version': os.environ['RELEASE_TAG'][1:], 'source': subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(), 'website': website_source, 'linuxRun': int(os.environ['VERIFIED_LINUX_RUN']), 'assets': []}
           if os.environ.get('VERIFIED_WINDOWS_RUN'): report['windowsRun'] = int(os.environ['VERIFIED_WINDOWS_RUN'])
           for path in sorted(root.iterdir()):
               report['assets'].append({'name':path.name,'size':path.stat().st_size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest()})

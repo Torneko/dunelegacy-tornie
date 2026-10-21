@@ -1,0 +1,49 @@
+{
+  "version": "1.0.545",
+  "source": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
+  "networkProtocol": 21,
+  "saveVersion": 9839,
+  "passed": true,
+  "local": {
+    "engineCases": 145,
+    "assertions": 10891,
+    "ctest": "2/2",
+    "campaignScenarios": 1606,
+    "native545": [
+      "fr",
+      "en"
+    ],
+    "coopFactions": [
+      2,
+      3,
+      4
+    ],
+    "goldenCampaignContextsPerLanguage": 63,
+    "originalArtworkFiles": 16,
+    "originalWebsitePngAndGifPreserved": 192,
+    "browserContexts": 264,
+    "achievementFixtureIsolation": true
+  },
+  "ci": {
+    "windows": {
+      "run": 39510210888,
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39510210888",
+      "source": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
+      "conclusion": "success"
+    },
+    "linux": {
+      "run": 39510214591,
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39510214591",
+      "source": "ba003c2cc87e0cc2dbe43b36b235e4889641cf9f",
+      "conclusion": "success"
+    }
+  },
+  "previousPreparation": {
+    "source": "fbe8b46270efc7635b9f3cc7446df90a3356e9c2",
+    "report": "Validation-Next-Release.json"
+  },
+  "limits": [
+    "Audio checked programmatically; human listening remains separate.",
+    "Physical Mint display and human Internet match across separate connections remain separate from automated checks."
+  ]
+}

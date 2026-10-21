@@ -1,3 +1,14 @@
+# Organisation actuelle — branche unique
+
+Le code et le site sont réunis sur `dunelegacy-tornie`. Le site français/anglais
+se maintient dans `website/` et se déploie par le workflow `website.yml`.
+Récupérer cette branche sur chaque PC avant de travailler ; ne plus créer de
+branche de préparation ou de documentation. Les tags d’archive préservent les
+anciens états. Voir [SINGLE-BRANCH.md](SINGLE-BRANCH.md).
+
+Les mentions de branches séparées dans les comptes rendus historiques ci-dessous
+décrivent l’organisation utilisée lors de ces publications.
+
 # 1.0.545 — publication autorisée
 
 Source du jeu et tag : `ba003c2cc87e0cc2dbe43b36b235e4889641cf9f`, protocole 21, sauvegardes 9839.
@@ -13,7 +24,7 @@ nouveaux portraits et cadres de campagne ; les 192 PNG/GIF préexistants restent
 [Reçus](../release_notes/Publication-Receipt-1.0.545.json) ·
 [Audit final](../release_notes/Final-Publication-Audit-1.0.545.json).
 Les reçus portent les révisions et les résultats définitifs ; le tag du jeu
-reste figé, les rapports sont ajoutés ensuite à la branche de préparation.
+reste figé, les rapports sont conservés sur la branche principale.
 
 # Préparation précédente — historique
 
@@ -439,10 +450,10 @@ the public branch before merging website changes from another PC.
 
 - Published site: https://torneko.github.io/dunelegacy-tornie/
 - English entry: https://torneko.github.io/dunelegacy-tornie/index-en.html
-- GitHub Pages source: the root of the `gh-pages` branch, separate from the game source branch `dunelegacy-tornie`.
+- GitHub Pages source: `website/` on `dunelegacy-tornie`, deployed by `.github/workflows/website.yml`.
 - Offline package: `DuneLegacyTornie-Site-Local-<version>.zip` in the matching GitHub release. Its website files are under `DuneLegacyTornie-Site-Local/dist/`.
 
-Before editing, fetch both branches and read the matching release notes and validation report. Preserve unrelated local changes. Retrieve the latest site from `origin/gh-pages` or the release package; previous PCs may retain older website generators outside this repository.
+Before editing, fetch `dunelegacy-tornie` and read the matching release notes and validation report. Preserve unrelated local changes. Use `website/` on this branch or the matching release package; previous PCs may retain older website generators outside this repository.
 
 ## Updating the content
 
@@ -458,7 +469,7 @@ Keep the offline package functional through `file://`, including its local downl
 
 Check both languages in a real browser on desktop and mobile widths: navigation, affected fiches/technology routes, language switching, images, search/filter controls and downloads. Check offline access and browser errors. Validate that the displayed version and download targets match the release, and that the gallery images exist.
 
-When releasing the game, include the updated offline site ZIP and publish the corresponding site through the configured `gh-pages` source. Verify the resulting Pages deployment and the live French and English entries. Report the checks actually performed and any unresolved game issues; a previous validation report does not validate a later build.
+When releasing the game, include the updated offline site ZIP and publish the corresponding `website/` directory through the GitHub Actions Pages workflow. Verify the resulting Pages deployment and the live French and English entries. Report the checks actually performed and any unresolved game issues; a previous validation report does not validate a later build.
 
 Historical synchronized release: **1.0.535**, tag `v1.0.535`, revised tagged game source `9ca89b3394a0190cf8db05c0538c771fa2e6e78c`; published website `66bcd8722e58cc757573c9220fb0dfb5a8d5d19c`. The existing 1.0.535 was replaced at Tornie's explicit request on 2026-10-06; no new version was created. The initial campaign rebuild was published through merged PRs #6 and #7; the revised opening balance is commit `9ca89b33`. Both public entries and the offline site ZIP match this revision: 30 unit entries, 29 buildings, 46 achievements and 111 PNGs.
 
@@ -472,6 +483,6 @@ Validation: revised release CI https://github.com/Torneko/dunelegacy-tornie/acti
 
 The published site passed 36 desktop/mobile routes, eight campaign views and twelve Windtrap portrait cases, in addition to 54 offline/local routes, eight affected fiches and 24 portrait checks. All 111 PNG hashes, five public website downloads and nineteen release asset hashes were verified. Reports attached to the release include `Validation-1.0.535.json`, `Campaign-Opening-Balance-1.0.535.json`, `Same-Version-Profile-Update-1.0.535.json` and `Publication-Validation-1.0.535.json`. Tornie authorized publication of this replacement; the new opening balance has automated checks and still benefits from human playtesting. Extended all-faction campaign balance and a live two-PC multiplayer match remain broader playtesting work.
 
-For the next update on either PC, use this published `origin/gh-pages` tree or the matching offline ZIP as the website baseline. Fetch both source branches explicitly if the local clone has a single-branch fetch refspec; do not recover the site from an older preview generator. Historical campaign tooling intentionally uses immutable baseline commits: initial 1.0.535 source `fa2a5de3d23507f95332e243d060eeb419ce8fd5` and original 1.0.534. The published tag now points to `9ca89b33`.
+For the next update on either PC, use `website/` on `dunelegacy-tornie` or the matching offline ZIP as the website baseline; do not recover the site from an older preview generator. Historical campaign tooling intentionally uses immutable baseline commits: initial 1.0.535 source `fa2a5de3d23507f95332e243d060eeb419ce8fd5` and original 1.0.534. The published tag now points to `9ca89b33`.
 
 Local artwork revision 538-followup-r4 uses Tornie’s final 80×224 Doublefinery sheet in all four mods and the FR/EN gallery/downloads. Gameplay, network protocol and save format are unchanged; remaining game tests were not rerun at Tornie’s request.

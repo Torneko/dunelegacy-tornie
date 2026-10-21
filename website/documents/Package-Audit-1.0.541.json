@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "version": "1.0.541",
+  "replacement": true,
+  "source": "0bf497ede39d6ab48bb0ecc3bb6c84df98a7d319",
+  "linuxRun": 38983299258,
+  "windowsRun": 38983297104,
+  "packages": [
+    {
+      "package": "DuneLegacyTornie-1.0.541-Linux-Mint-Compatible.AppImage",
+      "sha256": "d0faaffb786ce9cd99647b7df8621035ea761f58ded25b825966f73d7a65a792",
+      "exactModFiles": 5467,
+      "huskyAndKleshmershHeraldPreserved": true,
+      "originalRebelsCatAssetsExact": true,
+      "launcherMatchesSource": true
+    },
+    {
+      "package": "DuneLegacyTornie-1.0.541-Linux-x86_64.AppImage",
+      "sha256": "58b7cacaef94aa278275e0cd3b7c10258f6f34e8f50bf6ba8b92df5ffa613d25",
+      "exactModFiles": 5467,
+      "huskyAndKleshmershHeraldPreserved": true,
+      "originalRebelsCatAssetsExact": true,
+      "launcherMatchesSource": true
+    },
+    {
+      "package": "DuneLegacyTornie-1.0.541-Windows-x64.zip",
+      "sha256": "b40190f9c4d338632f9ac98ee790ff7db557bfbbb61b08f541bb8da3ff58b5ab",
+      "exactModFiles": 5467,
+      "huskyAndKleshmershHeraldPreserved": true,
+      "originalRebelsCatAssetsExact": true
+    }
+  ]
+}

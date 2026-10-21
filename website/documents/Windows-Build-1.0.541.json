@@ -1,0 +1,17 @@
+{
+  "source": "0bf497ede39d6ab48bb0ecc3bb6c84df98a7d319",
+  "workflowSource": "0bf497ede39d6ab48bb0ecc3bb6c84df98a7d319",
+  "sha256": "b40190f9c4d338632f9ac98ee790ff7db557bfbbb61b08f541bb8da3ff58b5ab",
+  "run": 38983297104,
+  "engineAndNetworkTests": true,
+  "version": "1.0.541",
+  "package": "DuneLegacyTornie-1.0.541-Windows-x64.zip",
+  "menuStartupChecks": [
+    "fr",
+    "en"
+  ],
+  "installedRuntimeChecks": [
+    "fr",
+    "en"
+  ]
+}

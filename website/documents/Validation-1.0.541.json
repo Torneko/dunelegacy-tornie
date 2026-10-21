@@ -1,0 +1,152 @@
+{
+  "version": "1.0.541",
+  "replacement": true,
+  "protocol": 13,
+  "saveVersion": 9833,
+  "source": "0bf497ede39d6ab48bb0ecc3bb6c84df98a7d319",
+  "startingFunds": {
+    "allActiveAlliesUseHostBudget": true,
+    "easyBonusOnce": 500,
+    "zeroAndMissingOptionalBudgetsTested": true,
+    "normalAndEasy": true,
+    "fourLocalPerspectives": true,
+    "stages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "modes": 7,
+    "saveLoadPreservesBalances": true,
+    "closedAlliesDoNotSpawn": true
+  },
+  "arcaKevColours": {
+    "rebels": "#343434",
+    "corruptique": "#d6b620",
+    "editorPaletteRoundtripPassed": true,
+    "bannersChanged": false,
+    "existingManagedProfileReseedPassed": true
+  },
+  "localEngine": {
+    "passed": true,
+    "ctestTests": 2,
+    "cases": 132,
+    "assertions": 10166
+  },
+  "network": {
+    "passed": true,
+    "players": 8,
+    "transport": "real UDP loopback",
+    "guestLinksBlocked": true,
+    "relayThroughHost": true,
+    "humanInternetPlaytest": "pending"
+  },
+  "modPayloads": {
+    "passed": true,
+    "files": 5467
+  },
+  "website": {
+    "recoveredFrom": "0e91f751a1d2946e97e4a22d937fd9fec63a50d1",
+    "localRoutes": 36,
+    "featureContexts": 28,
+    "languages": [
+      "fr",
+      "en"
+    ],
+    "preservedOriginalImages": 137,
+    "newFeatureContexts": 28,
+    "newActualRuntimePreviewAssets": 8
+  },
+  "nativeMintTested": false,
+  "ci": {
+    "linuxBuild": 38983299258,
+    "windowsBuild": 38983297104,
+    "status": "packages-published-website-ready",
+    "linuxPassed": true,
+    "windowsPassed": true,
+    "linuxPackagedRuntimeChecks": [
+      "expanded-coop",
+      "editor-owners",
+      "rebels-mentat"
+    ],
+    "windowsInstalledRuntimeLanguages": [
+      "fr",
+      "en"
+    ],
+    "windowsMenuStartupLanguages": [
+      "fr",
+      "en"
+    ],
+    "replacementRun": 38985579833,
+    "replacementPassed": true
+  },
+  "localFullRuntime": {
+    "passed": true,
+    "languages": [
+      "fr",
+      "en"
+    ],
+    "scenariosPerLanguage": 1606,
+    "achievementsPassed": true,
+    "sevenModesPassed": true
+  },
+  "upnpCompatibility": {
+    "api17SyntaxPassed": true,
+    "api18BuildPassed": true,
+    "systemLinuxCIEngineTestsPassed": true
+  },
+  "packages": {
+    "passed": true,
+    "exactModFilesPerPackage": 5467,
+    "bothAppImagesAndWindowsCompared": true,
+    "bannersUnchanged": true,
+    "huskyPreserved": true,
+    "publishedMintExpandedCoopPassed": true,
+    "originalRebelsCatAssetsExact": true
+  },
+  "alliedBuilding": {
+    "passed": true,
+    "default": false,
+    "hostOnly": true,
+    "guestSnapshotAndHostAuthorityTested": true,
+    "fourAlliedPerspectives": true,
+    "normalEasyAndArchon": true,
+    "independentOfAlliedControl": true,
+    "separateBuildingOwnershipAndFunds": true,
+    "enemyClosedAndWildlifeExcluded": true,
+    "terrainOccupancyAndConcreteRulesPreserved": true,
+    "saveReloadAndLockedResumedLobby": true,
+    "legacyDefaultOff": true,
+    "modes": 7
+  },
+  "editorOwnership": {
+    "passed": true,
+    "selectionUsesStableHouseId": true,
+    "modOrderAndRuntimeIndexDiffer": true,
+    "modes": 7,
+    "unitsAndBuildings": true,
+    "namedNumberedAndInactiveHouses": true,
+    "saveReload": true
+  },
+  "rebelsMentat": {
+    "passed": true,
+    "originalCatArtRetained": true,
+    "runtimeFactionTint": true,
+    "colours": {
+      "Vanilla": "#343434",
+      "Tornie": "#14441c",
+      "Jericho": "#343434",
+      "ArcaKev": "#343434"
+    },
+    "gazeAndSpeechStates": 5,
+    "noseAndShoulderAnchors": true,
+    "roomAlphaAndGreenIrisesPreserved": true,
+    "actualBriefingCaptured": true,
+    "neutralMentatUnchanged": true
+  }
+}
