@@ -1,5 +1,7 @@
 #pragma once
 #include <Menu/MainMenu.h>
+#include <Menu/SinglePlayerMenu.h>
+#include <Menu/MainMenuButtonColor.h>
 #include <Menu/HouseChoiceInfoMenu.h>
 #include <Menu/HouseChoiceMenu.h>
 #include <Menu/CampaignStatsMenu.h>
@@ -23,16 +25,28 @@ struct Release545Smoke {
         const bool scores=screen==UI_GameStatsBackground;
         const int top=scores?cy-184:cy+90;
         for(const int left: {scores?cx-318:cx-316,scores?cx+211:cx+212}) {
-            for(int y=0;y<106;++y)for(int x=0;x<106;++x)
-                require((getPixel(background,left+x,top+1+y)&0xffffff)==(getPixel(expected.get(),x,y)&0xffffff),
-                    "wrong faction, cropped border or changed colours in score/region frame");
+            // The engraved plate, border and four studs retain original art;
+            // its rectangular outer backing must now show the real menu tile.
+            for(int y=0;y<106;++y)for(int x=0;x<106;++x) {
+                if((x>=24&&x<82&&y>=14&&y<92)||(x>=14&&x<92&&y>=24&&y<82))
+                    require((getPixel(background,left+x,top+1+y)&0xffffff)==(getPixel(expected.get(),x,y)&0xffffff),
+                        "wrong faction, cropped border or changed colours in score/region frame");
+            }
+            for(int y: {13,93})for(int x: {13,93})
+                require((getPixel(background,left+x,top+1+y)&0xffffff)==(getPixel(expected.get(),x,y)&0xffffff),"frame stud changed");
+            auto* tile=pGFXManager->getBackgroundSurface();
             for(int x=0;x<106;++x)
-                require((getPixel(background,left+x,top)&0xffffff)==0
-                    &&(getPixel(background,left+x,top+107)&0xffffff)==0,"old emblem remains outside square frame");
+                require((getPixel(background,left+x,top)&0xffffff)==(getPixel(tile,left+x,top)&0xffffff)
+                    &&(getPixel(background,left+x,top+107)&0xffffff)==(getPixel(tile,left+x,top+107)&0xffffff),"frame backing differs from menu texture");
+            for(int y=0;y<108;++y)
+                require((getPixel(background,left,top+y)&0xffffff)==(getPixel(tile,left,top+y)&0xffffff)
+                    &&(getPixel(background,left+105,top+y)&0xffffff)==(getPixel(tile,left+105,top+y)&0xffffff),"rectangular gold/black frame fringe remains");
         }
     }
     static void run(const std::string& output) {
         auto& mods=ModManager::instance();const auto previous=mods.getActiveModName();
+        MainMenu menuPreview;
+        SinglePlayerMenu sectionPreview;
         const char* names[]={"Harkonnen","Atreides","Ordos","Fremen","Sardaukar","Mercenary","Neutral","Rebels","Corruptique","Wildspade","Kleshmersh","Tharpique"};
         const auto capture=[](SDL_Texture* texture) {
             require(texture,"missing portrait texture");
@@ -44,6 +58,20 @@ struct Release545Smoke {
         for(const std::string mod:{"Tornie","Jericho","ArcaKev","TornieLite","JerichoLite","ArcaKevLite","vanilla"}) {
             require(mods.setActiveMod(mod),"mod switch");
             effectiveGameOptions=mods.loadEffectiveGameOptions(settings.gameOptions);
+            menuPreview.refreshModVersionLabel();menuPreview.draw();
+            SavePNG(renderReadSurface(renderer).get(),(std::filesystem::path(output)/(mod+"-main-menu.png")).string().c_str());
+            const Uint32 expectedColour=MainMenuButtonColor::colorForMod(mod);
+            std::function<void(Widget*)> verifyColour=[&](Widget* widget) {
+                if(auto* button=dynamic_cast<TextButton*>(widget))
+                    require(button->getTextColor()==expectedColour,"stale/wrong menu button colour after switching to "+mod);
+                widget->forEachChildWidget(verifyColour);
+            };
+            verifyColour(&menuPreview);
+            sectionPreview.draw();verifyColour(&sectionPreview);
+            SavePNG(renderReadSurface(renderer).get(),(std::filesystem::path(output)/(mod+"-single-menu.png")).string().c_str());
+            if(mod=="Tornie")require(expectedColour==getHouseColorRGB(HOUSE_REBELS,3),"menu dark green differs from Tornie Rebels");
+            if(mod=="Jericho")require(expectedColour==COLOR_RGB(52,52,52),"Jericho menu must be dark grey");
+            if(mod=="ArcaKev")require(expectedColour==COLOR_RGB(176,64,24),"ArcaKev menu must be dark reddish orange");
             for(int runtime=0;runtime<NUM_HOUSES;++runtime) {
                 const auto house=static_cast<HOUSETYPE>(runtime);if(!isCampaignHouseAvailable(house))continue;
                 const auto identity=getHouseFactionIdentity(house);

@@ -43,6 +43,7 @@
 #include <mod/ModManager.h>
 
 #include <algorithm>
+#include <cmath>
 #include <cstdlib>
 #include <filesystem>
 
@@ -5470,20 +5471,41 @@ sdl2::surface_ptr GFXManager::createFactionFrameBackground(unsigned int id, int 
         THROW(sdl_error, "Cannot create faction frame background: %s", SDL_GetError());
     }
     auto* frame = getUIGraphicSurface(UI_FactionFrame, house);
+    auto emblem = sdl2::surface_ptr(SDL_CreateRGBSurfaceWithFormat(0,106,106,32,SDL_PIXELFORMAT_ARGB8888));
+    SDL_Rect source{0, 8, 166, 166};
+    if(!emblem || SDL_BlitScaled(frame,&source,emblem.get(),nullptr)!=0) {
+        THROW(sdl_error, "Cannot scale faction frame: %s", SDL_GetError());
+    }
+    // Keep the engraved frame and its four studs. The supplied outer gold
+    // texture is a rectangular backing, not part of that frame's silhouette.
+    for(int py=0;py<106;++py) for(int px=0;px<106;++px) {
+        const double u=(px+0.5)*166.0/106.0,v=(py+0.5)*166.0/106.0;
+        const auto rectangle=[&](double l,double t,double r,double b) {
+            return std::min({u-l,r-u,v-t,b-v});
+        };
+        double distance=std::max(rectangle(32,18,134,148),rectangle(18,32,148,134));
+        for(double cx: {20.5,145.5}) for(double cy: {20.5,145.5})
+            distance=std::max(distance,8.0-std::hypot(u-cx,v-cy));
+        const Uint8 alpha=static_cast<Uint8>(255*std::clamp((distance+0.75)/1.5,0.0,1.0));
+        auto* pixel=reinterpret_cast<Uint32*>(static_cast<Uint8*>(emblem->pixels)+py*emblem->pitch)+px;
+        Uint8 r,g,b,a;SDL_GetRGBA(*pixel,emblem->format,&r,&g,&b,&a);
+        *pixel=SDL_MapRGBA(emblem->format,r,g,b,alpha);
+    }
+    SDL_SetSurfaceBlendMode(emblem.get(),SDL_BLENDMODE_BLEND);
     const int centerX = background->w / 2;
     const int centerY = background->h / 2;
     const bool scores = id == UI_GameStatsBackground;
     const int y = scores ? centerY - 184 : centerY + 90;
     const int left = scores ? centerX - 318 : centerX - 316;
     const int right = scores ? centerX + 211 : centerX + 212;
-    SDL_Rect source{0, 8, 166, 166};
     for(const int x : {left, right}) {
-        // Original logos occupy 106x108. Keep the complete square gold border
-        // centred inside that slot, without remnants of the previous emblem.
+        // Restore the actual menu texture behind the original emblem instead
+        // of painting a black strip or importing another gold background.
         SDL_Rect slot{x, y, 106, 108};
-        SDL_FillRect(background.get(), &slot, SDL_MapRGB(background->format, 0, 0, 0));
+        SDL_Rect backing=slot;
+        SDL_BlitSurface(getBackgroundSurface(),&backing,background.get(),&slot);
         SDL_Rect target{x, y + 1, 106, 106};
-        if(SDL_BlitScaled(frame, &source, background.get(), &target) != 0) {
+        if(SDL_BlitSurface(emblem.get(),nullptr,background.get(),&target)!=0) {
             THROW(sdl_error, "Cannot draw faction frame: %s", SDL_GetError());
         }
     }

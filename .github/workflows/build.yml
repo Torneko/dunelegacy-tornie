@@ -24,6 +24,10 @@ on:
         description: Attach the verified Windows package to the release
         type: boolean
         default: true
+      ui_only:
+        description: UI-only replacement (CTest and installed FR/EN frames, menus and radar)
+        type: boolean
+        default: false
 
 concurrency:
   group: build-${{ github.ref }}
@@ -160,6 +164,8 @@ jobs:
         run: |
           ctest --test-dir build -C Release --output-on-failure
           if ($LASTEXITCODE -ne 0) { throw "Engine/network CTest failed." }
+          # Pure presentation changes use the installed FR/EN checks below.
+          if ("${{ inputs.ui_only }}" -eq "true") { exit 0 }
           $env:DUNELEGACY_USER_DIR = Join-Path $env:RUNNER_TEMP "dunelegacy-smoke-profile"
           New-Item -ItemType Directory -Force -Path $env:DUNELEGACY_USER_DIR | Out-Null
           $env:DUNELEGACY_SMOKE_DIR = $env:DUNELEGACY_USER_DIR
@@ -188,12 +194,14 @@ jobs:
           $env:SDL_VIDEODRIVER = "dummy"
           $env:SDL_AUDIODRIVER = "dummy"
           $env:SDL_RENDER_DRIVER = "software"
+          $uiOnly = "${{ inputs.ui_only }}" -eq "true"
           foreach ($language in @("fr", "en")) {
             $env:DUNELEGACY_USER_DIR = Join-Path $env:RUNNER_TEMP "dunelegacy-installed-$language"
             New-Item -ItemType Directory -Force -Path $env:DUNELEGACY_USER_DIR | Out-Null
             $env:DUNELEGACY_SMOKE_DIR = $env:DUNELEGACY_USER_DIR
             Set-Content -LiteralPath (Join-Path $env:DUNELEGACY_USER_DIR "Dune Legacy.ini") -Value "[General]`nLanguage=$language`nPlay Intro=false`n[Video]`nFullscreen=false`n[Audio]`nMusic Type=adl`nPlay Music=false" -Encoding utf8
             $log = Join-Path $env:RUNNER_TEMP "dunelegacy-installed-$language.log"
+            if (-not $uiOnly) {
             $process = Start-Process -FilePath "install/dunelegacy.exe" -ArgumentList "--verify-achievements", "--showlog", "--window" -WindowStyle Hidden -Wait -PassThru -RedirectStandardError $log
             Get-Content -LiteralPath $log | Select-String "MOD SMOKE|ACHIEVEMENT SMOKE|unhandled exception|runtime check:"
             if ($process.ExitCode -ne 0) { Get-Content -LiteralPath $log -Tail 120 }
@@ -202,7 +210,13 @@ jobs:
             foreach ($check in @(@("RELEASE 543 PASS:", 7), @("RELEASE 543 ALLIANCES PASS:", 7), @("RELEASE 543 UNITS PASS:", 6), @("RELEASE 543 GRAPHICS PASS:", 6), @("RELEASE 543 NEUTRAL SABOTEUR PASS:", 3), @("RELEASE 543 EDITOR TERRAIN PASS:", 6), @("RELEASE 543 FLAME PORTRAITS PASS:", 3), @("RELEASE 543 EXPANSION PASS:", 7), @("HARVESTER CRUSH PASS:", 7), @("UPGRADED SALE PASS:", 7), @("PALACE NAPALM PASS:", 7), @("RELEASE 544 ARTWORK PASS:", 6), @("SLOWPOST UPGRADE PASS:", 7), @("EDITOR WINDTRAP PASS:", 7), @("CHAOS DEFENCE UPGRADE PASS:", 7))) {
               if ((Select-String -LiteralPath $log -Pattern $check[0]).Count -ne $check[1]) { throw "Installed $language 543 checks failed: $($check[0])" }
             }
-            foreach ($check in @(@("--verify-radar-research", "RADAR RESEARCH PASS:", 7), @("--verify-campaign-cinema", "CAMPAIGN CINEMA PASS:", 7))) {
+            }
+            $checks = if ($uiOnly) {
+              @(@("--verify-radar-research", "RADAR RESEARCH PASS:", 7), @("--verify-release545", "RELEASE 545 PRESENTATION PASS:", 7))
+            } else {
+              @(@("--verify-radar-research", "RADAR RESEARCH PASS:", 7), @("--verify-campaign-cinema", "CAMPAIGN CINEMA PASS:", 7))
+            }
+            foreach ($check in $checks) {
               $nextLog = Join-Path $env:RUNNER_TEMP "dunelegacy-installed-$language-$($check[0]).log"
               $process = Start-Process -FilePath "install/dunelegacy.exe" -ArgumentList $check[0], "--showlog", "--window" -WindowStyle Hidden -Wait -PassThru -RedirectStandardError $nextLog
               Get-Content -LiteralPath $nextLog | Select-String "PASS:|unhandled exception"
@@ -270,6 +284,11 @@ jobs:
             videoOptionsChecks = @("fr", "en")
             package = $package.Name
             sha256 = (Get-FileHash $package.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+          }
+          $report.validationScope = if ("${{ inputs.ui_only }}" -eq "true") { "ui-refinements" } else { "full" }
+          if ("${{ inputs.ui_only }}" -eq "true") {
+            $report.release543Checks = @()
+            $report.nextReleaseChecks = @("faction-frame-background-blending", "mod-menu-colours", "radar-price-overlays-and-house-colours")
           }
           $report | ConvertTo-Json -Depth 5 | Set-Content "build/Windows-Build-$version.json" -Encoding utf8
 

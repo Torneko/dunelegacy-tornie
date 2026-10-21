@@ -29,7 +29,7 @@
 #include <structures/Radar.h>
 #include <mod/ModManager.h>
 #include <players/HumanPlayer.h>
-#include <GUI/TextButton.h>
+#include <GUI/ResearchButton.h>
 #include <array>
 
 #include <GUI/Label.h>
@@ -60,12 +60,14 @@ protected:
 
 
         for(int kind=0;kind<radar::Count;++kind) {
+            researchButtons[kind].setTextColor(color);
+            researchButtons[kind].setPrice(radar::cost(kind));
             researchButtons[kind].setOnClick([objectID,kind] {
                 auto* building=currentGame->getObjectManager().getObject(objectID);
                 if(building && pLocalPlayer && currentGame->canControlHouse(building->getOwner()))
                     currentGame->getCommandManager().addCommand(Command(pLocalPlayer->getPlayerID(),CMD_RADAR_RESEARCH,objectID,kind));
             });
-            textVBox.addWidget(&researchButtons[kind],20);
+            textVBox.addWidget(&researchButtons[kind],38);
         }
         textVBox.addWidget(Spacer::create(), 0.99);
     }
@@ -93,10 +95,12 @@ protected:
             auto& button=researchButtons[kind];
             button.setVisible(ModManager::instance().isTornieContentActive());
             std::string name=kind==radar::BaseExpansion?"Base +2":kind==radar::ExtendedVision?"Vision +2":specialName(pOwner,french);
-            if(pOwner->hasRadarResearch(kind))name+=" OK";
+            std::string status;
+            if(pOwner->hasRadarResearch(kind))status="OK";
             else if(pOwner->getRadarResearchActive()==kind)
-                name+=" "+std::to_string(100-100*pOwner->getRadarResearchRemaining()/MILLI2CYCLES(radar::seconds(kind)*1000))+"%";
-            button.setText(name);
+                status=std::to_string(100-100*pOwner->getRadarResearchRemaining()/MILLI2CYCLES(radar::seconds(kind)*1000))+" %";
+            if(button.getText()!=name)button.setText(name);
+            button.setStatus(status);
             button.setEnabled(currentGame->canControlHouse(pOwner) && pOwner->canStartRadarResearch(kind));
             std::string description=kind==radar::BaseExpansion
                 ?(french?"Construction : +2 cases autour de la base.":"Build range: +2 tiles around the base.")
@@ -105,12 +109,13 @@ protected:
                 :specialDescription(pOwner,french);
             description+=" "+std::to_string(radar::cost(kind))+(french?" crédits, ":" credits, ")+std::to_string(radar::seconds(kind))
                 +(french?" s, niveau ":" s, level ")+std::to_string(radar::level(kind))+(kind==radar::Specialization?" + IX.":".");
-            button.setTooltipText(description);
+            if(button.getTooltipText()!=description)button.setTooltipText(description);
         }
         return DefaultStructureInterface::update();
     }
 
 private:
+    friend struct RadarResearchFixture;
     static std::string specialName(const House* house,bool fr) {
         switch(getHouseFactionIdentity(static_cast<HOUSETYPE>(house->getFactionID()))) {
             case HOUSE_HARKONNEN:return fr?"Dégâts":"Damage";
@@ -143,7 +148,7 @@ private:
             default:return "";
         }
     }
-    std::array<TextButton,radar::Count> researchButtons;
+    std::array<ResearchButton,radar::Count> researchButtons;
     VBox    textVBox;
 
     Label   friendlyUnitsLabel;

@@ -11,6 +11,46 @@
 #include <misc/IMemoryStream.h>
 
 struct RadarResearchFixture {
+    static void verifyButtons(StructureBase* building,const std::string& output,const std::string& mod,int house,const std::string& stage) {
+        if(!building)throw std::runtime_error("Radar building missing for interface preview");
+        std::unique_ptr<ObjectInterface> ui(building->getInterfaceContainer());
+        auto* radarUI=dynamic_cast<RadarInterface*>(ui.get());
+        if(!radarUI || !ui->update())throw std::runtime_error("Radar interface missing");
+        const auto colour=getHouseColorRGB(getHouseVisualHouse(pLocalHouse->getHouseID()),3);
+        for(int kind=0;kind<radar::Count;++kind) {
+            auto& button=radarUI->researchButtons[kind];
+            if(button.isVisible()!=(mod!="vanilla") || button.getPrice()!=radar::cost(kind) || button.getTextColor()!=colour)
+                throw std::runtime_error("Radar price/house colour/Vanilla visibility mismatch");
+            if(!button.isVisible())continue;
+            button.resize(119,38);
+            if(button.getLabelFontSize()<10)throw std::runtime_error("Radar label no longer readable at sidebar width");
+            if(stage=="complete" && button.getStatus()!="OK")throw std::runtime_error("Radar completion not displayed separately");
+            if(stage=="active" && kind==radar::BaseExpansion && button.getStatus().find('%')==std::string::npos)
+                throw std::runtime_error("Radar progress not displayed separately");
+            SDL_RenderSetClipRect(renderer,nullptr);SDL_SetRenderDrawColor(renderer,20,20,20,255);SDL_RenderClear(renderer);
+            button.draw(Point(0,0));auto screen=renderReadSurface(renderer);
+            const auto quote=std::to_string(radar::cost(kind));
+            auto glyphs=pFontManager->createSurfaceWithText(quote,COLOR_WHITE,12);
+            auto rgba=sdl2::surface_ptr(SDL_ConvertSurfaceFormat(glyphs.get(),SDL_PIXELFORMAT_ARGB8888,0));
+            const int left=119-pFontManager->getTextWidth(quote,12)-5,top=38-pFontManager->getTextHeight(12)-3;
+            int checked=0;
+            for(int y=0;y<rgba->h;++y)for(int x=0;x<rgba->w;++x) {
+                auto pixel=*(reinterpret_cast<Uint32*>(static_cast<Uint8*>(rgba->pixels)+y*rgba->pitch)+x);
+                Uint8 r,g,b,a;SDL_GetRGBA(pixel,rgba->format,&r,&g,&b,&a);
+                if(a==255&&r==255&&g==255&&b==255) {
+                    if((getPixel(screen.get(),left+x,top+y)&0xffffff)!=0xffffff)
+                        throw std::runtime_error("Radar price overlay clipped, overlapped or missing");
+                    ++checked;
+                }
+            }
+            if(checked<10)throw std::runtime_error("Radar price overlay has too few readable pixels");
+        }
+        ui->resize(SIDEBARWIDTH,300);
+        SDL_SetRenderDrawColor(renderer,20,20,20,255);SDL_RenderClear(renderer);ui->draw(Point(0,0));
+        auto picture=renderReadSurface(renderer);
+        if(SavePNG(picture.get(),(std::filesystem::path(output)/(mod+"-radar-ui-"+std::to_string(house)+"-"+stage+".png")).string().c_str())!=0)
+            throw std::runtime_error("Radar interface preview failed");
+    }
     static void verify(const std::string& output,const std::string& mod) {
         const auto require=[](bool ok,const char* why) {
             if(!ok)throw std::runtime_error(std::string("Radar research: ")+why);
@@ -38,11 +78,13 @@ struct RadarResearchFixture {
             game->techLevel=7;
             require(!owner->startRadarResearch(radar::Specialization),"specialization without IX");
             if(mod=="vanilla") {
+                verifyButtons(building,output,mod,house,"hidden");
                 require(!owner->startRadarResearch(radar::BaseExpansion),"Vanilla acquired Radar research");
                 game.reset();currentGame=nullptr;pLocalHouse=nullptr;pLocalPlayer=nullptr;
                 ++cases;continue;
             }
             require(owner->placeStructure(NONE_ID,Structure_IX,8,1,true,true)!=nullptr,"IX placement");
+            verifyButtons(building,output,mod,house,"available");
             require(!owner->startRadarResearch(-1) && !owner->startRadarResearch(3),"invalid research index accepted");
             const int funds=owner->getCredits();
             Command forged(255,CMD_RADAR_RESEARCH,radarID,radar::BaseExpansion);forged.executeCommand();
@@ -50,6 +92,7 @@ struct RadarResearchFixture {
             Command begin(pLocalPlayer->getPlayerID(),CMD_RADAR_RESEARCH,radarID,radar::BaseExpansion);
             OMemoryStream wire;wire.open();begin.save(wire);IMemoryStream received(wire.getData(),wire.getDataLength());Command(received).executeCommand();
             require(owner->getRadarResearchActive()==radar::BaseExpansion && owner->getCredits()==funds-500,"command cost or start");
+            verifyButtons(building,output,mod,house,"active");
             require(!owner->startRadarResearch(radar::BaseExpansion) && !owner->startRadarResearch(radar::ExtendedVision),"parallel or duplicate house research");
             const int initial=owner->getRadarResearchRemaining();
             std::vector<WindTrap*> traps;
@@ -123,6 +166,7 @@ struct RadarResearchFixture {
             while(owner->getRadarResearchActive()>=0)owner->updateRadarResearch();
             require(owner->getCredits()==beforeSpecial-750 && !owner->startRadarResearch(radar::Specialization),"special price or repeat purchase");
             const auto identity=getHouseFactionIdentity(static_cast<HOUSETYPE>(owner->getFactionID()));
+            verifyButtons(game->getObjectManager().getObject(radarID)?dynamic_cast<StructureBase*>(game->getObjectManager().getObject(radarID)):nullptr,output,mod,house,"complete");
             {
                 std::unique_ptr<ObjectInterface> ui(game->getObjectManager().getObject(radarID)->getInterfaceContainer());
                 ui->resize(SIDEBARWIDTH,220);require(ui->update(),"Radar interface update");

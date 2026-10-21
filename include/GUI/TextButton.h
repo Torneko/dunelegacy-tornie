@@ -59,6 +59,8 @@ public:
         \return the text of this button
     */
     const std::string& getText() const noexcept { return text; };
+    Uint32 getTextColor() const noexcept { return textcolor; }
+    Uint32 getTextShadowColor() const noexcept { return textshadowcolor; }
 
     /**
         Sets the text color for this button.
