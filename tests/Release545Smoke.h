@@ -117,6 +117,7 @@ struct Release545Smoke {
         SDL_Log("RELEASE 545 TROOPER PORTRAITS PASS: %s, six production variants and two distinct selected-unit portraits, original pixels and bonus colours",mod.c_str());
     }
     static void run(const std::string& output) {
+        IntroLogoFixture::verify(output);
         auto& mods=ModManager::instance();const auto previous=mods.getActiveModName();
         MainMenu menuPreview;
         SinglePlayerMenu sectionPreview;
@@ -178,7 +179,6 @@ struct Release545Smoke {
             AircraftShortcutFixture::verify(output,mod);
             SDL_Log("RELEASE 545 PRESENTATION PASS: %s, score/region identity frames, ordinary campaign banners and eight original Trooper portraits",mod.c_str());
         }
-        IntroLogoFixture::verify(output);
         require(mods.setActiveMod("Tornie"),"co-op fixture mod");
         const auto playerName=settings.general.playerName;
         auto& manager=achievements::AchievementManager::instance();

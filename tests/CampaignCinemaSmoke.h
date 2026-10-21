@@ -9,6 +9,7 @@
 #include <SoundPlayer.h>
 #include <FileClasses/INIFile.h>
 #include <fstream>
+#include <cstring>
 #include <FileClasses/adl/sound_adlib.h>
 
 struct IntroLogoFixture {

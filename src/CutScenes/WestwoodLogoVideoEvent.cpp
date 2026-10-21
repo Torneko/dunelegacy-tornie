@@ -24,11 +24,15 @@ WestwoodLogoVideoEvent::WestwoodLogoVideoEvent()
     if(musicPlayer)musicPlayer->stopMusic();
     if(settings.audio.playMusic && (!musicPlayer || musicPlayer->isMusicOn()) && Mix_QuerySpec(nullptr, nullptr, nullptr)) {
         SoundAdlibPC decoder(pFileManager->openFile("DUNE0.ADL").get());
-        // The decoder defaults to half volume. Use its full output here, while
-        // the mixer still applies the user's music volume (including zero).
-        decoder.setVolume(MIX_MAX_VOLUME);
         signature.reset(decoder.getSubsong(4));
         if(!signature) THROW(sdl_error, "Westwood signature: %s", SDL_GetError());
+        // Decode with the original gain: getSubsong stops on PCM silence, so
+        // raising decoder gain also extends its tail. Amplify its native S16
+        // output afterwards to preserve the original duration and animation cue.
+        // The channel still applies the user's music volume (including zero).
+        auto* samples = reinterpret_cast<Sint16*>(signature->abuf);
+        for(Uint32 i=0; i<signature->alen/sizeof(Sint16); ++i)
+            samples[i] = static_cast<Sint16>(std::clamp(int(samples[i])*2,-32768,32767));
     }
 }
 
