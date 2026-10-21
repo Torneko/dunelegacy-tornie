@@ -348,8 +348,15 @@ jobs:
           mkdir -p staged/linux staged/windows
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$VERIFIED_LINUX_RUN" > staged/linux-run.json
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$VERIFIED_WINDOWS_RUN" > staged/windows-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$VERIFIED_WINDOWS_RUN/jobs?per_page=100" > staged/windows-jobs.json
           gh run download "$VERIFIED_LINUX_RUN" --repo "$GITHUB_REPOSITORY" --name DuneLegacyTornie-Linux-Packages --dir staged/linux
           gh run download "$VERIFIED_WINDOWS_RUN" --repo "$GITHUB_REPOSITORY" --name DuneLegacyTornie-Windows-Installer --dir staged/windows
+          # Earlier main-branch runs contain the tested ZIP but no publication
+          # report. Reuse that exact payload only after validating its source,
+          # successful engine/network/locale jobs and installed runtime steps.
+          git fetch --depth=1 origin "${{ github.sha }}"
+          git show FETCH_HEAD:scripts/record-verified-windows-artifact.py > "$RUNNER_TEMP/record-verified-windows-artifact.py"
+          python3 "$RUNNER_TEMP/record-verified-windows-artifact.py" --staged staged --version "${RELEASE_TAG#v}"
           python3 - <<'PYTHON'
           import hashlib, json, os, pathlib, subprocess
           version = os.environ['RELEASE_TAG'][1:]
@@ -375,7 +382,6 @@ jobs:
                   assert len(list(root.iterdir())) == 6
           PYTHON
           # Keep the release tag immutable; audit tooling follows this dispatch.
-          git fetch --depth=1 origin "${{ github.sha }}"
           git show FETCH_HEAD:scripts/audit-staged-release.py > "$RUNNER_TEMP/audit-staged-release.py"
           python3 "$RUNNER_TEMP/audit-staged-release.py" --staged staged --version "${RELEASE_TAG#v}" --output "staged/Package-Resources-Audit-${RELEASE_TAG#v}.json"
           SOURCE_COMMIT=$(git rev-parse HEAD)

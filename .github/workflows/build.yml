@@ -249,9 +249,11 @@ jobs:
             ${{ runner.temp }}/dunelegacy-installed-*/westwood-blue-original.png
 
       - name: Record Windows package provenance
-        if: inputs.windows_only || github.ref == 'refs/heads/publish/544-correctifs'
+        if: inputs.windows_only || github.ref == 'refs/heads/dunelegacy-tornie'
         run: |
-          $version = "${{ inputs.release_tag || 'v1.0.544' }}".Substring(1)
+          $versionMatch = Select-String -LiteralPath "CMakeLists.txt" -Pattern '^project\(DuneLegacyTornie VERSION ([0-9.]+)'
+          if (-not $versionMatch) { throw "Source version is missing." }
+          $version = $versionMatch.Matches[0].Groups[1].Value
           $package = Get-Item "build/DuneLegacyTornie-$version-Windows-x64.zip"
           $report = @{
             version = $version
