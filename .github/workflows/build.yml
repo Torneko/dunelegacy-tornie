@@ -223,6 +223,7 @@ jobs:
               if ($process.ExitCode -ne 0) { Get-Content -LiteralPath $nextLog -Tail 120 }
               if ($process.ExitCode -ne 0 -or (Select-String -LiteralPath $nextLog -Pattern $check[1]).Count -ne $check[2]) { throw "Installed $language next-release check failed: $($check[0])" }
               if ($check[0] -eq "--verify-campaign-cinema" -and (Select-String -LiteralPath $nextLog -Pattern "ORIGINAL CINEMA PASS:").Count -ne 1) { throw "Original cinema check missing" }
+              if ($check[0] -eq "--verify-release545" -and (Select-String -LiteralPath $nextLog -Pattern "RELEASE 545 TROOPER PORTRAITS PASS:").Count -ne 7) { throw "Installed $language Trooper portrait contexts failed." }
             }
             if (Select-String -LiteralPath "../src/main.cpp" -Pattern 'parameter == "--verify-startup"') {
               $startupLog = Join-Path $env:RUNNER_TEMP "dunelegacy-startup-$language.log"
@@ -288,7 +289,7 @@ jobs:
           $report.validationScope = if ("${{ inputs.ui_only }}" -eq "true") { "ui-refinements" } else { "full" }
           if ("${{ inputs.ui_only }}" -eq "true") {
             $report.release543Checks = @()
-            $report.nextReleaseChecks = @("faction-frame-background-blending", "mod-menu-colours", "radar-price-overlays-and-house-colours")
+            $report.nextReleaseChecks = @("faction-frame-background-blending", "mod-menu-colours", "radar-price-overlays-and-house-colours", "inclusive-right-score-frame-edge", "separate-trooper-production-selection-portraits")
           }
           $report | ConvertTo-Json -Depth 5 | Set-Content "build/Windows-Build-$version.json" -Encoding utf8
 

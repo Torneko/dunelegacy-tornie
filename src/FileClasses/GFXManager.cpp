@@ -4702,15 +4702,25 @@ void GFXManager::reloadRuntimeModPortraits() {
     const bool tornieGraphicsVisible = isTornieGraphicsVisible();
 
     const char* troopFiles[2][3] = {
-        {"Troopers_Fremen_alone.png", nullptr, "Troopers_Fremen_5.png"},
-        {nullptr, "Troopers_Sardaukar_3.png", "Troopers_Sardaukar_5.png"}};
+        {"Troopers_Fremen_alone.png", "Troopers_Fremen_3.png", "Troopers_Fremen_5.png"},
+        {"Troopers_Sardaukar_Alone.png", "Troopers_Sardaukar_3.png", "Troopers_Sardaukar_5.png"}};
     for(int faction=0; faction<2; ++faction) for(int size=0; size<3; ++size) {
-        auto& texture = factionTrooperPortraits[faction][size];
+        auto& texture = factionTrooperProductionPortraits[faction][size];
         texture.reset();
         const auto* name = troopFiles[faction][size];
         if(name && pFileManager->exists(name)) {
             auto surface = LoadPNG_RW(pFileManager->openFile(name).get());
             if(surface) texture = convertSurfaceToTexture(std::move(surface));
+        }
+    }
+    const char* selectionFiles[2] = {
+        "Troopers_Fremen_unit_selection.png", "Troopers_Sardaukar_unit_selection.png"};
+    for(int faction=0; faction<2; ++faction) {
+        auto& texture=factionTrooperSelectionPortraits[faction];
+        texture.reset();
+        if(pFileManager->exists(selectionFiles[faction])) {
+            auto surface=LoadPNG_RW(pFileManager->openFile(selectionFiles[faction]).get());
+            if(surface) texture=convertSurfaceToTexture(std::move(surface));
         }
     }
 
@@ -5419,11 +5429,19 @@ zoomable_texture GFXManager::getObjPic(unsigned int id, int house,bool greenWind
 
 
 SDL_Texture* GFXManager::getFactionTrooperPortrait(int itemID, int technologyHouse) {
+    if((itemID!=Unit_Trooper && itemID!=Unit_Troopers && itemID!=Unit_Troopers5)
+       || technologyHouse<0 || technologyHouse>=NUM_HOUSES) return nullptr;
+    const auto identity=getHouseFactionIdentity(static_cast<HOUSETYPE>(technologyHouse));
+    const int faction=identity==HOUSE_FREMEN?0:identity==HOUSE_SARDAUKAR?1:-1;
+    return faction<0 ? nullptr : factionTrooperSelectionPortraits[faction].get();
+}
+
+SDL_Texture* GFXManager::getFactionTrooperProductionPortrait(int itemID, int technologyHouse) {
     const int size = itemID == Unit_Trooper ? 0 : itemID == Unit_Troopers ? 1 : itemID == Unit_Troopers5 ? 2 : -1;
     if(size < 0 || technologyHouse < 0 || technologyHouse >= NUM_HOUSES) return nullptr;
     const auto identity = getHouseFactionIdentity(static_cast<HOUSETYPE>(technologyHouse));
     const int faction = identity == HOUSE_FREMEN ? 0 : identity == HOUSE_SARDAUKAR ? 1 : -1;
-    return faction < 0 ? nullptr : factionTrooperPortraits[faction][size].get();
+    return faction < 0 ? nullptr : factionTrooperProductionPortraits[faction][size].get();
 }
 
 SDL_Texture* GFXManager::getSmallDetailPic(unsigned int id) {
@@ -5497,7 +5515,9 @@ sdl2::surface_ptr GFXManager::createFactionFrameBackground(unsigned int id, int 
     const bool scores = id == UI_GameStatsBackground;
     const int y = scores ? centerY - 184 : centerY + 90;
     const int left = scores ? centerX - 318 : centerX - 316;
-    const int right = scores ? centerX + 211 : centerX + 212;
+    // Right-aligned legacy logos end at centerX+317 inclusively, so their
+    // 106px footprint starts at centerX+212 on both screens.
+    const int right = centerX + 212;
     for(const int x : {left, right}) {
         // Restore the actual menu texture behind the original emblem instead
         // of painting a black strip or importing another gold background.

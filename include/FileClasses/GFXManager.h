@@ -675,6 +675,7 @@ public:
     SDL_Texture* getMentatForeground(int house);
 
     SDL_Texture*     getFactionTrooperPortrait(int itemID, int technologyHouse);
+    SDL_Texture*     getFactionTrooperProductionPortrait(int itemID, int technologyHouse);
     SDL_Texture*     getSmallDetailPic(unsigned int id);
     SDL_Texture*     getSmallDetailPic(unsigned int id, int house);
     SDL_Texture*     getTinyPicture(unsigned int id);
@@ -744,7 +745,8 @@ private:
     std::array<std::array<sdl2::texture_ptr,NUM_ZOOMLEVEL>,NUM_HOUSE_COLOR_SLOTS> greenWindtrapTex;
     std::array<HDObjPicOverride, NUM_OBJPICS> hdObjPicOverrides;
     std::array<sdl2::texture_ptr, NUM_SMALLDETAILPICS> smallDetailPicTex;
-    std::array<std::array<sdl2::texture_ptr, 3>, 2> factionTrooperPortraits;
+    std::array<std::array<sdl2::texture_ptr, 3>, 2> factionTrooperProductionPortraits;
+    std::array<sdl2::texture_ptr, 2> factionTrooperSelectionPortraits;
     std::array<sdl2::texture_ptr, NUM_TINYPICTURE> tinyPictureTex;
     std::array<std::array<sdl2::texture_ptr, NUM_HOUSE_COLOR_SLOTS>, NUM_UIGRAPHICS> uiGraphicTex;
     std::array<std::array<sdl2::texture_ptr, NUM_HOUSE_COLOR_SLOTS>, NUM_MAPCHOICEPIECES> mapChoicePiecesTex;

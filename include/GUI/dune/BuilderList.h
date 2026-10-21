@@ -133,10 +133,7 @@ public:
         return tmp;
     }
 
-    SDL_Texture* getProductionPortrait(int item) const {
-        const auto found = productionPortraits.find(item);
-        return found == productionPortraits.end() ? nullptr : found->second.get();
-    }
+    SDL_Texture* getProductionPortrait(int item) const;
     int getItemIDFromIndex(int i) const;
     BuilderList(const BuilderList &) = delete;
     BuilderList(BuilderList &&) = delete;

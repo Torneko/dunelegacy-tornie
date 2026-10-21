@@ -109,6 +109,17 @@ BuilderList::BuilderList(Uint32 builderObjectID) {
 
 BuilderList::~BuilderList() = default;
 
+SDL_Texture* BuilderList::getProductionPortrait(int item) const {
+    const auto* builder=currentGame
+        ? dynamic_cast<BuilderBase*>(currentGame->getObjectManager().getObject(builderObjectID)) : nullptr;
+    if(builder) {
+        if(auto* portrait=pGFXManager->getFactionTrooperProductionPortrait(item,builder->getTechnologyHouseID()))
+            return portrait;
+    }
+    const auto found=productionPortraits.find(item);
+    return found==productionPortraits.end() ? nullptr : found->second.get();
+}
+
 void BuilderList::handleMouseMovement(Sint32 x, Sint32 y, bool insideOverlay) {
     StaticContainer::handleMouseMovement(x,y,insideOverlay);
 
@@ -263,15 +274,13 @@ void BuilderList::draw(Point position) {
                 SDL_Texture* pTexture = resolveItemPicture(
                     buildItem.itemID, static_cast<HOUSETYPE>(pBuilder->getOriginalHouseID()));
 
-                const auto portrait = productionPortraits.find(buildItem.itemID);
-                if(portrait != productionPortraits.end()) pTexture = portrait->second.get();
+                auto* portrait = getProductionPortrait(buildItem.itemID);
+                if(portrait) pTexture = portrait;
                 if(currentGame->getGameInitSettings().getGameOptions().content.customUnitsAndBuildings
                    && (buildItem.itemID==Unit_Trooper || buildItem.itemID==Unit_Troopers || buildItem.itemID==Unit_Troopers5)
-                   && portrait==productionPortraits.end()
+                   && !portrait
                    && isHouseFaction(static_cast<HOUSETYPE>(pBuilder->getTechnologyHouseID()),HOUSE_KLESHMERSH))
                     pTexture=pGFXManager->getSmallDetailPic(Picture_FlameTrooper);
-                if(auto* factionPortrait = pGFXManager->getFactionTrooperPortrait(buildItem.itemID, pBuilder->getTechnologyHouseID()))
-                    pTexture = factionPortrait;
                 const SDL_Rect dest = {position.x + getButtonPosition(i - currentListPos).x,
                     position.y + getButtonPosition(i - currentListPos).y, BUILDERBTN_WIDTH, BUILDERBTN_HEIGHT};
 

@@ -66,28 +66,61 @@
     {
       "source": "Troopers_Fremen_alone.png",
       "runtime": "data/Troopers_Fremen_alone.png",
-      "sha256": "88456a5d773b8e211d29d886ff83b63c1dcf856b7f1ebb2f75a87884b3ec31ff"
+      "sha256": "88456a5d773b8e211d29d886ff83b63c1dcf856b7f1ebb2f75a87884b3ec31ff",
+      "archive": "Troopers.zip",
+      "use": "production portrait"
     },
     {
       "source": "Troopers_Fremen_5.png",
       "runtime": "data/Troopers_Fremen_5.png",
-      "sha256": "4aefb637def3bed4aa357e45c9b3605dd1f6a7b498a87e1b3a6ab82b7add4d2e"
+      "sha256": "4aefb637def3bed4aa357e45c9b3605dd1f6a7b498a87e1b3a6ab82b7add4d2e",
+      "archive": "Troopers.zip",
+      "use": "production portrait"
     },
     {
       "source": "Troopers_Sardaukar_3.png",
       "runtime": "data/Troopers_Sardaukar_3.png",
-      "sha256": "7f9df2a89ffea96e9cd643cd70820f5d992fd7c1a041ec3fed711ec7246db0e6"
+      "sha256": "7f9df2a89ffea96e9cd643cd70820f5d992fd7c1a041ec3fed711ec7246db0e6",
+      "archive": "Troopers.zip",
+      "use": "production portrait"
     },
     {
       "source": "Troopers_Sardaukar_5.png",
       "runtime": "data/Troopers_Sardaukar_5.png",
-      "sha256": "deb07d0930962c3eb2199d7c4dbbfec9b5c518077ce05ca3764b0b5471989c41"
+      "sha256": "deb07d0930962c3eb2199d7c4dbbfec9b5c518077ce05ca3764b0b5471989c41",
+      "archive": "Troopers.zip",
+      "use": "production portrait"
+    },
+    {
+      "source": "Troopers_Fremen_unit_selection.png",
+      "runtime": "data/Troopers_Fremen_unit_selection.png",
+      "sha256": "3344e649ea5b60b9ab7592f9925f995c7bae35c559c1b7a082521750d04b051b",
+      "archive": "Troopers.zip",
+      "use": "selected-unit portrait"
+    },
+    {
+      "source": "Troopers_Sardaukar_Alone.png",
+      "runtime": "data/Troopers_Sardaukar_Alone.png",
+      "sha256": "d761e94403d04ca62c210ae6bcfa77f576db3f5a03a30fb1aff13fa76ffc0123",
+      "archive": "Troopers.zip",
+      "use": "production portrait"
+    },
+    {
+      "source": "Troopers_Fremen_3.png",
+      "runtime": "data/Troopers_Fremen_3.png",
+      "sha256": "3344e649ea5b60b9ab7592f9925f995c7bae35c559c1b7a082521750d04b051b",
+      "archive": "Troopers.zip",
+      "use": "production portrait"
+    },
+    {
+      "source": "Troopers_Sardaukar_unit_selection.png",
+      "runtime": "data/Troopers_Sardaukar_unit_selection.png",
+      "sha256": "026d3ffbd16fd5c69ee80e046946fc699189f7af2fe562719187f93b4eb5f590",
+      "archive": "Troopers.zip",
+      "use": "selected-unit portrait"
     }
   ],
-  "unusedSuppliedPortraits": [
-    "Troopers_Fremen_3.png",
-    "Troopers_Sardaukar.png"
-  ],
+  "unusedSuppliedPortraits": [],
   "banner": {
     "source": "mods/Tornie/data/HeraldFremen.png",
     "note": "Same supplied Fremen banner already preserved in the repository; visual crop only on preview website",
@@ -97,5 +130,9 @@
       330,
       366
     ]
-  }
+  },
+  "additionalUpload": "Troopers.zip",
+  "unusedOriginalArchivePortraits": [
+    "Troopers_Sardaukar.png"
+  ]
 }

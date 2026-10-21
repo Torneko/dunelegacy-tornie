@@ -24,7 +24,16 @@ struct Release545Smoke {
         const int cx=background->w/2,cy=background->h/2;
         const bool scores=screen==UI_GameStatsBackground;
         const int top=scores?cy-184:cy+90;
-        for(const int left: {scores?cx-318:cx-316,scores?cx+211:cx+212}) {
+        if(scores) {
+            // PictureFactory right-aligns the original 106px logo at cx+317,
+            // inclusively. Check that last column, outside the former cleanup.
+            auto* tile=pGFXManager->getBackgroundSurface();
+            const int edge=cx+317;
+            for(int y=top;y<top+108;++y)
+                require((getPixel(background,edge,y)&0xffffff)==(getPixel(tile,edge,y)&0xffffff),
+                    "old right score logo border remains at its inclusive edge");
+        }
+        for(const int left: {scores?cx-318:cx-316,cx+212}) {
             // The engraved plate, border and four studs retain original art;
             // its rectangular outer backing must now show the real menu tile.
             for(int y=0;y<106;++y)for(int x=0;x<106;++x) {
@@ -43,18 +52,74 @@ struct Release545Smoke {
                     &&(getPixel(background,left+105,top+y)&0xffffff)==(getPixel(tile,left+105,top+y)&0xffffff),"rectangular gold/black frame fringe remains");
         }
     }
+    static sdl2::surface_ptr capturePortrait(SDL_Texture* texture) {
+        require(texture,"missing portrait texture");
+        SDL_RenderSetClipRect(renderer,nullptr);SDL_SetRenderDrawColor(renderer,0,0,0,255);SDL_RenderClear(renderer);
+        SDL_Rect area{0,0,91,55};SDL_RenderCopy(renderer,texture,nullptr,&area);
+        auto pixels=sdl2::surface_ptr(SDL_CreateRGBSurfaceWithFormat(0,91,55,32,SDL_PIXELFORMAT_ARGB8888));
+        require(SDL_RenderReadPixels(renderer,&area,pixels->format->format,pixels->pixels,pixels->pitch)==0,"portrait capture");return pixels;
+    }
+    static void verifyTrooperPortraits(const std::string& mod,const std::string& output) {
+        const char* files[2][3]={
+            {"Troopers_Fremen_alone.png","Troopers_Fremen_3.png","Troopers_Fremen_5.png"},
+            {"Troopers_Sardaukar_Alone.png","Troopers_Sardaukar_3.png","Troopers_Sardaukar_5.png"}};
+        const char* selected[2]={"Troopers_Fremen_unit_selection.png","Troopers_Sardaukar_unit_selection.png"};
+        const int items[3]={Unit_Trooper,Unit_Troopers,Unit_Troopers5};
+        const auto reference=[](const char* name) {
+            auto raw=LoadPNG_RW(pFileManager->openFile(name).get());
+            require(raw&&raw->w==91&&raw->h==55,"original Trooper portrait dimensions");
+            auto texture=convertSurfaceToTexture(std::move(raw));return capturePortrait(texture.get());
+        };
+        const auto same=[](SDL_Surface* actual,SDL_Surface* expected) {
+            for(int y=0;y<55;++y)for(int x=0;x<91;++x)
+                require(getPixel(actual,x,y)==getPixel(expected,x,y),"Trooper portrait wrong context, size, tint or added star");
+        };
+        for(int faction=0;faction<2;++faction) {
+            const auto runtime=getRuntimeHouseForIdentity(faction==0?HOUSE_FREMEN:HOUSE_SARDAUKAR);
+            auto options=effectiveGameOptions;options.chaosMode=false;
+            auto game=std::make_unique<Game>();currentGame=game.get();game->initGame(chaosSmokeInit(runtime,options));
+            pLocalHouse->createUnit(Unit_MCV,true);
+            const int previousColour=getHouseVisualHouse(runtime);
+            setHouseVisualHouse(runtime,HOUSECOLOR_GUEST_1);
+            auto expectedSelection=reference(selected[faction]);
+            for(const int item:items) {
+                auto actual=capturePortrait(resolveItemPicture(item,runtime));same(actual.get(),expectedSelection.get());
+                require(pGFXManager->getFactionTrooperPortrait(item,HOUSE_ATREIDES)==nullptr
+                    &&pGFXManager->getFactionTrooperProductionPortrait(item,HOUSE_ATREIDES)==nullptr,"faction artwork leaked to Atreides");
+            }
+            auto* unit=pLocalHouse->createUnit(Unit_Trooper,true);require(unit,"selected Trooper fixture");
+            {
+                std::unique_ptr<ObjectInterface> panel(unit->getInterfaceContainer());require(panel!=nullptr,"selected Trooper interface");
+                int checked=0;
+                std::function<void(Widget*)> inspect=[&](Widget* widget) {
+                    if(auto* picture=dynamic_cast<PictureLabel*>(widget);picture&&picture->getMinimumSize()==Point(91,55)) {
+                        SDL_SetRenderDrawColor(renderer,0,0,0,255);SDL_RenderClear(renderer);picture->draw(Point(0,0));
+                        auto actual=renderReadSurface(renderer);same(actual.get(),expectedSelection.get());++checked;
+                        SavePNG(actual.get(),(std::filesystem::path(output)/(mod+"-trooper-selected-"+std::to_string(faction)+".png")).string().c_str());
+                    }
+                    widget->forEachChildWidget(inspect);
+                };
+                inspect(panel.get());require(checked==1,"selected-unit portrait widget not verified");
+            }
+            for(const int kind:{Structure_WOR,Structure_Worfinery}) {
+                if(kind==Structure_Worfinery&&mod=="vanilla")continue;
+                auto* building=pLocalHouse->placeStructure(NONE_ID,kind,2,kind==Structure_WOR?2:8,true,true);require(building,"Trooper production building");
+                StaticContainer panel;auto* list=BuilderList::create(building->getObjectID());panel.addWidget(list,Point(0,0),list->getMinimumSize());
+                for(int size=0;size<3;++size) {
+                    auto actual=capturePortrait(list->getProductionPortrait(items[size]));auto expected=reference(files[faction][size]);same(actual.get(),expected.get());
+                    SavePNG(actual.get(),(std::filesystem::path(output)/(mod+"-trooper-production-"+std::to_string(faction)+"-"+std::to_string(size)+".png")).string().c_str());
+                }
+            }
+            setHouseVisualHouse(runtime,previousColour);
+            game.reset();currentGame=nullptr;pLocalHouse=nullptr;pLocalPlayer=nullptr;
+        }
+        SDL_Log("RELEASE 545 TROOPER PORTRAITS PASS: %s, six production variants and two distinct selected-unit portraits, original pixels and bonus colours",mod.c_str());
+    }
     static void run(const std::string& output) {
         auto& mods=ModManager::instance();const auto previous=mods.getActiveModName();
         MainMenu menuPreview;
         SinglePlayerMenu sectionPreview;
         const char* names[]={"Harkonnen","Atreides","Ordos","Fremen","Sardaukar","Mercenary","Neutral","Rebels","Corruptique","Wildspade","Kleshmersh","Tharpique"};
-        const auto capture=[](SDL_Texture* texture) {
-            require(texture,"missing portrait texture");
-            SDL_RenderSetClipRect(renderer,nullptr);SDL_SetRenderDrawColor(renderer,0,0,0,255);SDL_RenderClear(renderer);
-            SDL_Rect area{0,0,91,55};SDL_RenderCopy(renderer,texture,nullptr,&area);
-            auto pixels=sdl2::surface_ptr(SDL_CreateRGBSurfaceWithFormat(0,91,55,32,SDL_PIXELFORMAT_ARGB8888));
-            require(SDL_RenderReadPixels(renderer,&area,pixels->format->format,pixels->pixels,pixels->pitch)==0,"portrait capture");return pixels;
-        };
         for(const std::string mod:{"Tornie","Jericho","ArcaKev","TornieLite","JerichoLite","ArcaKevLite","vanilla"}) {
             require(mods.setActiveMod(mod),"mod switch");
             effectiveGameOptions=mods.loadEffectiveGameOptions(settings.gameOptions);
@@ -107,20 +172,8 @@ struct Release545Smoke {
                     SavePNG(screen.get(),(std::filesystem::path(output)/(mod+"-gold-regions.png")).string().c_str());
                 }
             }
-            struct Portrait {int identity,item;const char* filename;};
-            for(const Portrait p: {Portrait{HOUSE_FREMEN,Unit_Trooper,"Troopers_Fremen_alone.png"},
-                    {HOUSE_FREMEN,Unit_Troopers5,"Troopers_Fremen_5.png"},
-                    {HOUSE_SARDAUKAR,Unit_Troopers,"Troopers_Sardaukar_3.png"},
-                    {HOUSE_SARDAUKAR,Unit_Troopers5,"Troopers_Sardaukar_5.png"}}) {
-                const auto runtime=getRuntimeHouseForIdentity(static_cast<HOUSETYPE>(p.identity));
-                auto original=LoadPNG_RW(pFileManager->openFile(p.filename).get());
-                auto texture=convertSurfaceToTexture(std::move(original));auto expected=capture(texture.get());
-                auto actual=capture(resolveItemPicture(p.item,runtime));
-                for(int y=0;y<55;++y)for(int x=0;x<91;++x)
-                    require(getPixel(actual.get(),x,y)==getPixel(expected.get(),x,y),"portrait altered/incorrect/starred");
-                require(pGFXManager->getFactionTrooperPortrait(p.item,HOUSE_ATREIDES)==nullptr,"faction portrait leaked to Atreides");
-            }
-            SDL_Log("RELEASE 545 PRESENTATION PASS: %s, score/region identity frames, ordinary campaign banners and four original portraits",mod.c_str());
+            verifyTrooperPortraits(mod,output);
+            SDL_Log("RELEASE 545 PRESENTATION PASS: %s, score/region identity frames, ordinary campaign banners and eight original Trooper portraits",mod.c_str());
         }
         require(mods.setActiveMod("Tornie"),"co-op fixture mod");
         const auto playerName=settings.general.playerName;

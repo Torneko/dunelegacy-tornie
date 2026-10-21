@@ -279,6 +279,7 @@ jobs:
             test "$(grep -c 'ORIGINAL CINEMA PASS:' "$PROFILE/$LANGUAGE/--verify-campaign-cinema.log")" -eq 1
             fi
             test "$(grep -c 'RELEASE 545 COMPLETE:' "$PROFILE/$LANGUAGE/--verify-release545.log")" -eq 1
+            test "$(grep -c 'RELEASE 545 TROOPER PORTRAITS PASS:' "$PROFILE/$LANGUAGE/--verify-release545.log")" -eq 7
           done
 
       - name: Upload next-release runtime evidence
@@ -299,7 +300,7 @@ jobs:
           report = {'version':os.environ['RELEASE_VERSION'], 'source':os.environ['SOURCE_COMMIT'], 'workflowSource':os.environ['GITHUB_SHA'], 'run':int(os.environ['GITHUB_RUN_ID']), 'graphicalStartup':{'passed':True,'languages':['en','fr'],'images':['standard','Mint-compatible'],'audio':'PulseAudio','videoCases':['window','fullscreen','stale-combined-desktop'],'xrandr':True},'softwareFallback':True,'engineAndNetworkTests':True,'packagedRuntimeChecks':['expanded-coop','editor-owners','rebels-mentat','rebels-windtrap-upgrade','building-sales','normal-multiplayer-alliances','flame-and-gas-units','magenta-free-zooms','house-colours-and-blue-stars','neutral-saboteur-tier-seven','editor-terrain-blue-stars','original-flame-squad-portraits','precise-close-flame-quad','sales-destruction-and-concrete','sale-button-after-upgrade','easy-sales-75-percent','extended-fallback-units','movement-slowing','saved-chaos-worm-offer','elite-ornithopter','seventy-three-achievements','palace-napalm-and-saved-hazards','harvester-area-guard-crush','completed-upgrade-sales','native-slowpost-editor-icon','impact-only-and-random-palace-napalm','ten-original-artwork-files','scoutpost-slowpost-upgrade','bicolour-vanilla-harvesters','worfinery-displayed-labels'],'nextReleaseChecks':['radar-research-fr-en','chaos-defence-upgrades','editor-preupgraded-windtraps','original-westwood-audio','original-localized-credits','campaign-role-cinematics','faction-portraits-and-golden-campaign-frames','coop-rescue-two-three-four-factions','palace-saboteur-achievement','main-menu-replay-intro'],'networkProtocol':21,'saveVersion':9839}
           report['validationScope'] = 'ui-refinements' if os.environ['UI_ONLY'] == 'true' else 'full'
           if report['validationScope'] == 'ui-refinements':
-              report['packagedRuntimeChecks'] = ['radar-price-overlays-and-house-colours-fr-en', 'faction-frame-background-blending-fr-en', 'mod-menu-colours-fr-en']
+              report['packagedRuntimeChecks'] = ['radar-price-overlays-and-house-colours-fr-en', 'faction-frame-background-blending-fr-en', 'mod-menu-colours-fr-en', 'inclusive-right-score-frame-edge-fr-en', 'separate-trooper-production-selection-portraits-fr-en']
               report['nextReleaseChecks'] = list(report['packagedRuntimeChecks'])
           pathlib.Path('build/Linux-Build-'+report['version']+'.json').write_text(json.dumps(report,indent=2)+'\n')
           PYTHON
