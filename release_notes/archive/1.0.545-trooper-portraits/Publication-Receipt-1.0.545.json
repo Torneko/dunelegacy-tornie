@@ -1,0 +1,19 @@
+{
+  "version": "1.0.545",
+  "source": "ba4c6255a8e96e7c88c348a77e464b17514c9867",
+  "previousSource": "89f8fee66ba0abdc2555d696455b4805e6aae15c",
+  "previousSourceArchive": "archive/releases/v1.0.545-ui-refinements",
+  "websiteSource": "63860501ef2d02af647ffa764489446f969e4cf4",
+  "release": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.545",
+  "ciRuns": {
+    "windows": 39665675743,
+    "linux": 39665682397
+  },
+  "promotionRun": 39668011339,
+  "pagesRun": 39668142522,
+  "documentsRun": 39668475174,
+  "published": true,
+  "replacement": true,
+  "assetCount": 17,
+  "finalAuditInRepository": "release_notes/Final-Publication-Audit-1.0.545.json"
+}

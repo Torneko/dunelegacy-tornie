@@ -1,0 +1,165 @@
+{
+  "version": "1.0.545",
+  "source": "ba4c6255a8e96e7c88c348a77e464b17514c9867",
+  "networkProtocol": 21,
+  "saveVersion": 9839,
+  "passed": true,
+  "replacement": {
+    "previousSource": "89f8fee66ba0abdc2555d696455b4805e6aae15c",
+    "archiveTag": "archive/releases/v1.0.545-ui-refinements",
+    "changes": [
+      "inclusive right score-frame cleanup",
+      "six production Trooper icons and two distinct selection portraits from Troopers.zip",
+      "prior radar and mod menu improvements retained"
+    ]
+  },
+  "local": {
+    "status": "verified-local",
+    "version": "1.0.545",
+    "source": "ba4c6255a8e96e7c88c348a77e464b17514c9867",
+    "previousPublishedSource": "89f8fee66ba0abdc2555d696455b4805e6aae15c",
+    "networkProtocol": 21,
+    "saveVersion": 9839,
+    "checkedAtUtc": "2026-10-21T19:57:40.361982+00:00",
+    "scope": "right score-frame inclusive edge and separate supplied Trooper portrait contexts",
+    "menuColours": {
+      "Tornie": [
+        20,
+        68,
+        28
+      ],
+      "Jericho": [
+        52,
+        52,
+        52
+      ],
+      "ArcaKev": [
+        176,
+        64,
+        24
+      ]
+    },
+    "ctest": {
+      "passed": true,
+      "tests": 2,
+      "unitCases": 145,
+      "assertions": 10891
+    },
+    "regression": {
+      "reproducedBeforeFix": true,
+      "message": "old right score logo border remains at its inclusive edge",
+      "redLogSha256": "e960558cf4cd99ad089f079b86de87e0de7f7470c9d8c490d9896de3134c129b"
+    },
+    "native": {
+      "en": {
+        "passed": true,
+        "mods": 7,
+        "campaignIdentities": 63,
+        "bonusColourBackgrounds": 126,
+        "productionVariants": 6,
+        "selectedUnitPortraits": 2,
+        "productionContextsWorAndWorfinery": 26,
+        "screenSize": [
+          640,
+          480
+        ],
+        "logSha256": {
+          "native": "6d59c99be7b9bea032985729bb5b1b14ed386f9f6294580dcebaec39c4e95742"
+        }
+      },
+      "fr": {
+        "passed": true,
+        "mods": 7,
+        "campaignIdentities": 63,
+        "bonusColourBackgrounds": 126,
+        "productionVariants": 6,
+        "selectedUnitPortraits": 2,
+        "productionContextsWorAndWorfinery": 26,
+        "screenSize": [
+          1024,
+          768
+        ],
+        "logSha256": {
+          "native": "ccb6fa6a549bd7d7185af0a995302bbb626383c286686c1928c92207a1099013"
+        }
+      }
+    },
+    "originalArtworkFiles": 20,
+    "originalArtworkPreserved": true,
+    "suppliedTrooperPngs": 8,
+    "testedSourceSha256": {
+      "src/FileClasses/GFXManager.cpp": "0e63a361efb82362b246f3ace3dfccac7a84392b82d0ec3c3a32f400816f4346",
+      "src/GUI/dune/BuilderList.cpp": "16a6883261ed459081aef048766d5ba8953e24d955db017e32af5668de88cfde",
+      "include/FileClasses/GFXManager.h": "e988b05dc09cd81437b7f7db0e484c67651fabe9a72784124f7cc98e882ec189",
+      "include/GUI/dune/BuilderList.h": "1d7d76ee22c7d81a0d5e437394f73731bf0deabd0dfb5c8c0076235d0f5b85de",
+      "tests/Release545Smoke.h": "cf7d6b26aff8b2c5df34e401dd0c14f5972d0819fe6abba647b579e033737d48",
+      "docs/RELEASE-1.0.545-assets.json": "beef675d1f0104b58cb22da1111d553a8075dd82e2b13d213a2fffea846a9298",
+      ".github/workflows/build.yml": "01494c1ad33e056858d021f7e6f7fed60df8bb984db3e991adce1c007b059707",
+      ".github/workflows/linux-release.yml": "1ad289e88e731a91108bda7c5200b70522543e1b500b8ca2dcf4a0c5a080c858",
+      "data/CampaignHeraldAtreides.png": "9eb7bf16f7f6bc02c17e3f17ad8a6e0ac87a8190252b23addfc1dda4bfc8c5bd",
+      "data/CampaignHeraldHarkonnen.png": "91b83f993957168c2e08f9328f6d0bcd9ac7e7bb75488d6ede084e262500fa8b",
+      "data/CampaignHeraldOrdos.png": "9e6baf73d96885bf2e83fcedd90779791fa768dae9fbded25b6c9cfd4cdd7725",
+      "data/CampaignHeraldFremen.png": "3f77cadb70eef158df7dfa5af2dabf02729e57990638377c43fb4cdaafedcdd9",
+      "data/CampaignHeraldSardaukar.png": "f71ffdb664e0f39740933b195dd132c5c841495dec898a1fd46ca05e98667c78",
+      "data/CampaignHeraldMercenary.png": "f35c079a44c6db39acf127d9af426c7d5eab5f97b396394ff00b2fbd4a860872",
+      "data/CampaignHeraldNeutral.png": "a2eac847e245c17319bd2fe14771df7804cd0353e85d2a7eb4382ef5b4eb9ed4",
+      "data/CampaignHeraldRebels.png": "6b0c922371f7f0cf04dd3eb03b7b8f1399f57f047701a14b1b77fa42beb2a164",
+      "data/CampaignHeraldCorruptique.png": "c076452c6eaab1fa361bf75d0af9088ae789e9af2eb7b97ee1572d1db34ad317",
+      "data/CampaignHeraldWildspade.png": "844a3cc1af59e94a2748c3112f88d7d724f3b978039d5f2e27e434bc2b3e3c87",
+      "data/CampaignHeraldKleshmersh.png": "59665370704297d29cfc7f31b091e16a8399adafc5c9c5c96be9072658c6a86a",
+      "data/CampaignHeraldTharpique.png": "762abf8f71f7af8b2b2f7f96b3ffe395135aee3f35044c8f00408d6b567080e1",
+      "data/Troopers_Fremen_alone.png": "88456a5d773b8e211d29d886ff83b63c1dcf856b7f1ebb2f75a87884b3ec31ff",
+      "data/Troopers_Fremen_5.png": "4aefb637def3bed4aa357e45c9b3605dd1f6a7b498a87e1b3a6ab82b7add4d2e",
+      "data/Troopers_Sardaukar_3.png": "7f9df2a89ffea96e9cd643cd70820f5d992fd7c1a041ec3fed711ec7246db0e6",
+      "data/Troopers_Sardaukar_5.png": "deb07d0930962c3eb2199d7c4dbbfec9b5c518077ce05ca3764b0b5471989c41",
+      "data/Troopers_Fremen_unit_selection.png": "3344e649ea5b60b9ab7592f9925f995c7bae35c559c1b7a082521750d04b051b",
+      "data/Troopers_Sardaukar_Alone.png": "d761e94403d04ca62c210ae6bcfa77f576db3f5a03a30fb1aff13fa76ffc0123",
+      "data/Troopers_Fremen_3.png": "3344e649ea5b60b9ab7592f9925f995c7bae35c559c1b7a082521750d04b051b",
+      "data/Troopers_Sardaukar_unit_selection.png": "026d3ffbd16fd5c69ee80e046946fc699189f7af2fe562719187f93b4eb5f590"
+    },
+    "selectedPaletteValidation": {
+      "passed": true,
+      "actualSelectedWidgetScreenshots": 28,
+      "originalPalettePixelsExact": true,
+      "screenCaptureFormat": "SCREEN_FORMAT"
+    }
+  },
+  "browser": {
+    "site-general.json": {
+      "passed": true,
+      "contexts": 36
+    },
+    "next-website-validation.json": {
+      "passed": true,
+      "contexts": 84
+    },
+    "release-site-validation.json": {
+      "passed": true,
+      "contexts": 200
+    }
+  },
+  "originalWebsiteImagesPreserved": 208,
+  "ci": {
+    "windows": {
+      "run": 39665675743,
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39665675743",
+      "workflowSource": "ba4c6255a8e96e7c88c348a77e464b17514c9867",
+      "source": "ba4c6255a8e96e7c88c348a77e464b17514c9867",
+      "conclusion": "success",
+      "validationScope": "ui-refinements"
+    },
+    "linux": {
+      "run": 39665682397,
+      "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/39665682397",
+      "workflowSource": "ba4c6255a8e96e7c88c348a77e464b17514c9867",
+      "source": "ba4c6255a8e96e7c88c348a77e464b17514c9867",
+      "conclusion": "success",
+      "validationScope": "ui-refinements"
+    }
+  },
+  "previousReleaseValidation": "archive/1.0.545-ui-refinements/Validation-1.0.545.json",
+  "scope": "UI-only: CTest plus packaged FR/EN presentation, research and startup checks. Previous exhaustive campaign checks are archived, not claimed for this run.",
+  "limits": [
+    "Physical Mint display and a human Internet match across separate connections remain separate from automated checks."
+  ]
+}

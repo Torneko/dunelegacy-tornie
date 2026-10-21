@@ -1,10 +1,10 @@
 # Dune Legacy Tornie
 
-**[1.0.545 — Windows / Linux / Mint](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.545)** : recherches radar, plans Chaos, éditeur, cinématiques originales, douze cadres dorés, portraits Fremen/Sardaukar et **73 succès**. Tous les participants réseau : protocole **21** ; nouvelles sauvegardes **9839**, anciennes lisibles. [Notes FR](release_notes/1.0.545-FR.md) · [Notes EN](release_notes/1.0.545-EN.md) · [Validation](release_notes/Validation-1.0.545.json).
+**[1.0.545 — Windows / Linux / Mint](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.545)** : recherches radar, plans Chaos, éditeur, cinématiques originales, douze cadres dorés, portraits Fremen/Sardaukar et **73 succès**. Tous les participants réseau : protocole **22** ; nouvelles sauvegardes **9839**, anciennes lisibles. [Notes FR](release_notes/1.0.545-FR.md) · [Notes EN](release_notes/1.0.545-EN.md) · [Validation](release_notes/Validation-1.0.545.json).
 
-Source de la 1.0.545 corrigée : `ba4c6255a8e96e7c88c348a77e464b17514c9867`. Le code, les rapports et le site sont réunis sur l’unique branche `dunelegacy-tornie`. Les remplacements de release autorisés conservent la source précédente sous un tag d’archive. Le site FR/EN se trouve dans [website/](website/) et se déploie automatiquement depuis cette branche. Les anciens états sont conservés par des tags d’archive. [Organisation du dépôt](docs/SINGLE-BRANCH.md) · [Recherches radar](docs/RADAR-RESEARCH-NEXT-RELEASE.md) · [Graphismes et succès](docs/RELEASE-1.0.545.md) · [Reçus de publication](release_notes/Publication-Receipt-1.0.545.json).
+Source de la 1.0.545 corrigée : `e8cf3e3cbc21be1b77dc05efc80d9f003b6bc469`. Le code, les rapports et le site sont réunis sur l’unique branche `dunelegacy-tornie`. Les remplacements de release autorisés conservent la source précédente sous un tag d’archive. Le site FR/EN se trouve dans [website/](website/) et se déploie automatiquement depuis cette branche. Les anciens états sont conservés par des tags d’archive. [Organisation du dépôt](docs/SINGLE-BRANCH.md) · [Recherches radar](docs/RADAR-RESEARCH-NEXT-RELEASE.md) · [Graphismes et succès](docs/RELEASE-1.0.545.md) · [Reçus de publication](release_notes/Publication-Receipt-1.0.545.json).
 
-La 1.0.545 corrigée place les cadres dorés dans les scores et les régions ; les choix et confirmations de campagne retrouvent leurs bannières habituelles. Le fond des cadres se fond dans la texture du menu, les recherches radar affichent leur coût en surimpression et les boutons suivent le mod : Tornie vert foncé, Jericho gris foncé, ArcaKev orange foncé rougeâtre, Lite compris. Le cadre droit des scores est nettoyé jusqu’au dernier pixel ; Troopers Fremen/Sardaukar : production 1/3/5 et sélection séparées selon Troopers.zip. Retélécharger les paquets 1.0.545 pour recevoir ces ajustements. Protocole 21 et sauvegardes 9839 conservés. [Détails et validation](docs/FACTION-FRAMES-CORRECTION.md).
+La 1.0.545 corrigée place les cadres dorés dans les scores et les régions ; les choix et confirmations de campagne retrouvent leurs bannières habituelles. Le fond des cadres se fond dans la texture du menu, les recherches radar affichent leur coût en surimpression et les boutons suivent le mod : Tornie vert foncé, Jericho gris foncé, ArcaKev orange foncé rougeâtre, Lite compris. Le cadre droit des scores est nettoyé jusqu’au dernier pixel ; Troopers Fremen/Sardaukar : production 1/3/5 et sélection séparées selon Troopers.zip. Retélécharger les paquets 1.0.545 pour recevoir ces ajustements. Protocole 22 ; sauvegardes 9839 conservées. Tous les participants doivent utiliser la nouvelle 545. [Détails et validation](docs/FACTION-FRAMES-CORRECTION.md).
 
 Correctifs 1.0.544 : Slowpost par amélioration du Scoutpost, animation, tourelle violette plus sombre, libellés Worfinery et deux moissonneuses bicolores reconstruites depuis la base vanilla. [FR](release_notes/Correctifs-1.0.544-FR.md) · [EN](release_notes/Correctifs-1.0.544-EN.md). Protocole 20 / nouvelles sauvegardes 9838. Retélécharger la 544 corrigée sur tous les postes d’une partie réseau.
 
@@ -253,3 +253,19 @@ Set `DUNELEGACY_DISCORD_APP_ID` to the application ID of your own Discord applic
 The editor’s **Sabotage** mode makes Soldiers and Troopers, including squads, hunt enemy buildings for capture. In game, the **Sabotage** button appears below **Retreat**; mixed selections apply it only to capturing infantry. Allied and noncapturable buildings are ignored, and lost targets are replaced. Normal capture rules apply: a red-health building changes ownership; otherwise the infantry damages it and is consumed.
 
 The Fremen banner is restored in the house-choice confirmation. Its original artwork is preserved; the planet background now uses a compatible image format.
+
+- Tharpique : délai entre les soins augmenté de 50 % pour l’infanterie à gaz
+  et le Chemical Siege Tank (1,92 → 2,88 s), ainsi que le Chemipost (2,4 → 3,6 s).
+  Les soins restent de 15 PV ; les attaques de déviation et les autres factions
+  conservent leur cadence. La règle suit la provenance des plans en Chaos.
+- Sans sélection, les boutons Ornithopter et Chemical Carryall affichent le nombre
+  d’aéronefs sélectionnables entre parenthèses, dans la couleur de la faction ou
+  couleur bonus du joueur. Les ornithoptères élite et le contrôle allié sont pris
+  en compte. Les compteurs disparaissent avec ces boutons lors d’une sélection.
+- Recherches radar : boutons communs visibles à partir du niveau 4, spécialisation
+  au niveau 7 ; l’IX reste requise pour lancer cette dernière.
+- Signature Westwood : son renforcé d’environ 6 dB, déclenché au premier mouvement
+  du logo après une seconde de fondu. Volume utilisateur, silence et arrêt lors
+  du passage de l’introduction respectés.
+- Réseau : tous les participants doivent retélécharger cette 1.0.545 corrigée
+  (protocole 22). Sauvegardes 9839 inchangées, anciennes toujours lisibles.

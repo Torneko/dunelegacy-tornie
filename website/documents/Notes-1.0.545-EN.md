@@ -1,7 +1,24 @@
 # Dune Legacy Tornie 1.0.545
 
+
+- Tharpique: healing recharge increased by 50% for Gas Infantry and Chemical
+  Siege Tank (1.92 → 2.88 s), and Chemipost (2.4 → 3.6 s). Healing stays at 15 HP;
+  enemy deviation attacks and other factions keep their cadence. Chaos follows
+  the production blueprint’s faction.
+- With nothing selected, Ornithopter and Chemical Carryall shortcut buttons show
+  the selectable aircraft count in parentheses, using the player’s faction/bonus
+  colour. Elite Ornithopters and allied control are included. These counters
+  disappear with their buttons when an object is selected.
+- Radar research: common buttons appear at level 4, specialization at level 7;
+  the IX remains required to start specialization.
+- Westwood signature: approximately +6 dB, starting with the logo’s first animated
+  frame after its one-second fade-in. User volume, mute and skip cleanup remain
+  respected.
+- Network: every participant must download this corrected 1.0.545 (protocol 22).
+  Save format remains 9839, with earlier saves still readable.
+
 Radar research, campaigns, faction artwork and 73 achievements. Linux, Linux Mint
-and Windows. Every network participant needs this version: protocol 21.
+and Windows. Every network participant needs this version: protocol 22.
 New saves use 9839; previous saves remain readable.
 
 - Right score frame: corrected one-pixel alignment clears the old logo through
@@ -49,6 +66,6 @@ New saves use 9839; previous saves remain readable.
   resources and a display crop for Tornie’s supplied Fremen banner.
 
 Existing achievement profiles are retained; the 100% indicator follows all 73.
-Game source: ba4c6255a8e96e7c88c348a77e464b17514c9867.
+Game source: see Validation-1.0.545.json.
 Sources, notes, checksums and the offline website accompany the release.
 Detailed results are recorded in Validation-1.0.545.json.
