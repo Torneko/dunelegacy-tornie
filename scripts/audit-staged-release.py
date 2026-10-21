@@ -41,15 +41,31 @@ def main():
     report['packages']['windows']={'passed':True,'sha256':sha(windows.read_bytes())}
     linux=args.staged/'linux'
     tar=next(linux.glob('*.tar.gz'))
-    with tarfile.open(tar) as archive:
-        members=[member for member in archive.getmembers() if member.isfile()]
-        for path,digest in expected.items():
-            matches=[member for member in members if member.name==path or member.name.endswith('/'+path)]
-            assert len(matches)==1 and sha(archive.extractfile(matches[0]).read())==digest,path
-        for entry in artwork:
-            suffix='/'+Path(entry['runtime']).name
-            matches=[member for member in members if member.name.endswith(suffix)]
-            assert len(matches)==1 and sha(archive.extractfile(matches[0]).read())==entry['sha256'],entry['runtime']
+    # A compressed TAR can require a full rewind when resources are requested
+    # out of archive order. Hash each required member in one forward pass while
+    # retaining the missing/duplicate checks used by the other package formats.
+    mod_counts={path:0 for path in expected}
+    artwork_counts=[0 for entry in artwork]
+    artwork_by_name={}
+    for index,entry in enumerate(artwork):
+        artwork_by_name.setdefault(Path(entry['runtime']).name,[]).append((index,entry))
+    with tarfile.open(tar,mode='r|gz') as archive:
+        for member in archive:
+            if not member.isfile():continue
+            parts=member.name.split('/')
+            mod_paths=['/'.join(parts[index:]) for index,part in enumerate(parts) if part=='mods']
+            mod_paths=[path for path in mod_paths if path in expected]
+            art_entries=artwork_by_name.get(parts[-1],[]) if len(parts)>1 else []
+            if not mod_paths and not art_entries:continue
+            digest=sha(archive.extractfile(member).read())
+            for path in mod_paths:
+                mod_counts[path]+=1
+                assert digest==expected[path],path
+            for index,entry in art_entries:
+                artwork_counts[index]+=1
+                assert digest==entry['sha256'],entry['runtime']
+    for path,count in mod_counts.items():assert count==1,path
+    for index,entry in enumerate(artwork):assert artwork_counts[index]==1,entry['runtime']
     report['packages']['linuxTar']={'passed':True,'sha256':sha(tar.read_bytes())}
     for image in sorted(linux.glob('*.AppImage')):
         image.chmod(image.stat().st_mode|0o100)
