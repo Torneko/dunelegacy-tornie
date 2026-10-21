@@ -1,17 +1,17 @@
 {
   "version": "1.0.545",
-  "source": "89f8fee66ba0abdc2555d696455b4805e6aae15c",
-  "previousSource": "1c70cd44313b6405994e00b0e06b25b462ce42f4",
-  "previousSourceArchive": "archive/releases/v1.0.545-faction-frames",
-  "websiteSource": "6089e7df36633f01d8c8a625189d0dfeedb4f8d9",
+  "source": "ba4c6255a8e96e7c88c348a77e464b17514c9867",
+  "previousSource": "89f8fee66ba0abdc2555d696455b4805e6aae15c",
+  "previousSourceArchive": "archive/releases/v1.0.545-ui-refinements",
+  "websiteSource": "63860501ef2d02af647ffa764489446f969e4cf4",
   "release": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.545",
   "ciRuns": {
-    "windows": 39659402739,
-    "linux": 39659394927
+    "windows": 39665675743,
+    "linux": 39665682397
   },
-  "promotionRun": 39661690543,
-  "pagesRun": 39661866101,
-  "documentsRun": 39662038157,
+  "promotionRun": 39668011339,
+  "pagesRun": 39668142522,
+  "documentsRun": 39668475174,
   "published": true,
   "replacement": true,
   "assetCount": 17,
