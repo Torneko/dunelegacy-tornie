@@ -21,7 +21,7 @@ on:
         type: string
         default: dunelegacy-tornie
       publish_packages:
-        description: Attach the built Linux packages to the release
+        description: Publish built packages (false keeps staged replacements as a draft)
         type: boolean
         default: true
       replace_packages:
@@ -449,7 +449,7 @@ jobs:
             NEW_RELEASE=true
           fi
           gh release upload "$RELEASE_TAG" staged/linux/* staged/windows/* "staged/Package-Resources-Audit-${RELEASE_TAG#v}.json" --repo "$GITHUB_REPOSITORY" --clobber
-          if [[ "$NEW_RELEASE" == true ]]; then
+          if [[ "$NEW_RELEASE" == true && "${{ inputs.publish_packages }}" == true ]]; then
             gh release edit "$RELEASE_TAG" --draft=false --latest --repo "$GITHUB_REPOSITORY"
           fi
 
@@ -471,7 +471,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.release_tag }}
+          ref: ${{ inputs.source_ref || inputs.release_tag }}
 
       - name: Verify the packaged source and matching website
         env:
@@ -546,7 +546,7 @@ jobs:
           cp "offline/DuneLegacyTornie-Site-Local/dist/documents/Notes-$VERSION.md" "supporting/Release-Notes-$VERSION-FR.md"
           cp "offline/DuneLegacyTornie-Site-Local/dist/documents/Notes-$VERSION-EN.md" "supporting/Release-Notes-$VERSION-EN.md"
           cp "offline/DuneLegacyTornie-Site-Local/dist/documents/Validation-$VERSION.json" supporting/
-          if [[ "$VERSION" == "1.0.545" ]]; then
+          if [[ "$VERSION" == "1.0.545" || "$VERSION" == "1.0.546" ]]; then
             gh release download "$RELEASE_TAG" --pattern "Package-Resources-Audit-$VERSION.json" --dir supporting
           fi
           gh release download "$RELEASE_TAG" --pattern '*Linux*' --dir supporting
@@ -588,15 +588,15 @@ jobs:
               for path in sorted(pathlib.Path('offline').rglob('*')):
                   if path.is_file(): archive.write(path,path.relative_to('offline'))
           PYTHON
+          SITE_URLS=("file://$GITHUB_WORKSPACE/offline/DuneLegacyTornie-Site-Local/dist/")
+          if [[ "${{ inputs.publish_packages }}" == true ]]; then SITE_URLS+=("https://torneko.github.io/dunelegacy-tornie/"); fi
           SITE_BROWSER="$(command -v google-chrome || command -v chromium)" \
           NODE_PATH="$RUNNER_TEMP/site-checks/node_modules" \
           RELEASE_VERSION="$VERSION" \
           NETWORK_PROTOCOL="$(sed -n 's/^#define NETWORK_PROTOCOL_VERSION[[:space:]]*\([0-9]*\).*/\1/p' include/Network/NetworkManager.h)" \
           REQUIRE_WINDOWS_VERSION="${VERIFIED_WINDOWS_RUN:+$VERSION}" \
           SITE_VALIDATION_OUTPUT="supporting/Website-Validation-$VERSION.json" \
-            node /tmp/check-documentation-site.cjs \
-              "file://$GITHUB_WORKSPACE/offline/DuneLegacyTornie-Site-Local/dist/" \
-              "https://torneko.github.io/dunelegacy-tornie/"
+            node /tmp/check-documentation-site.cjs "${SITE_URLS[@]}"
           (cd supporting && sha256sum * > "SHA256SUMS-$VERSION.txt")
           gh release upload "$RELEASE_TAG" supporting/* --clobber
           echo "Bilingual offline site, tagged sources, notes and SHA-256 checksums attached to $RELEASE_TAG." >> "$GITHUB_STEP_SUMMARY"

@@ -60,6 +60,7 @@ jobs:
           export SITE_BROWSER="$(command -v google-chrome || command -v chromium)"
           node scripts/check-documentation-site.cjs "file://$GITHUB_WORKSPACE/website/"
           node scripts/check-next-preparation-site.cjs "file://$GITHUB_WORKSPACE/website/"
+          RELEASE546_SITE_OUTPUT="$NEXT_SITE_OUTPUT/campaigns-546.json" node scripts/check-release546-site.cjs "file://$GITHUB_WORKSPACE/website/"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: website
