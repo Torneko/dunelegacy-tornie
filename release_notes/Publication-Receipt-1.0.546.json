@@ -1,0 +1,125 @@
+{
+  "version": "1.0.546",
+  "status": "published",
+  "publishedAt": "2026-10-30T15:38:25Z",
+  "source": "b951fb4e4217e5f0c570fc2e5ed88d186e925e3c",
+  "tag": "v1.0.546",
+  "website": "9c562c5ee2f4310fa10575efe5d3e5c01aa17358",
+  "releaseUrl": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.546",
+  "websiteUrl": "https://torneko.github.io/dunelegacy-tornie/",
+  "runs": {
+    "windows": 41074659306,
+    "linux": 41074658570,
+    "draftAudit": 41079202189,
+    "draftAuditAttempt": 2,
+    "documents": 41080501285,
+    "publication": 41082309511,
+    "pages": 41082674528
+  },
+  "networkProtocol": 24,
+  "saveFormat": 9839,
+  "assets": [
+    {
+      "name": "DuneLegacyTornie-1.0.546-Linux-Mint-Compatible.AppImage",
+      "bytes": 52607480,
+      "sha256": "96af734e20a5d4a68f36b5fa29512eeb69c665f4b87b70f4bd12b2821f136cfe",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/DuneLegacyTornie-1.0.546-Linux-Mint-Compatible.AppImage"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.546-Linux-x64.deb",
+      "bytes": 67034330,
+      "sha256": "d2c3cbf92b431fbb4714e446353380a1a6823cd8532be5c021860539d3379c9c",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/DuneLegacyTornie-1.0.546-Linux-x64.deb"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.546-Linux-x64.rpm",
+      "bytes": 67124692,
+      "sha256": "05d9c29cf3db327f82cbbde19591e4452ddd3fec1682929267bc06e926ef869a",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/DuneLegacyTornie-1.0.546-Linux-x64.rpm"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.546-Linux-x64.tar.gz",
+      "bytes": 67715478,
+      "sha256": "5b6b2f1ea9464a1d0548231815d4c37eb67787663df553bac036258a4cf9d5ef",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/DuneLegacyTornie-1.0.546-Linux-x64.tar.gz"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.546-Linux-x86_64.AppImage",
+      "bytes": 52607480,
+      "sha256": "9465b58e36b6ea49d778c996356379832618b2d134247d5b4a1c37339518e018",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/DuneLegacyTornie-1.0.546-Linux-x86_64.AppImage"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.546-Sources.zip",
+      "bytes": 285068242,
+      "sha256": "a78d797b284a95906792243b1e7755ced5b31ac9c5e9b623e9717657de0541fa",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/DuneLegacyTornie-1.0.546-Sources.zip"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.546-Windows-x64.zip",
+      "bytes": 80133644,
+      "sha256": "498f2d56dbe17aa45bfc6bc45cf0d40571b1eb7375a49f1c9d30033ed15c5632",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/DuneLegacyTornie-1.0.546-Windows-x64.zip"
+    },
+    {
+      "name": "DuneLegacyTornie-Site-Local-1.0.546.zip",
+      "bytes": 871292174,
+      "sha256": "fc1e691630f4041aaa89c13a0a995cdfd7375a4fb6ebf2c5f116914ec20d8e11",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/DuneLegacyTornie-Site-Local-1.0.546.zip"
+    },
+    {
+      "name": "Linux-Build-1.0.546.json",
+      "bytes": 1281,
+      "sha256": "0679869b805e0dcb9bd1643d4100da2940f6d03362ba1b9a2dec6e93775a842c",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/Linux-Build-1.0.546.json"
+    },
+    {
+      "name": "Package-Resources-Audit-1.0.546.json",
+      "bytes": 780,
+      "sha256": "81004c37bcee56d81608c1b675cf3d6f0c13bc394aa9f9a6af94ce8fd5799278",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/Package-Resources-Audit-1.0.546.json"
+    },
+    {
+      "name": "Publication-Validation-1.0.546.json",
+      "bytes": 2441,
+      "sha256": "e439d10b25aed808ab815eb0c863cfb7293655b09206d0ad16a7a7b255ddf9c5",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/Publication-Validation-1.0.546.json"
+    },
+    {
+      "name": "Release-Notes-1.0.546-EN.md",
+      "bytes": 3240,
+      "sha256": "ee891b02071f292370cc4a825e6e90e1c7b256c702e8cadba5169709cdc2e3b7",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/Release-Notes-1.0.546-EN.md"
+    },
+    {
+      "name": "Release-Notes-1.0.546-FR.md",
+      "bytes": 3816,
+      "sha256": "4edea24b689553481115b998998d66adb19fc4879d993394d3a7254e16323ccc",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/Release-Notes-1.0.546-FR.md"
+    },
+    {
+      "name": "SHA256SUMS-1.0.546.txt",
+      "bytes": 1634,
+      "sha256": "8a4ffcb0c752b21fcdc383c9fab8ce34536419550881f8b56c450dee50036ad8",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/SHA256SUMS-1.0.546.txt"
+    },
+    {
+      "name": "Validation-1.0.546.json",
+      "bytes": 11228,
+      "sha256": "1f3b04eed7d71e7982335e6c7bfbdd4950cccdfb76b34c76fd9288f01ab2d72d",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/Validation-1.0.546.json"
+    },
+    {
+      "name": "Website-Validation-1.0.546.json",
+      "bytes": 8688,
+      "sha256": "c51e80474fab3107ccde107c662b6a82f18b93c4d2b43fa1da84e7a667ab2874",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/Website-Validation-1.0.546.json"
+    },
+    {
+      "name": "Windows-Build-1.0.546.json",
+      "bytes": 968,
+      "sha256": "6d2ac527cbe5014f045447f0b7594d8de9d08fc03c32ad24b186c62a1dc7e1f2",
+      "url": "https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/Windows-Build-1.0.546.json"
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "version": "1.0.546",
+  "passed": true,
+  "source": "b951fb4e4217e5f0c570fc2e5ed88d186e925e3c",
+  "website": "9c562c5ee2f4310fa10575efe5d3e5c01aa17358",
+  "publicAssetCount": 17,
+  "manifestEntries": 16,
+  "packageResources": {
+    "version": "1.0.546",
+    "source": "b951fb4e4217e5f0c570fc2e5ed88d186e925e3c",
+    "modFiles": 5623,
+    "originalArtworkFiles": 20,
+    "vanillaFiles": 205,
+    "packages": {
+      "windows": {
+        "passed": true,
+        "sha256": "498f2d56dbe17aa45bfc6bc45cf0d40571b1eb7375a49f1c9d30033ed15c5632"
+      },
+      "linuxTar": {
+        "passed": true,
+        "sha256": "5b6b2f1ea9464a1d0548231815d4c37eb67787663df553bac036258a4cf9d5ef"
+      },
+      "DuneLegacyTornie-1.0.546-Linux-Mint-Compatible.AppImage": {
+        "passed": true,
+        "sha256": "96af734e20a5d4a68f36b5fa29512eeb69c665f4b87b70f4bd12b2821f136cfe"
+      },
+      "DuneLegacyTornie-1.0.546-Linux-x86_64.AppImage": {
+        "passed": true,
+        "sha256": "9465b58e36b6ea49d778c996356379832618b2d134247d5b4a1c37339518e018"
+      }
+    }
+  },
+  "campaignScope": {
+    "revision": 2,
+    "modifiedEditions": [
+      "Tornie",
+      "TornieLite"
+    ],
+    "campaigns": 18,
+    "soloMaps": 396,
+    "opponentCounts": {
+      "2": 342,
+      "3": 36,
+      "4": 18
+    },
+    "support": {
+      "Tornie/Harkonnen": "Ordos",
+      "Tornie/Atreides": "Fremen",
+      "Tornie/Ordos": "Sardaukar",
+      "Tornie/Fremen": "Mercenary",
+      "Tornie/Sardaukar": "Neutral",
+      "Tornie/Mercenary": "Rebels",
+      "Tornie/Neutral": "Corruptique",
+      "Tornie/Rebels": "Harkonnen",
+      "Tornie/Corruptique": "Kleshmersh",
+      "Tornie/Wildspade": "Tharpique",
+      "Tornie/Kleshmersh": "Wildspade",
+      "Tornie/Tharpique": "Atreides",
+      "TornieLite/Harkonnen": "Sardaukar",
+      "TornieLite/Atreides": "Mercenary",
+      "TornieLite/Ordos": "Harkonnen",
+      "TornieLite/Fremen": "Atreides",
+      "TornieLite/Sardaukar": "Ordos",
+      "TornieLite/Mercenary": "Fremen"
+    },
+    "foreignCampaignFilesByteIdentical": 2320,
+    "stage2SoloVariants": 54,
+    "minimumStage2SoloGap": 10,
+    "stage2CoopVariantsIncludingFourStarts": 54,
+    "minimumStage2CoopGap": 10,
+    "foreignCampaignFingerprint": "311f90e5ccd1e1d44a93531dabcc3fac5d3c8b0dc0990cf995a9752887cbf0e8"
+  },
+  "archiveIntegrity": {
+    "passed": true,
+    "source": "b951fb4e4217e5f0c570fc2e5ed88d186e925e3c",
+    "website": "9c562c5ee2f4310fa10575efe5d3e5c01aa17358",
+    "sourceZipCrc": true,
+    "offlineZipCrc": true,
+    "embeddedFiles": 14,
+    "websiteFilesByteIdentical": 382
+  },
+  "publicWebsite": {
+    "passed": true,
+    "generalRoutes": 36,
+    "researchContexts": 84,
+    "campaignContexts": 28,
+    "total": 148,
+    "desktopMobile": true,
+    "languages": [
+      "fr",
+      "en"
+    ]
+  },
+  "publicDownloadHeads": {
+    "windows": 200,
+    "mint": 200,
+    "sources": 200,
+    "offlineGuide": 200
+  },
+  "localOfficialWindowsStartup": {
+    "passed": true,
+    "language": "fr",
+    "renderer": "software",
+    "isolatedTestProfile": true
+  },
+  "publicationRuns": {
+    "windows": 41074659306,
+    "linux": 41074658570,
+    "draftAudit": 41079202189,
+    "draftAuditAttempt": 2,
+    "documents": 41080501285,
+    "publication": 41082309511,
+    "pages": 41082674528
+  },
+  "humanPlaythroughOrTwoPcSessionClaimed": false
+}

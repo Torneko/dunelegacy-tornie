@@ -1,5 +1,7 @@
 # Sortie 1.0.546
 
+La [1.0.546 est publiée](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.546), avec 17 fichiers. Le [site FR/EN](https://torneko.github.io/dunelegacy-tornie/) est déployé depuis `9c562c5ee2f4310fa10575efe5d3e5c01aa17358` ; ses 148 parcours publics passent. Les 382 fichiers du site sont identiques à l’archive hors ligne, dont les 14 fichiers embarqués sont contrôlés par SHA-256. [Publication](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41082309511) · [Pages](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41082674528) · [Reçu](../release_notes/Publication-Receipt-1.0.546.json) · [Audit final](../release_notes/Final-Publication-Audit-1.0.546.json).
+
 Campagnes Tornie/Tornie Lite seulement ; autres auteurs préservés. Source du jeu et tag : `b951fb4e4217e5f0c570fc2e5ed88d186e925e3c`. Protocole 24, sauvegardes 9839. Les CI [Windows](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41074659306) et [Linux/Mint](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41074658570) passent, avec les parcours installés FR/EN. L’audit vérifie 5 623 fichiers de mods, 20 images et 205 fichiers Vanilla dans les paquets. La publication complète est assemblée en brouillon avant l’activation de la release et le déploiement explicite de Pages. Notes : `website/documents/Notes-1.0.546.md` et `Notes-1.0.546-EN.md`. Rapports : `release_notes/Validation-1.0.546.json` et `Package-Resources-Audit-1.0.546.json`.
 
 # Correctifs 1.0.545 — soins, compteurs et introduction
