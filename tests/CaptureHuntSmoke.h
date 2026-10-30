@@ -16,6 +16,7 @@ struct CaptureHuntGameFixture {
         game.processObjects();
         ++game.gameCycleCount;
     }
+    static void fullTick(Game& game) { game.updateGameState(); }
 };
 
 class CaptureHuntUnitUI final : public UnitInterface {

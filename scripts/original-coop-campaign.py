@@ -20,6 +20,10 @@ SIZES = {"const yard": (2, 2), "windtrap": (2, 2), "refinery": (3, 2),
          "outpost": (2, 2), "hi-tech": (3, 2), "ix": (2, 2), "wor": (2, 2),
          "palace": (3, 3), "repair": (3, 2), "turret": (1, 1), "r-turret": (1, 1),
          "spice silo": (2, 2), "star port": (3, 3), "starport": (3, 3), "wall": (1, 1)}
+SIZES.update({"advanced windtrap 3x3": (3, 3), "advanced windtrap 2x3": (2, 3),
+              "advanced windtrap 3x2": (3, 2), "worfinery": (3, 2), "doublefinery": (5, 2),
+              "tech center": (3, 2), "love factory": (3, 2), "chaos factory": (3, 2),
+              "scoutpost": (1, 1), "flamepost": (1, 1), "chemipost": (1, 1), "slowpost": (1, 1)})
 
 
 def read(data):
@@ -124,6 +128,9 @@ def active_opponents(ini, house, owners):
 def campaigns(mod):
     if mod != "vanilla":
         plans = json.loads((ROOT / "config/CampaignPlans.json").read_text(encoding="utf-8"))["mods"][mod]
+        if mod in ('Tornie','TornieLite'):
+            support=json.loads((ROOT/'config/TornieCampaign546.json').read_text(encoding='utf-8'))['support'][mod]
+            return [(row['house'],(row['opponents'][0],support[row['house']],*row['opponents'][1:])) for row in plans]
         return [(row["house"], tuple(row["opponents"])) for row in plans]
     result = []
     for house in (*NAMES[:8], "Kleshmersh"):
@@ -138,7 +145,11 @@ def campaigns(mod):
     return result
 
 
-def stage_roles(mod, roles, actual):
+def stage_roles(mod, roles, actual, ini=None):
+    if mod in ('Tornie','TornieLite') and ini is not None and ini['BASIC'].get('CampaignRevision')=='2':
+        selected=tuple(ini['BASIC'][key] for key in ('PrimaryOpponent','SupportOpponent','LateOpponent','FinalOpponent'))
+        assert len(set(selected))==4 and actual<=set(selected),(mod,actual,selected)
+        return selected
     if mod != "vanilla" or len(roles) == 3:
         assert actual <= set(roles), (mod, actual, roles)
         return roles
@@ -211,7 +222,59 @@ def connected_cells(cells, blocked, origin):
     return reached
 
 
+def trade_start(ini, house, reserved=None):
+    """Duplicate the Rebels' trade economy, without bypassing the MCV purchase."""
+    size, offset, cells = terrain(ini)
+    occupied, structures = occupied_cells(ini, offset)
+    occupied.update(reserved["occupied"] if reserved else ())
+    structures.update(reserved["structures"] if reserved else ())
+    port = next(v.split(',') for v in ini['STRUCTURES'].values() if v.startswith(house+',Starport,'))
+    position=int(port[3]);origin=position%64-offset,position//64-offset
+    reached=connected_cells(cells,structures,origin)
+    additions, buildings, areas, patches = {}, {}, [], set()
+    protected=set()
+    for field in ('Bloom','Special'):
+        for p in ini['MAP'].get(field,'').split(','):
+            if p.strip():protected.add((int(p)%64-offset,int(p)//64-offset))
+    anchor=origin
+    for index,item in enumerate(('Starport','Windtrap','Windtrap','Refinery')):
+        w,h=SIZES[item.lower()]
+        candidates=[]
+        for x,y in reached:
+            area={(x+dx,y+dy) for dx in range(w) for dy in range(h)}
+            if not area.isdisjoint(occupied|protected) or any(p not in cells or cells[p]=='a' for p in area):continue
+            sand=sum(cells[p] not in '28' for p in area)
+            distance=max(abs(x-anchor[0]),abs(y-anchor[1]))
+            if not reserved and sand:continue
+            candidates.append((distance+3*sand,distance,y,x))
+        assert candidates,(house,'No cooperative trade facility footprint',item)
+        _,_,y,x=min(candidates);area={(x+dx,y+dy) for dx in range(w) for dy in range(h)}
+        buildings['IDCOOPTRADE'+str(index)]=f'Player2,{item},256,{(y+offset)*64+x+offset}'
+        occupied.update(area);structures.update(area);areas.append((x,y,w,h))
+        patches.update(p for p in area if cells[p] not in '28')
+        if index==0:anchor=x,y
+    reached=connected_cells(cells,structures,origin)
+    for key,value in ini['UNITS'].items():
+        parts=value.split(',')
+        if parts[0]!=house:continue
+        candidates=[(max(abs(x-anchor[0]),abs(y-anchor[1])),y,x) for x,y in reached
+                    if (x,y) not in occupied and (parts[1]!='Sandworm' or cells[x,y] in '79bc')]
+        assert candidates,(house,'No cooperative trade guard position')
+        _,y,x=min(candidates);occupied.add((x,y));parts[0]='Player2';parts[3]=str((y+offset)*64+x+offset)
+        additions['IDCOOP'+key[2:]]=','.join(parts)
+    return additions,dict(constructionYard=origin,mcv=None,mcvDistance=0,guestWor=None,guestWorPosition=None,
+        worReference=None,guestStructures=buildings,reservedStructures=areas,
+        optionalRock=sorted((y+offset)*64+x+offset for x,y in patches))
+
+
+def guest_structures(placement):
+    if 'guestStructures' in placement:return placement['guestStructures']
+    pos=placement['guestWorPosition']
+    return {'IDCOOPWOR':f'Player2,WOR,256,{pos}'} if pos is not None else {}
+
+
 def extra_units(ini, house, intro=False, reserved=None, allow_rock_patches=False):
+    if ini['BASIC'].get('OpeningStyle')=='Trade':return trade_start(ini,house,reserved)
     size, offset, cells = terrain(ini)
     occupied, structures = occupied_cells(ini, offset)
     occupied.update(reserved["occupied"] if reserved else ())
@@ -222,6 +285,16 @@ def extra_units(ini, house, intro=False, reserved=None, allow_rock_patches=False
             if value.strip():
                 pos=int(value)
                 protected.add((pos%64-offset,pos//64-offset))
+    clearance=ini.getint('BASIC','SupportBaseClearance',fallback=0)
+    if clearance:
+        support=ini['BASIC']['SupportOpponent']
+        for key,value in ini['STRUCTURES'].items():
+            parts=value.split(',')
+            if not key.startswith('ID') or parts[0]!=support:continue
+            pos=int(parts[3]);sx,sy=pos%64-offset,pos//64-offset
+            w,h=SIZES[parts[1].lower()]
+            protected.update((x,y) for y in range(max(0,sy-clearance+1),min(size,sy+h+clearance-1))
+                             for x in range(max(0,sx-clearance+1),min(size,sx+w+clearance-1)))
     rock_patches=set()
     allowed="2789" if reserved or allow_rock_patches else "28"
     yard = [value.split(",") for value in ini["STRUCTURES"].values()
@@ -279,7 +352,7 @@ def extra_units(ini, house, intro=False, reserved=None, allow_rock_patches=False
         choices = []
         for x, y in reached:
             distance = max(abs(x - origin[0]), abs(y - origin[1]))
-            if (distance <= (24 if reserved else 12) and (x, y) not in occupied
+            if (distance <= (24 if reserved else 12) and (x, y) not in occupied and (x,y) not in protected
                     and (parts[1] != "Sandworm" or cells[x, y] in "79bc")):
                 choices.append((max(abs(x - mx), abs(y - my)), distance, y, x))
         assert choices, (house, key, "No nearby free unit position")
@@ -298,6 +371,7 @@ def destination(mod, faction, stage, variant=0):
     return base / "coop" / f"faction{faction}" / (f"coop{stage:02}"+(f"-v{variant}" if variant else "")+".ini")
 
 
+@lru_cache(None)
 def generate(mod, house, roles, stage, variant=0):
     mission = MISSIONS[stage - 1]+variant
     source, provenance = source_bytes(mod, house, mission)
@@ -305,7 +379,7 @@ def generate(mod, house, roles, stage, variant=0):
     additions, placement = extra_units(original, house, stage == 1, allow_rock_patches=variant>0)
     owners, corrections, wildlife = normalized_owners(mod, house, roles, mission, original)
     actual, initial, future = active_opponents(original, house, owners)
-    roles = stage_roles(mod, roles, actual)
+    roles = stage_roles(mod, roles, actual, original)
     assert actual <= set(roles), (mod, house, mission, actual, roles)
     participant_count = 2 + len(roles)
     assert 5 <= participant_count <= 7, (mod, house, stage, roles)
@@ -333,8 +407,7 @@ def generate(mod, house, roles, stage, variant=0):
             ini[section].update(Credits="0", Quota="0", MaxUnit=original[house].get("MaxUnit", "25"))
         ini[section]["Brain"] = f"Team {1 if slot <= 2 else 2}"
     ini["UNITS"].update(additions)
-    if placement["guestWorPosition"] is not None:
-        ini["STRUCTURES"]["IDCOOPWOR"] = f"Player2,WOR,256,{placement['guestWorPosition']}"
+    ini["STRUCTURES"].update(guest_structures(placement))
     # Optional starts stay outside the engine's ordinary sections. The host
     # materializes only active allied slots when committing a new mission.
     _, offset, _ = terrain(original)
@@ -345,11 +418,11 @@ def generate(mod, house, roles, stage, variant=0):
         for value in units.values():
             position = int(value.split(",")[3])
             reserved["occupied"].add((position % 64-offset, position//64-offset))
-        for origin in (start["mcv"], start["guestWor"]):
-            if origin:
-                area={(origin[0]+dx,origin[1]+dy) for dx in range(2) for dy in range(2)}
-                reserved["occupied"].update(area)
-                reserved["structures"].update(area)
+        areas=start.get('reservedStructures',[(origin[0],origin[1],2,2) for origin in (start['mcv'],start['guestWor']) if origin])
+        for x,y,w,h in areas:
+            area={(x+dx,y+dy) for dx in range(w) for dy in range(h)}
+            reserved["occupied"].update(area)
+            reserved["structures"].update(area)
     reserve(additions,placement)
     for ally in (3,4):
         units, start = extra_units(original,house,stage==1,reserved)
@@ -358,8 +431,7 @@ def generate(mod, house, roles, stage, variant=0):
             ini[f"COOP_EXTRA_TERRAIN{ally}"] = {"Rock": ",".join(map(str,start["optionalRock"]))}
         ini[f"COOP_EXTRA_PLAYER{ally}"] = dict(ini["Player2"])
         ini[f"COOP_EXTRA_UNITS{ally}"] = {f"IDCOOP{ally}"+key[6:]: value for key,value in units.items()}
-        ini[f"COOP_EXTRA_STRUCTURES{ally}"] = ({f"IDCOOP{ally}WOR": f"Player2,WOR,256,{start['guestWorPosition']}"}
-                                              if start["guestWorPosition"] is not None else {})
+        ini[f"COOP_EXTRA_STRUCTURES{ally}"] = {f'IDCOOP{ally}'+key[6:]:value for key,value in guest_structures(start).items()}
     ini.add_section("COOP_TEMPLATE")
     quota = original.getint(house, "Quota", fallback=0) if original.getint("BASIC", "WinFlags") & 4 else 0
     marker = ini["COOP_TEMPLATE"]
@@ -408,15 +480,19 @@ def validate(text, mod, house, roles, stage, variant=0):
     own = [value.split(",")[1:] for key, value in ini["UNITS"].items() if value.startswith("Player1,")]
     other = [value.split(",")[1:] for key, value in ini["UNITS"].items() if value.startswith("Player2,") and key != "IDCOOPMCV"]
     assert [parts[:2] + parts[3:] for parts in own] == [parts[:2] + parts[3:] for parts in other]
-    guest_structures = [value for value in ini["STRUCTURES"].values() if value.startswith("Player2,")]
-    assert guest_structures == ([f"Player2,WOR,256,{placement['guestWorPosition']}"] if stage == 1 else [])
+    guest_buildings = [value for value in ini["STRUCTURES"].values() if value.startswith("Player2,")]
+    assert guest_buildings == list(guest_structures(placement).values())
     assert len(other) == len(own)
     size, offset, cells = terrain(original)
     occupied, _ = occupied_cells(original, offset)
-    mcv_x, mcv_y = placement["mcv"]
-    footprint = {(mcv_x + dx, mcv_y + dy) for dx in range(2) for dy in range(2)}
-    assert footprint.isdisjoint(occupied) and all(cells[p] in "28" for p in footprint)
-    occupied.update(footprint)
+    if placement['mcv']:
+        mcv_x, mcv_y = placement["mcv"]
+        footprint = {(mcv_x + dx, mcv_y + dy) for dx in range(2) for dy in range(2)}
+        assert footprint.isdisjoint(occupied) and all(cells[p] in "28" for p in footprint)
+        occupied.update(footprint)
+    else:
+        assert original['BASIC'].get('OpeningStyle')=='Trade' and 'IDCOOPMCV' not in ini['UNITS']
+        assert [v.split(',')[1] for v in guest_buildings]==['Starport','Windtrap','Windtrap','Refinery']
     for key, value in ini["UNITS"].items():
         if not key.startswith("IDCOOP") or key == "IDCOOPMCV":
             continue
@@ -466,7 +542,7 @@ def build(write=False):
               assert len({MISSIONS[stage-1]+v for v in range(variant_count)})==variant_count
               for variant in range(variant_count):
                 path = destination(mod, runtime_faction(mod, house), stage, variant)
-                if write:
+                if write and mod in ('Tornie','TornieLite'):
                     text, _ = generate(mod, house, roles, stage, variant)
                     path.parent.mkdir(parents=True, exist_ok=True)
                     path.write_text(text, encoding="cp850", newline="\n")

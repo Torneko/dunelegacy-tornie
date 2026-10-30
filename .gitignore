@@ -14,6 +14,8 @@ test-driver
 build-*/
 build_ci_test/
 build_release/
+windows-build-546/
+reports/
 vcpkg/
 dist/
 install/
@@ -97,6 +99,7 @@ scripts/sourceforge-config.sh
 
 # Documentation folders (analysis/ is tracked in dunecity)
 documents/
+!website/documents/
 
 # VSCode settings (ignore user-specific, keep shared config)
 .vscode/*

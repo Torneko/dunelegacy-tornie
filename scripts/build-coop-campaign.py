@@ -252,7 +252,7 @@ def main():
     for mod in MODS:
         for stage in range(1, 10):
             path = destination(mod, stage)
-            if args.legacy_write or (args.write and mod in ("ArcaKev", "ArcaKevLite")):
+            if args.legacy_write:
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(generate(mod, stage), encoding="ascii", newline="\n")
             text = path.read_text(encoding="ascii")

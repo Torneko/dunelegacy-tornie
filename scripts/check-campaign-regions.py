@@ -21,6 +21,7 @@ spec=spec_from_file_location('campaign_rebuild',ROOT/'scripts/rebuild-campaigns.
 helper=module_from_spec(spec);spec.loader.exec_module(helper)
 reports=[]
 plans=json.loads((ROOT/'config/CampaignPlans.json').read_text())['mods']
+revision=json.loads((ROOT/'config/TornieCampaign546.json').read_text())
 for mod,rows in plans.items():
     names=[row['house'] for row in rows]
     for role in range(3):assert sorted(row['opponents'][role] for row in rows)==sorted(names),(mod,role)
@@ -86,12 +87,31 @@ for mod,letters in [('Tornie','HAOFSMNRCWKT'),('TornieLite','HAOFSM'),('Jericho'
         if mod=='vanilla' and letter=='K':assert opponents=={'Harkonnen','Sardaukar','Mercenary'},opponents
         if mod in plans:
             plan=next(row for row in plans[mod] if row['letter']==letter)
-            assert opponents==set(plan['opponents']),(mod,letter,opponents,plan)
+            revised=mod in revision['modifiedEditions']
+            support=revision['support'][mod][plan['house']] if revised else None
+            expected_opponents=set(plan['opponents'])|({support} if revised else set())
+            assert opponents==expected_opponents,(mod,letter,opponents,plan)
             briefing=read(ROOT/'mods'/mod/'data/CampaignPlan.ini')[plan['house']]
             assert briefing['Template']==plan['vanillaTemplate'],(mod,plan)
             assert [briefing[f'Opponent{i+1}'] for i in range(3)]==plan['opponents'],(mod,plan)
             opening=read(files[f'SCEN{letter}001.INI'])
             assert briefing['OpeningQuota']==opening[plan['house']].get('Quota','0'),(mod,plan)
+            if revised:
+                assert briefing['PersistentSupport']==support,(mod,plan)
+                for mission in range(1,23):
+                    scenario=read(files[f'SCEN{letter}{mission:03}.INI'])
+                    actual={h for h in PREFIX.values() if scenario.has_section(h) and h!=plan['house']}
+                    count=4 if mission==22 else 3 if mission>=20 else 2
+                    stage=1 if mission==1 else 9 if mission==22 else 8 if mission>=20 else (mission-2)//3+2
+                    roles=[briefing[f'Stage{stage}Opponent{i}'] for i in range(1,count+1)]
+                    assert set(roles)==actual and roles[1]==support,(mod,letter,mission,roles,actual)
+                    assert scenario['BASIC']['CampaignRevision']=='2',(mod,letter,mission)
+                mirror=ROOT/'mods'/mod/'data'/f'scen{letter.lower()}001.ini'
+                if mirror.exists():assert mirror.read_bytes()==files[f'SCEN{letter}001.INI'].read_bytes(),mod
+                reports.append({'mod':mod,'house':LETTERS[letter],'missions':22,'routes':routes,
+                                'opponents':sorted(opponents),'persistentSupport':support,
+                                'intentionalRepeatedTerritories':repeats})
+                continue
             own=collections.Counter();enemies=[];positions=set()
             for value in opening['UNITS'].values():
                 owner,unit,health,pos,angle,mode=value.split(',')
@@ -120,5 +140,11 @@ for mod,letters in [('Tornie','HAOFSMNRCWKT'),('TornieLite','HAOFSM'),('Jericho'
                         if mission==1 and section=='UNITS' and owner.strip()==plan['house']:assert unit.strip() not in helper.SOLDIERS
         reports.append({'mod':mod,'house':LETTERS[letter],'missions':22,'routes':routes,
                         'opponents':sorted(opponents),'intentionalRepeatedTerritories':repeats})
-intro_clones=helper.opening_clones.clone_openings()
+clone_plans=json.loads((ROOT/'config/CampaignPlans.json').read_text())
+# The restored author campaigns retain their historical 545 intros. They no
+# longer clone the separately revised Tornie opening; the scope audit checks
+# their exact baseline bytes instead.
+clone_plans['openingClones']={target:source for target,source in clone_plans.get('openingClones',{}).items()
+                            if target not in revision['modifiedEditions'] and source not in revision['modifiedEditions']}
+intro_clones=helper.opening_clones.clone_openings(clone_plans)
 print(json.dumps({'regionFiles':len(reports),'campaigns':reports,'introClones':intro_clones},ensure_ascii=True,indent=2))

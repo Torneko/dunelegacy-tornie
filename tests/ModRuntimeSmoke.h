@@ -292,7 +292,15 @@ inline void runModRuntimeSmoke() {
                 require(currentGameMap != nullptr && pLocalHouse != nullptr,
                         mod + " scenario did not initialize: " + name);
                 require(!structureList.empty() || !unitList.empty(), "empty scenario " + name);
-                if(mission == 1 && mods.isTornieContentActive()) {
+                if(mission==1 && mods.isTornieContentActive() && scenario.getIntValue("BASIC","CampaignRecipe",0)==546) {
+                    require(pLocalHouse->getCredits()==1500,"546 intro starting funds");
+                    require(scenario.getIntValue(getHouseNameByNumber(static_cast<HOUSETYPE>(pLocalHouse->getHouseID())),"Quota",0)==2000,"546 intro harvest quota");
+                    int enemyYards=0;
+                    for(auto* building:structureList) if(building->getOwner()!=pLocalHouse && building->getItemID()==Structure_ConstructionYard)++enemyYards;
+                    require(enemyYards==2,"546 intro requires two enemy bases");
+                    for(auto* unit:unitList)if(unit->getOwner()!=pLocalHouse)require(unit->getAttackMode()!=HUNT,"546 immediate enemy rush");
+                }
+                if(mission == 1 && mods.isTornieContentActive() && scenario.getIntValue("BASIC","CampaignRecipe",0)!=546) {
                     int troops = 0, enemies = 0;
                     for(auto* unit : unitList) if(unit->getOwner() == pLocalHouse) {
                         if(unit->getItemID() == Unit_Trooper) ++troops;

@@ -192,6 +192,7 @@ InfSpawnProp = 25
 Builder = Construction Yard
 TechLevel = 5
 Prerequisite = Windtrap, Radar, Light Factory
+TechLevel(W) = 4
 
 [House IX]
 Enabled = true
@@ -454,6 +455,7 @@ TurnSpeed = 0.099  # Dynasty 168.75°/s × 2.1 = 354.4°/s ÷ 62.5Hz = 5.67°/ti
 BuildTime = 64
 InfSpawnProp = 0
 Builder = Hightech Factory
+TechLevel(W) = 4
 
 [Devastator]
 Enabled = true

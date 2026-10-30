@@ -4,6 +4,7 @@
 #include <DataTypes.h>
 
 #include <array>
+#include <algorithm>
 #include <chrono>
 #include <filesystem>
 #include <fstream>
@@ -77,6 +78,43 @@ TEST_CASE("Coop same-faction humans keep independent runtime ownership", "[coop]
             REQUIRE(opponents.insert(context.slots[i].faction).second);
         }
     }
+}
+
+TEST_CASE("Tornie persistent support survives mirror guests, four enemies and checkpoints", "[coop][campaign]") {
+    for(const std::string mod:{"Tornie","TornieLite"})for(const bool four:{false,true}) {
+        auto value=coop::CoopCampaignSession::create("support-r2",mod,{0,1,2,3,4,5},
+            {1,2},{"Host","Support-faction guest"},546,false);
+        if(four) {
+            value.enableExpandedAllies(false);
+            value.configureAlly(2,3,"HumanPlayer","Third");
+            value.configureAlly(3,4,"HumanPlayer","Fourth");
+        }
+        for(int stage=1;stage<=9;++stage) {
+            const std::vector<int> opponents=stage==9?std::vector<int>{3,2,4,5}
+                :stage==8?std::vector<int>{3,2,4,-1}:std::vector<int>{3,2,-1,-1};
+            auto map=originalTemplate(stage,1,opponents,mod);
+            replace(map,"\nOriginalMission="+std::to_string(coop::OriginalMissionNumbers[stage-1])+"\n",
+                "\nOriginalMission="+std::to_string(coop::OriginalMissionNumbers[stage-1]+value.context().missionVariant)+"\n");
+            replace(map,"[BASIC]\n","[BASIC]\nCampaignRevision=2\n");
+            for(const int ordinal:{3,4}) map+="\n[COOP_EXTRA_PLAYER"+std::to_string(ordinal)
+                +"]\nCredits=1200\n[COOP_EXTRA_UNITS"+std::to_string(ordinal)+"]\n[COOP_EXTRA_STRUCTURES"+std::to_string(ordinal)+"]\n";
+            const auto prepared=value.prepareMap(map);
+            auto restored=coop::CoopCampaignSession::fromMapData(prepared);
+            const auto& context=restored.context();
+            REQUIRE(context.enemyPresent.size()==4);
+            REQUIRE(context.slots.size()==(four?8:6));
+            REQUIRE(context.slots[3].faction==2);
+            REQUIRE(context.slots[1].faction==2);
+            REQUIRE(context.slots[3].house!=context.slots[1].house);
+            REQUIRE(std::count(context.enemyPresent.begin(),context.enemyPresent.end(),true)==(stage==9?4:stage==8?3:2));
+            REQUIRE(coop::readContext(restored.prepareMap(prepared))->slots[3].faction==2);
+            restored.completeMission(true);value=std::move(restored);
+        }
+    }
+    auto foreign=originalSession("JerichoLite");
+    auto unsupported=originalTemplate(1,1,{2,3,4,5},"JerichoLite");
+    replace(unsupported,"[BASIC]\n","[BASIC]\nCampaignRevision=2\n");
+    REQUIRE_THROWS(foreign.prepareMap(unsupported));
 }
 
 TEST_CASE("Coop AI ally and enemy difficulty survive progression and reconfiguration", "[coop][campaign]") {

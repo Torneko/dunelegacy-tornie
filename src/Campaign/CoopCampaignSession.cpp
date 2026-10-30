@@ -122,6 +122,8 @@ bool validPlayerName(const std::string& value) {
 }
 
 void validate(const Context& context) {
+    const bool tornieFour=context.followsOriginalCampaign()
+        && (context.modName=="Tornie" || context.modName=="TornieLite") && context.enemyPresent.size()==4;
     if(context.campaign != "common" || !safeIdentifier(context.sessionId) || !safeIdentifier(context.modName))
         throw std::invalid_argument("Invalid coop campaign identity");
     if(context.stage < 1 || context.stage > StageCount+1
@@ -134,7 +136,7 @@ void validate(const Context& context) {
     if((context.alliedCapacity!=2 && context.alliedCapacity!=4)
        || context.slots.size()!=context.enemyPresent.size()+context.alliedCapacity
        || context.enemyPresent.size()<3 || context.enemyPresent.size()>MaxEnemyCount
-       || (context.modName!="vanilla" && context.enemyPresent.size()!=3)
+       || (context.modName!="vanilla" && context.enemyPresent.size()!=3 && !tornieFour)
        || (context.archon && context.alliedCapacity!=4))
         throw std::invalid_argument("Invalid coop participant count");
     if(roster.size()<5 || (context.alliedCapacity==2 && roster.size()<context.slots.size()))
@@ -647,7 +649,11 @@ std::string CoopCampaignSession::prepareMap(const std::string& templateData) con
            || require(*marker, "Mod") != context_.modName)
             throw std::invalid_argument("Coop map does not match the original campaign source");
         const int count = participantCount(*marker);
-        if(count > SlotCount && (context_.modName != "vanilla" || context_.roster.size() < static_cast<std::size_t>(count)))
+        const auto revision=basic->find("campaignrevision");
+        const bool persistentTornie=(context_.modName=="Tornie" || context_.modName=="TornieLite")
+            && revision!=basic->end() && revision->second=="2";
+        if(count > SlotCount && ((context_.modName != "vanilla" && !(persistentTornie && count==6))
+            || context_.roster.size() < static_cast<std::size_t>(count)))
             throw std::invalid_argument("Unsupported original campaign participant count");
         std::vector<int> factions(count - 2);
         std::vector<bool> present(count - 2);
@@ -668,7 +674,9 @@ std::string CoopCampaignSession::prepareMap(const std::string& templateData) con
                 if(context_.slots[i].active() && faction==context_.slots[i].faction) return true;
             return false;
         };
-        for(auto& faction:factions) if(alliedFaction(faction)) {
+        // Tornie's authored support opponent stays fixed, including when a
+        // guest chooses the same faction. Runtime house slots remain distinct.
+        for(auto& faction:factions) if(!persistentTornie && alliedFaction(faction)) {
             usedFactions.erase(faction);
             faction=-1;
         }

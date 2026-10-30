@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "revision": 2,
+  "modifiedEditions": [
+    "Tornie",
+    "TornieLite"
+  ],
+  "preservedEditions": [
+    "Jericho",
+    "JerichoLite",
+    "ArcaKev",
+    "ArcaKevLite"
+  ],
+  "stage2BaseClearance": 10,
+  "stage2ArmyClearance": 6,
+  "enemyCounts": {
+    "1-19": 2,
+    "20-21": 3,
+    "22": 4
+  },
+  "support": {
+    "Tornie": {
+      "Harkonnen": "Ordos",
+      "Atreides": "Fremen",
+      "Ordos": "Sardaukar",
+      "Fremen": "Mercenary",
+      "Sardaukar": "Neutral",
+      "Mercenary": "Rebels",
+      "Neutral": "Corruptique",
+      "Rebels": "Harkonnen",
+      "Corruptique": "Kleshmersh",
+      "Wildspade": "Tharpique",
+      "Kleshmersh": "Wildspade",
+      "Tharpique": "Atreides"
+    },
+    "TornieLite": {
+      "Harkonnen": "Sardaukar",
+      "Atreides": "Mercenary",
+      "Ordos": "Harkonnen",
+      "Fremen": "Atreides",
+      "Sardaukar": "Ordos",
+      "Mercenary": "Fremen"
+    }
+  }
+}

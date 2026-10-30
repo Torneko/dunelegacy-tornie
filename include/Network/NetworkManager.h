@@ -80,7 +80,9 @@
 // Version 20: Slowpost conversion command and upgrade-only production.
 // Version 21: initial Windtrap upgrades, Chaos upgrade plans and Radar research.
 // Version 22: Tharpique healing cadence; reject older simulation rules.
-#define NETWORK_PROTOCOL_VERSION            22
+// Version 23: Wildspade technology and revised campaign/cooperative starts.
+// Version 24: Tornie persistent support and fourth cooperative opponent.
+#define NETWORK_PROTOCOL_VERSION            24
 
 /**
  * Reject an incompatible config-hash handshake and dispatch its disconnect cause.

@@ -91,6 +91,10 @@ void TextManager::loadData() {
                 row.opponents[role] = plan.getStringValue(name, "Opponent" + std::to_string(role + 1), "");
             if(std::any_of(row.opponents.begin(), row.opponents.end(), [](const std::string& n) { return n.empty(); })) continue;
             row.openingQuota = plan.getIntValue(name, "OpeningQuota", 0);
+            const auto mod=ModManager::instance().getActiveModName();
+            row.revision=(mod=="Tornie" || mod=="TornieLite")?plan.getIntValue(name,"CampaignRevision",0):0;
+            if(row.revision==2)for(int stage=1;stage<=9;++stage)for(int role=1;role<=4;++role)
+                row.stageOpponents[stage-1][role-1]=plan.getStringValue(name,"Stage"+std::to_string(stage)+"Opponent"+std::to_string(role),"");
             campaignTextPlans.emplace(getHouseFactionIdentity(static_cast<HOUSETYPE>(house)), std::move(row));
         }
     }
@@ -119,12 +123,27 @@ std::string TextManager::getBriefingText(unsigned int mission, unsigned int text
         const auto name = getHouseNameByNumber(static_cast<HOUSETYPE>(house));
         const bool french = settings.general.language == "fr";
         if(mission == 1 && texttype == MISSION_DESCRIPTION) {
-            return (french ? "Maison " : "House ") + name + (french
-                ? u8". \u00c9tablissez votre \u00e9conomie d'\u00e9pice et prot\u00e9gez vos moissonneuses. "
-                : ". Establish your spice economy and protect your harvesters. ")
+            if(plan.revision!=2) return (french?"Maison ":"House ")+name+(french
+                ?u8". \u00c9tablissez votre \u00e9conomie d'\u00e9pice et prot\u00e9gez vos moissonneuses. "
+                :". Establish your spice economy and protect your harvesters. ")
+                +(plan.openingQuota>0?(french?"Objectif : ":"Objective: ")+std::to_string(plan.openingQuota)+(french?u8" cr\u00e9dits. ":" credits. "):"")
+                +(french?"Premier adversaire : ":"First opponent: ")+plan.opponents[0]+".";
+            const char letter=getHouseScenarioLetter(static_cast<HOUSETYPE>(house));
+            const std::string opening=letter=='R' ? (french
+                ? u8". Votre port stellaire et votre petite exploitation remplacent le chantier initial. Achetez un VCM au CHOAM pour commencer les constructions. "
+                : ". Your starport and small spice operation replace the initial construction yard. Buy an MCV from CHOAM to begin construction. ")
+                : letter=='W' ? (french
+                ? u8". Reconnaissez les approches avec vos appareils pr\u00eat\u00e9s, utilisez le Carryall pour la logistique et gardez vos avions hors de port\u00e9e des missiles. "
+                : ". Scout with your loaned aircraft, use the Carryall for logistics and keep your aircraft clear of missiles. ")
+                : (french ? u8". \u00c9tablissez votre \u00e9conomie d'\u00e9pice et prot\u00e9gez vos moissonneuses. "
+                          : ". Establish your spice economy and protect your harvesters. ");
+            return (french ? "Maison " : "House ") + name + opening
                 + (plan.openingQuota > 0 ? (french ? "Objectif : " : "Objective: ")
                    + std::to_string(plan.openingQuota) + (french ? u8" cr\u00e9dits. " : " credits. ") : "")
-                + (french ? "Premier adversaire : " : "First opponent: ") + plan.opponents[0] + ".";
+                + (french ? "Adversaire principal : " : "Main opponent: ") + plan.stageOpponents[0][0]
+                + (french ? ", soutenu par " : ", supported by ") + plan.stageOpponents[0][1]
+                + (french ? u8". Deux petites bases ennemies et des renforts espac\u00e9s menacent votre exploitation. Vous commencez avec 1 500 cr\u00e9dits ; le quota compte l'\u00e9pice raffin\u00e9e."
+                          : ". Two small enemy bases and staggered reinforcements threaten your operation. You start with 1,500 credits; the quota counts refined spice.");
         }
         const auto filename = "TEXT" + plan.templateLetter + "." + _("LanguageFileExtension");
         const auto source = origDuneText.find(filename);
@@ -148,6 +167,14 @@ std::string TextManager::getBriefingText(unsigned int mission, unsigned int text
                 cursor = static_cast<size_t>(i->position() + i->length());
             }
             result.append(original, cursor, std::string::npos);
+            if(plan.revision==2 && texttype==MISSION_DESCRIPTION) {
+                const auto& enemies=plan.stageOpponents[mission-1];
+                std::string roster=(french?"Adversaire principal : ":"Main opponent: ")+enemies[0]
+                    +(french?". Soutien permanent : ":". Persistent support: ")+enemies[1]+". ";
+                for(int role=2;role<4;++role)if(!enemies[role].empty())
+                    roster+=(french?"Adversaire additionnel : ":"Additional opponent: ")+enemies[role]+". ";
+                result=roster+result;
+            }
             return result;
         }
         // Some original English archives omit the final advice entry. Never

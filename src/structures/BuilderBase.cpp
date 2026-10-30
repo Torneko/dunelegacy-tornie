@@ -357,10 +357,11 @@ int BuilderBase::getMaxUpgradeLevel() const {
 
     if(itemID == Structure_HighTechFactory && owner != nullptr
        && ModManager::instance().getActiveModName() != "vanilla"
-       && getHouseScenarioLetter(static_cast<HOUSETYPE>(technologyHouse)) == 'W'
-       && currentGame->techLevel >= 6) {
-        const bool revisedChemical = currentGame->objectData.data[Unit_ChemicalCarryall][technologyHouse].techLevel == 6;
-        if(revisedChemical || currentGame->techLevel >= 7)
+       && getHouseScenarioLetter(static_cast<HOUSETYPE>(technologyHouse)) == 'W') {
+        const int chemicalTech = currentGame->objectData.data[Unit_ChemicalCarryall][technologyHouse].techLevel;
+        const bool revisedChemical = chemicalTech == 5 || chemicalTech == 6;
+        const int firstUpgradeTech = revisedChemical ? chemicalTech : 6;
+        if(currentGame->techLevel >= firstUpgradeTech && (revisedChemical || currentGame->techLevel >= 7))
             upgradeLevel = std::max(upgradeLevel, currentGame->techLevel >= 7 ? 2 : 1);
     }
     return upgradeLevel;
@@ -428,9 +429,9 @@ void BuilderBase::updateBuildList()
         const bool itemEnabled = objData.enabled || specialChemicalCarryall;
         const bool wildspadeChemical = specialChemicalCarryall
             && isHouseFaction(static_cast<HOUSETYPE>(technologyHouse), HOUSE_WILDSPADE)
-            && objData.techLevel == 6;
+            && (objData.techLevel == 5 || objData.techLevel == 6);
         const int requiredUpgrade = specialChemicalCarryall ? (wildspadeChemical ? 1 : 2) : objData.upgradeLevel;
-        const int configuredTechLevel = specialChemicalCarryall ? (wildspadeChemical ? 6 : 1) : objData.techLevel;
+        const int configuredTechLevel = specialChemicalCarryall ? (wildspadeChemical ? objData.techLevel : 1) : objData.techLevel;
         const int requiredTechLevel = itemID2Add == Structure_ChaosFactory
             ? std::max(9, configuredTechLevel)
             : configuredTechLevel;

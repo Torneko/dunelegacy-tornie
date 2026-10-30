@@ -102,11 +102,15 @@ inline void verifyWildspadeTechnology(const std::string& output, const std::stri
         place(Structure_StarPort, 21, 1);
         auto* factory = dynamic_cast<BuilderBase*>(place(Structure_HighTechFactory, 5, 8));
         require(yard && factory, "production buildings missing");
+        game->techLevel=3;yard->updateBuildList();factory->updateBuildList();
+        require(!yard->isAvailableToBuild(Structure_HighTechFactory),"Hightech before level 4");
+        game->techLevel=4;yard->updateBuildList();factory->updateBuildList();
+        require(yard->isAvailableToBuild(Structure_HighTechFactory),"Hightech absent at level 4");
+        require(factory->isAvailableToBuild(Unit_Carryall),"standard Carryall absent at level 4");
+        require(!factory->isAvailableToBuild(Unit_ChemicalCarryall), "Chemical below level 5");
         game->techLevel = 5; factory->updateBuildList();
-        require(!factory->isAvailableToBuild(Unit_ChemicalCarryall), "Chemical below level 6");
-        game->techLevel = 6; factory->updateBuildList();
         require(!factory->isAvailableToBuild(Unit_ChemicalCarryall), "Chemical without upgrade");
-        require(factory->getMaxUpgradeLevel() == 1, "first Hightech upgrade at level 6");
+        require(factory->getMaxUpgradeLevel() == 1, "first Hightech upgrade at level 5");
         require(factory->doUpgrade(), "first upgrade unavailable"); factory->update();
         factory->updateBuildList();
         require(factory->isAvailableToBuild(Unit_ChemicalCarryall), "Chemical needs IX or a second upgrade");
@@ -125,7 +129,7 @@ inline void verifyWildspadeTechnology(const std::string& output, const std::stri
         require(window.getSize().y <= getRendererHeight(), "options dialog exceeds screen");
     }
     currentGame = nullptr; pLocalHouse = nullptr; pLocalPlayer = nullptr;
-    SDL_Log("WILDSPADE TECH PASS: %s, Chemical level 6/first upgrade/no IX; IX and Ornithopter level 7", mod.c_str());
+    SDL_Log("WILDSPADE TECH PASS: %s, Hightech/Carryall level 4; Chemical level 5/first upgrade/no IX; IX and Ornithopter level 7", mod.c_str());
 }
 
 inline void verifyChaosMode(const std::string& output, const std::string& mod) {

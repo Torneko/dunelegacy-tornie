@@ -215,6 +215,15 @@ void MapEditor::setMirrorMode(MirrorMode newMirrorMode) {
     mapMirror = MapMirror::createMapMirror(currentMirrorMode,map.getSizeX(), map.getSizeY());
 }
 
+std::vector<int> MapEditor::getPlayerSelectionOrder() const {
+    auto order = getFactionSelectionOrder();
+    for(size_t i=0;i<players.size();++i) {
+        if(players[i].bActive && std::find(order.begin(),order.end(),static_cast<int>(i))==order.end())
+            order.push_back(static_cast<int>(i));
+    }
+    return order;
+}
+
 void MapEditor::RunEditor() {
     while(!bQuitEditor) {
 

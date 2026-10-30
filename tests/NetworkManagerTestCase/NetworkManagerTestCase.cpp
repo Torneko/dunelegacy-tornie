@@ -19,10 +19,10 @@
 #define TEST_NETWORKPACKET_SENDGAMEINFO         1
 #define TEST_NETWORKPACKET_CLIENTSTATS          13
 #define TEST_NETWORKPACKET_KEEPALIVE            19
-#define TEST_NETWORK_PROTOCOL_VERSION           22
+#define TEST_NETWORK_PROTOCOL_VERSION           24
 
-TEST_CASE("NetworkManager: Tharpique healing balance requires protocol 22", "[network][protocol]") {
-    REQUIRE(NETWORK_PROTOCOL_VERSION == 22);
+TEST_CASE("NetworkManager: Tornie four-opponent campaigns require protocol 24", "[network][protocol]") {
+    REQUIRE(NETWORK_PROTOCOL_VERSION == 24);
     REQUIRE(TEST_NETWORK_PROTOCOL_VERSION != 4);
     REQUIRE(NETWORKPACKET_COOP_READY == 20);
     REQUIRE(NETWORKPACKET_COOP_ADVANCE == 21);

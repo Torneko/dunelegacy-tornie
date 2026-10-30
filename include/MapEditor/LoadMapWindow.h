@@ -34,7 +34,8 @@
 class  LoadMapWindow : public Window
 {
 public:
-    enum class MapSource { Singleplayer, Multiplayer, UserSingleplayer, UserMultiplayer, Campaign };
+    enum class MapSource { Singleplayer, Multiplayer, UserSingleplayer, UserMultiplayer, Campaign,
+        VanillaCampaign, CoopCampaign, VanillaCoopCampaign };
     explicit LoadMapWindow(Uint32 color = COLOR_DEFAULT, MapSource source = MapSource::Singleplayer);
 
     const std::string& getLoadMapFilepath() const { return loadMapFilepath; };
@@ -64,6 +65,7 @@ public:
 
 
 private:
+    friend struct Release546Fixture;
     void onCancel();
     void onLoad();
     void onMapTypeChange(int buttonID);

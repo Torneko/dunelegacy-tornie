@@ -1,0 +1,1023 @@
+{
+  "baseline": "89b1403f603a709a6883431adcfd91e317c859b7",
+  "frames": [
+    {
+      "path": "data/CampaignHeraldAtreides.png",
+      "source": "data/CampaignHeraldOrdos.png",
+      "sha256": "9e6baf73d96885bf2e83fcedd90779791fa768dae9fbded25b6c9cfd4cdd7725"
+    },
+    {
+      "path": "data/CampaignHeraldOrdos.png",
+      "source": "data/CampaignHeraldAtreides.png",
+      "sha256": "9eb7bf16f7f6bc02c17e3f17ad8a6e0ac87a8190252b23addfc1dda4bfc8c5bd"
+    },
+    {
+      "path": "website/assets/preparation545/CampaignHeraldAtreides.png",
+      "source": "website/assets/preparation545/CampaignHeraldOrdos.png",
+      "sha256": "9e6baf73d96885bf2e83fcedd90779791fa768dae9fbded25b6c9cfd4cdd7725"
+    },
+    {
+      "path": "website/assets/preparation545/CampaignHeraldOrdos.png",
+      "source": "website/assets/preparation545/CampaignHeraldAtreides.png",
+      "sha256": "9eb7bf16f7f6bc02c17e3f17ad8a6e0ac87a8190252b23addfc1dda4bfc8c5bd"
+    }
+  ],
+  "vanillaEditorMaps": [
+    {
+      "file": "SCENH001.INI",
+      "source": "SCENARIO.PAK:SCENH001.INI",
+      "sha256": "751f94cf4c575a5fb695c4ea1f585b6366dcf49f5ab6478644020f24e827f26c"
+    },
+    {
+      "file": "SCENH002.INI",
+      "source": "SCENARIO.PAK:SCENH002.INI",
+      "sha256": "edbb61380c9235f33e4d07c538c6862dcf0f43047c8e564676934488fc8b584c"
+    },
+    {
+      "file": "SCENH003.INI",
+      "source": "SCENARIO.PAK:SCENH003.INI",
+      "sha256": "7a36f6b78c92d038fe43b9f3d4e3028c067c3fe76adcf946eb88742614656329"
+    },
+    {
+      "file": "SCENH004.INI",
+      "source": "SCENARIO.PAK:SCENH004.INI",
+      "sha256": "73c754564c34765caf464782b7cd4a936354409e1b7e85c13ddbbc95db354c2f"
+    },
+    {
+      "file": "SCENH005.INI",
+      "source": "SCENARIO.PAK:SCENH005.INI",
+      "sha256": "ce32f2b2e916d212ae2309705b2729ab1aac0b43adc48a6c5a4c53d64ad48790"
+    },
+    {
+      "file": "SCENH006.INI",
+      "source": "SCENARIO.PAK:SCENH006.INI",
+      "sha256": "8d8476d08e2106725cc12918ee5d71ff9b3ad11c8b20b1b6ffac9bcba8c63b26"
+    },
+    {
+      "file": "SCENH007.INI",
+      "source": "SCENARIO.PAK:SCENH007.INI",
+      "sha256": "dabb3326021b6e46c1f692d37f24c46ee15abb1725e17514959a9d2d71aa70e5"
+    },
+    {
+      "file": "SCENH008.INI",
+      "source": "SCENARIO.PAK:SCENH008.INI",
+      "sha256": "3d212bd9bbbdee46c25079a79ec81a55ac039a34e46c4d14529e2ae9fb854731"
+    },
+    {
+      "file": "SCENH009.INI",
+      "source": "SCENARIO.PAK:SCENH009.INI",
+      "sha256": "ede18e9e26d1d75bf139781eec0168f1670e73ae008a05f369d6aa6cf776040b"
+    },
+    {
+      "file": "SCENH010.INI",
+      "source": "SCENARIO.PAK:SCENH010.INI",
+      "sha256": "bf61d55dd35e3eee2624b644e8f0f8a77546adf57737c34ade3bf4a4a392dd62"
+    },
+    {
+      "file": "SCENH011.INI",
+      "source": "SCENARIO.PAK:SCENH011.INI",
+      "sha256": "0ced5ed792e26dee7172efd37fa58e8bdd44b6bb07f11e0940770166f43beabc"
+    },
+    {
+      "file": "SCENH012.INI",
+      "source": "SCENARIO.PAK:SCENH012.INI",
+      "sha256": "69dfc6a1540eca74b95fd2eb245975c84e3f30a29bb9603e1732916dba145d7b"
+    },
+    {
+      "file": "SCENH013.INI",
+      "source": "SCENARIO.PAK:SCENH013.INI",
+      "sha256": "bc91467e184b5affd2b70afd3502e271dc671755d830944f318675f8919077b6"
+    },
+    {
+      "file": "SCENH014.INI",
+      "source": "SCENARIO.PAK:SCENH014.INI",
+      "sha256": "f29628cddbc6cda06b5a17e561e5493c1692efe8b010c7b8778de4873bce31ca"
+    },
+    {
+      "file": "SCENH015.INI",
+      "source": "SCENARIO.PAK:SCENH015.INI",
+      "sha256": "dfd15b6e72e42fa8cffea0f5378fff306fa388858fc6aad93bf71707487907e2"
+    },
+    {
+      "file": "SCENH016.INI",
+      "source": "SCENARIO.PAK:SCENH016.INI",
+      "sha256": "43b0b809673031996d110dcf18c09757c1770319d9b8cff0679495cecc635812"
+    },
+    {
+      "file": "SCENH017.INI",
+      "source": "SCENARIO.PAK:SCENH017.INI",
+      "sha256": "527c512656a4ccbe93d2cb12d457ed5145d82cbfb41776857955d0c734be3779"
+    },
+    {
+      "file": "SCENH018.INI",
+      "source": "SCENARIO.PAK:SCENH018.INI",
+      "sha256": "8a7665f6bd9e8654cff5bcbd191a86754747ba4c8167e16003c61fd1938f49dc"
+    },
+    {
+      "file": "SCENH019.INI",
+      "source": "SCENARIO.PAK:SCENH019.INI",
+      "sha256": "3d33f780ba53d2a5a804841c9e0d93841d36c6d098b274af0dc5bd775ec3671f"
+    },
+    {
+      "file": "SCENH020.INI",
+      "source": "SCENARIO.PAK:SCENH020.INI",
+      "sha256": "5711e05666a3ea3cea28311b9a9ff06be16b98b09e6db2620595fba940b11144"
+    },
+    {
+      "file": "SCENH021.INI",
+      "source": "SCENARIO.PAK:SCENH021.INI",
+      "sha256": "e7255e1315ac4fa2e179491583da0a22bff18fc97acd0321eb09be9d608dc1a1"
+    },
+    {
+      "file": "SCENH022.INI",
+      "source": "SCENARIO.PAK:SCENH022.INI",
+      "sha256": "7223b5a128eb05945f278ee23274d68c152b412ace6a578401455e9da672d605"
+    },
+    {
+      "file": "SCENA001.INI",
+      "source": "SCENARIO.PAK:SCENA001.INI",
+      "sha256": "9ffa5465e913b7b928d529af7d14c45ac0bcca7adcd3fd8b8619301d76226322"
+    },
+    {
+      "file": "SCENA002.INI",
+      "source": "SCENARIO.PAK:SCENA002.INI",
+      "sha256": "a897c3a559089f6f54763149512d3911de2b79981773e879d021347f350a6cde"
+    },
+    {
+      "file": "SCENA003.INI",
+      "source": "SCENARIO.PAK:SCENA003.INI",
+      "sha256": "ea67d6f9ecaeed61cc98adcdaef573f3e1c9643f988717f176d12c74da480a8f"
+    },
+    {
+      "file": "SCENA004.INI",
+      "source": "SCENARIO.PAK:SCENA004.INI",
+      "sha256": "c1dc9b8e3b8d677bee91c0eeb5e32e08ad197783b133baec19425eca72d34496"
+    },
+    {
+      "file": "SCENA005.INI",
+      "source": "SCENARIO.PAK:SCENA005.INI",
+      "sha256": "e0d14febcbb190b5663076589d7e67864fda78422de7b3d25c92d3be19a6cfff"
+    },
+    {
+      "file": "SCENA006.INI",
+      "source": "SCENARIO.PAK:SCENA006.INI",
+      "sha256": "e4c0e9fa39777afaae5f36b0dea59aa3a89cc2a9cdcda26b23345cec638fa0bd"
+    },
+    {
+      "file": "SCENA007.INI",
+      "source": "SCENARIO.PAK:SCENA007.INI",
+      "sha256": "41d07f011a94af5d8ec2eb1162df641e43339f2700672a551ef08d68e604f3ab"
+    },
+    {
+      "file": "SCENA008.INI",
+      "source": "SCENARIO.PAK:SCENA008.INI",
+      "sha256": "78dd240ab99744378a2b40f0306ca3601dea98cfa70722d2ed52f8783e3c38ae"
+    },
+    {
+      "file": "SCENA009.INI",
+      "source": "SCENARIO.PAK:SCENA009.INI",
+      "sha256": "8db45623dc4a46c0528d6bc1cb04db6cc320064c2dece5f52f71c322bb6c2713"
+    },
+    {
+      "file": "SCENA010.INI",
+      "source": "SCENARIO.PAK:SCENA010.INI",
+      "sha256": "790f51090d89f8a6a3fdc78381402a80c7c68a0688cb1b6cae766522d0cbe7f6"
+    },
+    {
+      "file": "SCENA011.INI",
+      "source": "SCENARIO.PAK:SCENA011.INI",
+      "sha256": "5ad76cf369646b0592799ddf67fad512410b4ed81a46531c181b327695000bbe"
+    },
+    {
+      "file": "SCENA012.INI",
+      "source": "SCENARIO.PAK:SCENA012.INI",
+      "sha256": "d9fad16f8a6af1018c530cefbfdb77ee3567551c824678a944e7079402683541"
+    },
+    {
+      "file": "SCENA013.INI",
+      "source": "SCENARIO.PAK:SCENA013.INI",
+      "sha256": "fc858a44b2f29c36c738b749d58fe8e204639f19198ac48f9898b116c52b104f"
+    },
+    {
+      "file": "SCENA014.INI",
+      "source": "SCENARIO.PAK:SCENA014.INI",
+      "sha256": "0a87cf8d64a06a79397d47790c9604e6002259cdeb171612e04bcd99250401bb"
+    },
+    {
+      "file": "SCENA015.INI",
+      "source": "SCENARIO.PAK:SCENA015.INI",
+      "sha256": "1ceb135c2b7bd2b903836c1fe1db74d604e8556d5a8a75e90aaccdd6e903d9a7"
+    },
+    {
+      "file": "SCENA016.INI",
+      "source": "SCENARIO.PAK:SCENA016.INI",
+      "sha256": "3c811292f51215e2369f63b99c3edbc668330c4879690d997825b2b5c01023aa"
+    },
+    {
+      "file": "SCENA017.INI",
+      "source": "SCENARIO.PAK:SCENA017.INI",
+      "sha256": "fade9420ee5058e3417002df817cc95c7ee06b228dcffcb0a70424e61a4f30b0"
+    },
+    {
+      "file": "SCENA018.INI",
+      "source": "SCENARIO.PAK:SCENA018.INI",
+      "sha256": "57155d87dce017f68823f26c77d60f0711e25604b1c3f31ac61ba599a40c8e8a"
+    },
+    {
+      "file": "SCENA019.INI",
+      "source": "SCENARIO.PAK:SCENA019.INI",
+      "sha256": "35203f454be9ca3892ff467e53d92fde34e16bf57b89afdc3d0ce6f28514aa1a"
+    },
+    {
+      "file": "SCENA020.INI",
+      "source": "SCENARIO.PAK:SCENA020.INI",
+      "sha256": "fbdca22754bad3c402d747ef597b6fc16a7f4428bd0d4bb2b08e5d1a2defc6b1"
+    },
+    {
+      "file": "SCENA021.INI",
+      "source": "SCENARIO.PAK:SCENA021.INI",
+      "sha256": "c4d24343e3ed770f5969fd042c31ff6629c6bda0443e767031bfc4aa8d67ba8e"
+    },
+    {
+      "file": "SCENA022.INI",
+      "source": "SCENARIO.PAK:SCENA022.INI",
+      "sha256": "e0ab502ead2b8e09480e29f5db386eb9144e868c190041cf4f8b94d876300297"
+    },
+    {
+      "file": "SCENO001.INI",
+      "source": "SCENARIO.PAK:SCENO001.INI",
+      "sha256": "396c87f84735971b72e9190d2f95d02493ccdb3c4e52b3981ba52673af5622ef"
+    },
+    {
+      "file": "SCENO002.INI",
+      "source": "SCENARIO.PAK:SCENO002.INI",
+      "sha256": "87ebec35c6e9829ad7bd3822ee255edeaf13e98ecab2dca57ca7da54fc2dac8d"
+    },
+    {
+      "file": "SCENO003.INI",
+      "source": "SCENARIO.PAK:SCENO003.INI",
+      "sha256": "58700d7e46671ed0c5d1c7ad63c04b09b55770000512acb8a490829e92cf91e8"
+    },
+    {
+      "file": "SCENO004.INI",
+      "source": "SCENARIO.PAK:SCENO004.INI",
+      "sha256": "d128c5802acf77f5c53eb6a3bb015eb79703e3fd1272bbac6d04f114ac1b9d76"
+    },
+    {
+      "file": "SCENO005.INI",
+      "source": "SCENARIO.PAK:SCENO005.INI",
+      "sha256": "b56f7befe3eb994c70edd05446c7230b8869b522c926d263c1023c895c55f66e"
+    },
+    {
+      "file": "SCENO006.INI",
+      "source": "SCENARIO.PAK:SCENO006.INI",
+      "sha256": "02c6823fc6f82baddd8b915b52b0cdae6dbefaa051d3b267ecc458ddfc69a953"
+    },
+    {
+      "file": "SCENO007.INI",
+      "source": "SCENARIO.PAK:SCENO007.INI",
+      "sha256": "2023e567dc352df01a758c68e6fb675dc2a25e16af5f86a728a690b33ed3e014"
+    },
+    {
+      "file": "SCENO008.INI",
+      "source": "SCENARIO.PAK:SCENO008.INI",
+      "sha256": "15e7873f453ea87ef5ca9c116dee318e49f7e8bdf705fb50fbe5129719b08f3a"
+    },
+    {
+      "file": "SCENO009.INI",
+      "source": "SCENARIO.PAK:SCENO009.INI",
+      "sha256": "c84249f2f0c45c230e49f92c71fab9457e76db6766b259d315eabdb49b3f018f"
+    },
+    {
+      "file": "SCENO010.INI",
+      "source": "SCENARIO.PAK:SCENO010.INI",
+      "sha256": "eefe67fa074afd224ac6bac823d528267305d71a45ed0ad5b463616c1e2f6b37"
+    },
+    {
+      "file": "SCENO011.INI",
+      "source": "SCENARIO.PAK:SCENO011.INI",
+      "sha256": "27ca5d8bd8048b110d6c7bf8f2aba1b9d65f745cf3a18e4d79bd579058ba7b85"
+    },
+    {
+      "file": "SCENO012.INI",
+      "source": "SCENARIO.PAK:SCENO012.INI",
+      "sha256": "6d89f6d90b7c86c676e4ff29dcec63a7ec0f09e056eba9cb6ddd19f2af2cf6fd"
+    },
+    {
+      "file": "SCENO013.INI",
+      "source": "SCENARIO.PAK:SCENO013.INI",
+      "sha256": "c969b0aea05e382876cb64ce752d080c734ebff3647980db5bf70210d65a96ab"
+    },
+    {
+      "file": "SCENO014.INI",
+      "source": "SCENARIO.PAK:SCENO014.INI",
+      "sha256": "486f58f88e80287646303d42f8dda7b3503f11567d5d786a4627019c50e950f8"
+    },
+    {
+      "file": "SCENO015.INI",
+      "source": "SCENARIO.PAK:SCENO015.INI",
+      "sha256": "f24b0c36cec16af3380df94ec137d2b264f23839a7bf08595400a56f0a3e79d7"
+    },
+    {
+      "file": "SCENO016.INI",
+      "source": "SCENARIO.PAK:SCENO016.INI",
+      "sha256": "7c81002ddcf29e695d9840a8afc053caf4920e423051689ff6f3524565eaa902"
+    },
+    {
+      "file": "SCENO017.INI",
+      "source": "SCENARIO.PAK:SCENO017.INI",
+      "sha256": "6ab8d0e870f82dcaf867eff04f8a1743c1e328605d2119781efc831ba9433ebb"
+    },
+    {
+      "file": "SCENO018.INI",
+      "source": "SCENARIO.PAK:SCENO018.INI",
+      "sha256": "f7cdaa35d1ae30901d6e316d4f8afef265d328a8c78aa5eb85dfae4fb53e7118"
+    },
+    {
+      "file": "SCENO019.INI",
+      "source": "SCENARIO.PAK:SCENO019.INI",
+      "sha256": "279da9e28e9e60f332af5413ced254e0f420614e217e0a1268fd988016018330"
+    },
+    {
+      "file": "SCENO020.INI",
+      "source": "SCENARIO.PAK:SCENO020.INI",
+      "sha256": "b6455bc66e726e8a85002cc1f5f70010ae9de2c62f25d750eeb24c236d1c743c"
+    },
+    {
+      "file": "SCENO021.INI",
+      "source": "SCENARIO.PAK:SCENO021.INI",
+      "sha256": "2609f06fc3b8b5cc2b89ddbc785f4e82207960ed8ccde7aed982a17baed37b9f"
+    },
+    {
+      "file": "SCENO022.INI",
+      "source": "SCENARIO.PAK:SCENO022.INI",
+      "sha256": "444f9b6bea0e40ac8f916cc315f326f11dd7ec3e9201b71376d78258e8e2323d"
+    },
+    {
+      "file": "SCENF001.INI",
+      "source": "OPENSD2.PAK:SCENF001.INI",
+      "sha256": "a34a710b98b44db81f6bc4c9e3c0fcf1afe400f96f1535620d57ba8aa115e9b1"
+    },
+    {
+      "file": "SCENF002.INI",
+      "source": "OPENSD2.PAK:SCENF002.INI",
+      "sha256": "37aa0f9906c97dec6f21bad0c143f401b018475f6c3ebdab7a25183e9a1dc173"
+    },
+    {
+      "file": "SCENF003.INI",
+      "source": "OPENSD2.PAK:SCENF003.INI",
+      "sha256": "8be95da2b2cecdf27ccdf96b89d9c54561d2852a8d81b1680cc3d2fc77632b6b"
+    },
+    {
+      "file": "SCENF004.INI",
+      "source": "OPENSD2.PAK:SCENF004.INI",
+      "sha256": "d7e7144a999730053bc7bc12fda53517dba0adfa4da921731001c2d5425d07eb"
+    },
+    {
+      "file": "SCENF005.INI",
+      "source": "OPENSD2.PAK:SCENF005.INI",
+      "sha256": "ee71347dd62acee361468341633021966c0e89cf70ff1865b68ca5095738376f"
+    },
+    {
+      "file": "SCENF006.INI",
+      "source": "OPENSD2.PAK:SCENF006.INI",
+      "sha256": "8ebfaff90cbe71a2996c49aeafbd334ace6775dc0e79d1f236719c63ef252c4b"
+    },
+    {
+      "file": "SCENF007.INI",
+      "source": "OPENSD2.PAK:SCENF007.INI",
+      "sha256": "1abdfb4f2a89970bef1a23a5ba77704c0e2607fe327186a5eb9d9e6351b37f8b"
+    },
+    {
+      "file": "SCENF008.INI",
+      "source": "OPENSD2.PAK:SCENF008.INI",
+      "sha256": "434bd80f813879dcfb6a53cb0bc42550fc21ef56e14fe9f6379d05346167f35a"
+    },
+    {
+      "file": "SCENF009.INI",
+      "source": "OPENSD2.PAK:SCENF009.INI",
+      "sha256": "219828059ded76e65d191558e64ad3ff7a6d6eeba443adda3665cc4dfe2f8574"
+    },
+    {
+      "file": "SCENF010.INI",
+      "source": "OPENSD2.PAK:SCENF010.INI",
+      "sha256": "feae5950e8e37c4e28aece0c8f64a4e9c043794293bd8eaca55d70c5bf431a7f"
+    },
+    {
+      "file": "SCENF011.INI",
+      "source": "OPENSD2.PAK:SCENF011.INI",
+      "sha256": "b70d5469a12f492a2fefa31fe22d894819c32a1f42b5aa505817bb939b961410"
+    },
+    {
+      "file": "SCENF012.INI",
+      "source": "OPENSD2.PAK:SCENF012.INI",
+      "sha256": "e5d5a59537998a74dfc2020bb84a7c05079068923440bc7da89ef35ec00481dd"
+    },
+    {
+      "file": "SCENF013.INI",
+      "source": "OPENSD2.PAK:SCENF013.INI",
+      "sha256": "3456c859fd630ec37d7f169337a3c02796cb1c2facf21e946e88ada39794b165"
+    },
+    {
+      "file": "SCENF014.INI",
+      "source": "OPENSD2.PAK:SCENF014.INI",
+      "sha256": "8c26eeae0ee2c71e83f759d9f031ad3a26a4eb7cb585d11c3f53103ea4d5b8b0"
+    },
+    {
+      "file": "SCENF015.INI",
+      "source": "OPENSD2.PAK:SCENF015.INI",
+      "sha256": "7336ee3b5faacb9f3e676d37c9f682ddffdb7ed71ad29cf0f770b8583efa4b33"
+    },
+    {
+      "file": "SCENF016.INI",
+      "source": "OPENSD2.PAK:SCENF016.INI",
+      "sha256": "f7ac8bea12b983a99ad53014e919dcec7c68101507b20caa47d36497eb1f4a9d"
+    },
+    {
+      "file": "SCENF017.INI",
+      "source": "OPENSD2.PAK:SCENF017.INI",
+      "sha256": "32d7bd83ef89a627cf0337ba32617f3f0323d3719e58c30dc69da2597c54e4d1"
+    },
+    {
+      "file": "SCENF018.INI",
+      "source": "OPENSD2.PAK:SCENF018.INI",
+      "sha256": "44910bc0bb8880b547e02f08d022be14da2e4331cf409c1495697f6acd09aca2"
+    },
+    {
+      "file": "SCENF019.INI",
+      "source": "OPENSD2.PAK:SCENF019.INI",
+      "sha256": "2325cb52c48d2b8d7bde7ec32d68ea6732f56d73a080aee3167ce28d0799e753"
+    },
+    {
+      "file": "SCENF020.INI",
+      "source": "OPENSD2.PAK:SCENF020.INI",
+      "sha256": "6e06a4f048d7e26eb690198695ff04f492c565b1fe125d292fe4eb2a8c947d71"
+    },
+    {
+      "file": "SCENF021.INI",
+      "source": "OPENSD2.PAK:SCENF021.INI",
+      "sha256": "227ae031d336140dedf6677ffe00f1cd39b9bcc98a7b959291de7f8c805f4f7c"
+    },
+    {
+      "file": "SCENF022.INI",
+      "source": "OPENSD2.PAK:SCENF022.INI",
+      "sha256": "fea30a002de118cedf5b2b1bb22c04d2a0416f996ff93783b5fe3f41f65f8794"
+    },
+    {
+      "file": "SCENS001.INI",
+      "source": "OPENSD2.PAK:SCENS001.INI",
+      "sha256": "e6b775d9caadb90720221fadadd9d378f44aed16fd8ba49e54c74dd37bc77e65"
+    },
+    {
+      "file": "SCENS002.INI",
+      "source": "OPENSD2.PAK:SCENS002.INI",
+      "sha256": "a1ec633ece06fb5a05c652ae7c66206b62ebf5ad07f7e034778d351a7ce99ca3"
+    },
+    {
+      "file": "SCENS003.INI",
+      "source": "OPENSD2.PAK:SCENS003.INI",
+      "sha256": "6928aad5199bf986fbb8f21d048d7d4f2f4e990a6710952c1c74266b21ea894c"
+    },
+    {
+      "file": "SCENS004.INI",
+      "source": "OPENSD2.PAK:SCENS004.INI",
+      "sha256": "203cf7ee192aa8c7ad3d220b0f63c5672ec1afeca067364416aea2f61614cda0"
+    },
+    {
+      "file": "SCENS005.INI",
+      "source": "OPENSD2.PAK:SCENS005.INI",
+      "sha256": "1413d68571b75f13a2a5d5d129a0cce8bd648338a8f51a194c9cf5d4928bb9a4"
+    },
+    {
+      "file": "SCENS006.INI",
+      "source": "OPENSD2.PAK:SCENS006.INI",
+      "sha256": "ea2848f678f99f0349ecc0abe9c009a61bbf10c8105e0bc0d60447d25d8e4e81"
+    },
+    {
+      "file": "SCENS007.INI",
+      "source": "OPENSD2.PAK:SCENS007.INI",
+      "sha256": "febd42cd47cea6477a07582dac9ef5aeab2f0fe180633058ec8f751ef5ae585b"
+    },
+    {
+      "file": "SCENS008.INI",
+      "source": "OPENSD2.PAK:SCENS008.INI",
+      "sha256": "b06e69e758d47a058673fc3b2f4ded4cd7bd0ecb95c02461f5f908882367cf86"
+    },
+    {
+      "file": "SCENS009.INI",
+      "source": "OPENSD2.PAK:SCENS009.INI",
+      "sha256": "9a6dbd600aa7cf88f4539357eba04259f4c33e8b8b447792a8c97000be4a8874"
+    },
+    {
+      "file": "SCENS010.INI",
+      "source": "OPENSD2.PAK:SCENS010.INI",
+      "sha256": "fb31d5cf823ee5e25465b430c108c8a1c8cfff15e9e6a0d8b7771df38ca05d18"
+    },
+    {
+      "file": "SCENS011.INI",
+      "source": "OPENSD2.PAK:SCENS011.INI",
+      "sha256": "f6aa05ec96a69e59b72d783525b6055fa262e68249c681cc302cd942ce259d85"
+    },
+    {
+      "file": "SCENS012.INI",
+      "source": "OPENSD2.PAK:SCENS012.INI",
+      "sha256": "0f2f27b9a8c78fb1ef68204cf35596ed0f17f2050faa43fc7336c84f56869002"
+    },
+    {
+      "file": "SCENS013.INI",
+      "source": "OPENSD2.PAK:SCENS013.INI",
+      "sha256": "71e599d21f3fba4abe43f0aaa884496eb6ea44a3e99169e049f84860382d91f7"
+    },
+    {
+      "file": "SCENS014.INI",
+      "source": "OPENSD2.PAK:SCENS014.INI",
+      "sha256": "dee8b271421ba85acd76a95a23826c8aea4900b1382fd03a48c83afe8fca25be"
+    },
+    {
+      "file": "SCENS015.INI",
+      "source": "OPENSD2.PAK:SCENS015.INI",
+      "sha256": "09ed0d54431dbd756d2e95a92991d050f4eb62c647f817ce74ddcca4b5a8859d"
+    },
+    {
+      "file": "SCENS016.INI",
+      "source": "OPENSD2.PAK:SCENS016.INI",
+      "sha256": "47e282add32a3dc7248150cea30787ab4fba9c0d4a059a601979d29f1f1696ff"
+    },
+    {
+      "file": "SCENS017.INI",
+      "source": "OPENSD2.PAK:SCENS017.INI",
+      "sha256": "fee3d1a05983456b2b6da5e23e08481e8b9724067e38cfb36faa196c03ea044e"
+    },
+    {
+      "file": "SCENS018.INI",
+      "source": "OPENSD2.PAK:SCENS018.INI",
+      "sha256": "7a9296fe011359dc7d1a7831e34724c13db863ab84ae6af1e23ea79140324146"
+    },
+    {
+      "file": "SCENS019.INI",
+      "source": "OPENSD2.PAK:SCENS019.INI",
+      "sha256": "d9e1393b741124a65f4a96c3a0c6296fc10cbeacf0fe032f5299745d267a1c06"
+    },
+    {
+      "file": "SCENS020.INI",
+      "source": "OPENSD2.PAK:SCENS020.INI",
+      "sha256": "356e3a5f3eb60cdeee9bea78794ea735f1995504558fb3f155336ff5f213d80e"
+    },
+    {
+      "file": "SCENS021.INI",
+      "source": "OPENSD2.PAK:SCENS021.INI",
+      "sha256": "0748d33aeddb80fb2a47f7b8c8169c9df867b57881550d53c590eccbeb672585"
+    },
+    {
+      "file": "SCENS022.INI",
+      "source": "OPENSD2.PAK:SCENS022.INI",
+      "sha256": "d6ef712b4f2cb6a15d75fd17fb98282aa437c0eb05acb43efd772313b6112a50"
+    },
+    {
+      "file": "SCENM001.INI",
+      "source": "OPENSD2.PAK:SCENM001.INI",
+      "sha256": "d1db5c37fdca20c9bb968f7148901b1436c67c2ebf68deee8c806f47e6628f16"
+    },
+    {
+      "file": "SCENM002.INI",
+      "source": "OPENSD2.PAK:SCENM002.INI",
+      "sha256": "eff256fd33cba8a2b1b9ed79c7764dabd513572138951249f50f70de39ef425a"
+    },
+    {
+      "file": "SCENM003.INI",
+      "source": "OPENSD2.PAK:SCENM003.INI",
+      "sha256": "26d298f7dc70ac1ceaad5c4dfe541659f97d2da3e7bb2fde5ce07daad2440320"
+    },
+    {
+      "file": "SCENM004.INI",
+      "source": "OPENSD2.PAK:SCENM004.INI",
+      "sha256": "88a7b00b26768048bac6a4abd62fc7d03cd992abd61afc3816a0f7a9f504eade"
+    },
+    {
+      "file": "SCENM005.INI",
+      "source": "OPENSD2.PAK:SCENM005.INI",
+      "sha256": "9c4b54a9994ce80d9ef31c00bea46b95c727f1825b4061f5885787571c55e4e4"
+    },
+    {
+      "file": "SCENM006.INI",
+      "source": "OPENSD2.PAK:SCENM006.INI",
+      "sha256": "445000dcfde48f7914bce3cabc1e58b8dda129b04f9b79c0e647b42b870213f8"
+    },
+    {
+      "file": "SCENM007.INI",
+      "source": "OPENSD2.PAK:SCENM007.INI",
+      "sha256": "52872f4d4c2283c18440835002169ba5c250c1057537501f12bca820cad89ec8"
+    },
+    {
+      "file": "SCENM008.INI",
+      "source": "OPENSD2.PAK:SCENM008.INI",
+      "sha256": "56f529474d2496e479760da9dd262dd6963ace325951d1e6a4301a0977b6cda4"
+    },
+    {
+      "file": "SCENM009.INI",
+      "source": "OPENSD2.PAK:SCENM009.INI",
+      "sha256": "bb814a0263e4618ce59471a3bbfb34efd329cd73e5036f3bfc8ca37e397f4ded"
+    },
+    {
+      "file": "SCENM010.INI",
+      "source": "OPENSD2.PAK:SCENM010.INI",
+      "sha256": "5d76b7b5deb6c6643347f6cb3d20c5033eb7a635c622662093671f3a22ce827f"
+    },
+    {
+      "file": "SCENM011.INI",
+      "source": "OPENSD2.PAK:SCENM011.INI",
+      "sha256": "577453f5ecbfd2175f6cc1515d02697d588153de8c10fb9741cf918bf5e01f82"
+    },
+    {
+      "file": "SCENM012.INI",
+      "source": "OPENSD2.PAK:SCENM012.INI",
+      "sha256": "34e18ff654a37a2e0a3f47572ea3088ebc5eb422c4971b1ecd7b16116b6e31b0"
+    },
+    {
+      "file": "SCENM013.INI",
+      "source": "OPENSD2.PAK:SCENM013.INI",
+      "sha256": "4b46a3c39a5bc8686bdb42289894f9518284e22a05261012aa6c6f21f526bec4"
+    },
+    {
+      "file": "SCENM014.INI",
+      "source": "OPENSD2.PAK:SCENM014.INI",
+      "sha256": "3944a7176cfdc9ddd369314637c726f5d589fb59acfae7c390c0eac9b0f21840"
+    },
+    {
+      "file": "SCENM015.INI",
+      "source": "OPENSD2.PAK:SCENM015.INI",
+      "sha256": "e20a10949556f1ee1df7fb73de8375a90dd20e0d11c9ee1a91521653f0ed2152"
+    },
+    {
+      "file": "SCENM016.INI",
+      "source": "OPENSD2.PAK:SCENM016.INI",
+      "sha256": "2e9ea0628a8945d0105f4dc2c3158b6b714cd03db9e9f73efde67ba8e1119b57"
+    },
+    {
+      "file": "SCENM017.INI",
+      "source": "OPENSD2.PAK:SCENM017.INI",
+      "sha256": "a7d312564e4e51b852851c81d63a8c43dee44285599b3be7040af68fd38b5774"
+    },
+    {
+      "file": "SCENM018.INI",
+      "source": "OPENSD2.PAK:SCENM018.INI",
+      "sha256": "24107adf45ad8d59a30359374e1308dd169352c7a7e9a6100394717e820bc15d"
+    },
+    {
+      "file": "SCENM019.INI",
+      "source": "OPENSD2.PAK:SCENM019.INI",
+      "sha256": "1ef13f7c3d4e9526feb2ee83266c2dca382c873033279d68cdb947917b0fef40"
+    },
+    {
+      "file": "SCENM020.INI",
+      "source": "OPENSD2.PAK:SCENM020.INI",
+      "sha256": "949bf6e05f166fe8b783c9673106840241ff0baa94bc6e328c41e35b27d59c22"
+    },
+    {
+      "file": "SCENM021.INI",
+      "source": "OPENSD2.PAK:SCENM021.INI",
+      "sha256": "4e30a50cf4a89f00cc1edb480a7ff3f3ff870a646f375b05b71d4a042dbea19a"
+    },
+    {
+      "file": "SCENM022.INI",
+      "source": "OPENSD2.PAK:SCENM022.INI",
+      "sha256": "3555ea55e90c3c4e269808dd232460d3a9995c773539f6ca8ffc714b20b1c12a"
+    },
+    {
+      "file": "SCENN001.INI",
+      "source": "Extra.PAK:SCENN001.INI",
+      "sha256": "0dad4121f6eefd8b0086a9a478a14f01b49e4d51b1989ffcc819ea5564974cd6"
+    },
+    {
+      "file": "SCENN002.INI",
+      "source": "Extra.PAK:SCENN002.INI",
+      "sha256": "6e8ccd2ee21c20d3ff7921926f110314055d544868b485aac93559a5b2d1664b"
+    },
+    {
+      "file": "SCENN003.INI",
+      "source": "Extra.PAK:SCENN003.INI",
+      "sha256": "f2f833a2417c5add4d611a6dc96891cf28ef716b469c2a2acda4bb25cc822a00"
+    },
+    {
+      "file": "SCENN004.INI",
+      "source": "Extra.PAK:SCENN004.INI",
+      "sha256": "e6b451ff03ac55de30a4a1b332426993ffaad8c8ccd598706e588ac8aa3a463e"
+    },
+    {
+      "file": "SCENN005.INI",
+      "source": "Extra.PAK:SCENN005.INI",
+      "sha256": "80c4280b82327f281f273006699bd1ca7e360d2c404b73839b4bba2341bf4f5b"
+    },
+    {
+      "file": "SCENN006.INI",
+      "source": "Extra.PAK:SCENN006.INI",
+      "sha256": "52688e6fa940ea3ab667800d7ecda54cbfcbe6d1f779e8c3266bdae7697dd3ed"
+    },
+    {
+      "file": "SCENN007.INI",
+      "source": "Extra.PAK:SCENN007.INI",
+      "sha256": "799d1a9b7d0967dcdb2040fb5f4a522b45c4d30035937bcfdf06a844b8d5fb0e"
+    },
+    {
+      "file": "SCENN008.INI",
+      "source": "Extra.PAK:SCENN008.INI",
+      "sha256": "5d137cc6496e6a1d16c978cf5d80e831b23254d1756ddc54c371aaa252634025"
+    },
+    {
+      "file": "SCENN009.INI",
+      "source": "Extra.PAK:SCENN009.INI",
+      "sha256": "7c8606497eedfb0cb97f7877215ccfe2dab68bced5066e954ac4a9cd2a4ac18f"
+    },
+    {
+      "file": "SCENN010.INI",
+      "source": "Extra.PAK:SCENN010.INI",
+      "sha256": "6d644687ee642576048b06bab520463d19ecdf03bf50ee162d36cc5a662f5efc"
+    },
+    {
+      "file": "SCENN011.INI",
+      "source": "Extra.PAK:SCENN011.INI",
+      "sha256": "974ed3881949e3ce8253ae1495e9608c550877731d9225ecdf9aacc72fd8bae6"
+    },
+    {
+      "file": "SCENN012.INI",
+      "source": "Extra.PAK:SCENN012.INI",
+      "sha256": "9f7152512a6853293739256520b70e7274dae61cc0120e619e51b0446c00b0fe"
+    },
+    {
+      "file": "SCENN013.INI",
+      "source": "Extra.PAK:SCENN013.INI",
+      "sha256": "a0e65aa3ae47999671ba4080cc0ca60bd0058156b58bc68a149c655edce2e67c"
+    },
+    {
+      "file": "SCENN014.INI",
+      "source": "Extra.PAK:SCENN014.INI",
+      "sha256": "462c44ce4f858e7f42f6d370c6040404492e25f31c0d6a3f714412b5cae83d32"
+    },
+    {
+      "file": "SCENN015.INI",
+      "source": "Extra.PAK:SCENN015.INI",
+      "sha256": "2a631d3d8554bdb05a6d9b4ece58c33847a30f6e82076dc1544e8d82ff70c766"
+    },
+    {
+      "file": "SCENN016.INI",
+      "source": "Extra.PAK:SCENN016.INI",
+      "sha256": "52b456e8bace5a2da4f2934b644d414b47041d035ad6868acd50f362089d0a85"
+    },
+    {
+      "file": "SCENN017.INI",
+      "source": "Extra.PAK:SCENN017.INI",
+      "sha256": "2fc38f3bde7340d760d0dae40ef80ee76659022f273e6935147bed347757de9a"
+    },
+    {
+      "file": "SCENN018.INI",
+      "source": "Extra.PAK:SCENN018.INI",
+      "sha256": "87ba7812c592efdfd432b6b0e83ccbaf6d01bcb548031cf29d8bc81e4e6fd789"
+    },
+    {
+      "file": "SCENN019.INI",
+      "source": "Extra.PAK:SCENN019.INI",
+      "sha256": "39ecda99b02fdcc29157845b543393c8caa79cd616b32b96fcc94c4fa7b8c154"
+    },
+    {
+      "file": "SCENN020.INI",
+      "source": "Extra.PAK:SCENN020.INI",
+      "sha256": "26600d84000b656f9d590f27ba6fefc6bfba23cab9c93feaad5f7e64f05d6cbb"
+    },
+    {
+      "file": "SCENN021.INI",
+      "source": "Extra.PAK:SCENN021.INI",
+      "sha256": "797ba76323127ddff4f9dbc383eb32357c2d9ffedcf2f07e932bc4d4a31e6f02"
+    },
+    {
+      "file": "SCENN022.INI",
+      "source": "Extra.PAK:SCENN022.INI",
+      "sha256": "e6d9e9f67e9f7fc040dca63c7c9cf073ca694678573b0b1e8b37bb1d3bd2c5ec"
+    },
+    {
+      "file": "SCENR001.INI",
+      "source": "Extra.PAK:SCENR001.INI",
+      "sha256": "fb94763a089ded93d558ca04607cd26db657e9cb905d5b9b0493e710e2640369"
+    },
+    {
+      "file": "SCENR002.INI",
+      "source": "Extra.PAK:SCENR002.INI",
+      "sha256": "989c811c1eb2835ecfb4ce01c2da970e2162afd294d3e963053c9d65fad366be"
+    },
+    {
+      "file": "SCENR003.INI",
+      "source": "Extra.PAK:SCENR003.INI",
+      "sha256": "2e33296b5655b1cab84b01862c0a13ba9639e077d2d1ec86679437e809635cce"
+    },
+    {
+      "file": "SCENR004.INI",
+      "source": "Extra.PAK:SCENR004.INI",
+      "sha256": "00239de031757ff8385dfadd84419128a9c3f8d4d33b3f8955ff13187ac4c892"
+    },
+    {
+      "file": "SCENR005.INI",
+      "source": "Extra.PAK:SCENR005.INI",
+      "sha256": "0cc85abf8694238e89a17036584a37ed1968c020f3482e3c68cd68a776fc6cfa"
+    },
+    {
+      "file": "SCENR006.INI",
+      "source": "Extra.PAK:SCENR006.INI",
+      "sha256": "da69cd9b4d640aaccb114889987f771e9fa8d1aa36ae8bbbf028696a97f3f035"
+    },
+    {
+      "file": "SCENR007.INI",
+      "source": "Extra.PAK:SCENR007.INI",
+      "sha256": "2971cb803604826f578bfceef3eae1c6438fd420139653370a234f19a108b5a0"
+    },
+    {
+      "file": "SCENR008.INI",
+      "source": "Extra.PAK:SCENR008.INI",
+      "sha256": "52ad4a394221b128e07838a95cdb4024d8b34c28e19f910d2133eb0f1e58121e"
+    },
+    {
+      "file": "SCENR009.INI",
+      "source": "Extra.PAK:SCENR009.INI",
+      "sha256": "f674a03e76069dbfc259a9c59825d095d94f4073285e3a1c328b261d77354625"
+    },
+    {
+      "file": "SCENR010.INI",
+      "source": "Extra.PAK:SCENR010.INI",
+      "sha256": "4b6b8503afc07031e559673edb1ecd59c6d1727dc92b2201c416235d841fb7ea"
+    },
+    {
+      "file": "SCENR011.INI",
+      "source": "Extra.PAK:SCENR011.INI",
+      "sha256": "72d102fe206d60cf777e43440e37b0322be383f06c3958b6017782e20ddd45ab"
+    },
+    {
+      "file": "SCENR012.INI",
+      "source": "Extra.PAK:SCENR012.INI",
+      "sha256": "9d16846ebf4437570cd6c29da7936b84fccf351661605437fa00de165544a415"
+    },
+    {
+      "file": "SCENR013.INI",
+      "source": "Extra.PAK:SCENR013.INI",
+      "sha256": "b2d607416730365bad7ba2141c69c06dc4edd97abdb2df3744ef1af7c25d4fa0"
+    },
+    {
+      "file": "SCENR014.INI",
+      "source": "Extra.PAK:SCENR014.INI",
+      "sha256": "07a936f6c19b532d658c2cbc52a78f32d68e97a2324a4c84a316129018273943"
+    },
+    {
+      "file": "SCENR015.INI",
+      "source": "Extra.PAK:SCENR015.INI",
+      "sha256": "8bfd2f182f1919c6ed64a32c48cd7c5e030e2a95e69fb61fcc7c2c72b5104a1e"
+    },
+    {
+      "file": "SCENR016.INI",
+      "source": "Extra.PAK:SCENR016.INI",
+      "sha256": "55934b2889a5e54aa181b47318579f4061381704ab5d71bd7426b483b358c3a7"
+    },
+    {
+      "file": "SCENR017.INI",
+      "source": "Extra.PAK:SCENR017.INI",
+      "sha256": "c5d8f12d926a3b9631c3e66100d8d8f9a69e7080b395edb4f23ece6b19e51c4a"
+    },
+    {
+      "file": "SCENR018.INI",
+      "source": "Extra.PAK:SCENR018.INI",
+      "sha256": "c32ef3a494d65a76841dde85882c1fb8cef58417d041115bfd6ab72fa04175aa"
+    },
+    {
+      "file": "SCENR019.INI",
+      "source": "Extra.PAK:SCENR019.INI",
+      "sha256": "6b9737020fbf52d1bcc8d3881a6bc2b3d916a9ae692ce84cc68db9d7e9cc1147"
+    },
+    {
+      "file": "SCENR020.INI",
+      "source": "Extra.PAK:SCENR020.INI",
+      "sha256": "6c7a4ed18a96d126fc8eb6286bf3ed7a33931c822586a4b83f44eb154b80b7ed"
+    },
+    {
+      "file": "SCENR021.INI",
+      "source": "Extra.PAK:SCENR021.INI",
+      "sha256": "ec8ae97ec1e84d62b3da324a816e9bee395bcc5e309abcded2d0d554ec782c96"
+    },
+    {
+      "file": "SCENR022.INI",
+      "source": "Extra.PAK:SCENR022.INI",
+      "sha256": "e508490fa80025fc1b0e457139fc2a85fcf5634d6ce5449155dcdd519f672b8c"
+    },
+    {
+      "file": "SCENK001.INI",
+      "source": "data/campaign_vanilla/SCENK001.INI",
+      "sha256": "1c077e5c1572d0b16dfd96977e35ac68c6bc96871aeb6f66dad8bc2d1f6c1753"
+    },
+    {
+      "file": "SCENK002.INI",
+      "source": "data/campaign_vanilla/SCENK002.INI",
+      "sha256": "15c202a1cbbf4e44f9c0ef623ebea30b35e9111648db9e9978d203b1e48644c6"
+    },
+    {
+      "file": "SCENK003.INI",
+      "source": "data/campaign_vanilla/SCENK003.INI",
+      "sha256": "3e62b3bfa1bbcea6725bc7888864282ec3b906abde8a5c760cf9705395657a52"
+    },
+    {
+      "file": "SCENK004.INI",
+      "source": "data/campaign_vanilla/SCENK004.INI",
+      "sha256": "70d1c4aa28cfbb35611303592ee965320fa970457062ac138c4367aa84b0564d"
+    },
+    {
+      "file": "SCENK005.INI",
+      "source": "data/campaign_vanilla/SCENK005.INI",
+      "sha256": "f98fd69a045435031a8ff582489d55dc18e80d39f90631f312134d65fbe25221"
+    },
+    {
+      "file": "SCENK006.INI",
+      "source": "data/campaign_vanilla/SCENK006.INI",
+      "sha256": "857716e233037653fd975b9fe1f395997bcc2e67fc2f2a9d9c7cf2e5fb025c47"
+    },
+    {
+      "file": "SCENK007.INI",
+      "source": "data/campaign_vanilla/SCENK007.INI",
+      "sha256": "0bbdf04cb6b8987544e6ab7a8a97ebaa4c68a1b5e5b2443f31d49fd61a1d491d"
+    },
+    {
+      "file": "SCENK008.INI",
+      "source": "data/campaign_vanilla/SCENK008.INI",
+      "sha256": "3723e6d7771a132c0df398cdd649daa74354f86ba15a380dfd756ab916cb5677"
+    },
+    {
+      "file": "SCENK009.INI",
+      "source": "data/campaign_vanilla/SCENK009.INI",
+      "sha256": "00a950e3c083b311ece412aa26bdcc9840b1f51b650434967ec5a5644467eb50"
+    },
+    {
+      "file": "SCENK010.INI",
+      "source": "data/campaign_vanilla/SCENK010.INI",
+      "sha256": "fec2ef838219ec45ac0cc7dc6daff4a9377442846b127c454525b984124e38a1"
+    },
+    {
+      "file": "SCENK011.INI",
+      "source": "data/campaign_vanilla/SCENK011.INI",
+      "sha256": "20b6568168d12ef539caa656039ec088aee78594fa57e2122e58963bcd834115"
+    },
+    {
+      "file": "SCENK012.INI",
+      "source": "data/campaign_vanilla/SCENK012.INI",
+      "sha256": "bd7deb6a8dd6d91a4af0fee02cd99ff54ecfbd2c6a71e9a2768e57b0fa425512"
+    },
+    {
+      "file": "SCENK013.INI",
+      "source": "data/campaign_vanilla/SCENK013.INI",
+      "sha256": "1b60fe70a82d2c86de1e194f64c81dbc72dc043c3c564dde8b21a163980e2f9c"
+    },
+    {
+      "file": "SCENK014.INI",
+      "source": "data/campaign_vanilla/SCENK014.INI",
+      "sha256": "d540cdbabdf51154c1b474d143c1676858501b7e0acc7fc7b7dc2f20579c6197"
+    },
+    {
+      "file": "SCENK015.INI",
+      "source": "data/campaign_vanilla/SCENK015.INI",
+      "sha256": "5d398bb934c65b57b1b1c00dac1155d82cb854a823c36e3d66a8ea2407b994f7"
+    },
+    {
+      "file": "SCENK016.INI",
+      "source": "data/campaign_vanilla/SCENK016.INI",
+      "sha256": "e426e44d2048d756111bbc9e9eff466181ee3178a3ad8435c907646e32c5f9d7"
+    },
+    {
+      "file": "SCENK017.INI",
+      "source": "data/campaign_vanilla/SCENK017.INI",
+      "sha256": "4d5bc3020c694a3145de465149a9f932a3204ae404630fa193321206e5ec9754"
+    },
+    {
+      "file": "SCENK018.INI",
+      "source": "data/campaign_vanilla/SCENK018.INI",
+      "sha256": "27259d956d97957fcdb91f07b876223edaf7c6f654f02d9b352c860e9c52a6f5"
+    },
+    {
+      "file": "SCENK019.INI",
+      "source": "data/campaign_vanilla/SCENK019.INI",
+      "sha256": "45d795ac36e9df879b0376fce6695450091885d862cccae9c7f06dcc8d5011d2"
+    },
+    {
+      "file": "SCENK020.INI",
+      "source": "data/campaign_vanilla/SCENK020.INI",
+      "sha256": "f6fbce34816c7d5999688ca66d8f1ee817d433ad20a946827c4bdadc5dc1b20c"
+    },
+    {
+      "file": "SCENK021.INI",
+      "source": "data/campaign_vanilla/SCENK021.INI",
+      "sha256": "dd857794ef6b51d0a5869216df953445db6c388e518480b1370cf812d991a57b"
+    },
+    {
+      "file": "SCENK022.INI",
+      "source": "data/campaign_vanilla/SCENK022.INI",
+      "sha256": "5f14710a1272d9a34f0c9b51391aad93fc0676f2b728a8e026385b43748102d1"
+    }
+  ],
+  "wildspadeTech": {
+    "hightech": 4,
+    "carryall": 4,
+    "chemicalCarryall": 5,
+    "ornithopter": 7
+  }
+}

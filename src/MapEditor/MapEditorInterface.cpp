@@ -1016,10 +1016,10 @@ void MapEditorInterface::onHouseChanges() {
 
     int currentIndex = 0;
     int currentPlayerNum = 1;
-    for(const int index : getFactionSelectionOrder()) {
+    for(const int index : pMapEditor->getPlayerSelectionOrder()) {
         if(index >= static_cast<int>(pMapEditor->getPlayers().size())) continue;
         const auto& player=pMapEditor->getPlayers()[index];
-        if(!isCampaignHouseAvailable(player.house)) continue;
+        if(!isCampaignHouseAvailable(player.house) && !player.bActive) continue;
         std::string entryName = player.bActive ? (player.bAnyHouse ? (_("Player") + " " + std::to_string(currentPlayerNum++)) : getHouseDisplayNameByNumber(player.house)) : ("(" + getHouseDisplayNameByNumber(player.house) + ")");
 
         houseDropDownBox.addEntry(entryName, player.house);

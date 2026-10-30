@@ -7,3 +7,8 @@ mods/** whitespace=cr-at-eol
 # New original co-op payloads retain the bytes used by package checksums.
 data/coop/faction*/coop*.ini -text whitespace=cr-at-eol,-blank-at-eof
 mods/*/campaign/coop/faction*/coop*.ini whitespace=cr-at-eol,-blank-at-eof
+mods/*/campaign/scen*.ini whitespace=cr-at-eol,-blank-at-eof
+mods/*/data/scen*.ini whitespace=cr-at-eol,-blank-at-eof
+# Original campaign bytes include legacy trailing spaces and empty lines.
+data/campaign_vanilla/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+mods/*/data/CampaignPlan.ini whitespace=cr-at-eol,-blank-at-eof

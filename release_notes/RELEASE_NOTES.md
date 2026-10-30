@@ -1,45 +1,77 @@
-# Dune Legacy Tornie 1.0.541 — ArcaKev, coop et corrections
+# Dune Legacy Tornie 1.0.546
 
-- **ArcaKev et ArcaKev Lite** : dérivés Jericho, unités personnalisées, épice normale **plus verte et bleue**, éditeur et génération de cartes adaptés. Campagnes et régions propres au nouveau mod.
-- Ordre ArcaKev : **Harkonnen, Atreides, Ordos, Fremen, Sardaukar, Mercenary, Kleshmersh, Wildspade, Rebels, Neutral, Tharpique, Corruptique**. Les identifiants de sauvegarde restent stables.
-- **Coop jusqu’à quatre factions alliées** ; **archonte jusqu’à huit joueurs**, affectation libre des contrôleurs, y compris tous dans une seule faction. Emplacements 3/4 fermés : aucune armée, MCV ou renfort.
-- À chaque nouvelle mission, tirage parmi les scénarios existants : trois variantes aux étapes 2–7 (002–019), deux à l’étape 8 (020/021). Tirage conservé après défaite ou chargement. Finale 22 : **technologie 9**, en campagne et skirmish.
-- **Facile** : +500 crédits au départ de **chaque mission** pour tous les alliés actifs, réduction d’achat de 25 conservée. **Forces ennemies +10** en option, cumulables avec +5 pour un total de **15** par adversaire présent.
-- Renforts et quota commun adaptés aux factions alliées actives. Transition après confirmation de tous les humains. Lobby, reprise et sauvegardes gèrent les huit contrôleurs ; couleurs bonus accessibles aux invités.
-- **Cases des mods** correctement appliquées ; sauvegarde des métadonnées sans accumulation de guillemets et bouton Enregistrer accessible. **Bannières Jericho** actualisées au démarrage.
-- **Kleshmersh Vanilla orange**, Troopers ordinaires sans feu. Hors Vanilla, une **WOR Kleshmersh empruntée en Chaos** produit les Troopers incendiaires au prix nominal Kleshmersh de **200 crédits**, y compris dans les éditions Lite. Dégâts d’impact du **Trooper lance-flammes +20 %**.
-- **Scoutpost, Flamepost et Chemipost** : missiles dès la base et après amélioration, portée **7 cases** au lieu de 5. Flamepost : effet du Flame Tank et **12 dégâts** au lieu de 10. Chemipost conserve le missile de soin allié.
-- **Sonic Trike** au niveau suivant lorsqu’il était au niveau 2. **Wildspade et Sardaukar** : Light Factory niveau **2**, hors Vanilla. **Ordos et Neutral** : Siege Tank niveau **6**, troisième amélioration.
-- **Doublefinery** : déchargement des récolteurs **15 % plus rapide** dans les deux baies ; aperçu solide **5×2** dans la grille pointillée **5×3**, placement cohérent avec le bâtiment.
-- **Tourelles ajoutées aux véhicules personnalisés** : proportions cohérentes aux zooms **1×, 2× et 3×**. Les trikes conservent leurs graphismes.
-- **Mentat husky animé de Kleshmersh**, issu du ZIP fourni par Tornie : cinq états de regard et de bouche, dans Vanilla, Tornie, Jericho et ArcaKev. PNG natifs conservés, parole liée au briefing.
-- **Éditeur** : changement d’équipe fonctionnel dans les listes défilantes et **12 équipes**. Ordre ArcaKev, unités et épices adaptés.
-- **Site français/anglais** : pouvoirs de chaque palais par maison et mod, recharge, technologies, nouveaux mods, husky et notes ; même contenu dans le site local.
+Cette version corrige le CHOAM de l’éditeur et les cadres Atreides/Ordos, rend les campagnes Vanilla accessibles dans l’éditeur et révise les campagnes **Tornie et Tornie Lite uniquement**.
 
-Tous les joueurs doivent utiliser **1.0.541 / protocole 11**, avec le même mod. Les nouvelles sauvegardes utilisent **9832** ; les anciennes restent lisibles. Le relais Internet par l’hôte sans VPN et les correctifs AppImage/Mint de 1.0.540 sont conservés. L’hôte doit rester connecté et joignable. Sous Mint, choisir `DuneLegacyTornie-1.0.541-Linux-Mint-Compatible.AppImage` ; sans FUSE, ajouter `--appimage-extract-and-run`. Sous Windows, extraire tout le ZIP dans un nouveau dossier avant de lancer `dunelegacy.exe`.
+## Campagnes et coop
 
-Les tests automatisés reproduisent des invités isolés avec huit participants UDP, vérifient les commandes, le démarrage, les sauvegardes et les sept modes. Les résultats finaux et liens CI sont consignés dans le rapport de validation. Une partie humaine sur plusieurs accès Internet et le lancement natif sur Mint 22.3 / noyau 6.17 restent à confirmer.
+- 18 campagnes, 396 scénarios solo et leurs cartes coop adaptés aux bâtiments, unités et technologies de chaque faction, avec des renforts des deux côtés.
+- Un adversaire de soutien permanent par campagne, différent d’une campagne à l’autre. Rebels conserve Harkonnen comme soutien, même lorsque l’adversaire principal change.
+- Missions 001–019 : deux adversaires. Missions 020–021 : trois. Finale 022 : quatre, avec leurs bases, forces et renforts.
+- En 002–004, les bâtiments du soutien se trouvent à au moins dix cases de l’emprise des bâtiments du joueur et des MCV de départ alliés. Les variantes coop à deux ou quatre factions respectent la même règle.
+- Intros Tornie : deux petites bases ennemies, 1 500 crédits au départ et objectif de 2 000 crédits raffinés.
+- Intro Rebels de Tornie : port stellaire et petite économie, sans chantier ni MCV gratuit. Acheter son MCV au CHOAM ; chaque partenaire coop reçoit une économie équivalente.
+- Intro Wildspade de Tornie : Carryall et Ornithoptère prêtés, avec une menace antiaérienne.
+- Les invités peuvent choisir la même faction que le soutien ennemi sans remplacer ce dernier. La progression et les sauvegardes coop conservent les participants supplémentaires.
+
+Les campagnes, briefings et cartes coop **Jericho, Jericho Lite, ArcaKev et ArcaKev Lite restent ceux de la référence 1.0.545**. Leur refonte attend l’avis de leurs auteurs. Les archives des campagnes Vanilla sont inchangées.
+
+## Éditeur et technologie
+
+- Correction du crash à l’ouverture du CHOAM : les 31 unités du catalogue tiennent dans une liste défilante, avec application, annulation et rechargement de carte.
+- Listes distinctes pour les campagnes solo et coop du mod actif et de Vanilla. Les cartes des campagnes peuvent être ouvertes dans l’éditeur ; les factions chargées restent sélectionnables, y compris dans une édition Lite.
+- Cadres dorés Atreides et Ordos réattribués à la bonne maison dans les scores et sur la carte des régions.
+- Wildspade, dans tous les mods qui proposent cette faction : usine high-tech et Carryall au niveau 4 ; Carryall chimique au niveau 5 après la première amélioration. Ornithoptères et IX restent au niveau 7.
+
+## Installation et compatibilité
+
+Extraire entièrement le paquet Windows dans un nouveau dossier. Pour le paquet portable, lancer `Lancer-1.0.546.cmd` ; ses préférences et sauvegardes sont dans `profile/`. Le guide français/anglais s’ouvre avec `Ouvrir-le-guide.cmd`.
+
+Commencer une **nouvelle campagne** pour jouer les missions révisées. Une sauvegarde en cours conserve l’état de sa mission.
+
+Réseau : **protocole 24**, version 1.0.546 et même mod sur tous les postes. Les préversions en protocole 23 et la 1.0.545 ne peuvent pas rejoindre cette version. Format de sauvegarde **9839** conservé ; les anciens lecteurs de sauvegardes restent présents.
+
+## Validation
+
+La validation Windows comprend 146 cas / 11 217 assertions moteur et réseau, 5 265 chargements de cartes dans l’éditeur, 252 démarrages solo, 224 départs coop, 76 reprises coop avancées et 28 compositions de cadres. Les 2 320 fichiers de campagnes, briefings et coops des autres auteurs sont identiques à la référence 545. Les empreintes du paquet et les sources accompagnent la livraison.
+
+Ces contrôles automatisés ne constituent pas une campagne complète jouée par une personne ni une partie coop humaine sur deux PC. Le rapport de livraison distingue les plateformes effectivement vérifiées.
 
 ---
 
-# Dune Legacy Tornie 1.0.541 — ArcaKev, co-op and fixes
+# Dune Legacy Tornie 1.0.546
 
-- **ArcaKev and ArcaKev Lite**: Jericho-derived mods with custom units and **normal plus green and blue spice**, matching editor and map generation, distinct campaigns and region ownership.
-- ArcaKev house/campaign order: **Harkonnen, Atreides, Ordos, Fremen, Sardaukar, Mercenary, Kleshmersh, Wildspade, Rebels, Neutral, Tharpique, Corruptique**. Persistent faction IDs remain stable.
-- **Four allied factions in co-op**, **eight players in Archon**, with freely assigned controllers, including all eight in one faction. Closed slots 3/4 spawn no army, MCV or reinforcements.
-- Each new mission draws existing scenarios: three variants at stages 2–7 (002–019), two at stage 8 (020/021). Retries and saves retain the selection. Final scenario 22 uses **technology 9** in campaign and skirmish.
-- **Easy Mode** grants every active ally **500 credits at every mission start**, retaining the 25-credit purchase discount. Optional **Enemy forces +10** combines with +5 for **15** per present opponent.
-- Reinforcements and shared harvest quota follow active allied factions. All humans confirm mission transitions. Lobby, resume and saves support eight controllers; guests can select bonus colours.
-- **Mod checkboxes** take effect; metadata no longer accumulates quotes and Save remains visible. **Jericho banners** refresh at startup.
-- **Vanilla Kleshmersh is orange**, with ordinary non-flame Troopers. Outside Vanilla, a **Chaos-borrowed Kleshmersh WOR** produces flame Troopers at Kleshmersh’s nominal **200-credit price**, including Lite editions. **Flame Trooper impact damage increases by 20%.**
-- **Scoutpost, Flamepost and Chemipost** fire missiles before and after upgrading, at **7 tiles** instead of 5. Flamepost uses the Flame Tank effect and deals **12 damage** instead of 10. Chemipost retains allied healing missiles.
-- **Sonic Trike** moves to the next level wherever it previously unlocked at 2. **Wildspade and Sardaukar** receive Light Factory at **level 2** outside Vanilla. **Ordos and Neutral** receive Siege Tank at **level 6, upgrade three**.
-- **Doublefinery** unloads Harvesters **15% faster** in both bays, with a solid **5×2** preview inside the dotted **5×3** grid and matching map placement.
-- Added turrets on custom vehicles retain their proportions at **1×, 2× and 3×**. Trike graphics are retained.
-- **Animated Kleshmersh husky mentat**, from Tornie's original supplied ZIP: five gaze and speech states in Vanilla, Tornie, Jericho and ArcaKev; original PNGs and briefing-driven speech.
-- **Editor** team changes work through scrolling dropdowns, with **12 teams**, ArcaKev order and matching custom units/spice.
-- **FR/EN website** lists every house's Palace power and recharge by mod, updated technology, new mods, husky and notes; matching offline content.
+This version fixes editor CHOAM and the Atreides/Ordos frames, exposes Vanilla campaigns in the editor and revises **Tornie and Tornie Lite campaigns only**.
 
-Every player needs **1.0.541 / protocol 11** and the same mod. New saves use **9832**; older saves remain readable. The Internet host relay without VPN and 1.0.540 AppImage/Mint startup fixes are retained. The host must remain reachable and connected. On Mint use `DuneLegacyTornie-1.0.541-Linux-Mint-Compatible.AppImage`; add `--appimage-extract-and-run` without FUSE. On Windows, extract the entire ZIP into a fresh directory before starting `dunelegacy.exe`.
+## Campaigns and co-op
 
-Automated tests isolate guests in eight-participant UDP sessions and verify commands, start, saves and all seven modes. The validation report records final results and CI links. Human play across independent Internet connections and native Mint 22.3/kernel 6.17 startup remain pending.
+- 18 campaigns, 396 solo scenarios and matching cooperative maps use faction buildings, units and technology, with reinforcements for both sides.
+- Each campaign keeps one supporting enemy throughout its missions. Support varies between campaigns; Rebels keeps Harkonnen even when the primary enemy changes.
+- Missions 001–019 have two opponents, 020–021 have three and final mission 022 has four, with bases, forces and reinforcements.
+- In 002–004, support buildings stay at least ten tiles from player building footprints and allied starting MCV footprints. Two/four-faction co-op follows the same rule.
+- Tornie openings have two small enemy bases, 1,500 starting credits and a 2,000 refined-spice quota.
+- Tornie Rebels opening: a starport and small economy, without a free construction yard or MCV. Buy the MCV through CHOAM; each co-op partner receives a matching economy.
+- Tornie Wildspade opening: loaned Carryall and Ornithopter, with an anti-air threat.
+- A guest choosing the enemy support faction no longer replaces that support. Progression and cooperative checkpoints retain additional participants.
+
+**Jericho, Jericho Lite, ArcaKev and ArcaKev Lite campaigns, briefings and co-op maps retain their 1.0.545 baseline**, pending their authors’ feedback. Vanilla campaign archives remain unchanged.
+
+## Editor and technology
+
+- Fixed the CHOAM opening crash: all 31 catalogue units fit in a scrolling list, supporting apply, undo and map reload.
+- Separate editor sources for the active mod’s solo/co-op campaigns and Vanilla campaigns. Loaded campaign factions remain selectable, including in Lite editions.
+- Golden Atreides and Ordos frames now match their faction on score and region screens.
+- Wildspade, wherever the faction is available: Hightech Factory and Carryall at technology 4; Chemical Carryall at 5 after the first upgrade. Ornithopter and IX remain at technology 7.
+
+## Installation and compatibility
+
+Fully extract the Windows package into a new folder. For the portable package, run `Lancer-1.0.546.cmd`; preferences and saves use `profile/`. Open the bilingual guide with `Ouvrir-le-guide.cmd`.
+
+Start a **new campaign** to use revised missions. Existing checkpoints retain their saved mission state.
+
+Networking requires **protocol 24**, version 1.0.546 and matching mods on every computer. Protocol 23 previews and 1.0.545 cannot join this version. Save format **9839** remains; earlier save readers are retained.
+
+## Validation
+
+Windows validation covers 146 cases / 11,217 engine and network assertions, 5,265 editor map loads, 252 solo starts, 224 cooperative starts, 76 late cooperative checkpoint restores and 28 frame compositions. All 2,320 campaign, briefing and co-op files from other authors match the 545 baseline. Package hashes and corresponding sources accompany the delivery.
+
+Automated checks do not represent a complete human campaign playthrough or human two-PC co-op. The delivery report identifies the platforms actually verified.

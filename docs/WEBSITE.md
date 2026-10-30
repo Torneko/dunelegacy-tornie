@@ -1,3 +1,7 @@
+# Sortie 1.0.546 — vérification avant publication
+
+Campagnes Tornie/Tornie Lite seulement ; autres auteurs préservés. Guide FR/EN aligné sur le protocole 24 et le soutien permanent. Les CI vérifient les paquets Windows et Linux/Mint avant leur publication. Le commit source utilise `[hold-pages]` pour conserver le site public 545 pendant cette vérification ; le commit final des reçus déploie le site 546. Notes : `website/documents/Notes-1.0.546.md` et `Notes-1.0.546-EN.md`.
+
 # Correctifs 1.0.545 — soins, compteurs et introduction
 
 Source : `e8cf3e3cbc21be1b77dc05efc80d9f003b6bc469`. Source précédente : `ba4c6255a8e96e7c88c348a77e464b17514c9867`, conservée sous

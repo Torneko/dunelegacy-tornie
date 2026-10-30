@@ -69,6 +69,7 @@
 #include "../tests/Release538Smoke.h"
 #include "../tests/SelectedPortraitSmoke.h"
 #include "../tests/Release545Smoke.h"
+#include "../tests/Release546Smoke.h"
 #include "../tests/HarvesterCrushSmoke.h"
 #endif
 
@@ -803,6 +804,8 @@ int main(int argc, char *argv[]) {
         bool bVerifyEditorFollowup = false;
         bool bVerifyRadarResearch = false;
         bool bVerifyRelease545 = false;
+        bool bVerifyRelease546 = false;
+        bool bVerifyRelease546Frames = false;
         bool bVerifyCampaignCinema = false;
         bool bVerifyCorrections544 = false;
         bool bVerifyWindtrapPreview = false;
@@ -829,6 +832,8 @@ int main(int argc, char *argv[]) {
             if((parameter == "--verify-next-draft" || parameter == "--verify-release544")) { bVerifyMods=true;bVerifyNextDraft=true;continue; }
             if(parameter == "--verify-campaign-cinema") { bVerifyMods=true;bVerifyCampaignCinema=true;continue; }
             if(parameter == "--verify-release545") {bVerifyMods=true;bVerifyRelease545=true;continue;}
+            if(parameter == "--verify-release546") {bVerifyMods=true;bVerifyRelease546=true;continue;}
+            if(parameter == "--verify-release546-frames") {bVerifyMods=true;bVerifyRelease546Frames=true;continue;}
             if(parameter == "--verify-radar-research") { bVerifyMods=true;bVerifyRadarResearch=true;continue; }
             if(parameter == "--verify-editor-followup") { bVerifyMods=true;bVerifyEditorFollowup=true;continue; }
             if(parameter == "--verify-correctifs544") { bVerifyMods=true;bVerifyCorrections544=true;continue; }
@@ -1444,6 +1449,8 @@ int main(int argc, char *argv[]) {
                         }
                         ModManager::instance().setActiveMod(previousMod);
                     }
+                    else if(bVerifyRelease546Frames) Release546Fixture::frames(std::getenv("DUNELEGACY_SMOKE_DIR"));
+                    else if(bVerifyRelease546) Release546Fixture::run(std::getenv("DUNELEGACY_SMOKE_DIR"));
                     else if(bVerifyRelease545) Release545Smoke::run(std::getenv("DUNELEGACY_SMOKE_DIR"));
                     else if(bVerifyPortraits) runSelectedPortraitSmoke();
                     else if(bVerifyRelease538) runRelease538Smoke();
@@ -1524,6 +1531,10 @@ int main(int argc, char *argv[]) {
     } catch(const std::exception& e) {
         std::string message = std::string("An unhandled exception of type \'") + demangleSymbol(typeid(e).name()) + std::string("\' was thrown:\n\n") + e.what() + std::string("\n\nDune Legacy Tornie will now be terminated!");
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s", message.c_str());
+#ifdef DUNELEGACY_RUNTIME_TESTS
+        // Automated native checks must fail without waiting on a modal dialog.
+        if(std::getenv("DUNELEGACY_SMOKE_DIR")==nullptr)
+#endif
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Dune Legacy Tornie: Unrecoverable error", message.c_str(), nullptr);
 
         return EXIT_FAILURE;

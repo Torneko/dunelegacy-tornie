@@ -79,6 +79,16 @@ jobs:
         with:
           key: linux-${{ hashFiles('vcpkg.json', 'packaging/linux/build-dependencies.txt') }}
 
+      - name: Audit revised and preserved campaigns
+        run: |
+          if [[ -f config/TornieCampaign546.json ]]; then
+            git fetch --depth=1 origin 89b1403f603a709a6883431adcfd91e317c859b7
+            python3 scripts/check-bundled-mods.py
+            python3 scripts/check-campaign-regions.py > campaign-regions.json
+            python3 scripts/check-campaigns-r2.py
+            python3 scripts/rebuild-campaigns-546.py --check
+          fi
+
       # vcpkg builds several autotools-based ports from source on Linux
       # (libxcrypt, sdl2-mixer's flac/opus/etc.) and needs the GNU build
       # toolchain pre-installed on the runner. Without these the Configure
@@ -267,6 +277,7 @@ jobs:
             printf '[General]\nLanguage=%s\nPlay Intro=false\n[Video]\nFullscreen=false\n[Audio]\nMusic Type=adl\nPlay Music=false\n' "$LANGUAGE" > "$PROFILE/$LANGUAGE/profile/DuneLegacyTornie/Dune Legacy.ini"
             CHECKS=(--verify-radar-research --verify-release545)
             if [[ "${{ inputs.ui_only || inputs.followup_545 }}" != true ]]; then CHECKS+=(--verify-editor-followup --verify-campaign-cinema); fi
+            if [[ -f config/TornieCampaign546.json ]]; then CHECKS+=(--verify-release546 --verify-release546-frames); fi
             for CHECK in "${CHECKS[@]}"; do
               LOG="$PROFILE/$LANGUAGE/$CHECK.log"
               SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy SDL_RENDER_DRIVER=software \
@@ -287,6 +298,11 @@ jobs:
             test "$(grep -c 'RELEASE 545 HEALING PASS:' "$PROFILE/$LANGUAGE/--verify-release545.log")" -eq 7
             test "$(grep -c 'RELEASE 545 AIRCRAFT PASS:' "$PROFILE/$LANGUAGE/--verify-release545.log")" -eq 7
             test "$(grep -c 'ORIGINAL CINEMA PASS:' "$PROFILE/$LANGUAGE/--verify-release545.log")" -eq 1
+            if [[ -f config/TornieCampaign546.json ]]; then
+              grep 'RELEASE 546 R2 MATRIX PASS: 5265 editor maps; 252 solo starts; 224 coop starts; 76 late cooperative checkpoints' "$PROFILE/$LANGUAGE/--verify-release546.log"
+              grep 'RELEASE 546 R2 PASS:' "$PROFILE/$LANGUAGE/--verify-release546.log"
+              grep 'RELEASE 546 FRAMES PASS: 28 ' "$PROFILE/$LANGUAGE/--verify-release546-frames.log"
+            fi
           done
 
       - name: Upload next-release runtime evidence
@@ -298,6 +314,8 @@ jobs:
             ${{ env.POST544_RUNTIME_ROOT }}/**/*.log
             ${{ env.POST544_RUNTIME_ROOT }}/**/results/*.png
             ${{ env.POST544_RUNTIME_ROOT }}/**/results/*.tsv
+            ${{ env.POST544_RUNTIME_ROOT }}/**/results/*.csv
+            reports/campaign-scope-r2.json
 
       - name: Record the exact packaged source
         run: |
@@ -312,6 +330,12 @@ jobs:
           if '${{ inputs.followup_545 }}' == 'true':
               report['validationScope'] = 'targeted-545-corrections'
               report['nextReleaseChecks'] += ['tharpique-healing-cadence', 'aircraft-shortcuts-parenthesized-counts-no-selection', 'aircraft-shortcut-faction-colours', 'radar-level-visibility', 'westwood-louder-synchronized-signature']
+          if pathlib.Path('config/TornieCampaign546.json').is_file():
+              import re
+              report['networkProtocol'] = int(re.search(r'#define NETWORK_PROTOCOL_VERSION\s+(\d+)', pathlib.Path('include/Network/NetworkManager.h').read_text()).group(1))
+              report['validationScope'] = 'release-546'
+              report['packagedRuntimeChecks'] = ['radar-fr-en', 'release-545-regressions-fr-en', 'choam-editor-31-items-fr-en', '5265-editor-loads-fr-en', '252-solo-starts-fr-en', '224-coop-starts-fr-en', '76-late-coop-restores-fr-en', 'persistent-support-and-four-opponents-fr-en', '28-frame-compositions-fr-en']
+              report['nextReleaseChecks'] = list(report['packagedRuntimeChecks'])
           pathlib.Path('build/Linux-Build-'+report['version']+'.json').write_text(json.dumps(report,indent=2)+'\n')
           PYTHON
 
@@ -567,6 +591,7 @@ jobs:
           SITE_BROWSER="$(command -v google-chrome || command -v chromium)" \
           NODE_PATH="$RUNNER_TEMP/site-checks/node_modules" \
           RELEASE_VERSION="$VERSION" \
+          NETWORK_PROTOCOL="$(sed -n 's/^#define NETWORK_PROTOCOL_VERSION[[:space:]]*\([0-9]*\).*/\1/p' include/Network/NetworkManager.h)" \
           REQUIRE_WINDOWS_VERSION="${VERIFIED_WINDOWS_RUN:+$VERSION}" \
           SITE_VALIDATION_OUTPUT="supporting/Website-Validation-$VERSION.json" \
             node /tmp/check-documentation-site.cjs \

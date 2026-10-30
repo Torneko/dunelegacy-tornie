@@ -35,10 +35,12 @@
 #include <INIMap/INIMapPreviewCreator.h>
 
 #include <globals.h>
+#include <sand.h>
 #include <mod/ModManager.h>
 
 #include <exception>
 #include <filesystem>
+#include <algorithm>
 
 
 LoadMapWindow::LoadMapWindow(Uint32 color, MapSource source) : Window(0,0,0,0), color(color), loadMapSingleplayer(false) {
@@ -74,8 +76,12 @@ LoadMapWindow::LoadMapWindow(Uint32 color, MapSource source) : Window(0,0,0,0), 
     mapSourceDropDown.addEntry(_("MP Maps"), static_cast<int>(MapSource::Multiplayer));
     mapSourceDropDown.addEntry(_("SP User Maps"), static_cast<int>(MapSource::UserSingleplayer));
     mapSourceDropDown.addEntry(_("MP User Maps"), static_cast<int>(MapSource::UserMultiplayer));
-    if(ModManager::instance().isTornieContentActive())
+    if(ModManager::instance().getActiveModName() != "vanilla") {
         mapSourceDropDown.addEntry(_("CAMPAIGN") + " - " + ModManager::instance().getActiveModName(), static_cast<int>(MapSource::Campaign));
+        mapSourceDropDown.addEntry(_("CAMPAIGN") + " COOP - " + ModManager::instance().getActiveModName(), static_cast<int>(MapSource::CoopCampaign));
+    }
+    mapSourceDropDown.addEntry(_("CAMPAIGN") + " - Vanilla", static_cast<int>(MapSource::VanillaCampaign));
+    mapSourceDropDown.addEntry(_("CAMPAIGN") + " COOP - Vanilla", static_cast<int>(MapSource::VanillaCoopCampaign));
     mapTypeButtonsHBox.addWidget(&mapSourceDropDown);
 
     mapList.setColor(color);
@@ -135,11 +141,13 @@ LoadMapWindow::LoadMapWindow(Uint32 color, MapSource source) : Window(0,0,0,0), 
 
     mainVBox.addWidget(VSpacer::create(10));
 
-    mapSourceDropDown.setSelectedItem(static_cast<int>(source));
+    mapSourceDropDown.setSelectedItem(0);
+    for(int i = 0; i < mapSourceDropDown.getNumEntries(); ++i)
+        if(mapSourceDropDown.getEntryIntData(i) == static_cast<int>(source)) mapSourceDropDown.setSelectedItem(i);
     mapSourceDropDown.setOnSelectionChange([this](bool) {
         onMapTypeChange(mapSourceDropDown.getSelectedEntryIntData());
     });
-    onMapTypeChange(static_cast<int>(source));
+    onMapTypeChange(mapSourceDropDown.getSelectedEntryIntData());
 }
 
 bool LoadMapWindow::handleKeyPress(SDL_KeyboardEvent& key) {
@@ -229,7 +237,9 @@ void LoadMapWindow::onMapTypeChange(int buttonID)
     const auto source = static_cast<MapSource>(buttonID);
     currentMapDirectory.clear();
     currentMapsAreUserMaps = source == MapSource::UserSingleplayer || source == MapSource::UserMultiplayer;
-    currentMapsAreSingleplayer = source != MapSource::Multiplayer && source != MapSource::UserMultiplayer;
+    const bool coopMaps = source == MapSource::CoopCampaign || source == MapSource::VanillaCoopCampaign;
+    const bool campaignMaps = coopMaps || source == MapSource::Campaign || source == MapSource::VanillaCampaign;
+    currentMapsAreSingleplayer = source != MapSource::Multiplayer && source != MapSource::UserMultiplayer && !coopMaps;
 
     switch(source) {
         case MapSource::Singleplayer:
@@ -247,9 +257,18 @@ void LoadMapWindow::onMapTypeChange(int buttonID)
             char tmp[FILENAME_MAX];
             if(fnkdat("maps/multiplayer/", tmp, FILENAME_MAX, FNKDAT_USER | FNKDAT_CREAT) >= 0) currentMapDirectory = tmp;
         } break;
-        case MapSource::Campaign: {
+        case MapSource::Campaign:
+        case MapSource::CoopCampaign: {
             const auto& mods = ModManager::instance();
             currentMapDirectory = mods.getModPath(mods.getActiveModName()) + "/campaign/";
+            if(coopMaps) currentMapDirectory += "coop/";
+        } break;
+        case MapSource::VanillaCampaign:
+        case MapSource::VanillaCoopCampaign: {
+            const std::string relative = coopMaps ? "/coop/" : "/campaign_vanilla/";
+            currentMapDirectory = getDuneLegacyDataDir() + "/data" + relative;
+            if(!std::filesystem::is_directory(std::filesystem::u8path(currentMapDirectory)))
+                currentMapDirectory = getDuneLegacyDataDir() + relative;
         } break;
     }
 
@@ -257,8 +276,28 @@ void LoadMapWindow::onMapTypeChange(int buttonID)
     mapFilepaths.clear();
     loadButton.setEnabled(false);
 
-    if(!currentMapDirectory.empty()) for(const std::string& filename : getFileNamesList(currentMapDirectory, "ini", true, FileListOrder_Name_CaseInsensitive_Asc)) {
-        if(source == MapSource::Campaign && strToLower(filename).find("scen") != 0) continue;
+    if(campaignMaps) {
+        std::error_code error;
+        const auto directory = std::filesystem::u8path(currentMapDirectory);
+        for(std::filesystem::recursive_directory_iterator it(directory, error), end; it != end && !error; it.increment(error)) {
+            if(!it->is_regular_file(error)) continue;
+            const auto filename = strToLower(it->path().filename().u8string());
+            if(it->path().extension() != ".ini" && it->path().extension() != ".INI") continue;
+            if(filename.find(coopMaps ? "coop" : "scen") != 0) continue;
+            mapFilepaths.push_back(it->path().u8string());
+        }
+        std::sort(mapFilepaths.begin(), mapFilepaths.end(), [](const auto& a, const auto& b) { return strToLower(a) < strToLower(b); });
+        for(const auto& filepath : mapFilepaths) {
+            const auto path = std::filesystem::u8path(filepath);
+            std::string label = path.stem().u8string();
+            if(coopMaps) {
+                const auto parent = path.parent_path().filename().u8string();
+                for(int h = 0; h < NUM_HOUSES; ++h)
+                    if(parent == "faction" + std::to_string(h)) label = getHouseDisplayNameByNumber(static_cast<HOUSETYPE>(h)) + " / " + label;
+            }
+            mapList.addEntry(label);
+        }
+    } else if(!currentMapDirectory.empty()) for(const std::string& filename : getFileNamesList(currentMapDirectory, "ini", true, FileListOrder_Name_CaseInsensitive_Asc)) {
         mapFilepaths.push_back((std::filesystem::path(currentMapDirectory) / filename).string());
         mapList.addEntry(filename.substr(0, filename.length() - 4));
     }

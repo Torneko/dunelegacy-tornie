@@ -149,6 +149,21 @@ jobs:
         with:
           ref: ${{ inputs.source_ref || (inputs.windows_only && inputs.release_tag) || github.ref }}
 
+      - name: Audit revised and preserved campaigns
+        shell: pwsh
+        run: |
+          if (Test-Path config/TornieCampaign546.json) {
+            git fetch --depth=1 origin 89b1403f603a709a6883431adcfd91e317c859b7
+            python scripts/check-bundled-mods.py
+            if ($LASTEXITCODE -ne 0) { throw "Mod audit failed" }
+            python scripts/check-campaign-regions.py > campaign-regions.json
+            if ($LASTEXITCODE -ne 0) { throw "Campaign routes failed" }
+            python scripts/check-campaigns-r2.py
+            if ($LASTEXITCODE -ne 0) { throw "Campaign scope/distance audit failed" }
+            python scripts/rebuild-campaigns-546.py --check
+            if ($LASTEXITCODE -ne 0) { throw "Campaign recipes differ" }
+          }
+
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@v11
         with:
@@ -169,7 +184,7 @@ jobs:
           ctest --test-dir build -C Release --output-on-failure
           if ($LASTEXITCODE -ne 0) { throw "Engine/network CTest failed." }
           # Targeted replacements use the installed FR/EN regression checks below.
-          if ("${{ inputs.ui_only || inputs.followup_545 }}" -eq "true") { exit 0 }
+          if ((Test-Path config/TornieCampaign546.json) -or "${{ inputs.ui_only || inputs.followup_545 }}" -eq "true") { exit 0 }
           $env:DUNELEGACY_USER_DIR = Join-Path $env:RUNNER_TEMP "dunelegacy-smoke-profile"
           New-Item -ItemType Directory -Force -Path $env:DUNELEGACY_USER_DIR | Out-Null
           $env:DUNELEGACY_SMOKE_DIR = $env:DUNELEGACY_USER_DIR
@@ -198,7 +213,8 @@ jobs:
           $env:SDL_VIDEODRIVER = "dummy"
           $env:SDL_AUDIODRIVER = "dummy"
           $env:SDL_RENDER_DRIVER = "software"
-          $uiOnly = "${{ inputs.ui_only || inputs.followup_545 }}" -eq "true"
+          $release546 = Test-Path ../config/TornieCampaign546.json
+          $uiOnly = $release546 -or "${{ inputs.ui_only || inputs.followup_545 }}" -eq "true"
           foreach ($language in @("fr", "en")) {
             $env:DUNELEGACY_USER_DIR = Join-Path $env:RUNNER_TEMP "dunelegacy-installed-$language"
             New-Item -ItemType Directory -Force -Path $env:DUNELEGACY_USER_DIR | Out-Null
@@ -219,6 +235,9 @@ jobs:
               @(@("--verify-radar-research", "RADAR RESEARCH PASS:", 7), @("--verify-release545", "RELEASE 545 PRESENTATION PASS:", 7))
             } else {
               @(@("--verify-radar-research", "RADAR RESEARCH PASS:", 7), @("--verify-campaign-cinema", "CAMPAIGN CINEMA PASS:", 7))
+            }
+            if ($release546) {
+              $checks += @(@("--verify-release546", "RELEASE 546 R2 PASS:", 1), @("--verify-release546-frames", "RELEASE 546 FRAMES PASS:", 1))
             }
             foreach ($check in $checks) {
               $nextLog = Join-Path $env:RUNNER_TEMP "dunelegacy-installed-$language-$($check[0]).log"
@@ -272,6 +291,9 @@ jobs:
             ${{ runner.temp }}/dunelegacy-installed-*/*campaign*.tsv
             ${{ runner.temp }}/dunelegacy-installed-*/original-credits-*.png
             ${{ runner.temp }}/dunelegacy-installed-*/westwood-blue-original.png
+            ${{ runner.temp }}/dunelegacy-installed-*/*.csv
+            ${{ runner.temp }}/dunelegacy-installed-*/*.png
+            reports/campaign-scope-r2.json
 
       - name: Record Windows package provenance
         if: inputs.windows_only || github.ref == 'refs/heads/dunelegacy-tornie'
@@ -289,7 +311,7 @@ jobs:
             installedRuntimeChecks = @("fr", "en")
             release543Checks = @("building-sales", "normal-multiplayer-alliances", "flame-and-gas-units", "magenta-free-zooms", "house-colours-and-blue-stars", "neutral-saboteur-tier-seven", "editor-terrain-blue-stars", "original-flame-squad-portraits", "precise-close-flame-quad", "sales-destruction-and-concrete", "sale-button-after-upgrade", "easy-sales-75-percent", "extended-fallback-units", "movement-slowing", "saved-chaos-worm-offer", "elite-ornithopter", "seventy-achievements", "palace-napalm-and-saved-hazards", "harvester-area-guard-crush", "completed-upgrade-sales", "native-slowpost-editor-icon", "impact-only-and-random-palace-napalm", "ten-original-artwork-files", "scoutpost-slowpost-upgrade", "bicolour-vanilla-harvesters", "worfinery-displayed-labels")
             nextReleaseChecks = @("editor-native-quad-anchors", "editor-preupgraded-windtraps", "chaos-defence-upgrades", "saved-radar-research", "original-westwood-audio", "original-localized-credits", "campaign-role-cinematics")
-            networkProtocol = 22
+            networkProtocol = [int]((Select-String -LiteralPath "include/Network/NetworkManager.h" -Pattern '^#define NETWORK_PROTOCOL_VERSION\s+(\d+)').Matches[0].Groups[1].Value)
             saveVersion = 9839
             menuStartupChecks = @("fr", "en")
             videoOptionsChecks = @("fr", "en")
@@ -297,6 +319,11 @@ jobs:
             sha256 = (Get-FileHash $package.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
           }
           $report.validationScope = if ("${{ inputs.ui_only || inputs.followup_545 }}" -eq "true") { "ui-refinements" } else { "full" }
+          if (Test-Path config/TornieCampaign546.json) {
+            $report.validationScope = "release-546"
+            $report.release543Checks = @()
+            $report.nextReleaseChecks = @("release-545-regressions-fr-en", "radar-fr-en", "choam-editor-31-items-fr-en", "5265-editor-loads-fr-en", "252-solo-starts-fr-en", "224-coop-starts-fr-en", "76-late-coop-restores-fr-en", "persistent-support-and-four-opponents-fr-en", "28-frame-compositions-fr-en")
+          }
           if ("${{ inputs.ui_only || inputs.followup_545 }}" -eq "true") {
             $report.release543Checks = @()
             $report.nextReleaseChecks = @("faction-frame-background-blending", "mod-menu-colours", "radar-price-overlays-and-house-colours", "inclusive-right-score-frame-edge", "separate-trooper-production-selection-portraits")

@@ -347,7 +347,6 @@ void INIMapEditorLoader::loadMap() {
 void INIMapEditorLoader::loadHouses()
 {
     for(int houseID = 0; houseID < NUM_HOUSES; houseID++) {
-        if(!isCampaignHouseAvailable(static_cast<HOUSETYPE>(houseID))) continue;
         std::string houseName = getHouseNameByNumber((HOUSETYPE) houseID);
 
         if(inifile->hasSection(houseName)) {
@@ -366,10 +365,13 @@ void INIMapEditorLoader::loadHouses()
         }
     }
 
+    auto editorSlots=getFactionSelectionOrder();
+    for(int h=0;h<NUM_HOUSES;++h)
+        if(std::find(editorSlots.begin(),editorSlots.end(),h)==editorSlots.end())editorSlots.push_back(h);
     for(int i=1;i<=MAX_CUSTOM_GAME_PLAYERS;i++) {
         std::string sectionname = "player" + std::to_string(i);
         if(inifile->hasSection(sectionname)) {
-            for(const int houseID:getFactionSelectionOrder()) {
+            for(const int houseID:editorSlots) {
                 MapEditor::Player& player = pMapEditor->getPlayers()[houseID];
 
                 if(player.bActive == false) {
@@ -391,6 +393,28 @@ void INIMapEditorLoader::loadHouses()
                 }
             }
         }
+    }
+    const auto addWildlifeOwner = [&](const std::string& wildlife) {
+        if(getHouseID(wildlife) != HOUSE_INVALID) return;
+        for(auto& player : pMapEditor->players) {
+            if(player.bActive) continue;
+            player.name = wildlife;
+            player.bActive = true;
+            player.bAnyHouse = false;
+            player.brain = "CPU";
+            player.credits = 0;
+            housename2house[strToLower(wildlife)] = player.house;
+            break;
+        }
+    };
+    const auto wildlife = inifile->getStringValue("COOP_TEMPLATE", "WildlifeOwner", "");
+    if(strToLower(wildlife) == "coopwildlife") addWildlifeOwner(wildlife);
+    // Some original OPENSD2 maps use an undeclared Player1 for wild worms.
+    // Keep them visible/editable without assigning them to a human faction.
+    if(inifile->hasSection("UNITS")) for(const auto& key : inifile->getSection("UNITS")) {
+        std::string owner, unit, health, position, rotation, mode;
+        if(splitString(key.getStringValue(),owner,unit,health,position,rotation,mode)
+           && strToLower(unit)=="sandworm") addWildlifeOwner(owner);
     }
 }
 
@@ -439,7 +463,11 @@ void INIMapEditorLoader::loadUnits()
     for(const INIFile::Key& key : inifile->getSection("UNITS")) {
         if(key.getKeyName().find("ID") == 0) {
             int unitID = 0;
-            parseString(key.getKeyName().substr(2), unitID);
+            const auto usedID = [&](int id) { return std::any_of(pMapEditor->units.begin(),pMapEditor->units.end(),[&](const auto& unit){return unit.id==id;}); };
+            if(!parseString(key.getKeyName().substr(2), unitID) || usedID(unitID)) {
+                unitID=0;
+                while(usedID(unitID)) ++unitID;
+            }
 
             std::string HouseStr, UnitStr, health, PosStr, rotation, mode;
             splitString(key.getStringValue(), HouseStr, UnitStr, health, PosStr, rotation, mode);
@@ -556,7 +584,11 @@ void INIMapEditorLoader::loadStructures()
         } else if(tmpkey.compare(0,2,"ID") == 0) {
             // other structure
             int structureID = 0;
-            parseString(tmpkey.substr(2), structureID);
+            const auto usedID = [&](int id) { return std::any_of(pMapEditor->structures.begin(),pMapEditor->structures.end(),[&](const auto& structure){return structure.id==id;}); };
+            if(!parseString(tmpkey.substr(2), structureID) || usedID(structureID)) {
+                structureID=0;
+                while(usedID(structureID)) ++structureID;
+            }
 
             std::string HouseStr, BuildingStr, health, PosStr;
             splitString(tmp, HouseStr, BuildingStr, health, PosStr);

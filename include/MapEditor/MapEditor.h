@@ -166,6 +166,9 @@ public:
         return players;
     }
 
+    // Loaded campaign owners remain editable even outside this mod's roster.
+    std::vector<int> getPlayerSelectionOrder() const;
+
     void informPlayersChanged() { pInterface->onHouseChanges(); };
 
     void setMirrorMode(MirrorMode newMirrorMode);

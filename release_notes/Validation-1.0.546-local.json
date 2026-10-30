@@ -1,0 +1,143 @@
+{
+  "version": "1.0.546",
+  "revision": 2,
+  "status": "local-preview-unpublished",
+  "date": "2026-10-25",
+  "baseline": "89b1403f603a709a6883431adcfd91e317c859b7",
+  "networkProtocol": 24,
+  "saveFormat": 9839,
+  "platform": "Windows x64",
+  "compiler": "MinGW GCC 15.2, CMake/Ninja Release O1, static libgcc/libstdc++",
+  "ctest": {
+    "passed": true,
+    "testCases": 146,
+    "assertions": 11217,
+    "nativeUdpRelayTest": true
+  },
+  "campaignRecipes": {
+    "mods": 2,
+    "modifiedEditions": [
+      "Tornie",
+      "TornieLite"
+    ],
+    "campaigns": 18,
+    "soloScenarios": 396,
+    "deterministicRebuildCheck": true,
+    "preservedEditions": [
+      "Jericho",
+      "JerichoLite",
+      "ArcaKev",
+      "ArcaKevLite"
+    ],
+    "foreignCampaignFilesByteIdentical": 2320,
+    "opponentCounts": {
+      "2": 342,
+      "3": 36,
+      "4": 18
+    },
+    "persistentSupport": {
+      "Tornie/Harkonnen": "Ordos",
+      "Tornie/Atreides": "Fremen",
+      "Tornie/Ordos": "Sardaukar",
+      "Tornie/Fremen": "Mercenary",
+      "Tornie/Sardaukar": "Neutral",
+      "Tornie/Mercenary": "Rebels",
+      "Tornie/Neutral": "Corruptique",
+      "Tornie/Rebels": "Harkonnen",
+      "Tornie/Corruptique": "Kleshmersh",
+      "Tornie/Wildspade": "Tharpique",
+      "Tornie/Kleshmersh": "Wildspade",
+      "Tornie/Tharpique": "Atreides",
+      "TornieLite/Harkonnen": "Sardaukar",
+      "TornieLite/Atreides": "Mercenary",
+      "TornieLite/Ordos": "Harkonnen",
+      "TornieLite/Fremen": "Atreides",
+      "TornieLite/Sardaukar": "Ordos",
+      "TornieLite/Mercenary": "Fremen"
+    },
+    "stage2Clearance": {
+      "soloVariants": 54,
+      "cooperativeVariantsWithFourStarts": 54,
+      "minimumSolo": 10,
+      "minimumCooperative": 10
+    },
+    "cooperativeScenariosIncludingVanilla": 1386,
+    "tradeOpeningTemplates": 1,
+    "sourceTerrainAndHostAndEnemyPayloadPreservedByCoop": true
+  },
+  "native": {
+    "passed": true,
+    "editorMapLoads": 5265,
+    "uniqueEditorMapFiles": 2835,
+    "modContexts": 7,
+    "soloCampaignStarts": 252,
+    "revisedSoloScenariosSampled": [
+      1,
+      2,
+      3,
+      4,
+      8,
+      20,
+      21,
+      22
+    ],
+    "introAndLateSoloSaveReloads": 90,
+    "cooperativeStarts": 224,
+    "cooperativeStages": [
+      1,
+      2,
+      8,
+      9
+    ],
+    "cooperativeLateCheckpoints": 76,
+    "cooperativeAllies": [
+      2,
+      4
+    ],
+    "mirrorGuestSupportFactionPreserved": true,
+    "fourOpponentFinalesWithEightRuntimeParticipants": true,
+    "choamDialogs": 7,
+    "choamChecks": [
+      "31 units / 16 rows",
+      "scroll to last row",
+      "apply",
+      "undo / redo",
+      "map save / reload"
+    ],
+    "reinforcements": "Tornie: native ownership and 5/6/9/11/13-minute timers for every active opponent/ally; solo and late cooperative checkpoint persistence",
+    "rebels": "Tornie: no free yard/MCV; host and every active ally have a trade economy; MCV purchase charged after economic initialization",
+    "startingFunds": "Tornie openings: 1500 before maintenance, quota 2000. Other editions retain original campaign funds/objectives.",
+    "wildspade": "Native factory production gates checked in Tornie/Jericho/ArcaKev: Hightech/Carryall 4, Chemical 5 plus first upgrade, Ornithopter/IX 7",
+    "frameCompositions": 28,
+    "frames": "Atreides falcon / Ordos serpent, scores and regions, seven mods and bonus colours",
+    "standaloneRuntimeWithoutMsysPath": true,
+    "matrixVerifierBinarySha256": "9fdf6870d4a7827ed22336b901b907fce790aa640fa12715c180effd09c9bb2e",
+    "finalPreviewBinarySha256": "9fdf6870d4a7827ed22336b901b907fce790aa640fa12715c180effd09c9bb2e"
+  },
+  "vanillaArchivesUnchanged": {
+    "SCENARIO.PAK": "733d9aa48c1846bca6b3cb25b7951ca82b4929b066e3b0c3b8d60c1103e4f5fd",
+    "OPENSD2.PAK": "93263014823a39df85fee26d8eb8cfdfd3b4604d8b070974ad21de53dc2d6ac6",
+    "Extra.PAK": "af74247ac7708a693ef3131446f0c535140256189c1d599916993676d3a023b6"
+  },
+  "website": {
+    "languages": [
+      "fr",
+      "en"
+    ],
+    "previewVersion": "1.0.546",
+    "publishedDownloadVersionRetained": "1.0.545",
+    "javascriptSyntaxChecked": true
+  },
+  "limits": [
+    "No complete human campaign playthrough or balance sign-off.",
+    "No human co-op session on two physical PCs / Internet.",
+    "New mission recipes require starting a new campaign; an ongoing checkpoint retains its saved state."
+  ],
+  "evidence": {
+    "matrixLogSha256": "ec11a15e576b6cbbf505eaa03018828d7658efb298ef2c3346a2e474abbf28ff",
+    "frameLogSha256": "7aa6decc58d8c14fd0a55d15af1ec9208acd118de20b3b27d40f558aafd16220",
+    "ctestLogSha256": "56d1559cde1434d1eff2b734ed868b0473e0bce6763ca907b2503cfa6184825e",
+    "coopAuditSha256": "d8b43a5893d9bde983c8a9729f29cb66a673b03ea51a191c4cf12bbaea9b6c78",
+    "scopeAndDistanceAuditSha256": "60f5b7548be4f79ca35e3a83d689604716e26db3930b7e04222df97a4237fcaf"
+  }
+}

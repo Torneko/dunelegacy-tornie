@@ -1,5 +1,9 @@
 # Dune Legacy Tornie
 
+**1.0.546** : campagnes Tornie/Tornie Lite et coops révisées, soutien permanent, trois adversaires en 020–021 et quatre en 022 ; CHOAM, cadres et éditeur Vanilla corrigés. Protocole **24**, sauvegardes **9839**. [FR](release_notes/1.0.546-FR.md) · [EN](release_notes/1.0.546-EN.md).
+
+Reproduction : `scripts/prepare-546.py`, puis `scripts/rebuild-campaigns-546.py`, `scripts/build-coop-campaign.py --write` et `scripts/prepare-website-546.py`. Le générateur 546 utilise le commit de référence `89b1403f603a709a6883431adcfd91e317c859b7` et préserve les archives Vanilla. Ne pas appliquer les anciens scripts d’intros par-dessus ces recettes. Compilation CMake avec tests, CTest, puis `scripts/check-windows-546.ps1` pour les contrôles natifs dans un profil isolé.
+
 **[1.0.545 — Windows / Linux / Mint](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.545)** : recherches radar, plans Chaos, éditeur, cinématiques originales, douze cadres dorés, portraits Fremen/Sardaukar et **73 succès**. Tous les participants réseau : protocole **22** ; nouvelles sauvegardes **9839**, anciennes lisibles. [Notes FR](release_notes/1.0.545-FR.md) · [Notes EN](release_notes/1.0.545-EN.md) · [Validation](release_notes/Validation-1.0.545.json).
 
 Source de la 1.0.545 corrigée : `e8cf3e3cbc21be1b77dc05efc80d9f003b6bc469`. Le code, les rapports et le site sont réunis sur l’unique branche `dunelegacy-tornie`. Les remplacements de release autorisés conservent la source précédente sous un tag d’archive. Le site FR/EN se trouve dans [website/](website/) et se déploie automatiquement depuis cette branche. Les anciens états sont conservés par des tags d’archive. [Organisation du dépôt](docs/SINGLE-BRANCH.md) · [Recherches radar](docs/RADAR-RESEARCH-NEXT-RELEASE.md) · [Graphismes et succès](docs/RELEASE-1.0.545.md) · [Reçus de publication](release_notes/Publication-Receipt-1.0.545.json).

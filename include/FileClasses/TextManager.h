@@ -92,6 +92,8 @@ private:
         std::string templateLetter;
         std::array<std::string, 3> opponents;
         int openingQuota = 0;
+        int revision = 0;
+        std::array<std::array<std::string,4>,9> stageOpponents{};
     };
     std::map<int, CampaignTextPlan> campaignTextPlans;
     /**
