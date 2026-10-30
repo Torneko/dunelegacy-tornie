@@ -56,13 +56,21 @@ for lang,index,app,note,summary in [
     s=re.sub(r'<section class="notice network539">.*?</section>',lambda m:m[0].replace('1.0.545','1.0.546').replace('protocole 22','protocole 24').replace('protocol 22','protocol 24'),s)
     for old,new in [('Windows · 1.0.545','Windows · 1.0.546'),('Windows x64 · 1.0.545','Windows x64 · 1.0.546'),('Linux AppImage · 1.0.545','Linux AppImage · 1.0.546'),('Linux AppImage 1.0.545','Linux AppImage 1.0.546'),('Windows / Linux release 1.0.545','Windows / Linux release 1.0.546'),('Version Windows / Linux 1.0.545','Version Windows / Linux 1.0.546'),('version actuelle 1.0.545 utilise le protocole 22','version actuelle 1.0.546 utilise le protocole 24'),('current 1.0.545 uses protocol 22','current 1.0.546 uses protocol 24'),('DuneLegacyTornie-1.0.545-Windows-x64.zip','DuneLegacyTornie-1.0.546-Windows-x64.zip'),('Release 1.0.545 · Linux','Release 1.0.546 · Linux'),('Version 1.0.545 · Linux','Version 1.0.546 · Linux')]:s=s.replace(old,new)
     s=s.replace('Windows ou Linux 1.0.545, le protocole 22','Windows ou Linux 1.0.546, le protocole 24').replace('Windows or Linux 1.0.545, protocol 22','Windows or Linux 1.0.546, protocol 24')
+    # Historical feature sections also contain current installation advice.
+    # Keep their historical headings while pointing that advice at this release.
+    for old,new in [('Retélécharger sur tous les postes : protocole 22','Avec la 1.0.546 : protocole 24'),
+                    ('Download this replacement on every computer: protocol 22','For 1.0.546, use protocol 24'),
+                    ('Download again on every computer: protocol 22','For 1.0.546, use protocol 24'),
+                    ('Retélécharger les paquets 1.0.545','Utiliser les paquets 1.0.546'),
+                    ('Download the 1.0.545 packages again','Use the 1.0.546 packages')]:
+        s=s.replace(old,new)
     p.write_text(s,encoding='utf-8',newline='\n')
     other='changes-546-en.html' if lang=='FR' else 'changes-546.html'
     page=f'<!doctype html><html lang="{lang.lower()}"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dune Legacy Tornie 1.0.546</title><link rel="stylesheet" href="assets/style.css"><body><main class="prose" style="max-width:900px;margin:2rem auto;padding:1.5rem"><nav><a href="{index}">Guide</a> · <a href="{other}">{"English" if lang=="FR" else "Français"}</a></nav><h1>Dune Legacy Tornie 1.0.546</h1><p>{summary}</p><p><a href="documents/{note}">{label}</a></p><pre style="white-space:pre-wrap;font:inherit">{html.escape(source.read_text(encoding="utf-8"))}</pre></main></body></html>\n'
     (site/('changes-546.html' if lang=='FR' else 'changes-546-en.html')).write_text(page,encoding='utf-8')
 
 readme=ROOT/'README.md';s=readme.read_text(encoding='utf-8')
-s=re.sub(r'^\*\*1\.0\.546.*$', '**1.0.546** : campagnes Tornie/Tornie Lite et coops révisées, soutien permanent, trois adversaires en 020–021 et quatre en 022 ; CHOAM, cadres et éditeur Vanilla corrigés. Protocole **24**, sauvegardes **9839**. [FR](release_notes/1.0.546-FR.md) · [EN](release_notes/1.0.546-EN.md).',s,flags=re.M)
+s=re.sub(r'^\*\*(?:\[)?1\.0\.546.*$', '**[1.0.546 — Windows / Linux / Mint](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.546)** : campagnes Tornie/Tornie Lite et coops révisées, soutien permanent, trois adversaires en 020–021 et quatre en 022 ; CHOAM, cadres et éditeur Vanilla corrigés. Protocole **24**, sauvegardes **9839**. [FR](release_notes/1.0.546-FR.md) · [EN](release_notes/1.0.546-EN.md).',s,flags=re.M)
 readme.write_text(s,encoding='utf-8')
 (ROOT/'release_notes/RELEASE_NOTES.md').write_text((ROOT/'release_notes/1.0.546-FR.md').read_text(encoding='utf-8')+'\n---\n\n'+(ROOT/'release_notes/1.0.546-EN.md').read_text(encoding='utf-8'),encoding='utf-8')
 validation=json.loads((ROOT/'release_notes/Validation-1.0.546-local.json').read_text(encoding='utf-8'))

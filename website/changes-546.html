@@ -24,7 +24,7 @@ Les campagnes, briefings et cartes coop **Jericho, Jericho Lite, ArcaKev et Arca
 
 ## Installation et compatibilité
 
-Extraire entièrement le paquet Windows dans un nouveau dossier. Pour le paquet portable, lancer `Lancer-1.0.546.cmd` ; ses préférences et sauvegardes sont dans `profile/`. Le guide français/anglais s’ouvre avec `Ouvrir-le-guide.cmd`.
+Extraire entièrement le paquet Windows dans un nouveau dossier, puis lancer `dunelegacy.exe` à la racine. Le guide français/anglais est disponible sur le site et dans `DuneLegacyTornie-Site-Local-1.0.546.zip` ; dans cette archive, ouvrir `dist/index.html`.
 
 Commencer une **nouvelle campagne** pour jouer les missions révisées. Une sauvegarde en cours conserve l’état de sa mission.
 

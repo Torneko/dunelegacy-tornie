@@ -1,6 +1,6 @@
-# Sortie 1.0.546 — vérification avant publication
+# Sortie 1.0.546
 
-Campagnes Tornie/Tornie Lite seulement ; autres auteurs préservés. Guide FR/EN aligné sur le protocole 24 et le soutien permanent. Les CI vérifient les paquets Windows et Linux/Mint avant leur publication. Le commit source utilise `[hold-pages]` pour conserver le site public 545 pendant cette vérification ; le commit final des reçus déploie le site 546. Notes : `website/documents/Notes-1.0.546.md` et `Notes-1.0.546-EN.md`.
+Campagnes Tornie/Tornie Lite seulement ; autres auteurs préservés. Source du jeu et tag : `b951fb4e4217e5f0c570fc2e5ed88d186e925e3c`. Protocole 24, sauvegardes 9839. Les CI [Windows](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41074659306) et [Linux/Mint](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41074658570) passent, avec les parcours installés FR/EN. L’audit vérifie 5 623 fichiers de mods, 20 images et 205 fichiers Vanilla dans les paquets. La publication complète est assemblée en brouillon avant l’activation de la release et le déploiement explicite de Pages. Notes : `website/documents/Notes-1.0.546.md` et `Notes-1.0.546-EN.md`. Rapports : `release_notes/Validation-1.0.546.json` et `Package-Resources-Audit-1.0.546.json`.
 
 # Correctifs 1.0.545 — soins, compteurs et introduction
 

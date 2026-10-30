@@ -24,7 +24,7 @@ This version fixes editor CHOAM and the Atreides/Ordos frames, exposes Vanilla c
 
 ## Installation and compatibility
 
-Fully extract the Windows package into a new folder. For the portable package, run `Lancer-1.0.546.cmd`; preferences and saves use `profile/`. Open the bilingual guide with `Ouvrir-le-guide.cmd`.
+Fully extract the Windows package into a new folder, then run `dunelegacy.exe` in its root. The bilingual guide is available online and in `DuneLegacyTornie-Site-Local-1.0.546.zip`; open `dist/index.html` inside that archive.
 
 Start a **new campaign** to use revised missions. Existing checkpoints retain their saved mission state.
 
