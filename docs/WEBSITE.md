@@ -2,6 +2,8 @@
 
 ## Guides actualisés — 30 octobre 2026
 
+Mise en ligne vérifiée depuis `a8d415aa8d2cb52dcef6ac1cd294c2871399ffbc` : [Pages](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41161165369), 148 parcours publics réussis et 12 guides/notes récupérés identiques au dépôt. Le [ZIP des guides FR/EN](https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/DuneLegacyTornie-1.0.546-Guides-FR-EN.zip) fait 347 782 octets ; l’archive hors ligne contient les 387 fichiers du site et 15 fichiers embarqués contrôlés. Les 19 fichiers publics correspondent au manifeste SHA-256. [Reçu documentaire](../release_notes/Documentation-Update-1.0.546.json).
+
 Guides de démarrage FR/EN, coop/archonte, campagnes et succès alignés sur 1.0.546 / protocole 24 / sauvegardes 9839 / 73 succès. Les 95 anciennes notes portent un bandeau historique et renvoient vers le suivi actuel. Les tableaux de soutien suivent `config/TornieCampaign546.json`. Les essais humains et l’avis des auteurs restent explicitement ouverts. La mise à jour des documents est livrée sur Pages, dans l’archive hors ligne et dans un petit ZIP des guides ; les paquets de jeu et la source du tag publié restent ceux des CI validées.
 
 ## Publication initiale — historique
