@@ -1,5 +1,11 @@
 # Sortie 1.0.546
 
+## Liens DuneCity — 31 octobre 2026
+
+Le site FR/EN affiche désormais, sous la base de référence, un lien vers le [site officiel de DuneCity](https://www.dunelegacy.com/) et sa [présentation du mod Tornie](https://www.dunelegacy.com/tornie.html), qui cite ce guide. Les liens sont aussi accessibles dans le menu mobile. Source du site : `c4f4e2444d8992d53b102012e37c49e473e4101c` ; [déploiement Pages réussi](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41254412097).
+
+Vérifications : 36 parcours généraux et quatre contrôles ciblés FR/EN ordinateur/mobile, en local puis sur le site public ; les trois fichiers modifiés en ligne correspondent exactement au commit. L’archive hors ligne de 871 633 215 octets contient les 387 fichiers du site et 15 fichiers embarqués contrôlés, sans doublon et avec CRC valide. Le manifeste public est actualisé ; les paquets de jeu restent identiques. [Reçu de cette mise à jour](../release_notes/Website-Links-1.0.546.json).
+
 ## Guides actualisés — 30 octobre 2026
 
 Mise en ligne vérifiée depuis `a8d415aa8d2cb52dcef6ac1cd294c2871399ffbc` : [Pages](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41161165369), 148 parcours publics réussis et 12 guides/notes récupérés identiques au dépôt. Le [ZIP des guides FR/EN](https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.546/DuneLegacyTornie-1.0.546-Guides-FR-EN.zip) fait 347 782 octets ; l’archive hors ligne contient les 387 fichiers du site et 15 fichiers embarqués contrôlés. Les 19 fichiers publics correspondent au manifeste SHA-256. [Reçu documentaire](../release_notes/Documentation-Update-1.0.546.json).

@@ -1,0 +1,139 @@
+{
+  "version": "1.0.546",
+  "date": "2026-10-31",
+  "websiteSource": "c4f4e2444d8992d53b102012e37c49e473e4101c",
+  "websiteRevision": "546-links-20261031",
+  "scope": "DuneCity reference links in the French and English sidebar and mobile menu",
+  "officialWebsite": "https://www.dunelegacy.com/",
+  "tornieFeature": "https://www.dunelegacy.com/tornie.html",
+  "githubPages": {
+    "conclusion": "success",
+    "databaseId": 41254412097,
+    "headSha": "c4f4e2444d8992d53b102012e37c49e473e4101c",
+    "status": "completed",
+    "url": "https://github.com/Torneko/dunelegacy-tornie/actions/runs/41254412097"
+  },
+  "browserChecks": {
+    "local": 40,
+    "public": 40,
+    "passed": true
+  },
+  "publicFilesByteIdentical": [
+    "index.html",
+    "index-en.html",
+    "assets/style.css"
+  ],
+  "offline": {
+    "bytes": 871633215,
+    "sha256": "a464ce25205ba514784812317a4902e0cde84fcab913fedfe5d35fb3e250e844",
+    "websiteFilesByteIdentical": 387,
+    "embeddedFilesVerified": 15,
+    "crc": true
+  },
+  "publicRelease": {
+    "url": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.546",
+    "assets": 19,
+    "manifestEntries": 18,
+    "allServerDigestsMatch": true,
+    "manifestAndValidationPublicDownloadsMatch": true
+  },
+  "updatedAssets": [
+    {
+      "name": "DuneLegacyTornie-Site-Local-1.0.546.zip",
+      "bytes": 871633215,
+      "sha256": "a464ce25205ba514784812317a4902e0cde84fcab913fedfe5d35fb3e250e844"
+    },
+    {
+      "name": "Publication-Validation-1.0.546.json",
+      "bytes": 2778,
+      "sha256": "81f7f630f12ff6f300c98199903f42aed9acad568196d345a1be8a9c48feb83c"
+    },
+    {
+      "name": "Website-Validation-1.0.546.json",
+      "bytes": 20498,
+      "sha256": "ecf5b993fc9277c16e7c158704f88f7dfddabb3c098a74b57f5b5c952e6ad026"
+    },
+    {
+      "name": "SHA256SUMS-1.0.546.txt",
+      "bytes": 1842,
+      "sha256": "59486d9de9f65b5701ab3a25d1b67417deaa73b7d392dce0de11239290511cd2"
+    }
+  ],
+  "preservedAssets": [
+    {
+      "name": "Documentation-Update-1.0.546.json",
+      "bytes": 2752,
+      "sha256": "5dd89c52619d1894243f6d9b2ba16e7fdb819b86c4d16c8e715cdb771670f558"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.546-Guides-FR-EN.zip",
+      "bytes": 347782,
+      "sha256": "c39cccbf0649148f3ff496d6e087dcd47bb5a843eab1af9734e9440922ef6b9b"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.546-Linux-Mint-Compatible.AppImage",
+      "bytes": 52607480,
+      "sha256": "96af734e20a5d4a68f36b5fa29512eeb69c665f4b87b70f4bd12b2821f136cfe"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.546-Linux-x64.deb",
+      "bytes": 67034330,
+      "sha256": "d2c3cbf92b431fbb4714e446353380a1a6823cd8532be5c021860539d3379c9c"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.546-Linux-x64.rpm",
+      "bytes": 67124692,
+      "sha256": "05d9c29cf3db327f82cbbde19591e4452ddd3fec1682929267bc06e926ef869a"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.546-Linux-x64.tar.gz",
+      "bytes": 67715478,
+      "sha256": "5b6b2f1ea9464a1d0548231815d4c37eb67787663df553bac036258a4cf9d5ef"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.546-Linux-x86_64.AppImage",
+      "bytes": 52607480,
+      "sha256": "9465b58e36b6ea49d778c996356379832618b2d134247d5b4a1c37339518e018"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.546-Sources.zip",
+      "bytes": 285068242,
+      "sha256": "a78d797b284a95906792243b1e7755ced5b31ac9c5e9b623e9717657de0541fa"
+    },
+    {
+      "name": "DuneLegacyTornie-1.0.546-Windows-x64.zip",
+      "bytes": 80133644,
+      "sha256": "498f2d56dbe17aa45bfc6bc45cf0d40571b1eb7375a49f1c9d30033ed15c5632"
+    },
+    {
+      "name": "Linux-Build-1.0.546.json",
+      "bytes": 1281,
+      "sha256": "0679869b805e0dcb9bd1643d4100da2940f6d03362ba1b9a2dec6e93775a842c"
+    },
+    {
+      "name": "Package-Resources-Audit-1.0.546.json",
+      "bytes": 780,
+      "sha256": "81004c37bcee56d81608c1b675cf3d6f0c13bc394aa9f9a6af94ce8fd5799278"
+    },
+    {
+      "name": "Release-Notes-1.0.546-EN.md",
+      "bytes": 3240,
+      "sha256": "ee891b02071f292370cc4a825e6e90e1c7b256c702e8cadba5169709cdc2e3b7"
+    },
+    {
+      "name": "Release-Notes-1.0.546-FR.md",
+      "bytes": 3816,
+      "sha256": "4edea24b689553481115b998998d66adb19fc4879d993394d3a7254e16323ccc"
+    },
+    {
+      "name": "Validation-1.0.546.json",
+      "bytes": 11228,
+      "sha256": "1f3b04eed7d71e7982335e6c7bfbdd4950cccdfb76b34c76fd9288f01ab2d72d"
+    },
+    {
+      "name": "Windows-Build-1.0.546.json",
+      "bytes": 968,
+      "sha256": "6d2ac527cbe5014f045447f0b7594d8de9d08fc03c32ad24b186c62a1dc7e1f2"
+    }
+  ]
+}
