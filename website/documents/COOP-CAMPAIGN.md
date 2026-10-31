@@ -1,10 +1,10 @@
-# Campagne coop et archonte — 1.0.541
+# Campagne coop et archonte — 1.0.546
 
 [English guide](COOP-CAMPAIGN-EN.md)
 
-Tous les participants doivent installer **1.0.541 / protocole 13**, activer le même mod et utiliser des noms différents. La connexion LAN ou Internet utilise le relais par l’hôte lorsque les invités ne peuvent pas communiquer directement, sans VPN. L’hôte doit rester joignable et connecté.
+Tous les participants doivent installer **1.0.546 / protocole 24**, activer le même mod et utiliser des noms différents. La connexion LAN ou Internet utilise le relais par l’hôte lorsque les invités ne peuvent pas communiquer directement, sans VPN. L’hôte doit rester joignable et connecté.
 
-À chaque nouveau départ de mission, toutes les factions alliées actives reçoivent **le même capital initial que l’hôte**, même si leur champ de crédits est nul ou absent. Le mode facile ajoute ensuite 500 crédits par faction, une seule fois. Un chargement de sauvegarde conserve les soldes enregistrés. Cette correction remplace la 1.0.541 : tous les participants doivent la retélécharger (protocole 13).
+À chaque nouveau départ de mission, toutes les factions alliées actives reçoivent **le même capital initial que l’hôte**, même si leur champ de crédits est nul ou absent. Le mode facile ajoute ensuite 500 crédits par faction, une seule fois. Un chargement de sauvegarde conserve les soldes enregistrés. Les anciennes versions en protocole 13, 22 ou 23 ne peuvent pas rejoindre cette version.
 
 ## Joueurs et factions
 
@@ -28,6 +28,19 @@ Cocher **Archonte** lors de la création permet jusqu’à **huit joueurs**. Dan
 
 Les 63 campagnes sources fournissent 1 386 cartes coop. La progression suit neuf étapes de la campagne de la faction choisie par l’hôte au départ ; cette source reste fixée dans la session.
 
+## Campagnes Tornie et Tornie Lite en 1.0.546
+
+La refonte concerne **Tornie et Tornie Lite uniquement** : 18 campagnes et 396 scénarios solo avec leurs adaptations coop. Les campagnes, briefings et coops de **Jericho, Jericho Lite, ArcaKev et ArcaKev Lite** conservent la référence 1.0.545, en attendant l’avis de leurs auteurs. Les archives Vanilla sont conservées.
+
+- Missions 001–019 : deux adversaires ; 020–021 : trois ; finale 022 : quatre. Les adversaires supplémentaires ont leurs bâtiments, forces et renforts.
+- Chaque campagne conserve un **soutien permanent**, même lorsque l’ennemi principal change. Les soutiens varient entre campagnes : Rebels garde Harkonnen. Le tableau complet est dans [Campagnes](CAMPAIGNS.md).
+- En 002–004, les bâtiments du soutien restent à au moins **dix cases** de l’emprise des bâtiments alliés et des MCV de départ, y compris avec quatre factions alliées.
+- Intros : deux petites bases ennemies, **1 500 crédits** par faction alliée active avant entretien et quota de **2 000 crédits raffinés par faction alliée active**. Les contrôleurs archontes ne multiplient pas le quota.
+- Intro Rebels de Tornie : chaque allié reçoit un **port stellaire et une petite économie**, sans chantier ni MCV gratuit. Acheter le MCV au CHOAM.
+- Intro Wildspade de Tornie : Carryall et Ornithoptère prêtés, avec menace antiaérienne. Dans tous les mods proposant Wildspade, usine high-tech/Carryall au niveau 4, Carryall chimique au niveau 5 après la première amélioration ; Ornithoptères et IX au niveau 7.
+
+Commencer une **nouvelle campagne** pour jouer ces recettes. Les checkpoints existants conservent leur carte et leur état enregistrés.
+
 ## Créer et jouer
 
 1. Ouvrir **Campagne coop**, puis LAN ou Internet, et créer une nouvelle campagne. Choisir le mode archonte si souhaité.
@@ -35,9 +48,9 @@ Les 63 campagnes sources fournissent 1 386 cartes coop. La progression suit neuf
 3. Lancer après la synchronisation des versions, règles et ressources de tous les invités.
 4. Après chaque mission, tous les humains connectés confirment être prêts avant la transition commune. Une déconnexion n’avance pas la campagne.
 
-Le premier joueur conserve les forces d’origine. Chaque autre faction alliée active reçoit les forces et crédits adaptés à sa faction, un MCV déployable proche du chantier et, dans les intros concernées, un WOR. Les renforts du premier joueur sont reproduits pour chaque allié actif avec une unité compatible. Les objectifs de récolte additionnent l’épice des factions alliées et multiplient le quota solo par leur nombre ; plusieurs contrôleurs d’une même faction ne multiplient pas son quota.
+Le premier joueur conserve les forces du scénario. Dans les départs ordinaires, chaque autre faction alliée active reçoit les forces et crédits adaptés à sa faction, un MCV déployable proche du chantier et, dans les intros concernées, un WOR. L’intro Rebels de Tornie suit le départ commercial décrit ci-dessus. Les renforts du premier joueur sont reproduits pour chaque allié actif avec une unité compatible. Les objectifs de récolte additionnent l’épice des factions alliées et multiplient le quota solo par leur nombre ; plusieurs contrôleurs d’une même faction ne multiplient pas son quota.
 
-Les adversaires conservent leurs forces et rôles. Une faction ennemie en conflit avec un allié est remplacée ; dans les éditions Lite, plusieurs adversaires peuvent partager une faction lorsque quatre alliés occupent le catalogue, mais leur propriété reste distincte.
+Dans les nouvelles campagnes Tornie/Tornie Lite, les adversaires gardent leur identité même si un invité choisit la même maison : propriétaires et équipes restent distincts. Dans les campagnes Vanilla, Jericho/ArcaKev et leurs éditions Lite, la règle historique remplace une faction ennemie en conflit avec un allié ; plusieurs adversaires peuvent partager une faction lorsque le catalogue Lite est occupé, avec des propriétaires distincts.
 
 ## Variantes et difficulté
 
@@ -60,12 +73,18 @@ Le tirage est commun aux participants, stocké dans la progression et conservé 
 
 La progression reste indépendante du solo : `coop/<session>.ini` et checkpoint `coop/<session>.dls`, à côté de `Dune Legacy.ini`. Conserver les deux fichiers. Une reprise utilise le mod de la session et le checkpoint existant ; les noms des contrôleurs peuvent être réattribués, avec les effectifs par faction conservés pour une partie déjà commencée.
 
-**Charger une sauvegarde**, dans le lobby hôte, propose les sauvegardes manuelles `mpsave/*.dls` et automatiques `coop/*.dls`. Un chargement compatible rouvre le lobby sur la mission enregistrée ; tous les invités le rejoignent à nouveau. Annuler conserve le lobby. Les nouveaux fichiers utilisent le format **9833** ; les anciens restent lisibles avec leur carte et leurs règles enregistrées.
+**Charger une sauvegarde**, dans le lobby hôte, propose les sauvegardes manuelles `mpsave/*.dls` et automatiques `coop/*.dls`. Un chargement compatible rouvre le lobby sur la mission enregistrée ; tous les invités le rejoignent à nouveau. Annuler conserve le lobby. Les nouveaux fichiers utilisent le format **9839** ; les anciens restent lisibles avec leur carte et leurs règles enregistrées. Les reprises des nouvelles campagnes Tornie conservent les emplacements des troisième et quatrième adversaires.
 
-Le haut fait **Ensemble sur Arrakis / COOP_CONQUEROR** récompense la fin de la campagne commune, avec un humain ou une IA ; le mode facile est accepté. Il ne complète aucune campagne solo. Le catalogue conserve 67 hauts faits et les profils restent locaux.
+Le haut fait **Ensemble sur Arrakis / COOP_CONQUEROR** récompense la fin de la campagne commune, avec un humain ou une IA ; le mode facile est accepté. Il ne complète aucune campagne solo. Le catalogue compte **73 hauts faits** et les profils restent locaux. Les succès de sauvetage coop suivent l’élimination et la victoire des factions alliées ; les contrôleurs archontes partagent l’état de leur maison.
+
+## Ouvrir les cartes dans l’éditeur
+
+Dans la fenêtre d’ouverture, choisir **Campagne – nom du mod**, **Campagne COOP – nom du mod**, **Campagne – Vanilla** ou **Campagne COOP – Vanilla**. La liste Vanilla propose 198 scénarios solo ; les sources coop incluent aussi neuf anciennes cartes communes par édition. Enregistrer une copie personnelle pour travailler sur une carte. Les propriétaires chargés restent sélectionnables, même dans une édition Lite. Le CHOAM de l’éditeur affiche ses 31 unités dans une liste défilante.
 
 ## Validation et maintenance
 
 Les tests automatisés couvrent les sept modes, les étapes 1–9, les alliés fermés ou actifs, le déploiement des MCV 3/4, les huit contrôleurs dans une faction, les crédits faciles, les forces +5/+10/+15, les sauvegardes et les affectations du lobby. Le transport UDP à huit filtre les communications directes entre invités et vérifie le relais, le démarrage et les commandes de tous les participants. Une partie humaine sur plusieurs connexions Internet reste à confirmer ; la confirmation historique de Tornie sur deux PC concerne 1.0.538.
 
-Templates : `data/coop/faction<id>/` pour Vanilla, `mods/<mod>/campaign/coop/faction<id>/` pour les mods, avec suffixes `-v1` et `-v2`. `scripts/build-coop-campaign.py --check` contrôle les 1 386 variantes, les 63 anciennes cartes racines et les empreintes des 2 342 fichiers solo protégés. Les sections auxiliaires des alliés 3/4 sont matérialisées seulement lorsqu’ils sont actifs ; le contexte `[COOP]` synchronise la carte, les contrôleurs et le tirage.
+Pour la 1.0.546, les contrôles natifs Windows et Linux/Mint en FR/EN couvrent 252 démarrages solo, 224 départs coop et 76 reprises coop avancées par langue. Une campagne complète jouée par une personne, son équilibrage et une partie humaine Internet sur plusieurs connexions restent à confirmer. Voir [Suivi de la version](SUIVI-1.0.546-FR.md).
+
+Templates : `data/coop/faction<id>/` pour Vanilla, `mods/<mod>/campaign/coop/faction<id>/` pour les mods, avec suffixes `-v1` et `-v2`. `scripts/build-coop-campaign.py --check` contrôle les 1 386 variantes et les 63 anciennes cartes racines. `scripts/check-campaigns-r2.py` vérifie le soutien, les distances et les 2 320 fichiers de campagnes/briefings/coops des autres auteurs identiques à la référence. Les sections auxiliaires des alliés 3/4 sont matérialisées seulement lorsqu’ils sont actifs ; le contexte `[COOP]` synchronise la carte, les contrôleurs et le tirage.

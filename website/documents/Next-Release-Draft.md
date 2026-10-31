@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historique — 544 preparation
+
+**Statut revu pour la 1.0.546 (30 octobre 2026).** Graphismes, récolte, vente et napalm ont été livrés dans la 544. Les phrases de préparation, dates et numéros de protocole/sauvegarde ci-dessous sont conservés pour la traçabilité. Voir le [suivi actuel](SUIVI-1.0.546-FR.md) pour les essais humains et avis des auteurs encore attendus.
+
+---
+
 # Brouillon archivé — devenu 1.0.544 / Archived draft
 
 Les portraits originaux ont été reçus et la publication 1.0.544 est autorisée. Les mentions d’attente ci-dessous décrivent les étapes préparatoires précédentes ; voir [la spécification finale](RELEASE-1.0.544.md). / Original portraits are now received and publication is authorized; the earlier pending notes below are historical.

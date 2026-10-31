@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historique — version 1.0.537
+
+**Statut revu pour la 1.0.546 (30 octobre 2026).** Ce document décrit une version antérieure. Les fonctions déjà livrées sont conservées dans la version courante ; les états de préparation sont historiques. Les phrases de préparation, dates et numéros de protocole/sauvegarde ci-dessous sont conservés pour la traçabilité. Voir le [suivi actuel](SUIVI-1.0.546-FR.md) pour les essais humains et avis des auteurs encore attendus.
+
+---
+
 # Dune Legacy Tornie 1.0.537
 
 - Depuis le lobby de l’hôte, **Charger une sauvegarde** ouvre deux onglets : **Manuelles** (`mpsave/`, fichiers `.dls`) et **Automatiques** (`coop/`, checkpoints `.dls`). La sauvegarde doit appartenir à une campagne coop du mod actif. Le chargement ferme l’ancien lobby et en ouvre un sur la mission enregistrée ; l’invité doit le rejoindre à nouveau. Annuler ou choisir un fichier incompatible conserve le lobby actuel. La reprise automatique par le fichier de progression `.ini` reste disponible.

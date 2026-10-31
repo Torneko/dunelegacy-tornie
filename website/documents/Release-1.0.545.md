@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historique — version 1.0.545
+
+**Statut revu pour la 1.0.546 (30 octobre 2026).** Ce document décrit une version antérieure. Les fonctions déjà livrées sont conservées dans la version courante ; les états de préparation sont historiques. Les phrases de préparation, dates et numéros de protocole/sauvegarde ci-dessous sont conservés pour la traçabilité. Voir le [suivi actuel](SUIVI-1.0.546-FR.md) pour les essais humains et avis des auteurs encore attendus.
+
+---
+
 # Correctifs 1.0.545 — soins, compteurs et introduction
 
 Source : `e8cf3e3cbc21be1b77dc05efc80d9f003b6bc469`. Source précédente : `ba4c6255a8e96e7c88c348a77e464b17514c9867`, conservée sous

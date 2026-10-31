@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historique — version 1.0.539
+
+**Statut revu pour la 1.0.546 (30 octobre 2026).** Ce document décrit une version antérieure. Les fonctions déjà livrées sont conservées dans la version courante ; les états de préparation sont historiques. Les phrases de préparation, dates et numéros de protocole/sauvegarde ci-dessous sont conservés pour la traçabilité. Voir le [suivi actuel](SUIVI-1.0.546-FR.md) pour les essais humains et avis des auteurs encore attendus.
+
+---
+
 # Dune Legacy Tornie 1.0.539 — multijoueur Internet
 
 Publication Linux, protocole réseau **10**. Tous les participants doivent utiliser **1.0.539** et le même mod. Les exécutables 1.0.538/protocole 9 sont incompatibles en réseau. Le format de sauvegarde reste **9831** et les règles déterministes du jeu sont conservées.

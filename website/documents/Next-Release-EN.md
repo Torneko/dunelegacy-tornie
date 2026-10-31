@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historical — 545 preparation
+
+**Status reviewed for 1.0.546 (30 October 2026).** The listed radar, movie, portrait/frame and achievement features were delivered in 545 and retained in 546. Original preparation statements, dates and protocol/save numbers below are retained for traceability. See [current follow-up](SUIVI-1.0.546-EN.md) for outstanding human checks and author feedback.
+
+---
+
 # 1.0.545 — preparation from corrected 1.0.544
 
 **Unpublished; 20 October additions are being validated.** Public

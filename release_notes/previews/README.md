@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historique — aperçu Windtrap 542
+
+**Statut revu pour la 1.0.546 (30 octobre 2026).** L’amélioration verte/double puissance Rebels a été livrée. Cet aperçu est une référence graphique historique. Les phrases de préparation, dates et numéros de protocole/sauvegarde ci-dessous sont conservés pour la traçabilité. Voir le [suivi actuel](../../docs/SUIVI-1.0.546-FR.md) pour les essais humains et avis des auteurs encore attendus.
+
+---
+
 # Aperçu 1.0.542 — Windtrap Rebels, brouillon
 
 ![Cycle bleu actuel à gauche ; cycle vert amélioré à droite](Rebels-Windtrap-Bleu-Vert-1.0.542.gif)

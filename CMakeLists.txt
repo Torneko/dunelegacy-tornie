@@ -195,10 +195,11 @@ endif()
 # Install documentation
 install(FILES docs/ACHIEVEMENTS.md docs/CHAOS-MODE.md docs/CAMPAIGNS.md docs/WILDSPADE-MENTAT.md docs/KLESHMERSH-MENTAT.md
               docs/COOP-CAMPAIGN.md docs/COOP-CAMPAIGN-EN.md
+              docs/SUIVI-1.0.546-FR.md docs/SUIVI-1.0.546-EN.md
         DESTINATION ${DUNELEGACY_DOC_DIR}/docs)
 if(WIN32)
     # Windows: install docs to root
-    install(FILES AUTHORS COPYING NEWS README.md HOWTOPLAY.md
+    install(FILES AUTHORS COPYING NEWS README.md HOWTOPLAY.md HOWTOPLAY-FR.md
         DESTINATION ${DUNELEGACY_DOC_DIR}
     )
     # Install release notes
@@ -208,7 +209,7 @@ if(WIN32)
     )
 elseif(NOT APPLE)
     # Linux: use standard doc directory
-    install(FILES AUTHORS COPYING NEWS README.md HOWTOPLAY.md
+    install(FILES AUTHORS COPYING NEWS README.md HOWTOPLAY.md HOWTOPLAY-FR.md
         DESTINATION ${DUNELEGACY_DOC_DIR}
     )
     install(FILES "release_notes/RELEASE_NOTES.md"

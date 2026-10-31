@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historique — version 1.0.535
+
+**Statut revu pour la 1.0.546 (30 octobre 2026).** Ce document décrit une version antérieure. Les fonctions déjà livrées sont conservées dans la version courante ; les états de préparation sont historiques. Les phrases de préparation, dates et numéros de protocole/sauvegarde ci-dessous sont conservés pour la traçabilité. Voir le [suivi actuel](SUIVI-1.0.546-FR.md) pour les essais humains et avis des auteurs encore attendus.
+
+---
+
 # Campaigns / Campagnes — 1.0.535
 
 Two independent plans; one occurrence of each faction in each opponent role. / Deux plans indépendants ; chaque faction apparaît une fois dans chaque rôle.

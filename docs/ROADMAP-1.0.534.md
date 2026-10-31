@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historique — ancienne feuille de route
+
+**Statut revu pour la 1.0.546 (30 octobre 2026).** Ce plan est conservé comme référence d’une ancienne version. Les fonctions livrées et les tâches ouvertes de la 546 sont indiquées dans le suivi actuel. Les phrases de préparation, dates et numéros de protocole/sauvegarde ci-dessous sont conservés pour la traçabilité. Voir le [suivi actuel](SUIVI-1.0.546-FR.md) pour les essais humains et avis des auteurs encore attendus.
+
+---
+
 # Préparation de la version 1.0.534
 
 Demandes de Tornie du 6 octobre 2026, issues de `task.zip`. Les choix ont été confirmés : Chemical Carryall ; Chaos en campagne, Custom Game et multijoueur ; une faction entière par type de bâtiment.

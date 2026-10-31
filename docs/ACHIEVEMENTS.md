@@ -1,6 +1,6 @@
-# Local achievements
+# Local achievements — 1.0.546
 
-Dune Legacy Tornie 1.0.538 provides 67 offline achievements. Open **Achievements**
+Dune Legacy Tornie 1.0.546 provides **73 offline achievements**. Open **Achievements**
 or **Hauts faits** from the main menu to view locked awards and cumulative stats.
 Unlocks use the existing in-game news ticker. Steam is not required.
 
@@ -53,7 +53,7 @@ Tornie profile. It stores lifetime statistics, unlock timestamps, campaign flags
 per-run high water marks and checkpoint history. Writes replace the file atomically.
 An unknown/newer or damaged profile is preserved and the window reports the issue.
 
-Game save streams, format versions and item IDs are unchanged. A checkpoint is
+Version 1.0.546 writes save format **9839** and uses network protocol **24**. Existing achievement IDs and profiles are retained. A checkpoint is
 stored separately in the local profile, keyed by the exact save-file digest. When
 that save is loaded, match conditions and simulation-cycle crushing windows resume.
 The run's high water marks prevent the same events from being counted again when
@@ -70,7 +70,7 @@ totals already earned survive loading an earlier save.
 `config/Achievements.ini` defines stable IDs, English/French names and descriptions,
 rule, statistic, threshold and `Secret`. Definitions override the compiled fallback
 catalog; additional IDs using an existing rule can be added. `Secret=true` displays
-`???` and a hidden description until unlocked. The default 67 awards are visible.
+`???` and a hidden description until unlocked. The built-in catalogue has 73 awards.
 Keep the fallback in `include/Achievements/AchievementDefaults.h` synchronized when
 changing built-in definitions, so a missing external catalog keeps the same rules.
 
@@ -88,7 +88,7 @@ The integration check exercises real captures, final-building victory, damage
 attribution, crushing, MCV deployment, worm removal, harvesting, save/reload and SDL
 window rendering. Optional `DUNELEGACY_OLD_SAVE` checks a previous-version save.
 
-## 1.0.531 additions
+## Historical additions — 1.0.531
 
 - `RULER_OF_ARRAKIS`: win a campaign mission with its displayed final score >= 1000.
   The profile stores `BestCampaignScore`, never the sum of repeated score screens.
@@ -115,7 +115,7 @@ Chaos after losing eligibility does not restore the award condition. Vanilla
 does not support Chaos Mode; the separate co-op campaign does not grant this award.
 
 
-## Added in 1.0.538
+## Historical additions — 1.0.538
 
 Twenty awards expand the catalogue to 67, preserving all existing IDs and unlocks.
 The full FR/EN conditions and thresholds are in `config/Achievements.ini`.
@@ -134,3 +134,13 @@ cumulative target. The same run contributes only its highest recorded score; rep
 cannot repeat the points. Existing best scores remain valid; unrecorded older scores are not synthesized.
 Other new lifetime thresholds cover wins, defeats, units built/lost/destroyed, buildings built/destroyed/captured,
 spice deposits, worms, crushed infantry, blooms, palace abilities and missiles.
+
+## Historical additions — 1.0.543 and 1.0.545, retained in 1.0.546
+
+The catalogue reached 70 in 1.0.543 and 73 in 1.0.545. Version 1.0.546 keeps these awards and their stable identifiers.
+
+- `COOP_RESCUED`: be eliminated in co-op and win through a surviving allied faction.
+- `COOP_RESCUER`: survive and win after an allied faction is eliminated.
+- `PALACE_SABOTEUR`: destroy an enemy Palace with a local-player Saboteur; damage alone does not qualify.
+
+Cooperative rescue awards resolve at team victory and support two, three or four allied factions. Archon controllers share their house’s elimination state. Quitting, disconnection or team defeat does not qualify for the victory awards. The completion star follows all 73 entries. Campaign balance playthroughs and human Internet co-op for 1.0.546 remain separate from automated verification.

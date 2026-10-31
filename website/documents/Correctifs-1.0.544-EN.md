@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historical — version 1.0.544
+
+**Status reviewed for 1.0.546 (30 October 2026).** This is an earlier version record. Delivered features are retained in the current release; preparation statuses are historical. Original preparation statements, dates and protocol/save numbers below are retained for traceability. See [current follow-up](SUIVI-1.0.546-EN.md) for outstanding human checks and author feedback.
+
+---
+
 # Dune Legacy Tornie 1.0.544 fixes
 
 Base: tag `v1.0.544` (`d979cea6ab8d2554ac7ab19d1444dcdf182ee245`). Applies to Tornie, Tornie Lite, Jericho, Jericho Lite, ArcaKev and ArcaKev Lite. Vanilla retains its rules and graphics.

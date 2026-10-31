@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historique — préversion 546 r2
+
+**Statut revu pour la 1.0.546 (30 octobre 2026).** Ces changements de campagnes/éditeur sont dans la 546 publiée. Les campagnes des autres auteurs restent préservées. Les phrases de préparation, dates et numéros de protocole/sauvegarde ci-dessous sont conservés pour la traçabilité. Voir le [suivi actuel](SUIVI-1.0.546-FR.md) pour les essais humains et avis des auteurs encore attendus.
+
+---
+
 # Dune Legacy Tornie 1.0.546 r2 — préparation locale
 
 La refonte des campagnes concerne uniquement **Tornie et Tornie Lite** : 18 campagnes, 396 scénarios solo et leurs variantes coop. Les campagnes, briefings et cartes coop de **Jericho, Jericho Lite, ArcaKev et ArcaKev Lite sont rétablis à l’identique de la référence 545**, en attendant l’avis de leurs auteurs. Aucune demande n’a été envoyée aux auteurs depuis cette préparation.

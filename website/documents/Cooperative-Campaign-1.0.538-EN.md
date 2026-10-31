@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historical — version 1.0.538
+
+**Status reviewed for 1.0.546 (30 October 2026).** This is an earlier version record. Delivered features are retained in the current release; preparation statuses are historical. Original preparation statements, dates and protocol/save numbers below are retained for traceability. See [current follow-up](SUIVI-1.0.546-EN.md) for outstanding human checks and author feedback.
+
+---
+
 # Common co-op campaign — 1.0.538
 
 Tornie confirmed co-op 1.0.538 works on two PCs (2026-10-09).

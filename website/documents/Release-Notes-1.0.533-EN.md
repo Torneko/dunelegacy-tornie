@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historical — version 1.0.533
+
+**Status reviewed for 1.0.546 (30 October 2026).** This is an earlier version record. Delivered features are retained in the current release; preparation statuses are historical. Original preparation statements, dates and protocol/save numbers below are retained for traceability. See [current follow-up](SUIVI-1.0.546-EN.md) for outstanding human checks and author feedback.
+
+---
+
 # Dune Legacy Tornie 1.0.533
 
 Previous automated checks are recorded in the supplied report. The final Fremen banner fix has been compiled; the full test suite was not rerun at Tornie’s request.

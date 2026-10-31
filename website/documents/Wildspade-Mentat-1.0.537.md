@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historique — version 1.0.537
+
+**Statut revu pour la 1.0.546 (30 octobre 2026).** Ce document décrit une version antérieure. Les fonctions déjà livrées sont conservées dans la version courante ; les états de préparation sont historiques. Les phrases de préparation, dates et numéros de protocole/sauvegarde ci-dessous sont conservés pour la traçabilité. Voir le [suivi actuel](SUIVI-1.0.546-FR.md) pour les essais humains et avis des auteurs encore attendus.
+
+---
+
 ## Ajustement 1.0.537
 
 La bouche utilise maintenant l’ancrage `(175, 200)`, un pixel à droite et vers le haut par rapport à 1.0.536. Les deux ancrages des yeux restent `(134, 137)` et `(198, 139)` ; ils sont vérifiés dans les captures des cinq états. Les overlays actifs utilisent `Eyes Brightness = 245` et `Mouth Brightness = 245` (sur 255). La teinte diminue légèrement à l’affichage, sans repeindre les PNG, changer leur transparence ni modifier le fond ou les poses de repos. Le nez, les moustaches et l’épaule restent préservés.

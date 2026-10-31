@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historical — 546 r2 preview
+
+**Status reviewed for 1.0.546 (30 October 2026).** These campaign/editor changes are included in published 546. Other authors’ campaigns remain preserved. Original preparation statements, dates and protocol/save numbers below are retained for traceability. See [current follow-up](SUIVI-1.0.546-EN.md) for outstanding human checks and author feedback.
+
+---
+
 # Dune Legacy Tornie 1.0.546 r2 — local preparation
 
 Campaign changes apply only to **Tornie and Tornie Lite**: 18 campaigns, 396 solo scenarios and their cooperative variants. **Jericho, Jericho Lite, ArcaKev and ArcaKev Lite campaigns, briefings and co-op maps are restored byte-for-byte to the 545 baseline**, pending their authors’ feedback. No message has been sent to those authors from this preparation.

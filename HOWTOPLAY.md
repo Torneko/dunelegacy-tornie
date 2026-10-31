@@ -1,27 +1,31 @@
-# Playing Dune Legacy Tornie
+# Playing Dune Legacy Tornie — 1.0.546
 
-In the host lobby, **Load a save** opens **Manual** (`mpsave/`, `.dls` files) and **Automatic** (`coop/`, `.dls` checkpoints) tabs. The save must be a co-op campaign for the active mod. Loading closes the old lobby and opens a new one for the saved mission; the guest must rejoin. Cancelling or selecting an incompatible file keeps the current lobby. Automatic resume through the `.ini` progress record remains available.
+[Guide français](HOWTOPLAY-FR.md) · [Co-op](docs/COOP-CAMPAIGN-EN.md) · [Campaigns](docs/CAMPAIGNS.md)
 
-Choose a campaign or start a skirmish through **Single Player -> Custom Game**. The main menu also includes multiplayer, the map editor and the mod selector.
+Extract the complete Windows ZIP into a new folder and run `dunelegacy.exe`. On Linux/Mint, use the matching package or Mint-compatible AppImage; make it executable and add `--appimage-extract-and-run` if FUSE is unavailable. The bilingual website is https://torneko.github.io/dunelegacy-tornie/ ; open `dist/index.html` inside its offline archive.
 
-Build your base on rock. A Construction Yard, Wind Traps and a Refinery form the starting economy. Harvesters collect spice, Silos increase storage, and production facilities supply your army. Protect your harvesters, keep enough power for your base, and upgrade your buildings to unlock more technology.
+The **Mods** menu offers Vanilla, Tornie, Tornie Lite, Jericho, Jericho Lite, ArcaKev and ArcaKev Lite. Vanilla has nine factions, full mods twelve and Lite editions six. Select the intended mod before starting a campaign or loading its save.
 
-The **Mods** menu switches between Vanilla, **Tornie**, **Tornie Lite**, **Jericho** and **Jericho Lite**. Vanilla provides nine factions, Tornie/Jericho twelve, and both Lite editions six. Jericho Lite combines Tornie Lite technology with Jericho spice. The active mod and game version appear in the main menu.
+## Base and campaign
 
-**Co-op campaign** follows the host faction’s campaign over nine shared stages, with up to four allied factions. **Archon** allows eight players assigned freely among those factions. Each active allied faction starts every new mission with the host’s initial budget; Easy Mode adds 500 credits once per faction. Controllers sharing a faction share its budget. The host can enable **Build on allied land** before a new mission: active allies may extend their building range from each other’s slabs and buildings, retaining separate ownership and expenses. This is independent of Allied control and is saved with the match. Closed slots 3/4 spawn no army, MCV or reinforcements. Allies may choose the same faction. The host can choose enemy AI settings and enable Allied control. Optional Enemy forces +5 and +10 combine to +15. All computers require the corrected 1.0.541 and protocol 13 with matching mods. Saves retain their stored balances. See the [English guide](docs/COOP-CAMPAIGN-EN.md) or [guide français](docs/COOP-CAMPAIGN.md).
+Build on rock. A Construction Yard, Wind Traps and a Refinery form the usual starting economy. Protect harvesters, maintain power, store spice and upgrade production buildings. Skirmishes are in **Single Player → Custom Game**.
 
-The former urban simulation has been removed. Its two scenario maps are retained in the original source branch; the supplied maps in this edition use RTS units and structures.
+The revised **Tornie/Tornie Lite campaigns** use faction buildings, units, technology and reinforcements. Each campaign keeps one support enemy. Missions 001–019 have two opponents, 020–021 three and 022 four. The opening has 1,500 credits and a 2,000 refined-credit quota. Rebels starts with a starport and small economy: buy the MCV without a free yard/MCV. Wildspade has loaned aircraft and anti-air threats. Start a **new campaign** for revised scenarios. Jericho/ArcaKev campaigns, including Lite, retain the 545 baseline pending their authors’ opinions. Vanilla archives are preserved.
 
-User settings are stored in a separate Dune Legacy Tornie profile. Saves containing the removed urban simulation are rejected; historical RTS save-format identifiers and reserved object IDs are retained for compatibility.
+Capturing infantry can take red-health enemy buildings. **Sabotage**, below **Retreat**, makes Soldiers/Troopers and their squads seek capturable enemy buildings; mixed selections apply it only to capturing infantry. Otherwise the infantry damages the building and is consumed. Healthy MCV deployment and consumed capture infantry have different achievement-loss rules.
 
-Open **Achievements / Hauts faits** in the main menu for 67 offline awards and
-cumulative statistics. Unlock messages appear in the news ticker during play.
-Progress is stored in `achievements.ini` beside your user configuration. Keep that
-file with your profile when transferring saves. Captures are allowed for Pacifism;
-the consumed infantry still counts as a loss for No Casualties. Replays, cheat mode
-and single-player immortality do not grant achievements. Old saves remain playable,
-but unknown earlier actions cannot qualify for no-destruction or no-loss awards.
+## Co-op, Archon and saves
 
-Source and issues: [Torneko/dunelegacy-tornie](https://github.com/Torneko/dunelegacy-tornie).
+Every computer needs **1.0.546 / protocol 24** and the same mod. Co-op follows the host faction over nine stages, up to four allied factions. Archon allows eight players distributed among them. Controllers sharing a faction share objects and money. Closed allied slots create no army, MCV or reinforcements.
 
-The editor’s **Sabotage** mode makes Soldiers and Troopers, including squads, hunt enemy buildings for capture. In game, the **Sabotage** button appears below **Retreat**; mixed selections apply it only to capturing infantry. Allied and noncapturable buildings are ignored, and lost targets are replaced. Normal capture rules apply: a red-health building changes ownership; otherwise the infantry damages it and is consumed.
+Every active allied faction receives the host’s starting budget at each new mission. Easy Mode adds 500 credits and starts at stage 2. Allied control and building on allied land are separate options. Enemy forces +5/+10 combine to +15 per present enemy. Rebels co-op allies receive the trading economy; Tornie enemies keep their identity when guests choose that faction.
+
+The host lobby’s **Load a save** offers manual `mpsave/*.dls` and automatic `coop/*.dls` checkpoints. Guests rejoin the reopened lobby. Keep `coop/<session>.ini` and `coop/<session>.dls` together. New saves use **9839**; earlier readers and stored mission states remain. Keep the local profile, including `achievements.ini`, when moving saves.
+
+## Editor and achievements
+
+The opening dialog distinguishes active-mod and Vanilla solo/co-op campaigns. Vanilla provides 198 solo scenarios. Save a personal copy for editing; loaded owners stay selectable in Lite. Editor CHOAM scrolls through 31 units, with undo/redo and map reload support.
+
+There are **73 local achievements**, retaining existing unlocks and statistics. Rescue awards resolve at co-op team victory; Palace sabotage requires a local Saboteur destroying an enemy Palace. Replays, cheats and single-player immortality do not grant progression. See [achievement rules](docs/ACHIEVEMENTS.md).
+
+Automated Windows/Linux and website checks pass. Human campaign balance playthroughs, 546 Internet co-op and the intended physical Mint PC remain manual checks. See [current follow-up](docs/SUIVI-1.0.546-EN.md).

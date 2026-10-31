@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historique — préparation devenue 545
+
+**Statut revu pour la 1.0.546 (30 octobre 2026).** Les recherches radar, cinématiques, portraits/cadres et succès listés ont été livrés dans la 545 et conservés dans la 546. Les phrases de préparation, dates et numéros de protocole/sauvegarde ci-dessous sont conservés pour la traçabilité. Voir le [suivi actuel](../docs/SUIVI-1.0.546-FR.md) pour les essais humains et avis des auteurs encore attendus.
+
+---
+
 # 1.0.545 — préparation depuis la 1.0.544 corrigée
 
 **Non publiée ; ajouts du 20 octobre en cours de validation.** Les téléchargements

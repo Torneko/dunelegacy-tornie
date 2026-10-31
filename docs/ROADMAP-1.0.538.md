@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historique — ancienne feuille de route
+
+**Statut revu pour la 1.0.546 (30 octobre 2026).** Ce plan est conservé comme référence d’une ancienne version. Les fonctions livrées et les tâches ouvertes de la 546 sont indiquées dans le suivi actuel. Les phrases de préparation, dates et numéros de protocole/sauvegarde ci-dessous sont conservés pour la traçabilité. Voir le [suivi actuel](SUIVI-1.0.546-FR.md) pour les essais humains et avis des auteurs encore attendus.
+
+---
+
 # Correctif publié de la 1.0.538
 
 Demandes de Tornie du 9 octobre 2026. Correctif intégré aux paquets et au tag de la 1.0.538 existante, sans nouveau numéro de version.

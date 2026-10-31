@@ -1,3 +1,10 @@
+<!-- historical-546 -->
+# Historical — version 1.0.540
+
+**Status reviewed for 1.0.546 (30 October 2026).** This is an earlier version record. Delivered features are retained in the current release; preparation statuses are historical. Original preparation statements, dates and protocol/save numbers below are retained for traceability. See [current follow-up](SUIVI-1.0.546-EN.md) for outstanding human checks and author feedback.
+
+---
+
 # Dune Legacy Tornie 1.0.540 — Linux Mint startup
 
 [Windows 64-bit ZIP](https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.540/DuneLegacyTornie-1.0.540-Windows-x64.zip) · [Linux Mint AppImage](https://github.com/Torneko/dunelegacy-tornie/releases/download/v1.0.540/DuneLegacyTornie-1.0.540-Linux-Mint-Compatible.AppImage)
