@@ -2,6 +2,8 @@
 
 ## 1.0.547 — Windows / Linux / Mint
 
+Publication et déploiement vérifiés : [release GitHub](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.547), [Pages](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41267405420), 18 fichiers publics et 17 empreintes de manifeste, 164 parcours web publics réussis. Les 397 fichiers servis sont identiques au site `80227a263afcafebaf5094f939d9c787eae23149` ; ses deux fichiers de contrôle restent archivés. Le ZIP hors ligne contient les 399 fichiers du site et 15 fichiers embarqués vérifiés. Les 8 490 fichiers des sources et les 160 fichiers des guides correspondent à leurs révisions exactes. [Reçu](../release_notes/Publication-Receipt-1.0.547.json) · [Audit final](../release_notes/Final-Publication-Audit-1.0.547.json).
+
 Source du jeu figée : `7c5149220fd0ee869205677127ae6c944e2f3113`. Super Tank de Kleshmersh à 925 crédits, sélections d’armée et de moissonneuses, Windtraps améliorés dans l’éditeur sans Chaos avec étoile verte, fermeture des missions et lecture des checkpoints coop sécurisées. Protocole 25 ; sauvegardes 9840.
 
 [Windows vérifié](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41264452598) · [Linux/Mint vérifié](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41265028810) · [Audit des ressources](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41266529079). Les deux rapports de compilation conservaient 9839 dans leur champ documentaire ; la correction vers 9840 est tracée par l’empreinte du rapport original et la source testée. Le ZIP Windows officiel a également généré dix sauvegardes contrôlées au format 9840, sans modification des paquets.
