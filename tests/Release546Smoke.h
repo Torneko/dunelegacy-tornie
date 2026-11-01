@@ -81,7 +81,7 @@ struct Release546Fixture {
         }
         verifyReinforcements(game,allies,expected);
     }
-    static void run(const char* directory) {
+    static void run(const char* directory,bool verifyEditor=true) {
         require(directory,"missing output directory");
         const std::filesystem::path output(directory);
         std::filesystem::create_directories(output);
@@ -97,7 +97,7 @@ struct Release546Fixture {
             effectiveGameOptions=mods.loadEffectiveGameOptions(settings.gameOptions);
             const bool revised=mod=="Tornie" || mod=="TornieLite";
             verifyWildspadeTechnology(directory,mod);
-            for(const auto source:{Source::VanillaCampaign,Source::VanillaCoopCampaign,Source::Campaign,Source::CoopCampaign}) {
+            if(verifyEditor) for(const auto source:{Source::VanillaCampaign,Source::VanillaCoopCampaign,Source::Campaign,Source::CoopCampaign}) {
                 if(mod=="vanilla" && (source==Source::Campaign || source==Source::CoopCampaign)) continue;
                 LoadMapWindow picker(COLOR_DEFAULT,source);
                 const int expected=source==Source::VanillaCampaign?198:source==Source::VanillaCoopCampaign?207:
@@ -144,7 +144,7 @@ struct Release546Fixture {
                     owners.onAdvancedBasicToggle();owners.onOK();
                 }
             }
-            SDL_Log("RELEASE 546 EDITOR PASS: %s",mod.c_str());
+            if(verifyEditor) SDL_Log("RELEASE 546 EDITOR PASS: %s",mod.c_str());
             if(mod=="vanilla") continue;
             auto options=effectiveGameOptions;options.easyMode=false;options.chaosMode=false;
             options.immortalHumanPlayer=false;options.instantBuild=false;
@@ -271,9 +271,14 @@ struct Release546Fixture {
                 }
                 }
             }
-            SDL_Log("RELEASE 546 MOD PASS: %s editor/CHOAM, campaign intros, stages 4/9 and intro checkpoints",mod.c_str());
+            SDL_Log("RELEASE 546 MOD PASS: %s %scampaign intros, stages 4/9 and intro checkpoints",mod.c_str(),verifyEditor?"editor/CHOAM, ":"");
         }
         mods.setActiveMod(previous);
+        if(!verifyEditor) {
+            require(started==252 && coopStarted==224 && coopCheckpoints==76,"checkpoint diagnostic coverage");
+            SDL_Log("RELEASE 546 CHECKPOINTS PASS: %d solo starts; %d coop starts; %d late cooperative checkpoints",started,coopStarted,coopCheckpoints);
+            return;
+        }
         SDL_Log("RELEASE 546 R2 MATRIX PASS: %d editor maps; %d solo starts; %d coop starts; %d late cooperative checkpoints",loaded,started,coopStarted,coopCheckpoints);
         SDL_Log("RELEASE 546 R2 PASS: Tornie-only campaign revision, persistent support including mirror guests, stage-two clearance, 3/4 late enemies, %d cooperative checkpoints",coopCheckpoints);
     }

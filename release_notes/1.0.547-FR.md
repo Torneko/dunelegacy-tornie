@@ -18,7 +18,7 @@ Dans les six mods hors Vanilla, l’option **« Améliorée au départ »** du W
 
 ## Stabilité des missions
 
-Correction d’un crash à la fermeture ou au rechargement d’une mission lorsqu’une armée est encore sélectionnée.
+Correction d’un crash à la fermeture ou au rechargement d’une mission lorsqu’une armée est encore sélectionnée. La lecture des checkpoints coop conserve maintenant les données de sauvegarde intactes pendant la restauration des réglages.
 
 ## Compatibilité
 

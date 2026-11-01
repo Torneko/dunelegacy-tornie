@@ -413,7 +413,10 @@ void Game::initGame(const GameInitSettings& newGameInitSettings) {
         } break;
 
         case GameType::LoadMultiplayer: {
-            IMemoryStream memStream(gameInitSettings.getFiledata().c_str(), gameInitSettings.getFiledata().size());
+            // Loading restores gameInitSettings, replacing its binary filedata.
+            // Keep the input alive independently until the entire save is read.
+            const std::string saveData = gameInitSettings.getFiledata();
+            IMemoryStream memStream(saveData.data(), saveData.size());
 
             if(loadSaveGame(memStream) == false) {
                 THROW(std::runtime_error, "Loading save game failed!");

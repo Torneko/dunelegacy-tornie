@@ -807,6 +807,7 @@ int main(int argc, char *argv[]) {
         bool bVerifyRelease545 = false;
         bool bVerifyRelease547 = false;
         bool bVerifyRelease546 = false;
+        bool bVerifyRelease546Checkpoints = false;
         bool bVerifyRelease546Frames = false;
         bool bVerifyCampaignCinema = false;
         bool bVerifyCorrections544 = false;
@@ -836,6 +837,7 @@ int main(int argc, char *argv[]) {
             if(parameter == "--verify-release545") {bVerifyMods=true;bVerifyRelease545=true;continue;}
             if(parameter == "--verify-release547") {bVerifyMods=true;bVerifyRelease547=true;continue;}
             if(parameter == "--verify-release546") {bVerifyMods=true;bVerifyRelease546=true;continue;}
+            if(parameter == "--verify-release546-checkpoints") {bVerifyMods=true;bVerifyRelease546=true;bVerifyRelease546Checkpoints=true;continue;}
             if(parameter == "--verify-release546-frames") {bVerifyMods=true;bVerifyRelease546Frames=true;continue;}
             if(parameter == "--verify-radar-research") { bVerifyMods=true;bVerifyRadarResearch=true;continue; }
             if(parameter == "--verify-editor-followup") { bVerifyMods=true;bVerifyEditorFollowup=true;continue; }
@@ -1454,7 +1456,7 @@ int main(int argc, char *argv[]) {
                     }
                     else if(bVerifyRelease547) Release547Fixture::run(std::getenv("DUNELEGACY_SMOKE_DIR"));
                     else if(bVerifyRelease546Frames) Release546Fixture::frames(std::getenv("DUNELEGACY_SMOKE_DIR"));
-                    else if(bVerifyRelease546) Release546Fixture::run(std::getenv("DUNELEGACY_SMOKE_DIR"));
+                    else if(bVerifyRelease546) Release546Fixture::run(std::getenv("DUNELEGACY_SMOKE_DIR"),!bVerifyRelease546Checkpoints);
                     else if(bVerifyRelease545) Release545Smoke::run(std::getenv("DUNELEGACY_SMOKE_DIR"));
                     else if(bVerifyPortraits) runSelectedPortraitSmoke();
                     else if(bVerifyRelease538) runRelease538Smoke();

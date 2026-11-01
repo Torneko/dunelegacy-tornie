@@ -109,6 +109,34 @@ struct Release547Fixture {
         require(game->getExplosionList().size()>=explosions+9 && neighbour->getHealth()<health,"Devastator-style damaging destruction");
         reset(game);
     }
+    static void networkCheckpoint(const std::string& output,const std::string& mod) {
+        const bool full=mod=="Tornie" || mod=="Jericho" || mod=="ArcaKev";
+        const auto roster=getFactionSelectionOrder();
+        const auto host=full?getRuntimeHouseForIdentity(HOUSE_KLESHMERSH):static_cast<HOUSETYPE>(roster.front());
+        const auto guest=static_cast<HOUSETYPE>(roster.front()==host?roster[1]:roster.front());
+        auto options=effectiveGameOptions;options.chaosMode=false;
+        GameInitSettings init("547-network-map",chaosSmokeMap()+"[Player2]\nCredits=3456\n","547 checkpoint",false,options);
+        for(const auto house:{host,guest}) {
+            GameInitSettings::HouseInfo info(house,1);
+            info.addPlayerInfo(GameInitSettings::PlayerInfo(house==host?settings.general.playerName:"547 Guest",HUMANPLAYERCLASS));
+            init.addHouseInfo(info);
+        }
+        auto game=std::make_unique<Game>();currentGame=game.get();game->initGame(init);
+        const int item=full?Unit_SuperTank:Unit_SiegeTank;
+        auto* unit=pLocalHouse->placeUnit(item,15,16,true);require(unit,"network checkpoint unit");
+        unit->setHealth(189);const auto id=unit->getObjectID();
+        const auto funds=game->getHouse(guest)->getCredits();
+        const auto saved=(std::filesystem::path(output)/(mod+"-547-network.dls")).string();
+        require(game->saveGame(saved),"network checkpoint save");reset(game);
+        GameInitSettings checkpoint(getBasename(saved,true),readCompleteFile(saved),"547 checkpoint");
+        for(const auto& info:init.getHouseInfoList())checkpoint.addHouseInfo(info);
+        game=std::make_unique<Game>();currentGame=game.get();game->initGame(checkpoint);
+        unit=dynamic_cast<UnitBase*>(game->getObjectManager().getObject(id));
+        require(pLocalHouse && pLocalHouse->getHouseID()==host && unit && unit->getOwner()==pLocalHouse
+            && unit->getItemID()==item && unit->getHealth()==189,"network checkpoint unit, owner or health changed");
+        require(game->getHouse(guest)->getCredits()==funds,"network checkpoint guest funds changed");
+        CaptureHuntGameFixture::start(*game);game->selectAllArmy();reset(game);
+    }
     static void windtraps(const std::string& output,const std::string& mod) {
         const auto roster=getFactionSelectionOrder();
         for(int house:roster) for(bool chaos:{false,true}) {
@@ -131,7 +159,7 @@ struct Release547Fixture {
         auto& mods=ModManager::instance();const auto previous=mods.getActiveModName();
         for(const std::string mod:{"Tornie","TornieLite","Jericho","JerichoLite","ArcaKev","ArcaKevLite","vanilla"}) {
             require(mods.setActiveMod(mod),"mod activation");effectiveGameOptions=mods.loadEffectiveGameOptions(settings.gameOptions);
-            selections(output,mod);superTank(output,mod);windtraps(output,mod);
+            selections(output,mod);superTank(output,mod);networkCheckpoint(output,mod);windtraps(output,mod);
             SDL_Log("RELEASE 547 MOD PASS: %s selections, Super Tank, editor Windtraps",mod.c_str());
         }
         mods.setActiveMod(previous);
