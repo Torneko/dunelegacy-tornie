@@ -250,6 +250,7 @@ jobs:
             foreach ($check in $checks) {
               $nextLog = Join-Path $env:RUNNER_TEMP "dunelegacy-installed-$language-$($check[0]).log"
               $process = Start-Process -FilePath "install/dunelegacy.exe" -ArgumentList $check[0], "--showlog", "--window" -WindowStyle Hidden -Wait -PassThru -RedirectStandardError $nextLog
+              Write-Output "Installed $language $($check[0]) exit code: $($process.ExitCode)"
               Get-Content -LiteralPath $nextLog | Select-String "PASS:|unhandled exception"
               if ($process.ExitCode -ne 0) { Get-Content -LiteralPath $nextLog -Tail 120 }
               if ($process.ExitCode -ne 0 -or (Select-String -LiteralPath $nextLog -Pattern $check[1]).Count -ne $check[2]) { throw "Installed $language next-release check failed: $($check[0])" }
@@ -293,6 +294,8 @@ jobs:
           if-no-files-found: ignore
           path: |
             ${{ runner.temp }}/dunelegacy-installed-*.log
+            ${{ runner.temp }}/dunelegacy-installed-*/**/*crash*.log
+            ${{ runner.temp }}/dunelegacy-installed-*/**/Dune Legacy.log
             ${{ runner.temp }}/dunelegacy-mod-smoke.log
             build/Testing/Temporary/LastTest.log
             ${{ runner.temp }}/dunelegacy-installed-*/*radar*.png

@@ -242,10 +242,11 @@ jobs:
           IMAGE=$(find "$PWD/build" -maxdepth 1 -name '*Mint-Compatible.AppImage' -print -quit)
           test -n "$IMAGE"
           for CHECK in --verify-coop-expanded --verify-release543 --verify-harvester-crush; do
+            echo "Packaged regression: $CHECK"
             SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy SDL_RENDER_DRIVER=software \
               XDG_CONFIG_HOME="$PROFILE/profile" DUNELEGACY_PROFILE_DIR="$PROFILE/profile" \
               DUNELEGACY_SMOKE_DIR="$PROFILE/results" FUSE_APPIMAGE_EXTRACT_AND_RUN=1 \
-              "$IMAGE" "$CHECK" --window > "$PROFILE/$CHECK.log" 2>&1
+              "$IMAGE" "$CHECK" --window > "$PROFILE/$CHECK.log" 2>&1 || { tail -100 "$PROFILE/$CHECK.log"; exit 1; }
           done
           test "$(grep -c 'EXPANDED COOP PASS:' "$PROFILE/--verify-coop-expanded.log")" -eq 7
           test "$(grep -c 'EDITOR OWNER PASS:' "$PROFILE/--verify-release543.log")" -eq 7

@@ -34,7 +34,7 @@
   "limits": [
     "Human two-PC/independent-Internet co-op remains separate from automated tests.",
     "Physical Mint PC and full campaign balance playthroughs remain manual checks.",
-    "Jericho/ArcaKev campaign rewrites await their authorsâ€™ opinions."
+    "Jericho/ArcaKev campaign rewrites await their authors' opinions."
   ],
   "website": {
     "passed": true,
@@ -44,5 +44,17 @@
     ],
     "desktopAndMobile": true,
     "contexts": 164
+  },
+  "historicalRegressions": {
+    "expandedCoopAllSevenModes": true,
+    "release543AllSevenModes": true,
+    "harvesterCrushAllSevenModes": true,
+    "release546Matrix": {
+      "passed": true,
+      "editorMaps": 5265,
+      "soloStarts": 252,
+      "coopStarts": 224,
+      "lateCoopCheckpoints": 76
+    }
   }
 }

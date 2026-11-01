@@ -19,6 +19,7 @@ struct Release546Fixture {
         auto& mods=ModManager::instance();const auto previous=mods.getActiveModName();
         int checked=0;
         for(const std::string mod:{"Tornie","Jericho","ArcaKev","TornieLite","JerichoLite","ArcaKevLite","vanilla"}) {
+            SDL_Log("RELEASE 546 MOD START: %s",mod.c_str());
             require(mods.setActiveMod(mod),"frame mod switch");
             for(const auto house:{HOUSE_ATREIDES,HOUSE_ORDOS}) {
                 const auto name=getHouseNameByNumber(house);
@@ -143,6 +144,7 @@ struct Release546Fixture {
                     owners.onAdvancedBasicToggle();owners.onOK();
                 }
             }
+            SDL_Log("RELEASE 546 EDITOR PASS: %s",mod.c_str());
             if(mod=="vanilla") continue;
             auto options=effectiveGameOptions;options.easyMode=false;options.chaosMode=false;
             options.immortalHumanPlayer=false;options.instantBuild=false;

@@ -294,8 +294,8 @@ private:
     SymbolButton        editorModeUnits_SonicTrike;
     SymbolButton        editorModeUnits_EliteLauncher;
     SymbolButton        editorModeUnits_EliteSiegeTank;
-    SymbolButton        editorModeUnits_SuperTank;
     HBox                editorModeUnits_HBoxSuper;
+    SymbolButton        editorModeUnits_SuperTank;
     HBox                editorModeUnits_HBoxNew543;
     SymbolButton        editorModeUnits_FlameQuad, editorModeUnits_GasInfantry, editorModeUnits_FlameTrooper;
     HBox                editorModeUnits_HBoxTornieChemical;

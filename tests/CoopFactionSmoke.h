@@ -85,6 +85,10 @@ inline ExpectedUnit unitRules(Game& game, const GameInitSettings& init, int fact
         if(item == Unit_Trike) item = Unit_RaiderTrike;
         else if(item == Unit_Quad) item = Unit_RocketTrike;
     }
+    if(custom && ModManager::instance().isTornieContentActive()
+       && isHouseFaction(static_cast<HOUSETYPE>(faction),HOUSE_KLESHMERSH)
+       && item==Unit_EliteSiegeTank && game.objectData.data[Unit_SuperTank][faction].enabled)
+        item=Unit_SuperTank;
     if(game.objectData.data[item][faction].enabled || (!copied && item == Unit_ChemicalCarryall && mod != "vanilla")) {
         result.items = {item};
     } else if(copied) {

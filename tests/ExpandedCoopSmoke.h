@@ -121,7 +121,7 @@ inline void verifyExpandedCoop(const std::string& output,const std::string& mod)
             }
             lobby.onReceiveChangeEventList(changes);
         } else {
-            const auto indices=session.context().alliedSlots();
+            const auto indices=lobby.coopSession->context().alliedSlots();
             for(int i=0;i<4;++i) lobby.setPlayer2Slot(names[i],indices[i]*2);
             // Real checkbox interaction as a guest, including its popup choices.
             const auto originalName=settings.general.playerName;
@@ -148,7 +148,7 @@ inline void verifyExpandedCoop(const std::string& output,const std::string& mod)
         GameInitSettings committed;
         {
             auto lobby=std::make_unique<CustomGamePlayers>(initial,true);
-            const auto indices=session.context().alliedSlots();
+            const auto indices=lobby->coopSession->context().alliedSlots();
             for(int ordinal=0;ordinal<4;++ordinal) lobby->setPlayer2Slot(names[ordinal],indices[ordinal]*2);
             lobby->coopEasyModeCheckbox.setChecked(easy);
             lobby->alliedBuildingCheckbox.setChecked(true);
