@@ -44,6 +44,10 @@ struct Release547Fixture {
                 game->unselectAll(game->getSelectedList());game->getSelectedList().clear();ui.updateObjectInterface();
                 require(ui.armySelectButton.isVisible() && ui.harvestersSelectButton.isVisible(),"buttons do not return after deselection");
             }
+            // Keep the real selection observer alive during bulk unit teardown.
+            CaptureHuntGameFixture::start(*game);
+            game->selectAllArmy();
+            require(!game->getSelectedList().empty(),"selected-army teardown fixture");
             reset(game);
         }
     }

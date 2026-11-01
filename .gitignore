@@ -15,6 +15,7 @@ build-*/
 build_ci_test/
 build_release/
 windows-build-546/
+windows-msvc-*/
 reports/
 vcpkg/
 dist/

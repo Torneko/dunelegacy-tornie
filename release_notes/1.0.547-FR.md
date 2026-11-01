@@ -16,6 +16,10 @@ Il conserve les conditions d’accès du char remplacé : Usine lourde et IX, ac
 
 Dans les six mods hors Vanilla, l’option **« Améliorée au départ »** du Windtrap standard 2×2 est disponible pour toutes les factions, **sans exiger le mode Chaos**. Elle double la production initiale, active l’animation verte et affiche une **étoile verte dans l’éditeur**. Le réglage suit l’annulation/rétablissement, la carte et les sauvegardes. Cette propriété de carte ne réclame ni paiement ni IX au départ ; l’amélioration achetable en partie conserve ses règles Rebels et ses plans Chaos.
 
+## Stabilité des missions
+
+Correction d’un crash à la fermeture ou au rechargement d’une mission lorsqu’une armée est encore sélectionnée.
+
 ## Compatibilité
 
 Tous les participants réseau doivent utiliser **1.0.547 / protocole 25** et le même mod. Nouvelles sauvegardes : **9840**. Les sauvegardes précédentes restent lisibles avec leurs unités, tables technologiques et états enregistrés ; commencer une nouvelle partie ou mission pour recevoir les nouveaux remplacements. Les campagnes et briefings Jericho/ArcaKev restent conservés ; cette version adapte l’unité de Kleshmersh sans réécrire leurs campagnes.

@@ -179,6 +179,9 @@ void UnitBase::setProductionHouseID(int houseID) {
 
 UnitBase::~UnitBase() {
     pathList.clear();
+    // Selection observers refresh unit counters during mission teardown too.
+    // Remove this unit before notifying them so they only see live objects.
+    unitList.remove(this);
     removeFromSelectionLists();
 
     for(int i=0; i < NUMSELECTEDLISTS; i++) {
