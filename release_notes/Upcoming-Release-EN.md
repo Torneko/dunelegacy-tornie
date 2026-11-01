@@ -1,6 +1,6 @@
-# Completed preparation — 1.0.547
+# History — requests delivered in 1.0.547
 
-Notes recorded on 31 October 2026, after the published **1.0.546** release. Implemented in the 1.0.547 preparation, with local FR/EN checks passing. Publication awaits the Windows/Linux package checks.
+Notes recorded on 31 October 2026, after the published **1.0.546** release. Delivered in 1.0.547. Local checks and FR/EN Windows/Linux packages are recorded in Validation-1.0.547.json.
 
 ## In-game interface
 
@@ -26,7 +26,7 @@ Notes recorded on 31 October 2026, after the published **1.0.546** release. Impl
 
 Artwork received on 31 October 2026, integrated into the game. SHA-256 of both the original and the copy: `06c324e587827c61074224df1c51a8de5a24cf724b72fe75822e0b24d263732c`.
 
-Icon received and preserved on 31 October 2026, ready for integration with the turret. SHA-256 of both the original and the copy: `5d89bf8f2f219a5f9f573df3ac65825f805c2745fc28eeb59f84eb170e856805`.
+Icon received and preserved on 31 October 2026, integrated with the turret. SHA-256 of both the original and the copy: `5d89bf8f2f219a5f9f573df3ac65825f805c2745fc28eeb59f84eb170e856805`.
 
 The [1.0.546 follow-up](../docs/SUIVI-1.0.546-EN.md) retains the manual checks and author feedback still pending for the published release. Previous drafts remain in the [historical records](README.md#historique--historical-records).
 

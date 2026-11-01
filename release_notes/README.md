@@ -7,11 +7,11 @@ La version courante est **1.0.547 / protocole 25 / sauvegardes 9840**. / Current
 - [Guide coop FR](../docs/COOP-CAMPAIGN.md) · [Co-op guide EN](../docs/COOP-CAMPAIGN-EN.md)
 - [Campagnes / Campaigns](../docs/CAMPAIGNS.md)
 
-## Préparation 1.0.547 / 1.0.547 preparation
+## Demandes livrées en 1.0.547 / Requests delivered in 1.0.547
 
 - [Contenu intégré FR](Upcoming-Release-FR.md) · [Implemented content EN](Upcoming-Release-EN.md)
 - Notes du 31 octobre 2026 : sélection d’armée, sélection des moissonneuses et option Windtrap dans l’éditeur avec étoile verte, sans obligation de mode Chaos. / Notes dated 31 October 2026: army selection, Harvester selection and an editor Windtrap option with a green star, without requiring Chaos Mode.
-- Super Tank de Kleshmersh à 925 crédits : nouvelle unité de siège incendiaire, vie du Siege Tank, tirs de feu façon Rocket Launcher et explosion façon Devastator ; tourelle et icône reçues et conservées pour l’intégration. / Kleshmersh Super Tank at 925 credits: new incendiary siege unit with Siege Tank hit points, Rocket Launcher-style fire attacks and a Devastator-style explosion; turret and icon artwork received and preserved for integration.
+- Super Tank de Kleshmersh à 925 crédits : nouvelle unité de siège incendiaire, vie du Siege Tank, tirs de feu façon Rocket Launcher et explosion façon Devastator ; tourelle et icône originales intégrées. / Kleshmersh Super Tank at 925 credits: new incendiary siege unit with Siege Tank hit points, Rocket Launcher-style fire attacks and a Devastator-style explosion; original turret and icon artwork integrated.
 
 ## Historique / Historical records
 
@@ -23,9 +23,9 @@ La version courante est **1.0.547 / protocole 25 / sauvegardes 9840**. / Current
 | Aperçu Windtrap 542 / Windtrap 542 preview | Amélioration Rebels livrée / Delivered Rebels upgrade |
 | Notes numérotées antérieures / Earlier numbered notes | Archives de leur version ; valeurs historiques conservées / Version history, original values retained |
 
-Les documents historiques conservent leur texte original sous un bandeau. Les anciennes phrases « non publié » ou « en attente » décrivent une étape passée. Le suivi actuel recense les essais humains, le PC Mint et les avis des auteurs encore attendus pour la 1.0.546 ; les nouvelles demandes figurent dans la section « Prochaine mise à jour » ci-dessus. Les rapports JSON et empreintes des validations passées sont conservés.
+Les documents historiques conservent leur texte original sous un bandeau. Les anciennes phrases « non publié » ou « en attente » décrivent une étape passée. Le suivi actuel recense les essais humains, le PC Mint et les avis des auteurs encore attendus pour la 1.0.547 ; les demandes intégrées figurent dans la section de cette version ci-dessus. Les rapports JSON et empreintes des validations passées sont conservés.
 
-Historical documents retain their original text below a banner. Earlier “unpublished” or “pending” statements describe past preparation. The follow-up lists the remaining 1.0.546 checks: human playtests, the physical Mint PC and author feedback. New requests appear in the “Next update” section above. Past validation JSON and checksums are preserved.
+Historical documents retain their original text below a banner. Earlier “unpublished” or “pending” statements describe past preparation. The follow-up lists the remaining 1.0.547 checks: human playtests, the physical Mint PC and author feedback. Implemented requests appear in the version section above. Past validation JSON and checksums are preserved.
 
 ## Dossiers de préparation conservés / Preserved preparation records
 

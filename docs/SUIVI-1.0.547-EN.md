@@ -20,7 +20,7 @@ Updated 31 October 2026. Published version **1.0.547**, network protocol **25**,
 ## Manual checks still unconfirmed
 
 - Complete Tornie campaign playthroughs and balance feedback, solo and co-op.
-- Human 1.0.547 co-op on two PCs and across independent Internet connections. The historical two-PC confirmation for 538 does not itself validate 546.
+- Human 1.0.547 co-op on two PCs and across independent Internet connections. The historical two-PC confirmation for 538 does not itself validate 547.
 - Startup on the intended physical Mint PC; automated Linux/Mint AppImage checks are complete.
 - Human listening to the intro and credits, if not already done: the recorded audio checks were programmatic.
 

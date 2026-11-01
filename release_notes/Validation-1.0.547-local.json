@@ -23,7 +23,8 @@
       "fire salvos and Devastator-style damaging destruction",
       "Super Tank save/reload",
       "all-faction editor Windtraps with and without Chaos",
-      "editor map and save roundtrips, undo/redo and marker rendering"
+      "editor map and save roundtrips, undo/redo and marker rendering",
+      "selected-army mission teardown with the real selection observer"
     ]
   },
   "campaignRecipe": {
@@ -46,15 +47,63 @@
     "contexts": 164
   },
   "historicalRegressions": {
-    "expandedCoopAllSevenModes": true,
-    "release543AllSevenModes": true,
-    "harvesterCrushAllSevenModes": true,
+    "expandedCoopAllSevenModes": {
+      "passed": true,
+      "source": "d44386f85b71cf56d7bd58aefa74bc0faf05ce4b"
+    },
+    "release543AllSevenModes": {
+      "passed": true,
+      "source": "d44386f85b71cf56d7bd58aefa74bc0faf05ce4b"
+    },
+    "harvesterCrushAllSevenModes": {
+      "passed": true,
+      "source": "d44386f85b71cf56d7bd58aefa74bc0faf05ce4b"
+    },
     "release546Matrix": {
       "passed": true,
       "editorMaps": 5265,
       "soloStarts": 252,
       "coopStarts": 224,
-      "lateCoopCheckpoints": 76
+      "lateCoopCheckpoints": 76,
+      "source": "7c5149220fd0ee869205677127ae6c944e2f3113"
     }
+  },
+  "memoryRegression": {
+    "compiler": "MSVC 19.44",
+    "instrumentation": "AddressSanitizer",
+    "beforeFixReproduced": true,
+    "beforeFixError": "heap-use-after-free in GameInterface::refreshAircraftButtons during selected-unit mission teardown",
+    "fix": "UnitBase unregisters from unitList before notifying selection observers",
+    "afterFixSevenModesPassed": true,
+    "selectedArmyAndRealInterface": true,
+    "source": "7c5149220fd0ee869205677127ae6c944e2f3113"
+  },
+  "multiplayerSaveMemory": {
+    "beforeFixReproduced": true,
+    "instrumentation": "MSVC AddressSanitizer",
+    "afterFixSevenModesPassed": true,
+    "checks": [
+      "genuine multiplayer save bytes kept stable while settings are restored",
+      "unit identity and owner",
+      "saved unit health",
+      "guest credits",
+      "selected-army teardown after loading"
+    ],
+    "source": "7c5149220fd0ee869205677127ae6c944e2f3113"
+  },
+  "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+  "asanCampaignCheckpoints": {
+    "passed": true,
+    "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+    "soloStarts": 252,
+    "coopStarts": 224,
+    "lateCoopCheckpoints": 76,
+    "editorCatalogueExcludedFromThisFocusedRun": true
+  },
+  "officialWindowsSaveHeader": {
+    "passed": true,
+    "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+    "saveVersion": 9840,
+    "generatedSaves": 10
   }
 }

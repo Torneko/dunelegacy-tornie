@@ -20,7 +20,7 @@ Mis à jour le 31 octobre 2026. Version publiée : **1.0.547**, protocole **25**
 ## Encore à confirmer par des essais manuels
 
 - Parcours complets et équilibrage des nouvelles campagnes Tornie, en solo et en coop.
-- Partie coop 1.0.547 entre deux PC, puis entre connexions Internet indépendantes. La confirmation humaine historique de la 538 ne valide pas à elle seule la 546.
+- Partie coop 1.0.547 entre deux PC, puis entre connexions Internet indépendantes. La confirmation humaine historique de la 538 ne valide pas à elle seule la 547.
 - Lancement sur le PC Mint concerné ; les vérifications automatisées des AppImages Linux/Mint sont terminées.
 - Écoute humaine de l’introduction et du générique, si elle n’a pas déjà été faite : les notes consignent des vérifications audio programmatiques.
 

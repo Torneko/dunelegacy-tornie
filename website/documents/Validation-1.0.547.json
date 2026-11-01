@@ -1,48 +1,270 @@
 {
   "version": "1.0.547",
-  "status": "local-verified",
+  "status": "release-verified",
   "date": "2026-10-31",
+  "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
   "networkProtocol": 25,
-  "saveVersion": 9840,
-  "engineAndNetwork": {
-    "ctestPassed": true,
-    "tests": 2
+  "saveFormat": 9840,
+  "platforms": {
+    "windows": {
+      "release543Checks": [],
+      "videoOptionsChecks": [
+        "fr",
+        "en"
+      ],
+      "validationScope": "release-547",
+      "engineAndNetworkTests": true,
+      "workflowSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
+      "sha256": "2288e7c6843be76b237572d83c8828ec12d03cadcbe72c76b2ae4ec04a957fa0",
+      "package": "DuneLegacyTornie-1.0.547-Windows-x64.zip",
+      "installedRuntimeChecks": [
+        "fr",
+        "en"
+      ],
+      "version": "1.0.547",
+      "networkProtocol": 25,
+      "saveVersion": 9840,
+      "nextReleaseChecks": [
+        "release-545-regressions-fr-en",
+        "radar-fr-en",
+        "5265-editor-loads-fr-en",
+        "252-solo-starts-fr-en",
+        "224-coop-starts-fr-en",
+        "76-late-coop-restores-fr-en",
+        "persistent-support-and-four-opponents-fr-en",
+        "28-frame-compositions-fr-en",
+        "super-tank-production-fire-blast-save-fr-en",
+        "army-harvester-selection-and-allied-control-fr-en",
+        "all-faction-editor-windtraps-with-and-without-chaos-fr-en",
+        "choam-editor-32-items-fr-en"
+      ],
+      "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+      "menuStartupChecks": [
+        "fr",
+        "en"
+      ],
+      "run": 41264452598,
+      "metadataCorrection": {
+        "field": "saveVersion",
+        "originalValue": 9839,
+        "correctValue": 9840,
+        "originalReportSha256": "8910229c60013edd0cb13fb3896b7db98ebd939bb10e382cc59ca60009ec0ce7",
+        "verifiedSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
+        "sourceHeader": "include/Definitions.h",
+        "reason": "The workflow report retained the previous save version; the tested source defines 9840. Package bytes are unchanged."
+      }
+    },
+    "linux": {
+      "version": "1.0.547",
+      "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+      "workflowSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
+      "run": 41265028810,
+      "graphicalStartup": {
+        "passed": true,
+        "languages": [
+          "en",
+          "fr"
+        ],
+        "images": [
+          "standard",
+          "Mint-compatible"
+        ],
+        "audio": "PulseAudio",
+        "videoCases": [
+          "window",
+          "fullscreen",
+          "stale-combined-desktop"
+        ],
+        "xrandr": true
+      },
+      "softwareFallback": true,
+      "engineAndNetworkTests": true,
+      "packagedRuntimeChecks": [
+        "radar-fr-en",
+        "release-545-regressions-fr-en",
+        "5265-editor-loads-fr-en",
+        "252-solo-starts-fr-en",
+        "224-coop-starts-fr-en",
+        "76-late-coop-restores-fr-en",
+        "persistent-support-and-four-opponents-fr-en",
+        "28-frame-compositions-fr-en",
+        "super-tank-production-fire-blast-save-fr-en",
+        "army-harvester-selection-and-allied-control-fr-en",
+        "all-faction-editor-windtraps-with-and-without-chaos-fr-en",
+        "choam-editor-32-items-fr-en"
+      ],
+      "nextReleaseChecks": [
+        "radar-fr-en",
+        "release-545-regressions-fr-en",
+        "5265-editor-loads-fr-en",
+        "252-solo-starts-fr-en",
+        "224-coop-starts-fr-en",
+        "76-late-coop-restores-fr-en",
+        "persistent-support-and-four-opponents-fr-en",
+        "28-frame-compositions-fr-en",
+        "super-tank-production-fire-blast-save-fr-en",
+        "army-harvester-selection-and-allied-control-fr-en",
+        "all-faction-editor-windtraps-with-and-without-chaos-fr-en",
+        "choam-editor-32-items-fr-en"
+      ],
+      "networkProtocol": 25,
+      "saveVersion": 9840,
+      "validationScope": "release-547",
+      "metadataCorrection": {
+        "field": "saveVersion",
+        "originalValue": 9839,
+        "correctValue": 9840,
+        "originalReportSha256": "26a4a7bdd20725d07d91288b332b9d0a9ce5ec8f65795da72260058657ccef69",
+        "verifiedSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
+        "sourceHeader": "include/Definitions.h",
+        "reason": "The workflow report retained the previous save version; the tested source defines 9840. Package bytes are unchanged."
+      }
+    }
   },
-  "native": {
-    "passed": true,
+  "packageResources": {
+    "version": "1.0.547",
+    "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+    "modFiles": 5635,
+    "originalArtworkFiles": 22,
+    "vanillaFiles": 205,
+    "packages": {
+      "windows": {
+        "passed": true,
+        "sha256": "2288e7c6843be76b237572d83c8828ec12d03cadcbe72c76b2ae4ec04a957fa0"
+      },
+      "linuxTar": {
+        "passed": true,
+        "sha256": "c6570dedf6f61ff197dc648610d1413ac236d35460c228baa026349a4cbbc18f"
+      },
+      "DuneLegacyTornie-1.0.547-Linux-Mint-Compatible.AppImage": {
+        "passed": true,
+        "sha256": "0373696e4badfe06c86338ad88fa97f36e4b57674a4a884c80d7c64812a7c86d"
+      },
+      "DuneLegacyTornie-1.0.547-Linux-x86_64.AppImage": {
+        "passed": true,
+        "sha256": "82e12b9bc5e48d4a82285463875cf855e87e4cb7a287071d98460212513cdd16"
+      }
+    }
+  },
+  "localValidation": {
+    "version": "1.0.547",
+    "status": "local-verified",
+    "date": "2026-10-31",
+    "networkProtocol": 25,
+    "saveVersion": 9840,
+    "engineAndNetwork": {
+      "ctestPassed": true,
+      "tests": 2
+    },
+    "native": {
+      "passed": true,
+      "languages": [
+        "fr",
+        "en"
+      ],
+      "mods": 7,
+      "checks": [
+        "army/Harvester selection and allied control",
+        "all four Harvester variants",
+        "Super Tank production at 925",
+        "Kleshmersh scenario and reinforcement replacement in three full mods",
+        "fire salvos and Devastator-style damaging destruction",
+        "Super Tank save/reload",
+        "all-faction editor Windtraps with and without Chaos",
+        "editor map and save roundtrips, undo/redo and marker rendering",
+        "selected-army mission teardown with the real selection observer"
+      ]
+    },
+    "campaignRecipe": {
+      "passed": true,
+      "campaigns": 18,
+      "soloScenarios": 396
+    },
+    "limits": [
+      "Human two-PC/independent-Internet co-op remains separate from automated tests.",
+      "Physical Mint PC and full campaign balance playthroughs remain manual checks.",
+      "Jericho/ArcaKev campaign rewrites await their authors' opinions."
+    ],
+    "website": {
+      "passed": true,
+      "languages": [
+        "fr",
+        "en"
+      ],
+      "desktopAndMobile": true,
+      "contexts": 164
+    },
+    "historicalRegressions": {
+      "expandedCoopAllSevenModes": {
+        "passed": true,
+        "source": "d44386f85b71cf56d7bd58aefa74bc0faf05ce4b"
+      },
+      "release543AllSevenModes": {
+        "passed": true,
+        "source": "d44386f85b71cf56d7bd58aefa74bc0faf05ce4b"
+      },
+      "harvesterCrushAllSevenModes": {
+        "passed": true,
+        "source": "d44386f85b71cf56d7bd58aefa74bc0faf05ce4b"
+      },
+      "release546Matrix": {
+        "passed": true,
+        "editorMaps": 5265,
+        "soloStarts": 252,
+        "coopStarts": 224,
+        "lateCoopCheckpoints": 76,
+        "source": "7c5149220fd0ee869205677127ae6c944e2f3113"
+      }
+    },
+    "memoryRegression": {
+      "compiler": "MSVC 19.44",
+      "instrumentation": "AddressSanitizer",
+      "beforeFixReproduced": true,
+      "beforeFixError": "heap-use-after-free in GameInterface::refreshAircraftButtons during selected-unit mission teardown",
+      "fix": "UnitBase unregisters from unitList before notifying selection observers",
+      "afterFixSevenModesPassed": true,
+      "selectedArmyAndRealInterface": true,
+      "source": "7c5149220fd0ee869205677127ae6c944e2f3113"
+    },
+    "multiplayerSaveMemory": {
+      "beforeFixReproduced": true,
+      "instrumentation": "MSVC AddressSanitizer",
+      "afterFixSevenModesPassed": true,
+      "checks": [
+        "genuine multiplayer save bytes kept stable while settings are restored",
+        "unit identity and owner",
+        "saved unit health",
+        "guest credits",
+        "selected-army teardown after loading"
+      ],
+      "source": "7c5149220fd0ee869205677127ae6c944e2f3113"
+    },
+    "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+    "asanCampaignCheckpoints": {
+      "passed": true,
+      "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+      "soloStarts": 252,
+      "coopStarts": 224,
+      "lateCoopCheckpoints": 76,
+      "editorCatalogueExcludedFromThisFocusedRun": true
+    },
+    "officialWindowsSaveHeader": {
+      "passed": true,
+      "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+      "saveVersion": 9840,
+      "generatedSaves": 10
+    }
+  },
+  "website": {
     "languages": [
       "fr",
       "en"
     ],
-    "mods": 7,
-    "checks": [
-      "army/Harvester selection and allied control",
-      "all four Harvester variants",
-      "Super Tank production at 925",
-      "Kleshmersh scenario and reinforcement replacement in three full mods",
-      "fire salvos and Devastator-style damaging destruction",
-      "Super Tank save/reload",
-      "all-faction editor Windtraps with and without Chaos",
-      "editor map and save roundtrips, undo/redo and marker rendering"
-    ]
-  },
-  "campaignRecipe": {
-    "passed": true,
-    "campaigns": 18,
-    "soloScenarios": 396
+    "browserContexts": 164
   },
   "limits": [
     "Human two-PC/independent-Internet co-op remains separate from automated tests.",
     "Physical Mint PC and full campaign balance playthroughs remain manual checks.",
-    "Jericho/ArcaKev campaign rewrites await their authorsâ€™ opinions."
-  ],
-  "website": {
-    "passed": true,
-    "languages": [
-      "fr",
-      "en"
-    ],
-    "desktopAndMobile": true,
-    "contexts": 164
-  }
+    "Jericho/ArcaKev campaign rewrites await their authors' opinions."
+  ]
 }

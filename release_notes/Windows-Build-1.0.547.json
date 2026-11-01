@@ -1,0 +1,48 @@
+{
+  "release543Checks": [],
+  "videoOptionsChecks": [
+    "fr",
+    "en"
+  ],
+  "validationScope": "release-547",
+  "engineAndNetworkTests": true,
+  "workflowSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
+  "sha256": "2288e7c6843be76b237572d83c8828ec12d03cadcbe72c76b2ae4ec04a957fa0",
+  "package": "DuneLegacyTornie-1.0.547-Windows-x64.zip",
+  "installedRuntimeChecks": [
+    "fr",
+    "en"
+  ],
+  "version": "1.0.547",
+  "networkProtocol": 25,
+  "saveVersion": 9840,
+  "nextReleaseChecks": [
+    "release-545-regressions-fr-en",
+    "radar-fr-en",
+    "5265-editor-loads-fr-en",
+    "252-solo-starts-fr-en",
+    "224-coop-starts-fr-en",
+    "76-late-coop-restores-fr-en",
+    "persistent-support-and-four-opponents-fr-en",
+    "28-frame-compositions-fr-en",
+    "super-tank-production-fire-blast-save-fr-en",
+    "army-harvester-selection-and-allied-control-fr-en",
+    "all-faction-editor-windtraps-with-and-without-chaos-fr-en",
+    "choam-editor-32-items-fr-en"
+  ],
+  "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+  "menuStartupChecks": [
+    "fr",
+    "en"
+  ],
+  "run": 41264452598,
+  "metadataCorrection": {
+    "field": "saveVersion",
+    "originalValue": 9839,
+    "correctValue": 9840,
+    "originalReportSha256": "8910229c60013edd0cb13fb3896b7db98ebd939bb10e382cc59ca60009ec0ce7",
+    "verifiedSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
+    "sourceHeader": "include/Definitions.h",
+    "reason": "The workflow report retained the previous save version; the tested source defines 9840. Package bytes are unchanged."
+  }
+}

@@ -1,6 +1,6 @@
-# Préparation réalisée — 1.0.547
+# Historique — demandes livrées en 1.0.547
 
-Notes du 31 octobre 2026, après la version publiée **1.0.546**. Contenu intégré dans la préparation 1.0.547, dont les essais locaux FR/EN passent. La publication attend la validation des paquets Windows/Linux.
+Notes du 31 octobre 2026, après la version publiée **1.0.546**. Contenu livré en 1.0.547. Les contrôles locaux et les paquets Windows/Linux FR/EN sont consignés dans Validation-1.0.547.json.
 
 ## Interface en partie
 
@@ -26,8 +26,8 @@ Notes du 31 octobre 2026, après la version publiée **1.0.546**. Contenu intég
 
 Graphique reçu le 31 octobre 2026, intégré au jeu. SHA-256 de l’original et de la copie : `06c324e587827c61074224df1c51a8de5a24cf724b72fe75822e0b24d263732c`.
 
-Icône reçue et conservée le 31 octobre 2026, prête pour l’intégration avec la tourelle. SHA-256 de l’original et de la copie : `5d89bf8f2f219a5f9f573df3ac65825f805c2745fc28eeb59f84eb170e856805`.
+Icône reçue et conservée le 31 octobre 2026, intégrée avec la tourelle. SHA-256 de l’original et de la copie : `5d89bf8f2f219a5f9f573df3ac65825f805c2745fc28eeb59f84eb170e856805`.
 
-Le [suivi de la 1.0.546](../docs/SUIVI-1.0.546-FR.md) conserve les essais manuels et avis des auteurs encore attendus pour la version publiée. Les anciens brouillons restent dans l’[historique](README.md#historique--historical-records).
+Le [suivi de la 1.0.546](../docs/SUIVI-1.0.546-FR.md) conserve les essais manuels et avis des auteurs encore attendus pour les versions publiées. Les anciens brouillons restent dans l’[historique](README.md#historique--historical-records).
 
 [English](Upcoming-Release-EN.md)

@@ -24,10 +24,10 @@ const {chromium}=require('playwright'),fs=require('fs');
   }
   await page.goto(base+(lang==='fr'?'index.html':'index-en.html'));
   if(width===390)await page.locator('.menu-toggle').click();
-  if(!await page.locator('.official-site a').first().isVisible())throw Error('DuneCity link missing');
+  if(!await page.locator('.official-site a').first().isVisible())throw Error('Official reference link missing');
   checks.push({lang,width,officialLinks:true});await page.close();
  }
  await browser.close();if(errors.length)throw Error(errors.join('\n'));
  fs.writeFileSync(process.env.RELEASE547_SITE_OUTPUT||'reports/website-547.json',JSON.stringify({passed:true,count:checks.length,checks,errors},null,2));
- console.log('PASS: '+checks.length+' FR/EN Super Tank, faction replacement, price, technology, artwork and DuneCity contexts');
+ console.log('PASS: '+checks.length+' FR/EN Super Tank, faction replacement, price, technology, artwork and official site contexts');
 })().catch(e=>{console.error(e);process.exit(1)});

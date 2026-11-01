@@ -1,5 +1,14 @@
 # Sortie 1.0.546
 
+## 1.0.547 — Windows / Linux / Mint
+
+Source du jeu figée : `7c5149220fd0ee869205677127ae6c944e2f3113`. Super Tank de Kleshmersh à 925 crédits, sélections d’armée et de moissonneuses, Windtraps améliorés dans l’éditeur sans Chaos avec étoile verte, fermeture des missions et lecture des checkpoints coop sécurisées. Protocole 25 ; sauvegardes 9840.
+
+[Windows vérifié](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41264452598) · [Linux/Mint vérifié](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41265028810) · [Audit des ressources](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41266529079). Les deux rapports de compilation conservaient 9839 dans leur champ documentaire ; la correction vers 9840 est tracée par l’empreinte du rapport original et la source testée. Le ZIP Windows officiel a également généré dix sauvegardes contrôlées au format 9840, sans modification des paquets.
+
+Contrôles locaux : 164 parcours web FR/EN ordinateur/mobile, tests moteur et réseau, matrice complète de 5 265 cartes/252 départs solo/224 coop/76 reprises. Les sept modes et cette matrice de reprises passent aussi sous MSVC AddressSanitizer. Le [bilan 547](../release_notes/Validation-1.0.547.json) distingue ces résultats des essais humains encore attendus.
+
+
 ## Liens DuneCity — 31 octobre 2026
 
 Le site FR/EN affiche désormais, sous la base de référence, un lien vers le [site officiel de DuneCity](https://www.dunelegacy.com/) et sa [présentation du mod Tornie](https://www.dunelegacy.com/tornie.html), qui cite ce guide. Les liens sont aussi accessibles dans le menu mobile. Source du site : `c4f4e2444d8992d53b102012e37c49e473e4101c` ; [déploiement Pages réussi](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41254412097).

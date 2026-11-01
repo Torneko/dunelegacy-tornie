@@ -323,7 +323,7 @@ jobs:
             release543Checks = @("building-sales", "normal-multiplayer-alliances", "flame-and-gas-units", "magenta-free-zooms", "house-colours-and-blue-stars", "neutral-saboteur-tier-seven", "editor-terrain-blue-stars", "original-flame-squad-portraits", "precise-close-flame-quad", "sales-destruction-and-concrete", "sale-button-after-upgrade", "easy-sales-75-percent", "extended-fallback-units", "movement-slowing", "saved-chaos-worm-offer", "elite-ornithopter", "seventy-achievements", "palace-napalm-and-saved-hazards", "harvester-area-guard-crush", "completed-upgrade-sales", "native-slowpost-editor-icon", "impact-only-and-random-palace-napalm", "ten-original-artwork-files", "scoutpost-slowpost-upgrade", "bicolour-vanilla-harvesters", "worfinery-displayed-labels")
             nextReleaseChecks = @("editor-native-quad-anchors", "editor-preupgraded-windtraps", "chaos-defence-upgrades", "saved-radar-research", "original-westwood-audio", "original-localized-credits", "campaign-role-cinematics")
             networkProtocol = [int]((Select-String -LiteralPath "include/Network/NetworkManager.h" -Pattern '^#define NETWORK_PROTOCOL_VERSION\s+(\d+)').Matches[0].Groups[1].Value)
-            saveVersion = 9839
+            saveVersion = [int]((Select-String -LiteralPath "include/Definitions.h" -Pattern '^#define SAVEGAMEVERSION\s+(\d+)').Matches[0].Groups[1].Value)
             menuStartupChecks = @("fr", "en")
             videoOptionsChecks = @("fr", "en")
             package = $package.Name
