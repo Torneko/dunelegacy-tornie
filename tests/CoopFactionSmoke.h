@@ -109,7 +109,7 @@ inline ExpectedUnit unitRules(Game& game, const GameInitSettings& init, int fact
         } else if(item == Unit_Tank || item == Unit_SiegeTank || item == Unit_Launcher) {
             category({Unit_Tank, Unit_SiegeTank, Unit_Launcher});
         } else if(item == Unit_Devastator || item == Unit_Deviator || item == Unit_SonicTank
-                || item == Unit_FlameTank || item == Unit_EliteLauncher || item == Unit_EliteSiegeTank
+                || item == Unit_SuperTank || item == Unit_FlameTank || item == Unit_EliteLauncher || item == Unit_EliteSiegeTank
                 || item == Unit_ChemicalSiegeTank) {
             result.items = specialPool(game, faction, custom, mod);
         }

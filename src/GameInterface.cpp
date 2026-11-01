@@ -16,6 +16,7 @@
  */
 
 #include <GameInterface.h>
+#include <UnitSelection.h>
 
 #include <globals.h>
 
@@ -124,6 +125,15 @@ GameInterface::GameInterface() : Window(0,0,0,0) {
     chemicalCarryallSelectButton.resize(chemicalCarryallButtonSize.x, chemicalCarryallButtonSize.y);
     windowWidget.addWidget(&chemicalCarryallSelectButton, chemicalCarryallButtonPos, chemicalCarryallButtonSize);
 
+    armySelectButton.setTooltipText(_("Select all army units"));
+    armySelectButton.setOnClick(std::bind(&Game::selectAllArmy,currentGame));
+    harvestersSelectButton.setTooltipText(_("Select all harvesters"));
+    harvestersSelectButton.setOnClick(std::bind(&Game::selectAllHarvesters,currentGame));
+    const int groupHeight=36;
+    const int groupY=chemicalCarryallButtonPos.y+chemicalCarryallButtonHeight+4;
+    windowWidget.addWidget(&armySelectButton,Point(chemicalCarryallButtonPos.x,groupY),Point(ornithopterButtonWidth,groupHeight));
+    windowWidget.addWidget(&harvestersSelectButton,Point(chemicalCarryallButtonPos.x,groupY+groupHeight+4),Point(ornithopterButtonWidth,groupHeight));
+
     // add chat manager
     windowWidget.addWidget(&chatManager, Point(20, 60), Point(getRendererWidth() - sideBar.getSize().x, 360));
 
@@ -191,9 +201,11 @@ GameInterface::~GameInterface() {
 }
 
 void GameInterface::refreshAircraftButtons() {
-    int ornithopters = 0, chemicalCarryalls = 0;
+    int ornithopters=0,chemicalCarryalls=0,army=0,harvesters=0;
     for(const auto* unit : unitList) {
         if(!currentGame->canControlHouse(unit->getOwner()) || !unit->isRespondable()) continue;
+        if(isArmySelectionItem(unit->getItemID())) ++army;
+        if(isHarvesterSelectionItem(unit->getItemID())) ++harvesters;
         if(isOrnithopterUnit(unit->getItemID())) ++ornithopters;
         else if(unit->getItemID() == Unit_ChemicalCarryall) ++chemicalCarryalls;
     }
@@ -202,6 +214,9 @@ void GameInterface::refreshAircraftButtons() {
     chemicalCarryallSelectButton.setTextColor(colour);
     ornithopterSelectButton.setCountedText(_("Ornithopter"),ornithopters);
     chemicalCarryallSelectButton.setCountedText(_("Chemical Carryall"),chemicalCarryalls);
+    armySelectButton.setTextColor(colour);harvestersSelectButton.setTextColor(colour);
+    armySelectButton.setCountedText(_("Army"),army);
+    harvestersSelectButton.setCountedText(_("Harvesters"),harvesters);
 }
 
 void GameInterface::draw(Point position) {
@@ -291,12 +306,14 @@ void GameInterface::updateObjectInterface() {
         refreshAircraftButtons();
         ornithopterSelectButton.setVisible(true);
         chemicalCarryallSelectButton.setVisible(true);
+        armySelectButton.setVisible(true);harvestersSelectButton.setVisible(true);
         removeOldContainer();
         return;
     }
 
     ornithopterSelectButton.setVisible(false);
     chemicalCarryallSelectButton.setVisible(false);
+    armySelectButton.setVisible(false);harvestersSelectButton.setVisible(false);
 
     if(selection.size() == 1) {
         ObjectBase* pObject = currentGame->getObjectManager().getObject(*selection.begin());

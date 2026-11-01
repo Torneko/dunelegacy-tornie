@@ -172,7 +172,8 @@ typedef enum {
     Unit_FastHarvester = 86,
     Unit_TameSandworm = 87,
     Structure_Slowpost = 84,
-    ItemID_LastID = 87,
+    Unit_SuperTank = 88,
+    ItemID_LastID = 88,
 
     Num_ItemID
 } ItemID_enum;
@@ -225,7 +226,7 @@ typedef enum {
     \param itemID   the ID of the item (e.g. Unit_Harvester)
     \return true if it is an unit, false otherwise
 */
-inline bool isUnit(int itemID) { return (itemID >= Unit_FirstID && itemID <= Unit_LastID) || (itemID >= Unit_RocketTrike && itemID <= Unit_ExtLastID) || itemID == Unit_RebelHarvester || itemID == Unit_SonicTrike || itemID == Unit_ChemicalSiegeTank || itemID == Unit_ChemicalCarryall || itemID == Unit_Troopers5 || itemID == Unit_Infantry5 || itemID == Unit_FlameQuad || itemID == Unit_GasInfantry || itemID == Unit_FlameTrooper || itemID == Unit_EliteOrnithopter || itemID == Unit_RaiderQuad || itemID == Unit_RangedTank || itemID == Unit_SlowTank || itemID == Unit_CapacityHarvester || itemID == Unit_FastHarvester || itemID == Unit_TameSandworm; }
+inline bool isUnit(int itemID) { return (itemID >= Unit_FirstID && itemID <= Unit_LastID) || (itemID >= Unit_RocketTrike && itemID <= Unit_ExtLastID) || itemID == Unit_RebelHarvester || itemID == Unit_SonicTrike || itemID == Unit_ChemicalSiegeTank || itemID == Unit_ChemicalCarryall || itemID == Unit_Troopers5 || itemID == Unit_Infantry5 || itemID == Unit_FlameQuad || itemID == Unit_GasInfantry || itemID == Unit_FlameTrooper || itemID == Unit_EliteOrnithopter || itemID == Unit_RaiderQuad || itemID == Unit_RangedTank || itemID == Unit_SlowTank || itemID == Unit_CapacityHarvester || itemID == Unit_FastHarvester || itemID == Unit_TameSandworm || itemID == Unit_SuperTank; }
 
 /**
     This function determines if the specified itemID is a structure or not.

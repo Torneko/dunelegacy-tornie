@@ -10,8 +10,8 @@ struct EditorWindtrapFixture {
         const auto require=[](bool ok,const char* why) {
             if(!ok)throw std::runtime_error(std::string("Editor Windtrap: ")+why);
         };
-        const bool full=mod!="vanilla" && !isLiteMod(mod);
-        const auto house=getRuntimeHouseForIdentity(full?HOUSE_REBELS:HOUSE_HARKONNEN);
+        const bool full=mod!="vanilla";
+        const auto house=getRuntimeHouseForIdentity(full && !isLiteMod(mod)?HOUSE_REBELS:HOUSE_HARKONNEN);
         const auto path=(std::filesystem::path(output)/(mod+"-editor-power.ini")).string();
         std::string map;
         {
@@ -39,7 +39,7 @@ struct EditorWindtrapFixture {
                 require(editor.getStructure(id)->powerUpgraded,"health edit cleared power upgrade");
                 undoHealth->perform(&editor);require(editor.getStructure(id)->health==256,"health undo");
             } else {
-                // A manually forged flag must not enable the feature in Vanilla/Lite.
+                // A manually forged flag must not enable the feature in Vanilla.
                 editor.getStructure(id)->powerUpgraded=true;
             }
             editor.saveMap(path);
@@ -67,6 +67,7 @@ struct EditorWindtrapFixture {
                         require(SDL_RenderReadPixels(renderer,&dst,expected->format->format,expected->pixels,expected->pitch)==0,"expected structure capture");
                         const int sx=view.world2screenX(pos.x*TILESIZE),sy=view.world2screenY(pos.y*TILESIZE);
                         for(int y=0;y<h;++y)for(int x=0;x<w;++x) {
+                            if(pos==Coord(4,4) && x>=w-5*(zoom+1)-2 && y>=h-5*(zoom+1)-2)continue; // Green editor star.
                             Uint8 r,g,b,a;SDL_GetRGBA(getPixel(expected.get(),x,y),expected->format,&r,&g,&b,&a);
                             if(r==7 && g==11 && b==13)continue;
                             Uint8 ar,ag,ab,aa;SDL_GetRGBA(getPixel(scene.get(),sx+x,sy+y),scene->format,&ar,&ag,&ab,&aa);

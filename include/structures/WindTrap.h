@@ -39,6 +39,7 @@ public:
     void save(OutputStream& stream) const override;
     bool isPowerUpgraded() const { return powerUpgraded; }
     static bool supportsPowerUpgrade(HOUSETYPE house);
+    static bool supportsEditorPowerUpgrade();
     bool isPowerUpgradeEligible() const;
     void handlePowerUpgradeClick();
     bool doPowerUpgrade();

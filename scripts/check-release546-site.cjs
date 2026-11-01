@@ -10,7 +10,8 @@ const {chromium}=require('playwright'),fs=require('fs');
    const result=await page.evaluate(({mod})=>{
     const d=window.SITE_DATA,revised=['Tornie','TornieLite'].includes(mod);
     const section=[...document.querySelectorAll('main .campaign-plan')].find(s=>s.querySelector('h2')?.textContent.includes('1.0.546'));
-    if(d.version!=='1.0.546'||d.rules546?.protocol!==24||d.rules546?.saveVersion!==9839)throw Error('Release metadata differs');
+    const current=d['rules'+d.version.split('.').pop()];
+    if(!['1.0.546','1.0.547'].includes(d.version)||!current||current.protocol!==(d.version==='1.0.547'?25:24)||current.saveVersion!==(d.version==='1.0.547'?9840:9839))throw Error('Release metadata differs');
     if(Boolean(section)!==revised)throw Error('Campaign revision shown for wrong edition '+mod);
     if(revised){
      const rows=[...section.querySelectorAll('tbody tr')].map(row=>[...row.children].map(c=>c.textContent.trim()));

@@ -44,6 +44,9 @@ docs/references/1.0.538/*
 !docs/COOP-CAMPAIGN-EN.md
 !docs/SUIVI-1.0.546-FR.md
 !docs/SUIVI-1.0.546-EN.md
+!docs/RELEASE-1.0.547-assets.json
+!docs/SUIVI-1.0.547-FR.md
+!docs/SUIVI-1.0.547-EN.md
 missing
 aclocal.m4
 install-sh

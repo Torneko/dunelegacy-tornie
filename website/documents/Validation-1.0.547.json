@@ -1,0 +1,48 @@
+{
+  "version": "1.0.547",
+  "status": "local-verified",
+  "date": "2026-10-31",
+  "networkProtocol": 25,
+  "saveVersion": 9840,
+  "engineAndNetwork": {
+    "ctestPassed": true,
+    "tests": 2
+  },
+  "native": {
+    "passed": true,
+    "languages": [
+      "fr",
+      "en"
+    ],
+    "mods": 7,
+    "checks": [
+      "army/Harvester selection and allied control",
+      "all four Harvester variants",
+      "Super Tank production at 925",
+      "Kleshmersh scenario and reinforcement replacement in three full mods",
+      "fire salvos and Devastator-style damaging destruction",
+      "Super Tank save/reload",
+      "all-faction editor Windtraps with and without Chaos",
+      "editor map and save roundtrips, undo/redo and marker rendering"
+    ]
+  },
+  "campaignRecipe": {
+    "passed": true,
+    "campaigns": 18,
+    "soloScenarios": 396
+  },
+  "limits": [
+    "Human two-PC/independent-Internet co-op remains separate from automated tests.",
+    "Physical Mint PC and full campaign balance playthroughs remain manual checks.",
+    "Jericho/ArcaKev campaign rewrites await their authorsâ€™ opinions."
+  ],
+  "website": {
+    "passed": true,
+    "languages": [
+      "fr",
+      "en"
+    ],
+    "desktopAndMobile": true,
+    "contexts": 164
+  }
+}

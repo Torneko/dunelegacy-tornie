@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 
 # Project name and version
-project(DuneLegacyTornie VERSION 1.0.546 LANGUAGES C CXX)
+project(DuneLegacyTornie VERSION 1.0.547 LANGUAGES C CXX)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -196,6 +196,7 @@ endif()
 install(FILES docs/ACHIEVEMENTS.md docs/CHAOS-MODE.md docs/CAMPAIGNS.md docs/WILDSPADE-MENTAT.md docs/KLESHMERSH-MENTAT.md
               docs/COOP-CAMPAIGN.md docs/COOP-CAMPAIGN-EN.md
               docs/SUIVI-1.0.546-FR.md docs/SUIVI-1.0.546-EN.md
+              docs/SUIVI-1.0.547-FR.md docs/SUIVI-1.0.547-EN.md
         DESTINATION ${DUNELEGACY_DOC_DIR}/docs)
 if(WIN32)
     # Windows: install docs to root

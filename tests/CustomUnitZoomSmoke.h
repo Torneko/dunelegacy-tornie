@@ -16,7 +16,7 @@ inline void verifyCustomUnitZooms(const std::string& output, const std::string& 
         ObjPic_DeviatorGunTornie, ObjPic_FlameTankGunTornie,
         ObjPic_EliteLauncherGunTornie, ObjPic_EliteSiegeTankGunTornie,
         ObjPic_ChemicalSiegeTankGunTornie, ObjPic_HarvestankGunTornie,
-        ObjPic_RebelSonicTankGun
+        ObjPic_RebelSonicTankGun, ObjPic_SuperTankGun
     };
     for(const unsigned id : graphics) {
         for(int house = 0; house < NUM_HOUSES; ++house) {

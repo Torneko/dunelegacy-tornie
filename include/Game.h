@@ -326,6 +326,9 @@ public:
     */
     void selectAllOrnithopters();
     void selectAllChemicalCarryalls();
+    void selectAllArmy();
+    void selectAllHarvesters();
+    void selectAllUnitGroup(bool harvesters);
 
     /**
         This method unselects all units/structures in the list aList.

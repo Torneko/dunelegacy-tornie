@@ -198,6 +198,7 @@ int Player::chooseLowPriorityCustomUnit(const BuilderBase* pBuilder, int chanceD
         Unit_FlameTank,
         Unit_EliteLauncher,
         Unit_EliteSiegeTank,
+        Unit_SuperTank,
         Unit_ChemicalSiegeTank,
         Unit_ChemicalCarryall,
         Unit_RebelHarvester

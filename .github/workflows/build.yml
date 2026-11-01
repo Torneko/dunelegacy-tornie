@@ -244,6 +244,9 @@ jobs:
             if ($release546) {
               $checks += @(@("--verify-release546", "RELEASE 546 R2 PASS:", 1), @("--verify-release546-frames", "RELEASE 546 FRAMES PASS:", 1))
             }
+            if (Test-Path ../config/Release547.json) {
+              $checks += ,@("--verify-release547", "RELEASE 547 PASS:", 1)
+            }
             foreach ($check in $checks) {
               $nextLog = Join-Path $env:RUNNER_TEMP "dunelegacy-installed-$language-$($check[0]).log"
               $process = Start-Process -FilePath "install/dunelegacy.exe" -ArgumentList $check[0], "--showlog", "--window" -WindowStyle Hidden -Wait -PassThru -RedirectStandardError $nextLog
@@ -325,9 +328,13 @@ jobs:
           }
           $report.validationScope = if ("${{ inputs.ui_only || inputs.followup_545 }}" -eq "true") { "ui-refinements" } else { "full" }
           if (Test-Path config/TornieCampaign546.json) {
-            $report.validationScope = "release-546"
+            $report.validationScope = if (Test-Path config/Release547.json) { "release-547" } else { "release-546" }
             $report.release543Checks = @()
             $report.nextReleaseChecks = @("release-545-regressions-fr-en", "radar-fr-en", "choam-editor-31-items-fr-en", "5265-editor-loads-fr-en", "252-solo-starts-fr-en", "224-coop-starts-fr-en", "76-late-coop-restores-fr-en", "persistent-support-and-four-opponents-fr-en", "28-frame-compositions-fr-en")
+            if (Test-Path config/Release547.json) {
+              $report.nextReleaseChecks = @($report.nextReleaseChecks | Where-Object { $_ -ne "choam-editor-31-items-fr-en" })
+              $report.nextReleaseChecks += @("super-tank-production-fire-blast-save-fr-en", "army-harvester-selection-and-allied-control-fr-en", "all-faction-editor-windtraps-with-and-without-chaos-fr-en", "choam-editor-32-items-fr-en")
+            }
           }
           if ("${{ inputs.ui_only || inputs.followup_545 }}" -eq "true") {
             $report.release543Checks = @()

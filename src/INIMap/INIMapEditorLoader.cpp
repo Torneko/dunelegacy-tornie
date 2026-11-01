@@ -621,7 +621,7 @@ void INIMapEditorLoader::loadStructures()
                 continue;
             }
 
-            const bool powerUpgraded=itemID==Structure_WindTrap && WindTrap::supportsPowerUpgrade(houseID)
+            const bool powerUpgraded=itemID==Structure_WindTrap && WindTrap::supportsEditorPowerUpgrade()
                 && inifile->getBoolValue("WINDTRAPUPGRADES",tmpkey,false);
             pMapEditor->structures.emplace_back(structureID, houseID, itemID, iHealth, Coord(getXPos(pos),getYPos(pos)),powerUpgraded);
         } else {

@@ -1,6 +1,6 @@
-# Local achievements — 1.0.546
+# Local achievements — 1.0.547
 
-Dune Legacy Tornie 1.0.546 provides **73 offline achievements**. Open **Achievements**
+Dune Legacy Tornie 1.0.547 provides **73 offline achievements**. Open **Achievements**
 or **Hauts faits** from the main menu to view locked awards and cumulative stats.
 Unlocks use the existing in-game news ticker. Steam is not required.
 
@@ -53,7 +53,7 @@ Tornie profile. It stores lifetime statistics, unlock timestamps, campaign flags
 per-run high water marks and checkpoint history. Writes replace the file atomically.
 An unknown/newer or damaged profile is preserved and the window reports the issue.
 
-Version 1.0.546 writes save format **9839** and uses network protocol **24**. Existing achievement IDs and profiles are retained. A checkpoint is
+Version 1.0.547 writes save format **9840** and uses network protocol **25**. Existing achievement IDs and profiles are retained. A checkpoint is
 stored separately in the local profile, keyed by the exact save-file digest. When
 that save is loaded, match conditions and simulation-cycle crushing windows resume.
 The run's high water marks prevent the same events from being counted again when
@@ -135,12 +135,12 @@ cannot repeat the points. Existing best scores remain valid; unrecorded older sc
 Other new lifetime thresholds cover wins, defeats, units built/lost/destroyed, buildings built/destroyed/captured,
 spice deposits, worms, crushed infantry, blooms, palace abilities and missiles.
 
-## Historical additions — 1.0.543 and 1.0.545, retained in 1.0.546
+## Historical additions — 1.0.543 and 1.0.545, retained in 1.0.547
 
-The catalogue reached 70 in 1.0.543 and 73 in 1.0.545. Version 1.0.546 keeps these awards and their stable identifiers.
+The catalogue reached 70 in 1.0.543 and 73 in 1.0.545. Version 1.0.547 keeps these awards and their stable identifiers.
 
 - `COOP_RESCUED`: be eliminated in co-op and win through a surviving allied faction.
 - `COOP_RESCUER`: survive and win after an allied faction is eliminated.
 - `PALACE_SABOTEUR`: destroy an enemy Palace with a local-player Saboteur; damage alone does not qualify.
 
-Cooperative rescue awards resolve at team victory and support two, three or four allied factions. Archon controllers share their house’s elimination state. Quitting, disconnection or team defeat does not qualify for the victory awards. The completion star follows all 73 entries. Campaign balance playthroughs and human Internet co-op for 1.0.546 remain separate from automated verification.
+Cooperative rescue awards resolve at team victory and support two, three or four allied factions. Archon controllers share their house’s elimination state. Quitting, disconnection or team defeat does not qualify for the victory awards. The completion star follows all 73 entries. Campaign balance playthroughs and human Internet co-op for 1.0.547 remain separate from automated verification.

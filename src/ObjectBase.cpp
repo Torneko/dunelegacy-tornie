@@ -89,6 +89,7 @@
 #include <units/FlameTank.h>
 #include <units/EliteLauncher.h>
 #include <units/EliteSiegeTank.h>
+#include <units/SuperTank.h>
 #include <units/ChemicalSiegeTank.h>
 
 #include <array>
@@ -907,6 +908,7 @@ ObjectBase* ObjectBase::createObject(int itemID, House* Owner, bool byScenario, 
         case Unit_FlameTank:                newObject = new FlameTank(Owner); break;
         case Unit_EliteLauncher:            newObject = new EliteLauncher(Owner); break;
         case Unit_EliteSiegeTank:           newObject = new EliteSiegeTank(Owner); break;
+        case Unit_SuperTank: newObject = new SuperTank(Owner); break;
         case Unit_ChemicalSiegeTank:        newObject = new ChemicalSiegeTank(Owner); break;
         case Unit_Special: {
             const bool modInitialized = ModManager::instance().isInitialized();
@@ -947,6 +949,7 @@ ObjectBase* ObjectBase::createObject(int itemID, House* Owner, bool byScenario, 
                     case Unit_FlameTank:       newObject = new FlameTank(Owner); break;
                     case Unit_EliteLauncher:   newObject = new EliteLauncher(Owner); break;
                     case Unit_EliteSiegeTank:  newObject = new EliteSiegeTank(Owner); break;
+        case Unit_SuperTank: newObject = new SuperTank(Owner); break;
                     case Unit_ChemicalSiegeTank: newObject = new ChemicalSiegeTank(Owner); break;
                     default: break;
                 }
@@ -1038,6 +1041,7 @@ ObjectBase* ObjectBase::loadObject(InputStream& stream, int itemID, Uint32 objec
         case Unit_FlameTank:                newObject = new FlameTank(stream); break;
         case Unit_EliteLauncher:            newObject = new EliteLauncher(stream); break;
         case Unit_EliteSiegeTank:           newObject = new EliteSiegeTank(stream); break;
+        case Unit_SuperTank: newObject = new SuperTank(stream); break;
         case Unit_ChemicalSiegeTank:        newObject = new ChemicalSiegeTank(stream); break;
 
         default:                            newObject = nullptr;

@@ -1,12 +1,20 @@
 # Dune Legacy Tornie
 
+**[1.0.547 — Windows / Linux / Mint](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.547)** : Super Tank de Kleshmersh à **925 crédits**, sélection d’armée et de toutes les moissonneuses, Windtraps préaméliorés dans l’éditeur pour toutes les factions hors Vanilla sans obligation de Chaos, avec étoile verte. Protocole **25**, sauvegardes **9840**. [FR](release_notes/1.0.547-FR.md) · [EN](release_notes/1.0.547-EN.md).
+
+Guides 1.0.547 : [FR](HOWTOPLAY-FR.md) · [EN](HOWTOPLAY.md) · [Coop](docs/COOP-CAMPAIGN.md) · [Suivi](docs/SUIVI-1.0.547-FR.md).
+
+Compilation CMake avec tests, puis CTest. Contrôles natifs Windows : `scripts/check-windows-547.ps1` en FR/EN dans des profils isolés. Le site se maintient dans `website/` ; `scripts/prepare-website-547.py` actualise le contenu du lot. Les recettes 546 servent à vérifier les anciennes campagnes, sans appliquer leurs anciennes préparations sur les nouvelles règles.
+
+## Historique des versions / Release history
+
 **[1.0.546 — Windows / Linux / Mint](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.546)** : campagnes Tornie/Tornie Lite et coops révisées, soutien permanent, trois adversaires en 020–021 et quatre en 022 ; CHOAM, cadres et éditeur Vanilla corrigés. Protocole **24**, sauvegardes **9839**. [FR](release_notes/1.0.546-FR.md) · [EN](release_notes/1.0.546-EN.md).
 
 Guides 1.0.546 : [FR](HOWTOPLAY-FR.md) · [EN](HOWTOPLAY.md) · [Coop](docs/COOP-CAMPAIGN.md) · [Suivi](docs/SUIVI-1.0.546-FR.md) · [Historique des notes](release_notes/README.md).
 
 Reproduction : `scripts/prepare-546.py`, puis `scripts/rebuild-campaigns-546.py`, `scripts/build-coop-campaign.py --write` et `scripts/prepare-website-546.py`. Le générateur 546 utilise le commit de référence `89b1403f603a709a6883431adcfd91e317c859b7` et préserve les archives Vanilla. Ne pas appliquer les anciens scripts d’intros par-dessus ces recettes. Compilation CMake avec tests, CTest, puis `scripts/check-windows-546.ps1` pour les contrôles natifs dans un profil isolé.
 
-## Historique des versions / Release history
+
 
 **[1.0.545 — Windows / Linux / Mint](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.545)** : recherches radar, plans Chaos, éditeur, cinématiques originales, douze cadres dorés, portraits Fremen/Sardaukar et **73 succès**. Tous les participants réseau : protocole **22** ; nouvelles sauvegardes **9839**, anciennes lisibles. [Notes FR](release_notes/1.0.545-FR.md) · [Notes EN](release_notes/1.0.545-EN.md) · [Validation](release_notes/Validation-1.0.545.json).
 

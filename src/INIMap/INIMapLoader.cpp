@@ -66,6 +66,7 @@ bool isTornieMapObject(int itemID) {
         case Unit_SonicTrike:
         case Unit_FlameTank:
         case Unit_EliteLauncher:
+        case Unit_SuperTank:
         case Unit_EliteSiegeTank:
         case Unit_ChemicalSiegeTank:
         case Unit_ChemicalCarryall:
@@ -100,9 +101,14 @@ bool isJerichoWildspade(Game* pGame, int houseID) {
         && ModManager::instance().getActiveModName() == "Jericho";
 }
 
-int replaceJerichoWildspadeUnit(Game* pGame, int houseID, int itemID) {
+int replaceFactionUnit(Game* pGame, int houseID, int itemID) {
     houseID = House::factionForRuntimeHouse(houseID);
     if(!pGame->getGameInitSettings().getGameOptions().content.customUnitsAndBuildings) return itemID;
+    if(houseID>=0 && houseID<NUM_HOUSES && itemID==Unit_EliteSiegeTank
+       && ModManager::instance().isTornieContentActive()
+       && isHouseFaction(static_cast<HOUSETYPE>(houseID),HOUSE_KLESHMERSH)
+       && pGame->objectData.data[Unit_SuperTank][houseID].enabled)
+        return Unit_SuperTank;
     if(houseID < 0 || houseID >= NUM_HOUSES
             || !isHouseFaction(static_cast<HOUSETYPE>(houseID), HOUSE_WILDSPADE)) {
         return itemID;
@@ -219,6 +225,7 @@ int resolveCoopGuestUnit(Game* game, int houseID, int itemID) {
         case Unit_SonicTank:
         case Unit_FlameTank:
         case Unit_EliteLauncher:
+        case Unit_SuperTank:
         case Unit_EliteSiegeTank:
         case Unit_ChemicalSiegeTank:
             return chooseSpecialVehicle(game, houseID);
@@ -976,7 +983,7 @@ void INIMapLoader::loadUnits()
                 continue;
             }
 
-            itemID = replaceJerichoWildspadeUnit(pGame, houseID, itemID);
+            itemID = replaceFactionUnit(pGame, houseID, itemID);
 
             if(guestCopy) {
                 itemID = resolveCoopGuestUnit(pGame, houseID, itemID);
@@ -1125,7 +1132,7 @@ void INIMapLoader::loadStructures()
                 } else {
                     newStructure->setHealth(newStructure->getMaxHealth() * percentHealth);
                     if(auto* trap=dynamic_cast<WindTrap*>(newStructure);
-                       trap && WindTrap::supportsPowerUpgrade(static_cast<HOUSETYPE>(trap->getTechnologyHouseID()))
+                       trap && WindTrap::supportsEditorPowerUpgrade()
                             && inifile->getBoolValue("WINDTRAPUPGRADES",tmpkey,false))
                         trap->inheritPowerUpgrade(true);
                 }
@@ -1247,7 +1254,7 @@ void INIMapLoader::loadReinforcements()
         const auto context = coop::readContext(pGame->getGameInitSettings().getFiledata());
         const bool hostDelivery = context && houseID == context->slots[0].house;
         const Uint32 originalItem = itemID;
-        itemID = replaceJerichoWildspadeUnit(pGame, houseID, itemID);
+        itemID = replaceFactionUnit(pGame, houseID, itemID);
 
         if(!pGame->objectData.data[itemID][House::factionForRuntimeHouse(houseID)].enabled && !hostDelivery) {
             continue;
@@ -1302,7 +1309,7 @@ void INIMapLoader::loadReinforcements()
                 if(index==0 || !context->slots[index].active()) continue;
                 const int guest=context->slots[index].house;
                 const int adapted=resolveCoopGuestUnit(pGame,guest,
-                    replaceJerichoWildspadeUnit(pGame,guest,originalItem));
+                    replaceFactionUnit(pGame,guest,originalItem));
                 if(adapted!=ItemID_Invalid) addDelivery(guest,adapted);
             }
         }

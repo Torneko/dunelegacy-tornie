@@ -1790,6 +1790,14 @@ void MapEditor::drawMap(ScreenBorder* pScreenborder, bool bCompleteMap) {
                 SDL_RenderCopy(renderer, ObjectSprite, &source, &dest);
             }
 
+            if(greenWindtrap) {
+                const int radius=2*(currentZoomlevel+1);
+                const int cx=dest.x+dest.w-radius-2,cy=dest.y+dest.h-radius-2;
+                renderDrawLine(renderer,cx-radius,cy,cx+radius,cy,COLOR_GREEN);
+                renderDrawLine(renderer,cx,cy-radius,cx,cy+radius,COLOR_GREEN);
+                renderDrawLine(renderer,cx-radius+1,cy-radius+1,cx+radius-1,cy+radius-1,COLOR_GREEN);
+                renderDrawLine(renderer,cx-radius+1,cy+radius-1,cx+radius-1,cy-radius+1,COLOR_GREEN);
+            }
             selectionDest = dest;
         }
 
@@ -1940,6 +1948,7 @@ void MapEditor::drawMap(ScreenBorder* pScreenborder, bool bCompleteMap) {
             case Unit_FlameTank:        objectPicBase = ObjPic_Tank_Base;       objectPicGun = tornieActive ? ObjPic_FlameTankGunTornie : ObjPic_Launcher_Gun; objectPicGunHouse = tornieActive ? HOUSE_HARKONNEN : unit.house; gunOffset = launcherTurretOffset; break;
             case Unit_EliteLauncher:    objectPicBase = ObjPic_Tank_Base;       objectPicGun = tornieActive ? ObjPic_EliteLauncherGunTornie : ObjPic_Launcher_Gun; objectPicGunHouse = tornieActive ? HOUSE_HARKONNEN : unit.house; gunOffset = launcherTurretOffset; break;
             case Unit_EliteSiegeTank:   objectPicBase = ObjPic_Siegetank_Base;  objectPicGun = ObjPic_EliteSiegeTankGunTornie; gunOffset = siegeTankTurretOffset; break;
+            case Unit_SuperTank: objectPicBase=ObjPic_Siegetank_Base;objectPicGun=ObjPic_SuperTankGun;gunOffset=siegeTankTurretOffset;break;
             case Unit_ChemicalSiegeTank: objectPicBase = ObjPic_Siegetank_Base; objectPicGun = ObjPic_ChemicalSiegeTankGunTornie; gunOffset = siegeTankTurretOffset; break;
         }
 
@@ -1979,7 +1988,7 @@ void MapEditor::drawMap(ScreenBorder* pScreenborder, bool bCompleteMap) {
                                        || unit.itemID == Unit_RaiderQuad || unit.itemID == Unit_RangedTank || unit.itemID == Unit_SlowTank || unit.itemID == Unit_CapacityHarvester || unit.itemID == Unit_FastHarvester || unit.itemID == Unit_TameSandworm || unit.itemID == Unit_FlameTrooper || unit.itemID == Unit_EliteOrnithopter
                                        || unit.itemID == Unit_RocketTrike || unit.itemID == Unit_SonicTrike
                                        || unit.itemID == Unit_FlameTank || unit.itemID == Unit_EliteLauncher
-                                       || unit.itemID == Unit_EliteSiegeTank || unit.itemID == Unit_ChemicalSiegeTank
+                                       || unit.itemID == Unit_SuperTank || unit.itemID == Unit_EliteSiegeTank || unit.itemID == Unit_ChemicalSiegeTank
                                        || unit.itemID == Unit_ChemicalCarryall || unit.itemID == Unit_RebelHarvester);
         if(yellowStarMarker || customStarMarker) {
             SDL_Texture* pStarSprite = pGFXManager->getZoomedObjPic(ObjPic_Star, currentZoomlevel);

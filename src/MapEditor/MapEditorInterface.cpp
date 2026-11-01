@@ -642,7 +642,7 @@ MapEditorInterface::MapEditorInterface(MapEditor* pMapEditor)
         editorModeStructs_VBox.addWidget(&editorModeStructs_AdvancedLayout, 11*cellSize);
     }
 
-    for(auto* button : {&editorModeUnits_Soldier, &editorModeUnits_Trooper, &editorModeUnits_Harvester, &editorModeUnits_RebelHarvester, &editorModeUnits_Infantry, &editorModeUnits_Troopers, &editorModeUnits_MCV, &editorModeUnits_Trike, &editorModeUnits_Raider, &editorModeUnits_Quad, &editorModeUnits_FlameQuad, &editorModeUnits_GasInfantry, &editorModeUnits_FlameTrooper, &editorModeUnits_RocketTrike, &editorModeUnits_SonicTrike, &editorModeUnits_FlameTank, &editorModeUnits_EliteLauncher, &editorModeUnits_EliteSiegeTank, &editorModeUnits_ChemicalSiegeTank, &editorModeUnits_ChemicalCarryall, &editorModeUnits_Tank, &editorModeUnits_SiegeTank, &editorModeUnits_Launcher, &editorModeUnits_Devastator, &editorModeUnits_SonicTank, &editorModeUnits_Deviator, &editorModeUnits_Saboteur, &editorModeUnits_Sandworm, &editorModeUnits_SpecialUnit, &editorModeUnits_Carryall, &editorModeUnits_Ornithopter, &editorModeUnits_Infantry5, &editorModeUnits_Troopers5})
+    for(auto* button : {&editorModeUnits_Soldier, &editorModeUnits_Trooper, &editorModeUnits_Harvester, &editorModeUnits_RebelHarvester, &editorModeUnits_Infantry, &editorModeUnits_Troopers, &editorModeUnits_MCV, &editorModeUnits_Trike, &editorModeUnits_Raider, &editorModeUnits_Quad, &editorModeUnits_FlameQuad, &editorModeUnits_GasInfantry, &editorModeUnits_FlameTrooper, &editorModeUnits_RocketTrike, &editorModeUnits_SonicTrike, &editorModeUnits_FlameTank, &editorModeUnits_EliteLauncher, &editorModeUnits_SuperTank, &editorModeUnits_EliteSiegeTank, &editorModeUnits_ChemicalSiegeTank, &editorModeUnits_ChemicalCarryall, &editorModeUnits_Tank, &editorModeUnits_SiegeTank, &editorModeUnits_Launcher, &editorModeUnits_Devastator, &editorModeUnits_SonicTank, &editorModeUnits_Deviator, &editorModeUnits_Saboteur, &editorModeUnits_Sandworm, &editorModeUnits_SpecialUnit, &editorModeUnits_Carryall, &editorModeUnits_Ornithopter, &editorModeUnits_Infantry5, &editorModeUnits_Troopers5})
         button->setSymbolPadding(3);
 
     // setup units mode
@@ -875,6 +875,13 @@ MapEditorInterface::MapEditorInterface(MapEditor* pMapEditor)
         editorModeUnits_HBoxTornieElite.addWidget(&editorModeUnits_EliteLauncher, 2*D2_TILESIZE + 4);
         editorModeUnits_HBoxTornieElite.addWidget(HSpacer::create(2));
         editorModeUnits_HBoxTornieElite.addWidget(&editorModeUnits_EliteSiegeTank, 2*D2_TILESIZE + 4);
+        editorModeUnits_SuperTank.setToggleButton(true);
+        editorModeUnits_SuperTank.setTooltipText(resolveItemName(Unit_SuperTank));
+        editorModeUnits_SuperTank.setOnClick(std::bind(&MapEditorInterface::onUnitButton,this,Unit_SuperTank));
+        editorModeUnits_HBoxSuper.addWidget(&editorModeUnits_SuperTank,2*D2_TILESIZE+4);
+        editorModeUnits_HBoxSuper.addWidget(Spacer::create());
+        editorModeUnits_VBox.addWidget(VSpacer::create(2));
+        editorModeUnits_VBox.addWidget(&editorModeUnits_HBoxSuper,2*D2_TILESIZE+4);
         editorModeUnits_VBox.addWidget(VSpacer::create(2));
         editorModeUnits_VBox.addWidget(&editorModeUnits_HBoxTornieChemical, 2*D2_TILESIZE + 4);
         editorModeUnits_HBoxTornieChemical.addWidget(&editorModeUnits_ChemicalSiegeTank, 2*D2_TILESIZE + 4);
@@ -1077,7 +1084,7 @@ void MapEditorInterface::onObjectSelected() {
 
         structureDetailsHealthDropDownBox.setSelectedItem(pStructure->health - 1);
         structureDetailsPowerUpgradeCheckbox.setVisible(pStructure->itemID==Structure_WindTrap
-            && WindTrap::supportsPowerUpgrade(pStructure->house));
+            && WindTrap::supportsEditorPowerUpgrade());
         structureDetailsPowerUpgradeCheckbox.setChecked(pStructure->powerUpgraded);
 
         changeHouseDropDown(pStructure->house);
@@ -1421,6 +1428,7 @@ void MapEditorInterface::onUnitButton(int unitType) {
     editorModeUnits_FlameTank.setToggleState( (unitType == Unit_FlameTank) );
     editorModeUnits_EliteLauncher.setToggleState( (unitType == Unit_EliteLauncher) );
     editorModeUnits_EliteSiegeTank.setToggleState( (unitType == Unit_EliteSiegeTank) );
+    editorModeUnits_SuperTank.setToggleState(unitType==Unit_SuperTank);
     editorModeUnits_ChemicalSiegeTank.setToggleState( (unitType == Unit_ChemicalSiegeTank) );
     editorModeUnits_ChemicalCarryall.setToggleState( (unitType == Unit_ChemicalCarryall) );
     editorModeUnits_Tank.setToggleState( (unitType == Unit_Tank) );
@@ -1443,12 +1451,12 @@ void MapEditorInterface::onUnitButton(int unitType) {
 
 void MapEditorInterface::onStructurePowerUpgrade() {
     const auto* selected=pMapEditor->getSelectedStructure();
-    if(!selected || selected->itemID!=Structure_WindTrap || !WindTrap::supportsPowerUpgrade(selected->house))return;
+    if(!selected || selected->itemID!=Structure_WindTrap || !WindTrap::supportsEditorPowerUpgrade())return;
     pMapEditor->startOperation();
     currentEditStructureID=currentEditUnitID=INVALID;
     for(const int id:pMapEditor->getMirrorStructures(selected->id)) {
         auto* trap=pMapEditor->getStructure(id);
-        if(!trap || trap->itemID!=Structure_WindTrap || !WindTrap::supportsPowerUpgrade(trap->house))continue;
+        if(!trap || trap->itemID!=Structure_WindTrap || !WindTrap::supportsEditorPowerUpgrade())continue;
         MapEditorEditStructureOperation op(id,trap->health,structureDetailsPowerUpgradeCheckbox.isChecked());
         pMapEditor->addUndoOperation(op.perform(pMapEditor));
     }
@@ -1734,6 +1742,7 @@ void MapEditorInterface::changeInterfaceColor(HOUSETYPE newHouse) {
     editorModeUnits_FlameTank.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_FlameTank, newHouse));
     editorModeUnits_EliteLauncher.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_EliteLauncher, newHouse));
     editorModeUnits_EliteSiegeTank.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_EliteSiegeTank, newHouse));
+    editorModeUnits_SuperTank.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_SuperTank,newHouse));
     editorModeUnits_ChemicalSiegeTank.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_ChemicalSiegeTank, newHouse));
     editorModeUnits_ChemicalCarryall.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_ChemicalCarryall, newHouse));
     editorModeUnits_Tank.setSymbol(pGFXManager->getUIGraphicSurface(UI_MapEditor_Tank, newHouse));

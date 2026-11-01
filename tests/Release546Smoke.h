@@ -123,7 +123,7 @@ struct Release546Fixture {
                     const auto before=editor.getChoam();
                     {
                         ChoamWindow window(&editor,HOUSE_ATREIDES);
-                        require(window.choamRows.size()==16 && window.choamUnits.size()==31,"CHOAM row capacity");
+                        require(window.choamRows.size()==16 && window.choamUnits.size()==32,"CHOAM row capacity");
                         auto& row=window.choamRows.back();
                         row.Checkbox_Unit1.setChecked(true);window.onUnitCheckbox(Unit_RebelHarvester);
                         row.TextBox_Unit1.setValue(7);

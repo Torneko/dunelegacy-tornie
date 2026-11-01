@@ -70,6 +70,7 @@
 #include "../tests/SelectedPortraitSmoke.h"
 #include "../tests/Release545Smoke.h"
 #include "../tests/Release546Smoke.h"
+#include "../tests/Release547Smoke.h"
 #include "../tests/HarvesterCrushSmoke.h"
 #endif
 
@@ -804,6 +805,7 @@ int main(int argc, char *argv[]) {
         bool bVerifyEditorFollowup = false;
         bool bVerifyRadarResearch = false;
         bool bVerifyRelease545 = false;
+        bool bVerifyRelease547 = false;
         bool bVerifyRelease546 = false;
         bool bVerifyRelease546Frames = false;
         bool bVerifyCampaignCinema = false;
@@ -832,6 +834,7 @@ int main(int argc, char *argv[]) {
             if((parameter == "--verify-next-draft" || parameter == "--verify-release544")) { bVerifyMods=true;bVerifyNextDraft=true;continue; }
             if(parameter == "--verify-campaign-cinema") { bVerifyMods=true;bVerifyCampaignCinema=true;continue; }
             if(parameter == "--verify-release545") {bVerifyMods=true;bVerifyRelease545=true;continue;}
+            if(parameter == "--verify-release547") {bVerifyMods=true;bVerifyRelease547=true;continue;}
             if(parameter == "--verify-release546") {bVerifyMods=true;bVerifyRelease546=true;continue;}
             if(parameter == "--verify-release546-frames") {bVerifyMods=true;bVerifyRelease546Frames=true;continue;}
             if(parameter == "--verify-radar-research") { bVerifyMods=true;bVerifyRadarResearch=true;continue; }
@@ -1449,6 +1452,7 @@ int main(int argc, char *argv[]) {
                         }
                         ModManager::instance().setActiveMod(previousMod);
                     }
+                    else if(bVerifyRelease547) Release547Fixture::run(std::getenv("DUNELEGACY_SMOKE_DIR"));
                     else if(bVerifyRelease546Frames) Release546Fixture::frames(std::getenv("DUNELEGACY_SMOKE_DIR"));
                     else if(bVerifyRelease546) Release546Fixture::run(std::getenv("DUNELEGACY_SMOKE_DIR"));
                     else if(bVerifyRelease545) Release545Smoke::run(std::getenv("DUNELEGACY_SMOKE_DIR"));

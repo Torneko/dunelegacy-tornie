@@ -163,6 +163,7 @@ typedef enum {
     ObjPic_TameSandworm,
     ObjPic_NapalmRocket,
     ObjPic_SlowRocket,
+    ObjPic_SuperTankGun,
     NUM_OBJPICS
 } ObjPic_enum;
 
@@ -179,7 +180,7 @@ static const std::array<std::string, NUM_OBJPICS> ObjPicNames =  { { "Tank_Base"
     "SandDamage", "Terrain_Hidden", "Terrain_HiddenFog", "Terrain_Tracks", "Star", "RebelHarvester", "Worfinery", "TechCenter", "Scoutpost", "LoveFactory",
     "LegacyReserved01", "LegacyReserved02", "LegacyReserved03", "LegacyReserved04", "LegacyReserved05", "LegacyReserved06",
     "LegacyReserved07", "LegacyReserved08", "LegacyReserved09", "LegacyReserved10", "SonicTrike", "EliteLauncherGunTornie", "RebelSonicTankGun",
-    "HarvestankGunTornie", "ChemicalCarryall", "Flamepost", "Chemipost", "ChaosFactory", "Doublefinery", "FlameQuad", "GasInfantry", "EliteOrnithopter", "RaiderQuad", "RangedTankBase", "RangedTankTurret", "SlowTankBase", "SlowTankTurret", "Slowpost", "CapacityHarvester", "FastHarvester", "TameSandworm", "NapalmRocket", "SlowRocket" } };
+    "HarvestankGunTornie", "ChemicalCarryall", "Flamepost", "Chemipost", "ChaosFactory", "Doublefinery", "FlameQuad", "GasInfantry", "EliteOrnithopter", "RaiderQuad", "RangedTankBase", "RangedTankTurret", "SlowTankBase", "SlowTankTurret", "Slowpost", "CapacityHarvester", "FastHarvester", "TameSandworm", "NapalmRocket", "SlowRocket", "SuperTankGun" } };
 
 #define GROUNDUNIT_ROW(i) (i+2)|TILE_NORMAL,(i+1)|TILE_NORMAL,i|TILE_NORMAL,(i+1)|TILE_FLIPV,(i+2)|TILE_FLIPV,(i+3)|TILE_FLIPV, (i+4)|TILE_NORMAL,(i+3)|TILE_NORMAL
 #define AIRUNIT_ROW(i) (i+2)|TILE_NORMAL,(i+1)|TILE_NORMAL,i|TILE_NORMAL,(i+1)|TILE_FLIPV,(i+2)|TILE_FLIPV,(i+1)|TILE_ROTATE, i|TILE_FLIPH,(i+1)|TILE_FLIPH
@@ -271,6 +272,7 @@ typedef enum {
     Picture_CapacityHarvester,
     Picture_FastHarvester,
     Picture_Slowpost,
+    Picture_SuperTank,
     NUM_SMALLDETAILPICS
 } SmallDetailPics_Enum;
 
@@ -561,6 +563,7 @@ typedef enum {
     UI_MapEditor_TameSandworm,
     UI_MapEditor_Slowpost,
     UI_FactionFrame,
+    UI_MapEditor_SuperTank,
     NUM_UIGRAPHICS
 } UIGraphics_Enum;
 

@@ -22,7 +22,7 @@ inline bool aircraft(int item) {
 }
 inline bool conventionalTank(int item) {
     switch(item) {
-        case Unit_Tank:case Unit_SiegeTank:case Unit_EliteSiegeTank:case Unit_ChemicalSiegeTank:
+        case Unit_Tank:case Unit_SiegeTank:case Unit_SuperTank:case Unit_EliteSiegeTank:case Unit_ChemicalSiegeTank:
         case Unit_FlameTank:case Unit_RangedTank:case Unit_SlowTank:return true;
         default:return false;
     }
@@ -33,7 +33,7 @@ inline bool tank(int item) {
 inline bool nonHeavyUnit(int item) { return isInfantryUnit(item) || lightVehicle(item) || aircraft(item); }
 inline bool scoutOrArtillery(int item) {
     return lightVehicle(item) || item==Unit_Launcher || item==Unit_EliteLauncher
-        || item==Unit_SiegeTank || item==Unit_EliteSiegeTank || item==Unit_ChemicalSiegeTank || item==Unit_RangedTank;
+        || item==Unit_SuperTank || item==Unit_SiegeTank || item==Unit_EliteSiegeTank || item==Unit_ChemicalSiegeTank || item==Unit_RangedTank;
 }
 struct State {
     std::uint8_t completed=0;

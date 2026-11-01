@@ -199,6 +199,7 @@ static const Coord objPicTiles[] {
     { 1, 9 }, // ObjPic_TameSandworm
     { 16, 1 }, // ObjPic_NapalmRocket
     { 16, 1 }, // ObjPic_SlowRocket
+    { 8, 1 }, // ObjPic_SuperTankGun
 
 };
 static_assert(sizeof(objPicTiles) / sizeof(objPicTiles[0]) == NUM_OBJPICS,
@@ -1637,6 +1638,7 @@ GFXManager::GFXManager() {
         loadIcon(Picture_FlameTank,      "FlameTankIcon.png",      "HTANK.WSA");
         loadIcon(Picture_EliteLauncher,  "EliteLauncherIcon.png",  "HTANK.WSA");
         loadIcon(Picture_EliteSiegeTank, "EliteSiegeTankIcon.png", "HTANK.WSA");
+        loadIcon(Picture_SuperTank, "SuperTankIcon.png", "HTANK.WSA");
         loadIcon(Picture_ChemicalSiegeTank, "ChemicalSiegeTankIcon.png", "HTANK.WSA");
         loadIcon(Picture_ChemicalCarryall, "ChemicalCarryallIcon.png", "CARRYALL.WSA");
         loadIcon(Picture_AdvancedWindTrap, "Tornie_AdvancedWindtrap_icon.png", "WINDTRAP.WSA");
@@ -2339,6 +2341,8 @@ GFXManager::GFXManager() {
     addMapEditorStar(UI_MapEditor_EliteLauncher, true);
     uiGraphic[UI_MapEditor_EliteSiegeTank][HOUSE_HARKONNEN] = combinePictures(getSubFrame(objPic[ObjPic_Siegetank_Base][HOUSE_HARKONNEN][0].get(),0,0,8,1).get(), getSubFrame(objPic[eliteSiegeTankEditorGun][HOUSE_HARKONNEN][0].get(),0,0,8,1).get(), 2, -4);
     addMapEditorStar(UI_MapEditor_EliteSiegeTank, true);
+    uiGraphic[UI_MapEditor_SuperTank][HOUSE_HARKONNEN] = combinePictures(getSubFrame(objPic[ObjPic_Siegetank_Base][HOUSE_HARKONNEN][0].get(),0,0,8,1).get(), getSubFrame(objPic[ObjPic_SuperTankGun][HOUSE_HARKONNEN][0].get(),0,0,8,1).get(), 2, -4);
+    addMapEditorStar(UI_MapEditor_SuperTank, true);
     uiGraphic[UI_MapEditor_ChemicalSiegeTank][HOUSE_HARKONNEN] = combinePictures(getSubFrame(objPic[ObjPic_Siegetank_Base][HOUSE_HARKONNEN][0].get(),0,0,8,1).get(), getSubFrame(objPic[chemicalSiegeTankEditorGun][HOUSE_HARKONNEN][0].get(),0,0,8,1).get(), 2, -4);
     addMapEditorStar(UI_MapEditor_ChemicalSiegeTank, true);
 
@@ -2495,6 +2499,8 @@ GFXManager::GFXManager() {
             uiGraphic[UI_MapEditor_EliteSiegeTank][colorSlot] =
                 decorateEditorVehicle(std::move(eliteSiegeTank), true);
         }
+        auto superTank = composeEditorVehicle(ObjPic_Siegetank_Base,colorSlot,static_cast<int>(ObjPic_SuperTankGun),colorSlot,2,-4);
+        if(superTank) uiGraphic[UI_MapEditor_SuperTank][colorSlot]=decorateEditorVehicle(std::move(superTank),true);
         auto chemicalSiegeTank = composeEditorVehicle(
             ObjPic_Siegetank_Base, colorSlot,
             static_cast<int>(ObjPic_ChemicalSiegeTankGunTornie), colorSlot, 2, -4);
@@ -4583,6 +4589,7 @@ void GFXManager::reloadModDependentObjectGraphics() {
             if(raw || fixedTurret)for(int y=0;y<image->h;++y)for(int x=0;x<image->w;++x) {
                 Uint8 r,g,b,a;SDL_GetRGBA(getPixel(image.get(),x,y),image->format,&r,&g,&b,&a);
                 if(!a)continue;
+                if(id==ObjPic_SuperTankGun)continue; // Preserve the authored fire-coloured turret.
                 if(r==255 && g==0 && b==255){putPixel(image.get(),x,y,0);continue;}
                 if(twoToneHarvester) {
                     const int shade=harvesterShade(r,g,b);
@@ -4632,6 +4639,7 @@ void GFXManager::reloadModDependentObjectGraphics() {
     installFallbackSheet(ObjPic_TameSandworm,ObjPic_Sandworm,"TameSandworm.png");
     installFallbackSheet(ObjPic_NapalmRocket,ObjPic_Bullet_LargeRocket,"NapalmRocket.png");
     installFallbackSheet(ObjPic_SlowRocket,ObjPic_Bullet_MediumRocket,"SlowRocket.png");
+    installFallbackSheet(ObjPic_SuperTankGun,ObjPic_Siegetank_Gun,"SuperTankGun.png");
 
 
 }
@@ -4732,6 +4740,7 @@ void GFXManager::reloadRuntimeModPortraits() {
     loadPortrait(Picture_FlameTank, "FlameTankIcon.png", "HTANK.WSA", tornieGraphicsVisible);
     loadPortrait(Picture_EliteLauncher, "EliteLauncherIcon.png", "HTANK.WSA", tornieGraphicsVisible);
     loadPortrait(Picture_EliteSiegeTank, "EliteSiegeTankIcon.png", "HTANK.WSA", tornieGraphicsVisible);
+    loadPortrait(Picture_SuperTank, "SuperTankIcon.png", "HTANK.WSA", tornieGraphicsVisible);
     loadPortrait(Picture_ChemicalSiegeTank, "ChemicalSiegeTankIcon.png", "HTANK.WSA", tornieGraphicsVisible);
     loadPortrait(Picture_ChemicalCarryall, "ChemicalCarryallIcon.png", "CARRYALL.WSA", true);
     loadPortrait(Picture_AdvancedWindTrap, "Tornie_AdvancedWindtrap_icon.png", "WINDTRAP.WSA", tornieGraphicsVisible);
@@ -4876,6 +4885,7 @@ void GFXManager::rebuildModDependentEditorGraphics() {
         UI_MapEditor_FlameTank,
         UI_MapEditor_EliteLauncher,
         UI_MapEditor_EliteSiegeTank,
+        UI_MapEditor_SuperTank,
         UI_MapEditor_ChemicalSiegeTank
     };
 
@@ -4990,6 +5000,8 @@ void GFXManager::rebuildModDependentEditorGraphics() {
                 decorateRuntimeEditorVehicle(std::move(eliteSiegeTank), true);
         }
 
+        auto superTank = composeRuntimeEditorVehicle(ObjPic_Siegetank_Base,colorSlot,static_cast<int>(ObjPic_SuperTankGun),colorSlot,2,-4);
+        if(superTank) uiGraphic[UI_MapEditor_SuperTank][colorSlot]=decorateRuntimeEditorVehicle(std::move(superTank),true);
         auto chemicalSiegeTank = composeRuntimeEditorVehicle(
             ObjPic_Siegetank_Base, colorSlot,
             static_cast<int>(chemicalSiegeTankEditorGun), colorSlot, 2, -4);
@@ -5592,6 +5604,7 @@ SDL_Surface* GFXManager::getUIGraphicSurface(unsigned int id, int house) {
                 case UI_MapEditor_EliteLauncher:
                     fallbackID = UI_MapEditor_Launcher;
                     break;
+                case UI_MapEditor_SuperTank:
                 case UI_MapEditor_EliteSiegeTank:
                 case UI_MapEditor_ChemicalSiegeTank:
                     fallbackID = UI_MapEditor_SiegeTank;

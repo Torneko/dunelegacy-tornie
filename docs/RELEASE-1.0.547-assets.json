@@ -1,0 +1,14 @@
+{
+  "version": "1.0.547",
+  "author": "Tornie_Panther",
+  "activeResources": [
+    {
+      "runtime": "data/SuperTankGun.png",
+      "sha256": "06c324e587827c61074224df1c51a8de5a24cf724b72fe75822e0b24d263732c"
+    },
+    {
+      "runtime": "data/SuperTankIcon.png",
+      "sha256": "5d89bf8f2f219a5f9f573df3ac65825f805c2745fc28eeb59f84eb170e856805"
+    }
+  ]
+}

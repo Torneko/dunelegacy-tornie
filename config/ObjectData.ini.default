@@ -735,3 +735,8 @@ Builder = WOR
 Enabled = false
 Builder = Invalid
 TechLevel = -1
+
+[Super Tank]
+Enabled = false
+Builder = Invalid
+TechLevel = -1

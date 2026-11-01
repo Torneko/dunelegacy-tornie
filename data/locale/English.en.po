@@ -57,3 +57,18 @@ msgstr "Pre-upgraded"
 
 msgid "Start with double power and green animation."
 msgstr "Start with double power and green animation."
+
+msgid "Army"
+msgstr "Army"
+
+msgid "Harvesters"
+msgstr "Harvesters"
+
+msgid "Select all army units"
+msgstr "Select all army units"
+
+msgid "Select all harvesters"
+msgstr "Select all harvesters"
+
+msgid "Super Tank"
+msgstr "Super Tank"

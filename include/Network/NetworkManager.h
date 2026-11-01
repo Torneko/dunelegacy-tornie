@@ -82,7 +82,7 @@
 // Version 22: Tharpique healing cadence; reject older simulation rules.
 // Version 23: Wildspade technology and revised campaign/cooperative starts.
 // Version 24: Tornie persistent support and fourth cooperative opponent.
-#define NETWORK_PROTOCOL_VERSION            24
+#define NETWORK_PROTOCOL_VERSION            25
 
 /**
  * Reject an incompatible config-hash handshake and dispatch its disconnect cause.

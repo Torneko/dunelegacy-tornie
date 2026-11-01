@@ -278,6 +278,7 @@ jobs:
             CHECKS=(--verify-radar-research --verify-release545)
             if [[ "${{ inputs.ui_only || inputs.followup_545 }}" != true ]]; then CHECKS+=(--verify-editor-followup --verify-campaign-cinema); fi
             if [[ -f config/TornieCampaign546.json ]]; then CHECKS+=(--verify-release546 --verify-release546-frames); fi
+            if [[ -f config/Release547.json ]]; then CHECKS+=(--verify-release547); fi
             for CHECK in "${CHECKS[@]}"; do
               LOG="$PROFILE/$LANGUAGE/$CHECK.log"
               SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy SDL_RENDER_DRIVER=software \
@@ -302,6 +303,9 @@ jobs:
               grep 'RELEASE 546 R2 MATRIX PASS: 5265 editor maps; 252 solo starts; 224 coop starts; 76 late cooperative checkpoints' "$PROFILE/$LANGUAGE/--verify-release546.log"
               grep 'RELEASE 546 R2 PASS:' "$PROFILE/$LANGUAGE/--verify-release546.log"
               grep 'RELEASE 546 FRAMES PASS: 28 ' "$PROFILE/$LANGUAGE/--verify-release546-frames.log"
+            fi
+            if [[ -f config/Release547.json ]]; then
+              grep 'RELEASE 547 PASS:' "$PROFILE/$LANGUAGE/--verify-release547.log"
             fi
           done
 
@@ -333,9 +337,13 @@ jobs:
           if pathlib.Path('config/TornieCampaign546.json').is_file():
               import re
               report['networkProtocol'] = int(re.search(r'#define NETWORK_PROTOCOL_VERSION\s+(\d+)', pathlib.Path('include/Network/NetworkManager.h').read_text()).group(1))
-              report['validationScope'] = 'release-546'
+              report['validationScope'] = 'release-547' if pathlib.Path('config/Release547.json').is_file() else 'release-546'
               report['packagedRuntimeChecks'] = ['radar-fr-en', 'release-545-regressions-fr-en', 'choam-editor-31-items-fr-en', '5265-editor-loads-fr-en', '252-solo-starts-fr-en', '224-coop-starts-fr-en', '76-late-coop-restores-fr-en', 'persistent-support-and-four-opponents-fr-en', '28-frame-compositions-fr-en']
               report['nextReleaseChecks'] = list(report['packagedRuntimeChecks'])
+              if pathlib.Path('config/Release547.json').is_file():
+                  report['packagedRuntimeChecks'] = [check for check in report['packagedRuntimeChecks'] if check != 'choam-editor-31-items-fr-en']
+                  report['packagedRuntimeChecks'] += ['super-tank-production-fire-blast-save-fr-en', 'army-harvester-selection-and-allied-control-fr-en', 'all-faction-editor-windtraps-with-and-without-chaos-fr-en', 'choam-editor-32-items-fr-en']
+                  report['nextReleaseChecks'] = list(report['packagedRuntimeChecks'])
           pathlib.Path('build/Linux-Build-'+report['version']+'.json').write_text(json.dumps(report,indent=2)+'\n')
           PYTHON
 
@@ -546,7 +554,10 @@ jobs:
           cp "offline/DuneLegacyTornie-Site-Local/dist/documents/Notes-$VERSION.md" "supporting/Release-Notes-$VERSION-FR.md"
           cp "offline/DuneLegacyTornie-Site-Local/dist/documents/Notes-$VERSION-EN.md" "supporting/Release-Notes-$VERSION-EN.md"
           cp "offline/DuneLegacyTornie-Site-Local/dist/documents/Validation-$VERSION.json" supporting/
-          if [[ "$VERSION" == "1.0.545" || "$VERSION" == "1.0.546" ]]; then
+          if [[ -f config/Release547.json ]]; then
+            python3 scripts/package-guides.py --output "supporting/DuneLegacyTornie-$VERSION-Guides-FR-EN.zip"
+          fi
+          if [[ "$VERSION" == "1.0.545" || "$VERSION" == "1.0.546" || "$VERSION" == "1.0.547" ]]; then
             gh release download "$RELEASE_TAG" --pattern "Package-Resources-Audit-$VERSION.json" --dir supporting
           fi
           gh release download "$RELEASE_TAG" --pattern '*Linux*' --dir supporting

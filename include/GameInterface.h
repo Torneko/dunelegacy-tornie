@@ -108,6 +108,7 @@ public:
 
 private:
     friend struct AircraftShortcutFixture;
+    friend struct Release547Fixture;
     void refreshAircraftButtons();
     void removeOldContainer();
 
@@ -129,6 +130,8 @@ private:
 
     ChatManager         chatManager;            ///< Manages chat manages shown overlayed with the main map
     AircraftCountButton ornithopterSelectButton;///< Select all controllable, responding ornithopters
+    AircraftCountButton armySelectButton;
+    AircraftCountButton harvestersSelectButton;
     AircraftCountButton chemicalCarryallSelectButton;///< Select all controllable, responding chemical carryalls
 
     Label               harvesterCountLabel;    ///< Local house count, independent of watermark visibility.

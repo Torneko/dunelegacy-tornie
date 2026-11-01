@@ -1,8 +1,8 @@
-# Campagne coop et archonte — 1.0.546
+# Campagne coop et archonte — 1.0.547
 
 [English guide](COOP-CAMPAIGN-EN.md)
 
-Tous les participants doivent installer **1.0.546 / protocole 24**, activer le même mod et utiliser des noms différents. La connexion LAN ou Internet utilise le relais par l’hôte lorsque les invités ne peuvent pas communiquer directement, sans VPN. L’hôte doit rester joignable et connecté.
+Tous les participants doivent installer **1.0.547 / protocole 25**, activer le même mod et utiliser des noms différents. La connexion LAN ou Internet utilise le relais par l’hôte lorsque les invités ne peuvent pas communiquer directement, sans VPN. L’hôte doit rester joignable et connecté.
 
 À chaque nouveau départ de mission, toutes les factions alliées actives reçoivent **le même capital initial que l’hôte**, même si leur champ de crédits est nul ou absent. Le mode facile ajoute ensuite 500 crédits par faction, une seule fois. Un chargement de sauvegarde conserve les soldes enregistrés. Les anciennes versions en protocole 13, 22 ou 23 ne peuvent pas rejoindre cette version.
 
@@ -28,7 +28,7 @@ Cocher **Archonte** lors de la création permet jusqu’à **huit joueurs**. Dan
 
 Les 63 campagnes sources fournissent 1 386 cartes coop. La progression suit neuf étapes de la campagne de la faction choisie par l’hôte au départ ; cette source reste fixée dans la session.
 
-## Campagnes Tornie et Tornie Lite en 1.0.546
+## Campagnes Tornie et Tornie Lite en 1.0.547
 
 La refonte concerne **Tornie et Tornie Lite uniquement** : 18 campagnes et 396 scénarios solo avec leurs adaptations coop. Les campagnes, briefings et coops de **Jericho, Jericho Lite, ArcaKev et ArcaKev Lite** conservent la référence 1.0.545, en attendant l’avis de leurs auteurs. Les archives Vanilla sont conservées.
 
@@ -73,7 +73,7 @@ Le tirage est commun aux participants, stocké dans la progression et conservé 
 
 La progression reste indépendante du solo : `coop/<session>.ini` et checkpoint `coop/<session>.dls`, à côté de `Dune Legacy.ini`. Conserver les deux fichiers. Une reprise utilise le mod de la session et le checkpoint existant ; les noms des contrôleurs peuvent être réattribués, avec les effectifs par faction conservés pour une partie déjà commencée.
 
-**Charger une sauvegarde**, dans le lobby hôte, propose les sauvegardes manuelles `mpsave/*.dls` et automatiques `coop/*.dls`. Un chargement compatible rouvre le lobby sur la mission enregistrée ; tous les invités le rejoignent à nouveau. Annuler conserve le lobby. Les nouveaux fichiers utilisent le format **9839** ; les anciens restent lisibles avec leur carte et leurs règles enregistrées. Les reprises des nouvelles campagnes Tornie conservent les emplacements des troisième et quatrième adversaires.
+**Charger une sauvegarde**, dans le lobby hôte, propose les sauvegardes manuelles `mpsave/*.dls` et automatiques `coop/*.dls`. Un chargement compatible rouvre le lobby sur la mission enregistrée ; tous les invités le rejoignent à nouveau. Annuler conserve le lobby. Les nouveaux fichiers utilisent le format **9840** ; les anciens restent lisibles avec leur carte et leurs règles enregistrées. Les reprises des nouvelles campagnes Tornie conservent les emplacements des troisième et quatrième adversaires.
 
 Le haut fait **Ensemble sur Arrakis / COOP_CONQUEROR** récompense la fin de la campagne commune, avec un humain ou une IA ; le mode facile est accepté. Il ne complète aucune campagne solo. Le catalogue compte **73 hauts faits** et les profils restent locaux. Les succès de sauvetage coop suivent l’élimination et la victoire des factions alliées ; les contrôleurs archontes partagent l’état de leur maison.
 
@@ -85,6 +85,6 @@ Dans la fenêtre d’ouverture, choisir **Campagne – nom du mod**, **Campagne 
 
 Les tests automatisés couvrent les sept modes, les étapes 1–9, les alliés fermés ou actifs, le déploiement des MCV 3/4, les huit contrôleurs dans une faction, les crédits faciles, les forces +5/+10/+15, les sauvegardes et les affectations du lobby. Le transport UDP à huit filtre les communications directes entre invités et vérifie le relais, le démarrage et les commandes de tous les participants. Une partie humaine sur plusieurs connexions Internet reste à confirmer ; la confirmation historique de Tornie sur deux PC concerne 1.0.538.
 
-Pour la 1.0.546, les contrôles natifs Windows et Linux/Mint en FR/EN couvrent 252 démarrages solo, 224 départs coop et 76 reprises coop avancées par langue. Une campagne complète jouée par une personne, son équilibrage et une partie humaine Internet sur plusieurs connexions restent à confirmer. Voir [Suivi de la version](SUIVI-1.0.546-FR.md).
+Pour la 1.0.547, les contrôles natifs Windows et Linux/Mint en FR/EN couvrent 252 démarrages solo, 224 départs coop et 76 reprises coop avancées par langue. Une campagne complète jouée par une personne, son équilibrage et une partie humaine Internet sur plusieurs connexions restent à confirmer. Voir [Suivi de la version](SUIVI-1.0.547-FR.md).
 
 Templates : `data/coop/faction<id>/` pour Vanilla, `mods/<mod>/campaign/coop/faction<id>/` pour les mods, avec suffixes `-v1` et `-v2`. `scripts/build-coop-campaign.py --check` contrôle les 1 386 variantes et les 63 anciennes cartes racines. `scripts/check-campaigns-r2.py` vérifie le soutien, les distances et les 2 320 fichiers de campagnes/briefings/coops des autres auteurs identiques à la référence. Les sections auxiliaires des alliés 3/4 sont matérialisées seulement lorsqu’ils sont actifs ; le contexte `[COOP]` synchronise la carte, les contrôleurs et le tirage.

@@ -16,6 +16,7 @@
  */
 
 #include <Game.h>
+#include <UnitSelection.h>
 #include <misc/CampaignTechLevel.h>
 #include <Achievements/AchievementEvents.h>
 #include <Achievements/AchievementManager.h>
@@ -3796,6 +3797,29 @@ void Game::selectAllChemicalCarryalls()
     screenborder->setNewScreenCenter(averagePosition * TILESIZE);
 }
 
+
+void Game::selectAllArmy() { selectAllUnitGroup(false); }
+void Game::selectAllHarvesters() { selectAllUnitGroup(true); }
+
+void Game::selectAllUnitGroup(bool harvesters) {
+    std::set<Uint32> ids;
+    Coord summedPosition;
+    for(auto* unit:unitList) {
+        const int item=unit->getItemID();
+        if(!canControlHouse(unit->getOwner()) || !unit->isRespondable()
+           || !(harvesters ? isHarvesterSelectionItem(item) : isArmySelectionItem(item))) continue;
+        ids.insert(unit->getObjectID());
+        summedPosition+=unit->getLocation();
+    }
+    if(ids.empty()) return;
+    unselectAll(selectedList);selectedList.clear();
+    for(auto id:ids) {
+        auto* object=objectManager.getObject(id);
+        if(object) { object->setSelected(true);selectedList.insert(id); }
+    }
+    selectionChanged();currentCursorMode=CursorMode_Normal;
+    screenborder->setNewScreenCenter((summedPosition/static_cast<int>(ids.size()))*TILESIZE);
+}
 
 void Game::unselectAll(const std::set<Uint32>& aList)
 {

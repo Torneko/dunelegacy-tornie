@@ -46,7 +46,7 @@ const int BuilderBase::itemOrder[] = { Unit_Troopers5, Unit_Infantry5, Unit_Chem
                                            Structure_AdvancedWindTrap, Structure_AdvancedWindTrapMK2, Structure_AdvancedWindTrapMK3,
                                            Structure_Palace,
                                            Unit_SonicTank, Unit_Devastator, Unit_Deviator, Unit_Special,
-                                           Unit_EliteLauncher, Unit_EliteSiegeTank, Unit_ChemicalSiegeTank, Unit_FlameTank,
+                                           Unit_EliteLauncher, Unit_EliteSiegeTank, Unit_SuperTank, Unit_ChemicalSiegeTank, Unit_FlameTank,
                                            Unit_Launcher, Unit_SiegeTank, Unit_Tank, Unit_MCV,
                                            Unit_RebelHarvester, Unit_Harvester,
                                            Unit_RaiderQuad, Unit_RangedTank, Unit_SlowTank, Unit_CapacityHarvester, Unit_FastHarvester, Unit_TameSandworm, Unit_EliteOrnithopter, Unit_Ornithopter, Unit_Carryall, Unit_Quad, Unit_RocketTrike, Unit_SonicTrike, Unit_RaiderTrike,

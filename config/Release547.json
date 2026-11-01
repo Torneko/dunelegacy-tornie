@@ -1,0 +1,31 @@
+{
+  "version": "1.0.547",
+  "networkProtocol": 25,
+  "saveVersion": 9840,
+  "superTank": {
+    "itemID": 88,
+    "faction": "Kleshmersh",
+    "replacesProduction": "Elite Siege Tank",
+    "price": 925,
+    "hitPoints": 300,
+    "weapon": "Bullet_Flame",
+    "salvo": 2,
+    "damage": 75,
+    "range": 9,
+    "reloadCycles": 360,
+    "configuredTech": 1,
+    "upgradeLevel": 0,
+    "prerequisite": "House IX",
+    "effectiveTechLevel": 7
+  },
+  "editorWindtraps": {
+    "allFactions": true,
+    "chaosRequired": false,
+    "greenStar": true,
+    "vanillaUnchanged": true
+  },
+  "selectionButtons": [
+    "army",
+    "harvesters"
+  ]
+}

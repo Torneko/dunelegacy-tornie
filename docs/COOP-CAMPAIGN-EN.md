@@ -1,8 +1,8 @@
-# Co-op and Archon campaigns — 1.0.546
+# Co-op and Archon campaigns — 1.0.547
 
 [Guide français](COOP-CAMPAIGN.md)
 
-Every participant needs **1.0.546 / protocol 24**, the same mod and a distinct name. LAN or Internet play uses the host relay when guests cannot communicate directly, without a VPN. The host must remain reachable and connected.
+Every participant needs **1.0.547 / protocol 25**, the same mod and a distinct name. LAN or Internet play uses the host relay when guests cannot communicate directly, without a VPN. The host must remain reachable and connected.
 
 At every new mission start, all active allied factions receive **the same initial budget as the host**, including zero or missing optional-player credit fields. Easy Mode then adds 500 credits once per faction. Loading a save preserves recorded balances. Older protocol 13, 22 or 23 clients cannot join this version.
 
@@ -18,7 +18,7 @@ Optional **Allied control** also permits commands to other allied factions; thei
 
 There are 63 source campaigns and 1,386 co-op maps: Vanilla 9/198; Tornie, Jericho and ArcaKev 12/264 each; Tornie Lite, Jericho Lite and ArcaKev Lite 6/132 each. Nine stages follow the host faction's original campaign, fixed when the session starts.
 
-## Tornie and Tornie Lite campaigns in 1.0.546
+## Tornie and Tornie Lite campaigns in 1.0.547
 
 The revision applies to **Tornie and Tornie Lite only**: 18 campaigns and 396 solo scenarios with matching co-op maps. **Jericho, Jericho Lite, ArcaKev and ArcaKev Lite campaigns, briefings and co-op maps** retain their 1.0.545 baseline, pending their authors’ feedback. Vanilla archives are preserved.
 
@@ -54,7 +54,7 @@ Independent **Enemy forces +5** and **Enemy forces +10** switches combine to **1
 
 Shared progress and checkpoint files are `coop/<session>.ini` and `coop/<session>.dls`, next to `Dune Legacy.ini`, separate from solo progress. Keep both files. Resuming preserves the mod, selected scenario and checkpoint. Controller names can be reassigned; already-started saves retain controller counts per faction.
 
-The host lobby's **Load a save** offers manual `mpsave/*.dls` saves and automatic `coop/*.dls` checkpoints. Loading a compatible save reopens the lobby; all guests rejoin. Cancelling preserves the lobby. New saves use format **9839**; older saves remain readable with their stored maps and rules. New Tornie campaign checkpoints retain the third and fourth enemy slots.
+The host lobby's **Load a save** offers manual `mpsave/*.dls` saves and automatic `coop/*.dls` checkpoints. Loading a compatible save reopens the lobby; all guests rejoin. Cancelling preserves the lobby. New saves use format **9840**; older saves remain readable with their stored maps and rules. New Tornie campaign checkpoints retain the third and fourth enemy slots.
 
 **Together on Arrakis / COOP_CONQUEROR** rewards completing the shared campaign with a human or AI ally, including Easy Mode. It does not complete a solo campaign. The catalogue has **73 achievements**, with local profiles. Cooperative rescue awards follow allied faction elimination and team victory; Archon controllers share their house’s state.
 
@@ -66,6 +66,6 @@ In the opening dialog, choose **Campaign – mod name**, **Campaign COOP – mod
 
 Automated checks cover all seven modes and stages 1–9, closed/active allies, MCV 3/4 deployment, eight controllers in one faction, Easy credits, +5/+10/+15 forces, saves and lobby assignments. The eight-player UDP check filters direct guest links and verifies host relay, start and every participant's commands. Human play across independent Internet connections remains pending. Tornie's historical two-PC confirmation concerns 1.0.538.
 
-Native Windows and Linux/Mint FR/EN checks for 1.0.546 cover 252 solo starts, 224 cooperative starts and 76 late cooperative restores per language. Complete human campaign playthroughs, balance sign-off and human Internet co-op across separate connections remain unconfirmed. See [Release follow-up](SUIVI-1.0.546-EN.md).
+Native Windows and Linux/Mint FR/EN checks for 1.0.547 cover 252 solo starts, 224 cooperative starts and 76 late cooperative restores per language. Complete human campaign playthroughs, balance sign-off and human Internet co-op across separate connections remain unconfirmed. See [Release follow-up](SUIVI-1.0.547-EN.md).
 
 Templates live in `data/coop/faction<id>/` for Vanilla and `mods/<mod>/campaign/coop/faction<id>/` for mods, with `-v1`/`-v2` variants. `scripts/build-coop-campaign.py --check` audits all 1,386 variants and 63 legacy root maps. `scripts/check-campaigns-r2.py` checks support, distances and 2,320 foreign campaign/briefing/co-op files identical to the baseline. Optional ally sections materialize only for active slots; the `[COOP]` context synchronizes map, controllers and mission selection.

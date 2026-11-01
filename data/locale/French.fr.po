@@ -2775,3 +2775,18 @@ msgstr "Améliorée au départ"
 
 msgid "Start with double power and green animation."
 msgstr "Énergie doublée et animation verte dès le départ."
+
+msgid "Army"
+msgstr "Armée"
+
+msgid "Harvesters"
+msgstr "Moissonneuses"
+
+msgid "Select all army units"
+msgstr "Sélectionner toute l’armée"
+
+msgid "Select all harvesters"
+msgstr "Sélectionner toutes les moissonneuses"
+
+msgid "Super Tank"
+msgstr "Super Tank"

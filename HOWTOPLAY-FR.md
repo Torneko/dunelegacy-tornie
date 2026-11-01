@@ -1,4 +1,9 @@
-# Jouer à Dune Legacy Tornie — 1.0.546
+# Jouer à Dune Legacy Tornie — 1.0.547
+
+## Ajouts 1.0.547
+
+Sous Chemical Carryall : **Armée**, puis **Moissonneuses**, avec compteurs et contrôle allié. Kleshmersh reçoit le **Super Tank à 925 crédits**, 300 PV, deux projectiles incendiaires et explosion à la destruction, en remplacement de l’Elite Siege Tank. Usine lourde + IX, normalement au niveau 7. Dans l’éditeur hors Vanilla, tout Windtrap standard peut être amélioré au départ, sans Chaos, avec étoile verte. Les anciennes sauvegardes gardent leurs tables ; démarrer une nouvelle partie ou mission pour les remplacements.
+
 
 [English guide](HOWTOPLAY.md) · [Coop](docs/COOP-CAMPAIGN.md) · [Campagnes](docs/CAMPAIGNS.md)
 
@@ -16,11 +21,11 @@ L’infanterie de capture peut prendre un bâtiment ennemi en santé rouge. **Sa
 
 ## Coop, archonte et sauvegardes
 
-Tous les postes doivent utiliser **1.0.546 / protocole 24** et le même mod. La coop suit la faction de l’hôte sur neuf étapes, jusqu’à quatre factions alliées. Archonte répartit jusqu’à huit joueurs entre elles. Les contrôleurs d’une maison partagent unités et crédits. Un emplacement allié fermé ne crée ni armée, ni MCV, ni renforts.
+Tous les postes doivent utiliser **1.0.547 / protocole 25** et le même mod. La coop suit la faction de l’hôte sur neuf étapes, jusqu’à quatre factions alliées. Archonte répartit jusqu’à huit joueurs entre elles. Les contrôleurs d’une maison partagent unités et crédits. Un emplacement allié fermé ne crée ni armée, ni MCV, ni renforts.
 
 Chaque allié actif reçoit le capital de départ de l’hôte à chaque nouvelle mission. Le mode facile ajoute 500 crédits et commence à l’étape 2. Contrôles alliés et construction sur terrain allié sont distincts. Les forces ennemies +5/+10 se cumulent à +15 par adversaire présent. L’intro Rebels de Tornie donne une économie commerciale aux partenaires ; les adversaires Tornie gardent leur identité si un invité choisit la même maison.
 
-**Charger une sauvegarde**, dans le lobby hôte, propose les manuelles `mpsave/*.dls` et automatiques `coop/*.dls`. Les invités rejoignent le lobby rouvert. Garder ensemble `coop/<session>.ini` et `coop/<session>.dls`. La version écrit le format **9839** ; anciens lecteurs et état des missions enregistrées sont conservés. Garder le profil local, dont `achievements.ini`, lors d’un transfert.
+**Charger une sauvegarde**, dans le lobby hôte, propose les manuelles `mpsave/*.dls` et automatiques `coop/*.dls`. Les invités rejoignent le lobby rouvert. Garder ensemble `coop/<session>.ini` et `coop/<session>.dls`. La version écrit le format **9840** ; anciens lecteurs et état des missions enregistrées sont conservés. Garder le profil local, dont `achievements.ini`, lors d’un transfert.
 
 ## Éditeur et succès
 
@@ -28,4 +33,4 @@ L’ouverture de l’éditeur distingue les campagnes solo/coop du mod actif et 
 
 Le catalogue comporte **73 hauts faits locaux**, avec statistiques et succès acquis conservés. Les succès de sauvetage coop sont attribués à la victoire de l’équipe ; le sabotage exige un palais ennemi détruit par un Saboteur du joueur. Replays, triche et immortalité solo n’accordent pas de progression.
 
-Les contrôles automatisés Windows/Linux et du site passent. L’équilibrage après des campagnes complètes, la coop Internet humaine pour la 546 et le PC Mint physique restent à confirmer. Voir le [suivi actuel](docs/SUIVI-1.0.546-FR.md).
+Les contrôles automatisés Windows/Linux et du site passent. L’équilibrage après des campagnes complètes, la coop Internet humaine pour la 546 et le PC Mint physique restent à confirmer. Voir le [suivi actuel](docs/SUIVI-1.0.547-FR.md).

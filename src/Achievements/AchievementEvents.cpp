@@ -141,12 +141,13 @@ void lost(UnitBase* unit){
 }
 void sold(House* owner,int refund){if(local(owner))manager().sold(static_cast<std::uint64_t>(std::max(0,refund)));}
 void built(House* house,ObjectBase* object){
-    if(object&&object->getItemID()==Unit_FlameTank)manager().flameSource(object->getObjectID());
+    if(object&&(object->getItemID()==Unit_FlameTank || object->getItemID()==Unit_SuperTank))manager().flameSource(object->getObjectID());
     if(!local(house)||!object)return;
     std::string special;
     switch(object->getItemID()){
         case Unit_RocketTrike:special="RocketTrike";break;case Unit_SonicTrike:special="SonicTrike";break;
         case Unit_FlameTank:special="FlameTank";break;case Unit_EliteLauncher:special="EliteLauncher";break;
+        case Unit_SuperTank:special="SuperTank";break;
         case Unit_EliteSiegeTank:special="EliteSiegeTank";break;case Unit_ChemicalSiegeTank:special="ChemicalSiegeTank";break;
         case Unit_RaiderQuad:special="RaiderQuad";break;case Unit_RangedTank:special="RangedTank";break;case Unit_SlowTank:special="SlowTank";break;case Unit_CapacityHarvester:special="CapacityHarvester";break;case Unit_FastHarvester:special="FastHarvester";break;case Unit_TameSandworm:special="TameSandworm";break;
         case Unit_FlameQuad:special="FlameQuad";break;case Unit_GasInfantry:special="GasInfantry";break;

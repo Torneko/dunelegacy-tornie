@@ -94,6 +94,10 @@ int WindTrap::getProducedPower() const {
 
 void WindTrap::save(OutputStream& stream) const { StructureBase::save(stream);stream.writeBool(powerUpgraded); }
 
+bool WindTrap::supportsEditorPowerUpgrade() {
+    return ModManager::instance().isTornieContentActive();
+}
+
 bool WindTrap::supportsPowerUpgrade(HOUSETYPE house) {
     return ModManager::instance().isTornieContentActive() && isHouseFaction(house,HOUSE_REBELS);
 }

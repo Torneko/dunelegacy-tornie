@@ -26,7 +26,7 @@ def main():
     artfile=Path('docs')/('RELEASE-'+args.version+'-assets.json')
     artwork=json.loads(artfile.read_text())['activeResources'] if artfile.exists() else []
     vanilla={}
-    if args.version=='1.0.546':
+    if args.version in ('1.0.546','1.0.547'):
         # Keep the supplied 545 artwork bytes, with the two requested frame
         # bindings swapped. The preparation manifest pins their exact hashes.
         artwork=json.loads(Path('docs/RELEASE-1.0.545-assets.json').read_text())['activeResources']
@@ -34,6 +34,8 @@ def main():
         frames={entry['path']:entry['sha256'] for entry in preparation['frames']}
         for entry in artwork:
             if entry['runtime'] in frames:entry['sha256']=frames[entry['runtime']]
+        if args.version=='1.0.547':
+            artwork+=json.loads(artfile.read_text())['activeResources']
         vanilla_paths=subprocess.check_output(['git','ls-tree','-r','--name-only','HEAD','data/campaign_vanilla'],text=True).splitlines()
         vanilla_paths+=['data/SCENARIO.PAK','data/OPENSD2.PAK','data/Extra.PAK']
         vanilla={path.removeprefix('data/'):sha(Path(path).read_bytes()) for path in vanilla_paths}
@@ -48,7 +50,7 @@ def main():
             matches=[name for name in names if name==path or name.endswith('/'+path)]
             assert len(matches)==1 and sha(archive.read(matches[0]))==digest,path
         for entry in artwork:
-            path=entry['runtime'];matches=[name for name in names if name==path or name.endswith('/'+path)]
+            path=entry['runtime'];matches=[name for name in names if (name==path or name.endswith('/'+path)) and '/mods/' not in '/'+name]
             assert len(matches)==1 and sha(archive.read(matches[0]))==entry['sha256'],path
         for path,digest in vanilla.items():
             matches=[name for name in names if name==path or name.endswith('/'+path)]
@@ -71,7 +73,7 @@ def main():
             parts=member.name.split('/')
             mod_paths=['/'.join(parts[index:]) for index,part in enumerate(parts) if part=='mods']
             mod_paths=[path for path in mod_paths if path in expected]
-            art_entries=artwork_by_name.get(parts[-1],[]) if len(parts)>1 else []
+            art_entries=artwork_by_name.get(parts[-1],[]) if len(parts)>1 and 'mods' not in parts else []
             vanilla_paths=[path for path in vanilla if member.name==path or member.name.endswith('/'+path)]
             if not mod_paths and not art_entries and not vanilla_paths:continue
             digest=sha(archive.extractfile(member).read())
@@ -99,7 +101,7 @@ def main():
             root=roots[0]
             for path,digest in expected.items():assert sha((root/path).read_bytes())==digest,image.name+':'+path
             for entry in artwork:
-                matches=list(extracted.rglob(Path(entry['runtime']).name))
+                matches=[path for path in extracted.rglob(Path(entry['runtime']).name) if 'mods' not in path.relative_to(extracted).parts]
                 assert len(matches)==1 and sha(matches[0].read_bytes())==entry['sha256'],image.name+':'+entry['runtime']
             for path,digest in vanilla.items():assert sha((root/path).read_bytes())==digest,image.name+':'+path
         report['packages'][image.name]={'passed':True,'sha256':sha(image.read_bytes())}

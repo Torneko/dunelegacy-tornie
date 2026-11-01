@@ -1,77 +1,23 @@
-# Dune Legacy Tornie 1.0.546
+# Dune Legacy Tornie 1.0.547
 
-Cette version corrige le CHOAM de l’éditeur et les cadres Atreides/Ordos, rend les campagnes Vanilla accessibles dans l’éditeur et révise les campagnes **Tornie et Tornie Lite uniquement**.
+## Super Tank de Kleshmersh
 
-## Campagnes et coop
+Le **Super Tank** est une nouvelle unité qui remplace l’Elite Siege Tank dans la production de Kleshmersh, dans Tornie, Jericho et ArcaKev. Il coûte **925 crédits**, possède **300 points de vie**, comme le Siege Tank standard, et tire une salve de deux projectiles incendiaires à la manière du Rocket Launcher. Sa destruction provoque une explosion dommageable sur le modèle du Devastator.
 
-- 18 campagnes, 396 scénarios solo et leurs cartes coop adaptés aux bâtiments, unités et technologies de chaque faction, avec des renforts des deux côtés.
-- Un adversaire de soutien permanent par campagne, différent d’une campagne à l’autre. Rebels conserve Harkonnen comme soutien, même lorsque l’adversaire principal change.
-- Missions 001–019 : deux adversaires. Missions 020–021 : trois. Finale 022 : quatre, avec leurs bases, forces et renforts.
-- En 002–004, les bâtiments du soutien se trouvent à au moins dix cases de l’emprise des bâtiments du joueur et des MCV de départ alliés. Les variantes coop à deux ou quatre factions respectent la même règle.
-- Intros Tornie : deux petites bases ennemies, 1 500 crédits au départ et objectif de 2 000 crédits raffinés.
-- Intro Rebels de Tornie : port stellaire et petite économie, sans chantier ni MCV gratuit. Acheter son MCV au CHOAM ; chaque partenaire coop reçoit une économie équivalente.
-- Intro Wildspade de Tornie : Carryall et Ornithoptère prêtés, avec une menace antiaérienne.
-- Les invités peuvent choisir la même faction que le soutien ennemi sans remplacer ce dernier. La progression et les sauvegardes coop conservent les participants supplémentaires.
+Il conserve les conditions d’accès du char remplacé : Usine lourde et IX, accessible normalement au niveau 7, sans amélioration supplémentaire de l’usine. Les autres factions conservent leur Elite Siege Tank. Les départs de scénario et les renforts de Kleshmersh utilisant cet ancien char reçoivent le Super Tank lors d’une nouvelle mission. La tourelle et l’icône originales fournies par Tornie sont intégrées.
 
-Les campagnes, briefings et cartes coop **Jericho, Jericho Lite, ArcaKev et ArcaKev Lite restent ceux de la référence 1.0.545**. Leur refonte attend l’avis de leurs auteurs. Les archives des campagnes Vanilla sont inchangées.
+## Sélection en partie
 
-## Éditeur et technologie
+- **Armée**, sous le bouton Chemical Carryall : sélectionne les unités militaires disponibles ; les moissonneuses, MCV et transports restent dans leurs sélections propres.
+- **Moissonneuses** : sélectionne toutes les variantes disponibles, y compris Harvestank, grande capacité et rapide.
+- Les compteurs correspondent aux unités sélectionnables. Le contrôle allié est respecté ; une unité ennemie ou indisponible n’est pas sélectionnée. Les boutons cèdent leur place aux commandes des objets sélectionnés.
 
-- Correction du crash à l’ouverture du CHOAM : les 31 unités du catalogue tiennent dans une liste défilante, avec application, annulation et rechargement de carte.
-- Listes distinctes pour les campagnes solo et coop du mod actif et de Vanilla. Les cartes des campagnes peuvent être ouvertes dans l’éditeur ; les factions chargées restent sélectionnables, y compris dans une édition Lite.
-- Cadres dorés Atreides et Ordos réattribués à la bonne maison dans les scores et sur la carte des régions.
-- Wildspade, dans tous les mods qui proposent cette faction : usine high-tech et Carryall au niveau 4 ; Carryall chimique au niveau 5 après la première amélioration. Ornithoptères et IX restent au niveau 7.
+## Windtraps dans l’éditeur
 
-## Installation et compatibilité
+Dans les six mods hors Vanilla, l’option **« Améliorée au départ »** du Windtrap standard 2×2 est disponible pour toutes les factions, **sans exiger le mode Chaos**. Elle double la production initiale, active l’animation verte et affiche une **étoile verte dans l’éditeur**. Le réglage suit l’annulation/rétablissement, la carte et les sauvegardes. Cette propriété de carte ne réclame ni paiement ni IX au départ ; l’amélioration achetable en partie conserve ses règles Rebels et ses plans Chaos.
 
-Extraire entièrement le paquet Windows dans un nouveau dossier, puis lancer `dunelegacy.exe` à la racine. Le guide français/anglais est disponible sur le site et dans `DuneLegacyTornie-Site-Local-1.0.546.zip` ; dans cette archive, ouvrir `dist/index.html`.
+## Compatibilité
 
-Commencer une **nouvelle campagne** pour jouer les missions révisées. Une sauvegarde en cours conserve l’état de sa mission.
+Tous les participants réseau doivent utiliser **1.0.547 / protocole 25** et le même mod. Nouvelles sauvegardes : **9840**. Les sauvegardes précédentes restent lisibles avec leurs unités, tables technologiques et états enregistrés ; commencer une nouvelle partie ou mission pour recevoir les nouveaux remplacements. Les campagnes et briefings Jericho/ArcaKev restent conservés ; cette version adapte l’unité de Kleshmersh sans réécrire leurs campagnes.
 
-Réseau : **protocole 24**, version 1.0.546 et même mod sur tous les postes. Les préversions en protocole 23 et la 1.0.545 ne peuvent pas rejoindre cette version. Format de sauvegarde **9839** conservé ; les anciens lecteurs de sauvegardes restent présents.
-
-## Validation
-
-La validation Windows comprend 146 cas / 11 217 assertions moteur et réseau, 5 265 chargements de cartes dans l’éditeur, 252 démarrages solo, 224 départs coop, 76 reprises coop avancées et 28 compositions de cadres. Les 2 320 fichiers de campagnes, briefings et coops des autres auteurs sont identiques à la référence 545. Les empreintes du paquet et les sources accompagnent la livraison.
-
-Ces contrôles automatisés ne constituent pas une campagne complète jouée par une personne ni une partie coop humaine sur deux PC. Le rapport de livraison distingue les plateformes effectivement vérifiées.
-
----
-
-# Dune Legacy Tornie 1.0.546
-
-This version fixes editor CHOAM and the Atreides/Ordos frames, exposes Vanilla campaigns in the editor and revises **Tornie and Tornie Lite campaigns only**.
-
-## Campaigns and co-op
-
-- 18 campaigns, 396 solo scenarios and matching cooperative maps use faction buildings, units and technology, with reinforcements for both sides.
-- Each campaign keeps one supporting enemy throughout its missions. Support varies between campaigns; Rebels keeps Harkonnen even when the primary enemy changes.
-- Missions 001–019 have two opponents, 020–021 have three and final mission 022 has four, with bases, forces and reinforcements.
-- In 002–004, support buildings stay at least ten tiles from player building footprints and allied starting MCV footprints. Two/four-faction co-op follows the same rule.
-- Tornie openings have two small enemy bases, 1,500 starting credits and a 2,000 refined-spice quota.
-- Tornie Rebels opening: a starport and small economy, without a free construction yard or MCV. Buy the MCV through CHOAM; each co-op partner receives a matching economy.
-- Tornie Wildspade opening: loaned Carryall and Ornithopter, with an anti-air threat.
-- A guest choosing the enemy support faction no longer replaces that support. Progression and cooperative checkpoints retain additional participants.
-
-**Jericho, Jericho Lite, ArcaKev and ArcaKev Lite campaigns, briefings and co-op maps retain their 1.0.545 baseline**, pending their authors’ feedback. Vanilla campaign archives remain unchanged.
-
-## Editor and technology
-
-- Fixed the CHOAM opening crash: all 31 catalogue units fit in a scrolling list, supporting apply, undo and map reload.
-- Separate editor sources for the active mod’s solo/co-op campaigns and Vanilla campaigns. Loaded campaign factions remain selectable, including in Lite editions.
-- Golden Atreides and Ordos frames now match their faction on score and region screens.
-- Wildspade, wherever the faction is available: Hightech Factory and Carryall at technology 4; Chemical Carryall at 5 after the first upgrade. Ornithopter and IX remain at technology 7.
-
-## Installation and compatibility
-
-Fully extract the Windows package into a new folder, then run `dunelegacy.exe` in its root. The bilingual guide is available online and in `DuneLegacyTornie-Site-Local-1.0.546.zip`; open `dist/index.html` inside that archive.
-
-Start a **new campaign** to use revised missions. Existing checkpoints retain their saved mission state.
-
-Networking requires **protocol 24**, version 1.0.546 and matching mods on every computer. Protocol 23 previews and 1.0.545 cannot join this version. Save format **9839** remains; earlier save readers are retained.
-
-## Validation
-
-Windows validation covers 146 cases / 11,217 engine and network assertions, 5,265 editor map loads, 252 solo starts, 224 cooperative starts, 76 late cooperative checkpoint restores and 28 frame compositions. All 2,320 campaign, briefing and co-op files from other authors match the 545 baseline. Package hashes and corresponding sources accompany the delivery.
-
-Automated checks do not represent a complete human campaign playthrough or human two-PC co-op. The delivery report identifies the platforms actually verified.
+Le catalogue reste à **73 succès**. Les campagnes et coops révisées de la 546 sont conservées, ainsi que les accès Vanilla de l’éditeur et les liens DuneCity du site. Voir le suivi actuel pour les essais humains et l’avis des auteurs encore attendus.

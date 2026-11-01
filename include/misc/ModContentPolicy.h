@@ -22,6 +22,7 @@ inline int neutralVanillaMapItem(int item) {
         case Unit_SonicTrike: return Unit_RaiderTrike;
         case Unit_FlameTank: return Unit_Tank;
         case Unit_EliteLauncher: return Unit_Launcher;
+        case Unit_SuperTank:
         case Unit_EliteSiegeTank:
         case Unit_ChemicalSiegeTank: return Unit_SiegeTank;
         case Unit_ChemicalCarryall: return Unit_Carryall;

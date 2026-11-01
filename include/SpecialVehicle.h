@@ -68,7 +68,7 @@ inline std::vector<int> getSpecialVehicleFallbackPoolForHouse(
             case HOUSE_REBELS:     return { Unit_SonicTank, Unit_FlameTank };
             case HOUSE_CUSTOM:     return { Unit_Devastator, Unit_EliteSiegeTank };
             case HOUSE_WILDSPADE:  return { Unit_EliteLauncher, Unit_FlameTank };
-            case HOUSE_KLESHMERSH: return { Unit_FlameTank, Unit_EliteSiegeTank };
+            case HOUSE_KLESHMERSH: return { Unit_FlameTank, Unit_SuperTank };
             case HOUSE_THARPIQUE:  return { Unit_Deviator, Unit_EliteLauncher };
             default:               return {};
         }
