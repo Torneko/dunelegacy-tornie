@@ -1,88 +1,88 @@
 {
   "version": "1.0.547",
   "passed": true,
-  "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
-  "website": "80227a263afcafebaf5094f939d9c787eae23149",
+  "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+  "website": "9360d8deaa950113025f104384f54970881d6364",
   "assets": [
     {
       "name": "DuneLegacyTornie-1.0.547-Guides-FR-EN.zip",
-      "size": 432316,
-      "sha256": "894853dfa3848d4d685279bbe2ab47e98db39f7a87b0aeab92f46eff00e474fc"
+      "size": 445213,
+      "sha256": "ee6830a7d3dbf76907c45ea93128f2bb1e2cc286a76b9d3bdd861592c235d0ff"
     },
     {
       "name": "DuneLegacyTornie-1.0.547-Linux-Mint-Compatible.AppImage",
-      "size": 52668920,
-      "sha256": "0373696e4badfe06c86338ad88fa97f36e4b57674a4a884c80d7c64812a7c86d"
+      "size": 52677112,
+      "sha256": "44c2aa52d4748f13704d79115bbfec00701765b2e59bc8f98bf2db974954c8ff"
     },
     {
       "name": "DuneLegacyTornie-1.0.547-Linux-x64.deb",
-      "size": 67122782,
-      "sha256": "61f8a56f1af582f21f61166737c496d406982bc77e704b8f7bd629da805754f8"
+      "size": 67138634,
+      "sha256": "ff9388b20a0b7eceba414aad1f1f0f97d4b381a121ab6e831f532e805e11a71d"
     },
     {
       "name": "DuneLegacyTornie-1.0.547-Linux-x64.rpm",
-      "size": 67217101,
-      "sha256": "87d526c6585b883bbe3349ae80e2982c6e8e7ece8bc6a022eedac034f8ac364c"
+      "size": 67233450,
+      "sha256": "4979665690957a5cf1a28f4973bea93c92765373bc20288f12d6f94fae1e0984"
     },
     {
       "name": "DuneLegacyTornie-1.0.547-Linux-x64.tar.gz",
-      "size": 67815707,
-      "sha256": "c6570dedf6f61ff197dc648610d1413ac236d35460c228baa026349a4cbbc18f"
+      "size": 67821032,
+      "sha256": "e357a1cc28a27b6ccd18335478d9aff0b5d9dea4d58fd6ce2d405dd3a14a0e6b"
     },
     {
       "name": "DuneLegacyTornie-1.0.547-Linux-x86_64.AppImage",
-      "size": 52673016,
-      "sha256": "82e12b9bc5e48d4a82285463875cf855e87e4cb7a287071d98460212513cdd16"
+      "size": 52677112,
+      "sha256": "9788322e6efc04bb9a4084494a3c7e82fcec5b0b3e970509c399806d4e0d561c"
     },
     {
       "name": "DuneLegacyTornie-1.0.547-Sources.zip",
-      "size": 285278643,
-      "sha256": "9135f77f400bd29132a90037a855bc1f79de0883a1446c9c651df0fc20dc4e89"
+      "size": 285335297,
+      "sha256": "509e531d5be57d03c38051c127aa59804d9a2b370d161b030732181661b7f443"
     },
     {
       "name": "DuneLegacyTornie-1.0.547-Windows-x64.zip",
-      "size": 80237147,
-      "sha256": "2288e7c6843be76b237572d83c8828ec12d03cadcbe72c76b2ae4ec04a957fa0"
+      "size": 80247532,
+      "sha256": "90ce9386ec6657bf7aaed5b4c157e0f83a0c441ab28c7952c096e4efff452692"
     },
     {
       "name": "DuneLegacyTornie-Site-Local-1.0.547.zip",
-      "size": 872438218,
-      "sha256": "2e5f3ed2b24b5541144f508d65073e0617ec813bedc23422e73dcb277f4853fe"
+      "size": 872575983,
+      "sha256": "d9ed760b93717673524953a4336527b2f5945d27f27a228d45f64b4eb26ca43a"
     },
     {
       "name": "Linux-Build-1.0.547.json",
-      "size": 2079,
-      "sha256": "cc241a34043b04f27ca64e0b90ec02b9c686fd922ce70ce005c65693335ba08e"
+      "size": 1916,
+      "sha256": "4e39dc813564610ee51558e9317f9b1df31554fac15d1015f70d990ff6b03869"
     },
     {
       "name": "Package-Resources-Audit-1.0.547.json",
       "size": 780,
-      "sha256": "af5834ac87b90bbe9a0187a4af80dc92b6dd88262b9cb6f645347cd823b3cd45"
+      "sha256": "802d6d155c50369f22b27d37cd9301fe627903bb558c21e00e1b5f3650503576"
     },
     {
       "name": "Publication-Validation-1.0.547.json",
-      "size": 2618,
-      "sha256": "9ae4f1352cedfdc07cb24f3103e54e4772ba9c60cfa917c7ab6309f5f3fd4591"
+      "size": 2646,
+      "sha256": "8ba2d1a7dae5e573ef9a1a83eb1197ddd985191dd8feff47bf448df849649190"
     },
     {
       "name": "Release-Notes-1.0.547-EN.md",
-      "size": 2542,
-      "sha256": "b9914e41045f142a1eed17a82083a1393e050a8dce5151b98e3a592a7431ede0"
+      "size": 3002,
+      "sha256": "10c809789c8caf313ec57ae853cf7f5d13bbfed552a9cab86ba2163969bcadce"
     },
     {
       "name": "Release-Notes-1.0.547-FR.md",
-      "size": 3023,
-      "sha256": "067e269245e5aadc77dfda7baa14a3e5318a426638722ab0e972a59a1d47d5a6"
+      "size": 3504,
+      "sha256": "7f2a50d5067a5537cabc98c84ca7a0d3f11b82f5bcee52e9bd83aaf85ea0b118"
     },
     {
       "name": "SHA256SUMS-1.0.547.txt",
       "size": 1742,
-      "sha256": "1e03ab66d65f24a828fe0cd8e2390cc8264e7f23bde386b1f8abfe00f8c7efaa"
+      "sha256": "7eee36e1a500990b9479d1610bc6a962f7d08f969f63b4d52cb91f2e34a9326d"
     },
     {
       "name": "Validation-1.0.547.json",
-      "size": 9104,
-      "sha256": "47b813d4dc2eaeb1bca0bd3417384a1fc3af35774b8bdbdb2d24a2aad8b03717"
+      "size": 9572,
+      "sha256": "04db16861062955b5ac90f0ad8eb030e22b0f8eba30507999b1ffb2864009335"
     },
     {
       "name": "Website-Validation-1.0.547.json",
@@ -91,98 +91,39 @@
     },
     {
       "name": "Windows-Build-1.0.547.json",
-      "size": 1557,
-      "sha256": "fde8158f31f76135925465fda7f1265ad6826a8ceaf67d0ef1046f6139d64e7d"
+      "size": 841,
+      "sha256": "760378cd2d9a2e65c8bb861e90cf320145119b27df371ff8afc9cdae7d11e296"
     }
   ],
   "manifestEntries": 17,
-  "sourceZipFilesByteIdentical": 8490,
-  "guidesFilesByteIdentical": 160,
-  "websiteFilesByteIdentical": 399,
+  "sourceZipFilesByteIdentical": 8509,
+  "guidesFilesByteIdentical": 162,
+  "websiteFilesByteIdentical": 402,
   "embeddedFiles": 15,
   "archivesCrcAndUniqueEntries": true,
-  "verifiedAt": "2026-11-01T03:07:27.854115+00:00",
+  "serverAssetsVerified": true,
   "release": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.547",
+  "releaseDraft": false,
+  "releaseId": 430280161,
   "publishedAt": "2026-11-01T03:00:18Z",
-  "publicDownloads": [
-    {
-      "name": "DuneLegacyTornie-1.0.547-Guides-FR-EN.zip",
-      "status": 200
+  "verifiedAt": "2026-11-02T01:42:56.320272+00:00",
+  "publicDownloadHeads": 18,
+  "servedWebsiteFilesByteIdentical": 400,
+  "publicBrowserContexts": 168,
+  "liveVerificationSha256": "25424e612112e0907d9d42997d8f91cddee8d0a43156070f24f2c9eb9da18054",
+  "releaseIdentity": null,
+  "releaseCommitDates": {
+    "after": {
+      "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+      "gitCommitDate": "2026-11-01T20:16:05-05:00",
+      "createdAt": "2026-11-02T01:16:05Z",
+      "match": true
     },
-    {
-      "name": "DuneLegacyTornie-1.0.547-Linux-x64.rpm",
-      "status": 200
-    },
-    {
-      "name": "DuneLegacyTornie-1.0.547-Linux-Mint-Compatible.AppImage",
-      "status": 200
-    },
-    {
-      "name": "DuneLegacyTornie-1.0.547-Linux-x64.deb",
-      "status": 200
-    },
-    {
-      "name": "DuneLegacyTornie-1.0.547-Linux-x64.tar.gz",
-      "status": 200
-    },
-    {
-      "name": "DuneLegacyTornie-1.0.547-Sources.zip",
-      "status": 200
-    },
-    {
-      "name": "DuneLegacyTornie-1.0.547-Windows-x64.zip",
-      "status": 200
-    },
-    {
-      "name": "DuneLegacyTornie-1.0.547-Linux-x86_64.AppImage",
-      "status": 200
-    },
-    {
-      "name": "DuneLegacyTornie-Site-Local-1.0.547.zip",
-      "status": 200
-    },
-    {
-      "name": "Linux-Build-1.0.547.json",
-      "status": 200
-    },
-    {
-      "name": "Publication-Validation-1.0.547.json",
-      "status": 200
-    },
-    {
-      "name": "Package-Resources-Audit-1.0.547.json",
-      "status": 200
-    },
-    {
-      "name": "Release-Notes-1.0.547-EN.md",
-      "status": 200
-    },
-    {
-      "name": "Release-Notes-1.0.547-FR.md",
-      "status": 200
-    },
-    {
-      "name": "SHA256SUMS-1.0.547.txt",
-      "status": 200
-    },
-    {
-      "name": "Validation-1.0.547.json",
-      "status": 200
-    },
-    {
-      "name": "Website-Validation-1.0.547.json",
-      "status": 200
-    },
-    {
-      "name": "Windows-Build-1.0.547.json",
-      "status": 200
+    "before": {
+      "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+      "gitCommitDate": "2026-10-31T22:15:46-04:00",
+      "createdAt": "2026-11-01T02:15:46Z",
+      "match": true
     }
-  ],
-  "servedWebsiteFilesByteIdentical": 397,
-  "repositoryControlFiles": [
-    "website/.gitignore",
-    "website/.nojekyll"
-  ],
-  "publicBrowserContexts": 164,
-  "pagesRun": 41267405420
+  }
 }

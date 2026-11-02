@@ -1,44 +1,73 @@
 {
   "version": "1.0.547",
   "status": "published-and-verified",
-  "verifiedAt": "2026-11-01T03:07:27.854115+00:00",
+  "replacement": "super-tank-alignment-547",
+  "date": "2026-11-01",
+  "verifiedAt": "2026-11-02T01:42:56.320272+00:00",
   "publishedAt": "2026-11-01T03:00:18Z",
+  "releaseId": 430280161,
   "release": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.547",
-  "gameSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
-  "websiteSource": "80227a263afcafebaf5094f939d9c787eae23149",
+  "existingReleaseReused": true,
+  "originalPublishedAtPreserved": true,
+  "gameSource": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+  "websiteSource": "9360d8deaa950113025f104384f54970881d6364",
+  "previousGameSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
+  "previousSourceArchive": "archive/releases/v1.0.547-before-super-tank-alignment",
+  "previousReports": "release_notes/initial-1.0.547/",
   "networkProtocol": 25,
   "saveFormat": 9840,
   "runs": {
-    "windows": 41264452598,
-    "linux": 41265028810,
-    "packageResources": 41266529079,
-    "documents": 41267003315,
-    "pages": 41267405420
+    "windows": 41371611314,
+    "linux": 41371613772,
+    "packageResources": 41372832958,
+    "documents": 41373060036,
+    "pages": 41373553244
   },
   "assets": 18,
   "manifestEntries": 17,
-  "sourceZipFiles": 8490,
-  "guideFiles": 160,
-  "offlineWebsiteFiles": 399,
+  "sourceZipFiles": 8509,
+  "guideFiles": 162,
+  "offlineWebsiteFiles": 402,
   "embeddedFiles": 15,
-  "publicServedWebsiteFiles": 397,
-  "publicBrowserContexts": 164,
+  "publicServedWebsiteFiles": 400,
+  "publicBrowserContexts": 168,
   "originalArtworkFiles": 22,
   "vanillaFiles": 205,
   "modFiles": 5635,
   "originalGraphicsPreserved": true,
-  "saveVersionReportCorrection": {
-    "originalValue": 9839,
-    "correctValue": 9840,
-    "originalReportHashesPreserved": true,
-    "packagesUnchanged": true,
-    "officialWindowsGeneratedSaves": 10
+  "superTank": {
+    "price": 925,
+    "hitPoints": 300,
+    "gameAndEditorPosesPerLanguage": 144,
+    "directions": 8,
+    "zooms": [
+      1,
+      2,
+      3
+    ],
+    "gameplayUnchanged": true
   },
   "localWindowsZip": "DuneLegacyTornie-1.0.547-Windows-x64.zip",
   "localWindowsFolder": "DuneLegacyTornie-1.0.547-Windows-x64",
+  "localWindowsZipSha256": "90ce9386ec6657bf7aaed5b4c157e0f83a0c441ab28c7952c096e4efff452692",
+  "localExecutableMatchesVerifiedZip": true,
+  "previousLocalFolder": "C:\\Users\\canti\\OneDrive\\Documents\\Tests Codex\\Archive-1.0.547-avant-alignement-SuperTank\\DuneLegacyTornie-1.0.547-Windows-x64",
+  "createdAtMetadata": {
+    "after": {
+      "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+      "gitCommitDate": "2026-11-01T20:16:05-05:00",
+      "createdAt": "2026-11-02T01:16:05Z",
+      "match": true
+    },
+    "before": {
+      "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+      "gitCommitDate": "2026-10-31T22:15:46-04:00",
+      "createdAt": "2026-11-01T02:15:46Z",
+      "match": true
+    }
+  },
   "limits": [
-    "Human two-PC/independent-Internet co-op remains separate from automated tests.",
-    "Physical Mint PC and full campaign balance playthroughs remain manual checks.",
-    "Jericho/ArcaKev campaign rewrites await their authors' opinions."
+    "Initial gameplay/campaign and memory validations are explicitly inherited, with byte-identical gameplay data and non-drawing runtime sources.",
+    "This correction reran CTest, installed FR/EN alignment, menus and startup checks on Windows/Linux; human multiplayer and physical Mint testing remain separate."
   ]
 }
