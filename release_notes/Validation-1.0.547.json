@@ -1,64 +1,51 @@
 {
   "version": "1.0.547",
   "status": "release-verified",
-  "date": "2026-10-31",
-  "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+  "validationScope": "super-tank-alignment-547",
+  "date": "2026-11-01",
+  "verifiedAt": "2026-11-02T01:32:27.974442+00:00",
+  "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
   "networkProtocol": 25,
   "saveFormat": 9840,
   "platforms": {
     "windows": {
+      "networkProtocol": 25,
       "release543Checks": [],
-      "videoOptionsChecks": [
-        "fr",
-        "en"
-      ],
-      "validationScope": "release-547",
-      "engineAndNetworkTests": true,
-      "workflowSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
-      "sha256": "2288e7c6843be76b237572d83c8828ec12d03cadcbe72c76b2ae4ec04a957fa0",
-      "package": "DuneLegacyTornie-1.0.547-Windows-x64.zip",
+      "workflowSource": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+      "version": "1.0.547",
       "installedRuntimeChecks": [
         "fr",
         "en"
       ],
-      "version": "1.0.547",
-      "networkProtocol": 25,
-      "saveVersion": 9840,
-      "nextReleaseChecks": [
-        "release-545-regressions-fr-en",
-        "radar-fr-en",
-        "5265-editor-loads-fr-en",
-        "252-solo-starts-fr-en",
-        "224-coop-starts-fr-en",
-        "76-late-coop-restores-fr-en",
-        "persistent-support-and-four-opponents-fr-en",
-        "28-frame-compositions-fr-en",
-        "super-tank-production-fire-blast-save-fr-en",
-        "army-harvester-selection-and-allied-control-fr-en",
-        "all-faction-editor-windtraps-with-and-without-chaos-fr-en",
-        "choam-editor-32-items-fr-en"
-      ],
-      "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+      "package": "DuneLegacyTornie-1.0.547-Windows-x64.zip",
+      "engineAndNetworkTests": true,
+      "validationScope": "super-tank-alignment-547",
       "menuStartupChecks": [
         "fr",
         "en"
       ],
-      "run": 41264452598,
-      "metadataCorrection": {
-        "field": "saveVersion",
-        "originalValue": 9839,
-        "correctValue": 9840,
-        "originalReportSha256": "8910229c60013edd0cb13fb3896b7db98ebd939bb10e382cc59ca60009ec0ce7",
-        "verifiedSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
-        "sourceHeader": "include/Definitions.h",
-        "reason": "The workflow report retained the previous save version; the tested source defines 9840. Package bytes are unchanged."
-      }
+      "saveVersion": 9840,
+      "videoOptionsChecks": [
+        "fr",
+        "en"
+      ],
+      "run": 41371611314,
+      "nextReleaseChecks": [
+        "super-tank-alignment-eight-directions-three-zooms-fr-en",
+        "super-tank-game-editor-preview-placement-fr-en"
+      ],
+      "alignmentChecks": [
+        "fr",
+        "en"
+      ],
+      "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+      "sha256": "90ce9386ec6657bf7aaed5b4c157e0f83a0c441ab28c7952c096e4efff452692"
     },
     "linux": {
       "version": "1.0.547",
-      "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
-      "workflowSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
-      "run": 41265028810,
+      "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+      "workflowSource": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+      "run": 41371613772,
       "graphicalStartup": {
         "passed": true,
         "languages": [
@@ -80,188 +67,207 @@
       "softwareFallback": true,
       "engineAndNetworkTests": true,
       "packagedRuntimeChecks": [
-        "radar-fr-en",
-        "release-545-regressions-fr-en",
-        "5265-editor-loads-fr-en",
-        "252-solo-starts-fr-en",
-        "224-coop-starts-fr-en",
-        "76-late-coop-restores-fr-en",
-        "persistent-support-and-four-opponents-fr-en",
-        "28-frame-compositions-fr-en",
-        "super-tank-production-fire-blast-save-fr-en",
-        "army-harvester-selection-and-allied-control-fr-en",
-        "all-faction-editor-windtraps-with-and-without-chaos-fr-en",
-        "choam-editor-32-items-fr-en"
+        "super-tank-alignment-eight-directions-three-zooms-fr-en",
+        "super-tank-game-editor-preview-placement-fr-en"
       ],
       "nextReleaseChecks": [
-        "radar-fr-en",
-        "release-545-regressions-fr-en",
-        "5265-editor-loads-fr-en",
-        "252-solo-starts-fr-en",
-        "224-coop-starts-fr-en",
-        "76-late-coop-restores-fr-en",
-        "persistent-support-and-four-opponents-fr-en",
-        "28-frame-compositions-fr-en",
-        "super-tank-production-fire-blast-save-fr-en",
-        "army-harvester-selection-and-allied-control-fr-en",
-        "all-faction-editor-windtraps-with-and-without-chaos-fr-en",
-        "choam-editor-32-items-fr-en"
+        "super-tank-alignment-eight-directions-three-zooms-fr-en",
+        "super-tank-game-editor-preview-placement-fr-en"
       ],
       "networkProtocol": 25,
       "saveVersion": 9840,
-      "validationScope": "release-547",
-      "metadataCorrection": {
-        "field": "saveVersion",
-        "originalValue": 9839,
-        "correctValue": 9840,
-        "originalReportSha256": "26a4a7bdd20725d07d91288b332b9d0a9ce5ec8f65795da72260058657ccef69",
-        "verifiedSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
-        "sourceHeader": "include/Definitions.h",
-        "reason": "The workflow report retained the previous save version; the tested source defines 9840. Package bytes are unchanged."
-      }
+      "validationScope": "super-tank-alignment-547",
+      "alignmentChecks": [
+        "fr",
+        "en"
+      ],
+      "packages": [
+        {
+          "package": "DuneLegacyTornie-1.0.547-Linux-Mint-Compatible.AppImage",
+          "size": 52677112,
+          "sha256": "44c2aa52d4748f13704d79115bbfec00701765b2e59bc8f98bf2db974954c8ff"
+        },
+        {
+          "package": "DuneLegacyTornie-1.0.547-Linux-x64.deb",
+          "size": 67138634,
+          "sha256": "ff9388b20a0b7eceba414aad1f1f0f97d4b381a121ab6e831f532e805e11a71d"
+        },
+        {
+          "package": "DuneLegacyTornie-1.0.547-Linux-x64.rpm",
+          "size": 67233450,
+          "sha256": "4979665690957a5cf1a28f4973bea93c92765373bc20288f12d6f94fae1e0984"
+        },
+        {
+          "package": "DuneLegacyTornie-1.0.547-Linux-x64.tar.gz",
+          "size": 67821032,
+          "sha256": "e357a1cc28a27b6ccd18335478d9aff0b5d9dea4d58fd6ce2d405dd3a14a0e6b"
+        },
+        {
+          "package": "DuneLegacyTornie-1.0.547-Linux-x86_64.AppImage",
+          "size": 52677112,
+          "sha256": "9788322e6efc04bb9a4084494a3c7e82fcec5b0b3e970509c399806d4e0d561c"
+        }
+      ]
     }
   },
   "packageResources": {
     "version": "1.0.547",
-    "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+    "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
     "modFiles": 5635,
     "originalArtworkFiles": 22,
     "vanillaFiles": 205,
     "packages": {
       "windows": {
         "passed": true,
-        "sha256": "2288e7c6843be76b237572d83c8828ec12d03cadcbe72c76b2ae4ec04a957fa0"
+        "sha256": "90ce9386ec6657bf7aaed5b4c157e0f83a0c441ab28c7952c096e4efff452692"
       },
       "linuxTar": {
         "passed": true,
-        "sha256": "c6570dedf6f61ff197dc648610d1413ac236d35460c228baa026349a4cbbc18f"
+        "sha256": "e357a1cc28a27b6ccd18335478d9aff0b5d9dea4d58fd6ce2d405dd3a14a0e6b"
       },
       "DuneLegacyTornie-1.0.547-Linux-Mint-Compatible.AppImage": {
         "passed": true,
-        "sha256": "0373696e4badfe06c86338ad88fa97f36e4b57674a4a884c80d7c64812a7c86d"
+        "sha256": "44c2aa52d4748f13704d79115bbfec00701765b2e59bc8f98bf2db974954c8ff"
       },
       "DuneLegacyTornie-1.0.547-Linux-x86_64.AppImage": {
         "passed": true,
-        "sha256": "82e12b9bc5e48d4a82285463875cf855e87e4cb7a287071d98460212513cdd16"
+        "sha256": "9788322e6efc04bb9a4084494a3c7e82fcec5b0b3e970509c399806d4e0d561c"
       }
     }
   },
-  "localValidation": {
-    "version": "1.0.547",
-    "status": "local-verified",
-    "date": "2026-10-31",
+  "visualOnlyProof": {
+    "baseSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
+    "changedRuntimeFiles": [
+      "include/MapEditor/MapEditor.h",
+      "include/units/SuperTankRender.h",
+      "src/FileClasses/GFXManager.cpp",
+      "src/MapEditor/MapEditor.cpp",
+      "src/main.cpp",
+      "src/units/SuperTank.cpp"
+    ],
+    "graphicsAllowlist": [
+      "include/units/SuperTankRender.h",
+      "src/FileClasses/GFXManager.cpp",
+      "src/MapEditor/MapEditor.cpp",
+      "src/units/SuperTank.cpp"
+    ],
+    "qaEntryPoint": "src/main.cpp",
+    "qaFriendDeclarations": [
+      "include/MapEditor/MapEditor.h"
+    ],
+    "gameplayConfigurationDataAndModsByteIdentical": true,
+    "otherGameplaySourcesByteIdentical": true,
+    "superTankNonDrawingCodeUnchanged": true,
+    "editorNonDrawingCodeUnchanged": true,
     "networkProtocol": 25,
-    "saveVersion": 9840,
-    "engineAndNetwork": {
-      "ctestPassed": true,
-      "tests": 2
-    },
-    "native": {
-      "passed": true,
-      "languages": [
-        "fr",
-        "en"
-      ],
-      "mods": 7,
-      "checks": [
-        "army/Harvester selection and allied control",
-        "all four Harvester variants",
-        "Super Tank production at 925",
-        "Kleshmersh scenario and reinforcement replacement in three full mods",
-        "fire salvos and Devastator-style damaging destruction",
-        "Super Tank save/reload",
-        "all-faction editor Windtraps with and without Chaos",
-        "editor map and save roundtrips, undo/redo and marker rendering",
-        "selected-army mission teardown with the real selection observer"
-      ]
-    },
-    "campaignRecipe": {
-      "passed": true,
-      "campaigns": 18,
-      "soloScenarios": 396
-    },
-    "limits": [
-      "Human two-PC/independent-Internet co-op remains separate from automated tests.",
-      "Physical Mint PC and full campaign balance playthroughs remain manual checks.",
-      "Jericho/ArcaKev campaign rewrites await their authors' opinions."
-    ],
-    "website": {
-      "passed": true,
-      "languages": [
-        "fr",
-        "en"
-      ],
-      "desktopAndMobile": true,
-      "contexts": 164
-    },
-    "historicalRegressions": {
-      "expandedCoopAllSevenModes": {
-        "passed": true,
-        "source": "d44386f85b71cf56d7bd58aefa74bc0faf05ce4b"
+    "saveFormat": 9840,
+    "price": 925,
+    "hitPoints": 300,
+    "itemID": 88,
+    "originalArtwork": [
+      {
+        "path": "data/CampaignHeraldAtreides.png",
+        "sha256": "9e6baf73d96885bf2e83fcedd90779791fa768dae9fbded25b6c9cfd4cdd7725"
       },
-      "release543AllSevenModes": {
-        "passed": true,
-        "source": "d44386f85b71cf56d7bd58aefa74bc0faf05ce4b"
+      {
+        "path": "data/CampaignHeraldHarkonnen.png",
+        "sha256": "91b83f993957168c2e08f9328f6d0bcd9ac7e7bb75488d6ede084e262500fa8b"
       },
-      "harvesterCrushAllSevenModes": {
-        "passed": true,
-        "source": "d44386f85b71cf56d7bd58aefa74bc0faf05ce4b"
+      {
+        "path": "data/CampaignHeraldOrdos.png",
+        "sha256": "9eb7bf16f7f6bc02c17e3f17ad8a6e0ac87a8190252b23addfc1dda4bfc8c5bd"
       },
-      "release546Matrix": {
-        "passed": true,
-        "editorMaps": 5265,
-        "soloStarts": 252,
-        "coopStarts": 224,
-        "lateCoopCheckpoints": 76,
-        "source": "7c5149220fd0ee869205677127ae6c944e2f3113"
+      {
+        "path": "data/CampaignHeraldFremen.png",
+        "sha256": "3f77cadb70eef158df7dfa5af2dabf02729e57990638377c43fb4cdaafedcdd9"
+      },
+      {
+        "path": "data/CampaignHeraldSardaukar.png",
+        "sha256": "f71ffdb664e0f39740933b195dd132c5c841495dec898a1fd46ca05e98667c78"
+      },
+      {
+        "path": "data/CampaignHeraldMercenary.png",
+        "sha256": "f35c079a44c6db39acf127d9af426c7d5eab5f97b396394ff00b2fbd4a860872"
+      },
+      {
+        "path": "data/CampaignHeraldNeutral.png",
+        "sha256": "a2eac847e245c17319bd2fe14771df7804cd0353e85d2a7eb4382ef5b4eb9ed4"
+      },
+      {
+        "path": "data/CampaignHeraldRebels.png",
+        "sha256": "6b0c922371f7f0cf04dd3eb03b7b8f1399f57f047701a14b1b77fa42beb2a164"
+      },
+      {
+        "path": "data/CampaignHeraldCorruptique.png",
+        "sha256": "c076452c6eaab1fa361bf75d0af9088ae789e9af2eb7b97ee1572d1db34ad317"
+      },
+      {
+        "path": "data/CampaignHeraldWildspade.png",
+        "sha256": "844a3cc1af59e94a2748c3112f88d7d724f3b978039d5f2e27e434bc2b3e3c87"
+      },
+      {
+        "path": "data/CampaignHeraldKleshmersh.png",
+        "sha256": "59665370704297d29cfc7f31b091e16a8399adafc5c9c5c96be9072658c6a86a"
+      },
+      {
+        "path": "data/CampaignHeraldTharpique.png",
+        "sha256": "762abf8f71f7af8b2b2f7f96b3ffe395135aee3f35044c8f00408d6b567080e1"
+      },
+      {
+        "path": "data/Troopers_Fremen_alone.png",
+        "sha256": "88456a5d773b8e211d29d886ff83b63c1dcf856b7f1ebb2f75a87884b3ec31ff"
+      },
+      {
+        "path": "data/Troopers_Fremen_5.png",
+        "sha256": "4aefb637def3bed4aa357e45c9b3605dd1f6a7b498a87e1b3a6ab82b7add4d2e"
+      },
+      {
+        "path": "data/Troopers_Sardaukar_3.png",
+        "sha256": "7f9df2a89ffea96e9cd643cd70820f5d992fd7c1a041ec3fed711ec7246db0e6"
+      },
+      {
+        "path": "data/Troopers_Sardaukar_5.png",
+        "sha256": "deb07d0930962c3eb2199d7c4dbbfec9b5c518077ce05ca3764b0b5471989c41"
+      },
+      {
+        "path": "data/Troopers_Fremen_unit_selection.png",
+        "sha256": "3344e649ea5b60b9ab7592f9925f995c7bae35c559c1b7a082521750d04b051b"
+      },
+      {
+        "path": "data/Troopers_Sardaukar_Alone.png",
+        "sha256": "d761e94403d04ca62c210ae6bcfa77f576db3f5a03a30fb1aff13fa76ffc0123"
+      },
+      {
+        "path": "data/Troopers_Fremen_3.png",
+        "sha256": "3344e649ea5b60b9ab7592f9925f995c7bae35c559c1b7a082521750d04b051b"
+      },
+      {
+        "path": "data/Troopers_Sardaukar_unit_selection.png",
+        "sha256": "026d3ffbd16fd5c69ee80e046946fc699189f7af2fe562719187f93b4eb5f590"
+      },
+      {
+        "path": "data/SuperTankGun.png",
+        "sha256": "06c324e587827c61074224df1c51a8de5a24cf724b72fe75822e0b24d263732c"
+      },
+      {
+        "path": "data/SuperTankIcon.png",
+        "sha256": "5d89bf8f2f219a5f9f573df3ac65825f805c2745fc28eeb59f84eb170e856805"
       }
-    },
-    "memoryRegression": {
-      "compiler": "MSVC 19.44",
-      "instrumentation": "AddressSanitizer",
-      "beforeFixReproduced": true,
-      "beforeFixError": "heap-use-after-free in GameInterface::refreshAircraftButtons during selected-unit mission teardown",
-      "fix": "UnitBase unregisters from unitList before notifying selection observers",
-      "afterFixSevenModesPassed": true,
-      "selectedArmyAndRealInterface": true,
-      "source": "7c5149220fd0ee869205677127ae6c944e2f3113"
-    },
-    "multiplayerSaveMemory": {
-      "beforeFixReproduced": true,
-      "instrumentation": "MSVC AddressSanitizer",
-      "afterFixSevenModesPassed": true,
-      "checks": [
-        "genuine multiplayer save bytes kept stable while settings are restored",
-        "unit identity and owner",
-        "saved unit health",
-        "guest credits",
-        "selected-army teardown after loading"
-      ],
-      "source": "7c5149220fd0ee869205677127ae6c944e2f3113"
-    },
+    ]
+  },
+  "inheritedGameplayValidation": {
     "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
-    "asanCampaignCheckpoints": {
-      "passed": true,
-      "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
-      "soloStarts": 252,
-      "coopStarts": 224,
-      "lateCoopCheckpoints": 76,
-      "editorCatalogueExcludedFromThisFocusedRun": true
-    },
-    "officialWindowsSaveHeader": {
-      "passed": true,
-      "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
-      "saveVersion": 9840,
-      "generatedSaves": 10
-    }
+    "document": "release_notes/initial-1.0.547/Validation-1.0.547.json",
+    "sha256": "47b813d4dc2eaeb1bca0bd3417384a1fc3af35774b8bdbdb2d24a2aad8b03717",
+    "description": "Initial gameplay, campaign and memory checks remain historical; they are not claimed as rerun for this graphics-only correction."
   },
-  "website": {
-    "languages": [
-      "fr",
-      "en"
-    ],
-    "browserContexts": 164
-  },
+  "currentChecks": [
+    "engine/network CTest",
+    "FR/EN eight-direction three-zoom game/editor/preview alignment",
+    "FR/EN Windows menus/video",
+    "both Linux AppImages startup and software fallback",
+    "unchanged original artwork and Vanilla/package resources"
+  ],
   "limits": [
     "Human two-PC/independent-Internet co-op remains separate from automated tests.",
     "Physical Mint PC and full campaign balance playthroughs remain manual checks.",

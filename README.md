@@ -2,6 +2,8 @@
 
 **[1.0.547 — Windows / Linux / Mint](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.547)** : Super Tank de Kleshmersh à **925 crédits**, sélection d’armée et de toutes les moissonneuses, Windtraps préaméliorés dans l’éditeur pour toutes les factions hors Vanilla sans obligation de Chaos, avec étoile verte. Protocole **25**, sauvegardes **9840**. [FR](release_notes/1.0.547-FR.md) · [EN](release_notes/1.0.547-EN.md).
 
+**Correctif visuel du 1er novembre 2026 :** tourelle du Super Tank recentrée en partie et dans l’éditeur, dans les huit directions et aux trois zooms. Retélécharger les paquets **1.0.547** existants pour recevoir cette correction ; prix **925 crédits**, protocole **25**, sauvegardes **9840**. [Aperçus FR](website/changes-547.html) · [English previews](website/changes-547-en.html).
+
 Guides 1.0.547 : [FR](HOWTOPLAY-FR.md) · [EN](HOWTOPLAY.md) · [Coop](docs/COOP-CAMPAIGN.md) · [Suivi](docs/SUIVI-1.0.547-FR.md).
 
 Compilation CMake avec tests, puis CTest. Contrôles natifs Windows : `scripts/check-windows-547.ps1` en FR/EN dans des profils isolés. Le site se maintient dans `website/` ; `scripts/prepare-website-547.py` actualise le contenu du lot. Les recettes 546 servent à vérifier les anciennes campagnes, sans appliquer leurs anciennes préparations sur les nouvelles règles.

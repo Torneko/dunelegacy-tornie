@@ -2,7 +2,7 @@
 
 ## Visual correction dated 1 November 2026
 
-The Super Tank turret is centred in all eight directions and at all three zoom levels, in game, in the editor and in its previews. This correction uses the existing **1.0.547** packages; download them again once their replacement is complete. Price: **925 credits**; protocol **25**; save format **9840**. Original PNG files are preserved.
+The Super Tank turret is centred in all eight directions and at all three zoom levels, in game, in the editor and in its previews. Download the existing **1.0.547** packages again to receive this correction. Price: **925 credits**; protocol **25**; save format **9840**. Original PNG files are preserved.
 
 ## Additions in 1.0.547
 

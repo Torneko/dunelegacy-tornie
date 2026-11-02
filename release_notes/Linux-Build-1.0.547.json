@@ -1,8 +1,8 @@
 {
   "version": "1.0.547",
-  "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
-  "workflowSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
-  "run": 41265028810,
+  "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+  "workflowSource": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+  "run": 41371613772,
   "graphicalStartup": {
     "passed": true,
     "languages": [
@@ -24,43 +24,45 @@
   "softwareFallback": true,
   "engineAndNetworkTests": true,
   "packagedRuntimeChecks": [
-    "radar-fr-en",
-    "release-545-regressions-fr-en",
-    "5265-editor-loads-fr-en",
-    "252-solo-starts-fr-en",
-    "224-coop-starts-fr-en",
-    "76-late-coop-restores-fr-en",
-    "persistent-support-and-four-opponents-fr-en",
-    "28-frame-compositions-fr-en",
-    "super-tank-production-fire-blast-save-fr-en",
-    "army-harvester-selection-and-allied-control-fr-en",
-    "all-faction-editor-windtraps-with-and-without-chaos-fr-en",
-    "choam-editor-32-items-fr-en"
+    "super-tank-alignment-eight-directions-three-zooms-fr-en",
+    "super-tank-game-editor-preview-placement-fr-en"
   ],
   "nextReleaseChecks": [
-    "radar-fr-en",
-    "release-545-regressions-fr-en",
-    "5265-editor-loads-fr-en",
-    "252-solo-starts-fr-en",
-    "224-coop-starts-fr-en",
-    "76-late-coop-restores-fr-en",
-    "persistent-support-and-four-opponents-fr-en",
-    "28-frame-compositions-fr-en",
-    "super-tank-production-fire-blast-save-fr-en",
-    "army-harvester-selection-and-allied-control-fr-en",
-    "all-faction-editor-windtraps-with-and-without-chaos-fr-en",
-    "choam-editor-32-items-fr-en"
+    "super-tank-alignment-eight-directions-three-zooms-fr-en",
+    "super-tank-game-editor-preview-placement-fr-en"
   ],
   "networkProtocol": 25,
   "saveVersion": 9840,
-  "validationScope": "release-547",
-  "metadataCorrection": {
-    "field": "saveVersion",
-    "originalValue": 9839,
-    "correctValue": 9840,
-    "originalReportSha256": "26a4a7bdd20725d07d91288b332b9d0a9ce5ec8f65795da72260058657ccef69",
-    "verifiedSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
-    "sourceHeader": "include/Definitions.h",
-    "reason": "The workflow report retained the previous save version; the tested source defines 9840. Package bytes are unchanged."
-  }
+  "validationScope": "super-tank-alignment-547",
+  "alignmentChecks": [
+    "fr",
+    "en"
+  ],
+  "packages": [
+    {
+      "package": "DuneLegacyTornie-1.0.547-Linux-Mint-Compatible.AppImage",
+      "size": 52677112,
+      "sha256": "44c2aa52d4748f13704d79115bbfec00701765b2e59bc8f98bf2db974954c8ff"
+    },
+    {
+      "package": "DuneLegacyTornie-1.0.547-Linux-x64.deb",
+      "size": 67138634,
+      "sha256": "ff9388b20a0b7eceba414aad1f1f0f97d4b381a121ab6e831f532e805e11a71d"
+    },
+    {
+      "package": "DuneLegacyTornie-1.0.547-Linux-x64.rpm",
+      "size": 67233450,
+      "sha256": "4979665690957a5cf1a28f4973bea93c92765373bc20288f12d6f94fae1e0984"
+    },
+    {
+      "package": "DuneLegacyTornie-1.0.547-Linux-x64.tar.gz",
+      "size": 67821032,
+      "sha256": "e357a1cc28a27b6ccd18335478d9aff0b5d9dea4d58fd6ce2d405dd3a14a0e6b"
+    },
+    {
+      "package": "DuneLegacyTornie-1.0.547-Linux-x86_64.AppImage",
+      "size": 52677112,
+      "sha256": "9788322e6efc04bb9a4084494a3c7e82fcec5b0b3e970509c399806d4e0d561c"
+    }
+  ]
 }

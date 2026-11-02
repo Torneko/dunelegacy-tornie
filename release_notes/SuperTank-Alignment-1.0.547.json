@@ -1,0 +1,82 @@
+{
+  "version": "1.0.547",
+  "date": "2026-11-01",
+  "scope": "super-tank-alignment-547",
+  "nativeFrames": 144,
+  "mods": 6,
+  "directions": 8,
+  "zooms": [
+    1,
+    2,
+    3
+  ],
+  "gameEditorPixelMismatches": 0,
+  "palettePixelMismatches": 0,
+  "fixedHullTurretSweepReviewed": true,
+  "originalPngsUnchanged": true,
+  "nativeTurretOffsets": [
+    [
+      2,
+      1
+    ],
+    [
+      1,
+      -1
+    ],
+    [
+      0,
+      -2
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      -2,
+      1
+    ],
+    [
+      -1,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      2,
+      1
+    ]
+  ],
+  "price": 925,
+  "health": 300,
+  "protocol": 25,
+  "saveFormat": 9840,
+  "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+  "languages": [
+    "fr",
+    "en"
+  ],
+  "engineAndNetworkTests": {
+    "passed": true,
+    "tests": 2
+  },
+  "screenshots": [
+    "previews/SuperTank-alignment-547-game.png",
+    "previews/SuperTank-alignment-547-turret-sweep.png"
+  ],
+  "evidence": [
+    {
+      "path": "reports/ctest-super-tank-alignment-fixed.log",
+      "sha256": "137cd5fb4537c32abe57475de928471fd7b0617e422383dc7489e4b7ebac3fe1"
+    },
+    {
+      "path": "reports/native-547/fr/verify-super-tank-alignment/super-tank-alignment.csv",
+      "sha256": "1302771ca6b46a258927e44ecf2375a3d7e0e21cc25d98959d74026101c4cfaa"
+    },
+    {
+      "path": "reports/native-547/en/verify-super-tank-alignment/super-tank-alignment.csv",
+      "sha256": "1302771ca6b46a258927e44ecf2375a3d7e0e21cc25d98959d74026101c4cfaa"
+    }
+  ]
+}

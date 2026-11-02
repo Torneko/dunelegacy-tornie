@@ -2,7 +2,7 @@
 
 ## Correctif visuel du 1er novembre 2026
 
-Recentrage de la tourelle du Super Tank dans les huit directions et aux trois zooms, en partie, dans l’éditeur et dans ses aperçus. Ce correctif utilise les paquets existants **1.0.547**, à retélécharger une fois leur remplacement effectué. Prix : **925 crédits** ; protocole **25** ; sauvegardes **9840**. Les PNG originaux sont conservés.
+Recentrage de la tourelle du Super Tank dans les huit directions et aux trois zooms, en partie, dans l’éditeur et dans ses aperçus. Retélécharger les paquets existants **1.0.547** pour recevoir ce correctif. Prix : **925 crédits** ; protocole **25** ; sauvegardes **9840**. Les PNG originaux sont conservés.
 
 ## Ajouts de la 1.0.547
 

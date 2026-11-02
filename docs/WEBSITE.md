@@ -1,14 +1,22 @@
-# Sortie 1.0.546
+# Publications — Dune Legacy Tornie
 
-## 1.0.547 — Windows / Linux / Mint
+## Correctif visuel 1.0.547 — 1er novembre 2026
 
-Publication et déploiement vérifiés : [release GitHub](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.547), [Pages](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41267405420), 18 fichiers publics et 17 empreintes de manifeste, 164 parcours web publics réussis. Les 397 fichiers servis sont identiques au site `80227a263afcafebaf5094f939d9c787eae23149` ; ses deux fichiers de contrôle restent archivés. Le ZIP hors ligne contient les 399 fichiers du site et 15 fichiers embarqués vérifiés. Les 8 490 fichiers des sources et les 160 fichiers des guides correspondent à leurs révisions exactes. [Reçu](../release_notes/Publication-Receipt-1.0.547.json) · [Audit final](../release_notes/Final-Publication-Audit-1.0.547.json).
+La tourelle du Super Tank est recentrée sur le châssis dans les huit directions et aux trois zooms, en partie, dans l’éditeur et dans les aperçus de la palette. Les PNG originaux fournis par Tornie sont conservés. Retélécharger les paquets **1.0.547** existants pour recevoir ce correctif ; prix **925 crédits**, protocole **25**, sauvegardes **9840**.
+
+Source du correctif figée : `05912c4e8eee1919355c91e2d1bc38d6637d9a3b`. [Contrôles Windows](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41371611314) · [Contrôles Linux/Mint](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41371613772). [Aperçus FR](../website/changes-547.html) · [English previews](../website/changes-547-en.html).
+
+Les deux plateformes ont validé CTest et les 144 poses dans chaque langue ; l’audit conserve les 22 images originales, les 205 fichiers Vanilla et les 5 635 fichiers de mods. [Validation du correctif](../release_notes/Validation-1.0.547.json) · [Contrôle local du rendu](../release_notes/SuperTank-Alignment-1.0.547.json). La source précédente reste sous `archive/releases/v1.0.547-before-super-tank-alignment`.
+
+## 1.0.547 initiale — Windows / Linux / Mint (historique)
+
+Publication et déploiement vérifiés : [release GitHub](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.547), [Pages](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41267405420), 18 fichiers publics et 17 empreintes de manifeste, 164 parcours web publics réussis. Les 397 fichiers servis sont identiques au site `80227a263afcafebaf5094f939d9c787eae23149` ; ses deux fichiers de contrôle restent archivés. Le ZIP hors ligne contient les 399 fichiers du site et 15 fichiers embarqués vérifiés. Les 8 490 fichiers des sources et les 160 fichiers des guides correspondent à leurs révisions exactes. [Reçu](../release_notes/initial-1.0.547/Publication-Receipt-1.0.547.json) · [Audit final](../release_notes/initial-1.0.547/Final-Publication-Audit-1.0.547.json).
 
 Source du jeu figée : `7c5149220fd0ee869205677127ae6c944e2f3113`. Super Tank de Kleshmersh à 925 crédits, sélections d’armée et de moissonneuses, Windtraps améliorés dans l’éditeur sans Chaos avec étoile verte, fermeture des missions et lecture des checkpoints coop sécurisées. Protocole 25 ; sauvegardes 9840.
 
 [Windows vérifié](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41264452598) · [Linux/Mint vérifié](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41265028810) · [Audit des ressources](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41266529079). Les deux rapports de compilation conservaient 9839 dans leur champ documentaire ; la correction vers 9840 est tracée par l’empreinte du rapport original et la source testée. Le ZIP Windows officiel a également généré dix sauvegardes contrôlées au format 9840, sans modification des paquets.
 
-Contrôles locaux : 164 parcours web FR/EN ordinateur/mobile, tests moteur et réseau, matrice complète de 5 265 cartes/252 départs solo/224 coop/76 reprises. Les sept modes et cette matrice de reprises passent aussi sous MSVC AddressSanitizer. Le [bilan 547](../release_notes/Validation-1.0.547.json) distingue ces résultats des essais humains encore attendus.
+Contrôles locaux : 164 parcours web FR/EN ordinateur/mobile, tests moteur et réseau, matrice complète de 5 265 cartes/252 départs solo/224 coop/76 reprises. Les sept modes et cette matrice de reprises passent aussi sous MSVC AddressSanitizer. Le [bilan 547](../release_notes/initial-1.0.547/Validation-1.0.547.json) distingue ces résultats des essais humains encore attendus.
 
 
 ## Liens DuneCity — 31 octobre 2026
