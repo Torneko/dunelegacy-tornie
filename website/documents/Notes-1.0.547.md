@@ -1,6 +1,12 @@
 # Dune Legacy Tornie 1.0.547
 
-## Correctif visuel du 1er novembre 2026
+## Support orange du Super Tank — 2 novembre 2026
+
+Le rendu ajoute le support de tourelle du Siege Tank, teinté en orange, sous le dessin original de la tourelle du Super Tank. La copie reste orange et pivote avec la tourelle supérieure autour du même axe. Le dessin original se superpose au-dessus. Les deux couches sont assemblées en mémoire ; les PNG originaux fournis par Tornie restent intacts. Le placement suit les **huit directions** et les **trois zooms**, en partie, dans l’éditeur et dans ses aperçus.
+
+Retélécharger les paquets **1.0.547** existants pour recevoir ce rendu. Le Super Tank coûte **925 crédits** ; compatibilité réseau : **protocole 25**, sauvegardes : **9840**.
+
+## Correctif visuel du 1er novembre 2026 — historique
 
 Les paquets corrigés de la **1.0.547** recentrent la tourelle du Super Tank sur son châssis dans les **huit directions** et aux **trois zooms**, en partie, dans l’éditeur et dans ses aperçus. Les PNG originaux fournis par Tornie sont conservés.
 

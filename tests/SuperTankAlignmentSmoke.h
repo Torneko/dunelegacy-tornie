@@ -1,7 +1,11 @@
 #pragma once
 #include <units/SuperTank.h>
 #include <MapEditor/MapEditor.h>
+#include <FileClasses/FileManager.h>
 #include <FileClasses/LoadSavePNG.h>
+#include <FileClasses/Shpfile.h>
+#include <array>
+#include <cstdint>
 #include <fstream>
 
 struct SuperTankAlignmentFixture {
@@ -35,13 +39,94 @@ struct SuperTankAlignmentFixture {
     static void save(SDL_Surface* image,const std::filesystem::path& path) {
         require(SavePNG(image,path.string().c_str())==0,"PNG export "+path.filename().string());
     }
+    static int pixelDifferences(SDL_Surface* first,SDL_Surface* second) {
+        require(first && second && first->w==second->w && first->h==second->h,"comparison dimensions");
+        int result=0;
+        for(int y=0;y<first->h;++y)for(int x=0;x<first->w;++x)
+            if(getPixel(first,x,y)!=getPixel(second,x,y))++result;
+        return result;
+    }
+    static std::uint64_t fingerprint(SDL_Surface* image) {
+        std::uint64_t result=14695981039346656037ULL;
+        for(int y=0;y<image->h;++y)for(int x=0;x<image->w;++x) {
+            const Uint32 pixel=getPixel(image,x,y);
+            for(int byte=0;byte<4;++byte){result^=(pixel>>(byte*8))&255U;result*=1099511628211ULL;}
+        }
+        return result;
+    }
+    static sdl2::surface_ptr spriteFrame(SDL_Texture* texture,int angle,int zoom,bool nativeReference=false) {
+        require(texture!=nullptr,"sprite reference texture");
+        int width=0,height=0;require(SDL_QueryTexture(texture,nullptr,nullptr,&width,&height)==0,"sprite dimensions query");
+        const int sourceScale=nativeReference?1:zoom+1,size=16*(zoom+1);
+        require(width==128*sourceScale && height==16*sourceScale,"eight native sprite frames");
+        SDL_Rect source{angle*16*sourceScale,0,16*sourceScale,16*sourceScale};
+        SDL_Rect destination{48-size/2,48-size/2,size,size};
+        clear();require(SDL_RenderCopy(renderer,texture,&source,&destination)==0,"sprite reference draw");
+        return capture();
+    }
+    static sdl2::texture_ptr referenceTexture(SDL_Surface* image) {
+        auto texture=sdl2::texture_ptr{SDL_CreateTextureFromSurface(renderer,image)};
+        require(texture!=nullptr,"independent reference texture");
+        SDL_SetTextureBlendMode(texture.get(),SDL_BLENDMODE_BLEND);
+        SDL_SetTextureScaleMode(texture.get(),SDL_ScaleModeNearest);
+        return texture;
+    }
+    struct LayerReference {
+        sdl2::surface_ptr ordinarySiege,superGun;
+        std::array<int,8> visibleOrange{};
+    };
+    static LayerReference independentLayers() {
+        // Decode the original SHP again rather than reading GFXManager's cache.
+        // This catches recolouring the shared Siege sheet in place.
+        auto packed=pFileManager->openFile("UNITS2.SHP");Shpfile source(packed.get());
+        auto stock=source.getPictureArray(8,1,GROUNDUNIT_ROW(15));
+        require(stock && stock->w==128 && stock->h==16 && stock->format->BytesPerPixel==1,"original Siege SHP atlas");
+        SDL_SetColorKey(stock.get(),SDL_TRUE,0);
+        auto upper=LoadPNG_RW(pFileManager->openFile("SuperTankGun.png").get());
+        require(upper && upper->w==128 && upper->h==16,"authored upper turret PNG");
+        auto upperRgba=sdl2::surface_ptr{SDL_ConvertSurfaceFormat(upper.get(),SDL_PIXELFORMAT_RGBA32,0)};
+        LayerReference result;
+        result.ordinarySiege.reset(SDL_ConvertSurfaceFormat(stock.get(),SDL_PIXELFORMAT_RGBA32,0));
+        result.superGun.reset(SDL_CreateRGBSurfaceWithFormat(0,128,16,32,SDL_PIXELFORMAT_RGBA32));
+        require(upperRgba && result.ordinarySiege && result.superGun,"independent layer allocation");
+        SDL_FillRect(result.superGun.get(),nullptr,0);
+        // Fixed visual specification, deliberately independent of the production
+        // anchor table and tint helper: campaign-orange shades 0,1,2,3,5.
+        const Coord underlayOffsets[]={{-1,-1},{0,-1},{1,0},{0,-1},{1,-1},{0,0},{0,-2},{0,0}};
+        const SDL_Color orange[]={{255,168,48,255},{240,144,32,255},{220,120,20,255},
+                                  {196,96,12,255},{132,52,4,255}};
+        for(int angle=0;angle<8;++angle)for(int y=0;y<16;++y)for(int x=0;x<16;++x) {
+            Uint32 expected=0;bool orangeUnderlay=false;
+            const int sx=x-underlayOffsets[angle].x,sy=y-underlayOffsets[angle].y;
+            if(sx>=0 && sx<16 && sy>=0 && sy<16) {
+                const auto index=getPixel(stock.get(),angle*16+sx,sy);
+                if(index!=0) {
+                    if(index>=128 && index<=132) {
+                        const auto color=orange[index-128];orangeUnderlay=true;
+                        expected=SDL_MapRGBA(result.superGun->format,color.r,color.g,color.b,255);
+                    } else {
+                        require(index==12,"unexpected original Siege metal/outline index");
+                        expected=SDL_MapRGBA(result.superGun->format,0,0,0,255);
+                    }
+                }
+            }
+            Uint8 r,g,b,a;SDL_GetRGBA(getPixel(upperRgba.get(),angle*16+x,y),upperRgba->format,&r,&g,&b,&a);
+            require(a==0 || a==255,"authored upper turret alpha changed");
+            if(a)expected=SDL_MapRGBA(result.superGun->format,r,g,b,a);
+            else if(orangeUnderlay)++result.visibleOrange[angle];
+            putPixel(result.superGun.get(),angle*16+x,y,expected);
+        }
+        for(int count:result.visibleOrange)require(count>0,"orange underlay completely hidden in one direction");
+        SDL_SetSurfaceBlendMode(result.superGun.get(),SDL_BLENDMODE_BLEND);
+        return result;
+    }
     static void run(const char* directory) {
         require(directory,"missing output directory");const std::filesystem::path output(directory);
         std::filesystem::create_directories(output);
         const auto previousMod=ModManager::instance().getActiveModName();const int previousZoom=currentZoomlevel;
         std::ofstream csv(output/"super-tank-alignment.csv");
-        csv<<"mod,zoom,angle,game_editor_mismatches,palette_mismatches\n";
-        int gameEditorMismatches=0,paletteMismatches=0,frames=0;
+        csv<<"mod,zoom,angle,game_editor_mismatches,palette_mismatches,super_layers_mismatches,visible_orange_pixels,ordinary_siege_source_mismatches,ordinary_siege_before_hash,ordinary_siege_after_hash\n";
+        int gameEditorMismatches=0,paletteMismatches=0,layerMismatches=0,ordinarySiegeMismatches=0,frames=0;
         for(const std::string mod:{"Tornie","Jericho","ArcaKev","TornieLite","JerichoLite","ArcaKevLite"}) {
             require(ModManager::instance().setActiveMod(mod),"mod activation "+mod);
             effectiveGameOptions=ModManager::instance().loadEffectiveGameOptions(settings.gameOptions);
@@ -51,6 +136,11 @@ struct SuperTankAlignmentFixture {
             GameInitSettings::HouseInfo info(house,1);
             info.addPlayerInfo(GameInitSettings::PlayerInfo(settings.general.playerName,HUMANPLAYERCLASS));init.addHouseInfo(info);
             auto game=std::make_unique<Game>();currentGame=game.get();game->initGame(init);
+            auto layers=independentLayers();
+            auto expectedSuper=referenceTexture(layers.superGun.get()),expectedStock=referenceTexture(layers.ordinarySiege.get());
+            std::array<sdl2::surface_ptr,24> stockBefore;
+            for(int zoom=0;zoom<3;++zoom)for(int angle=0;angle<8;++angle)
+                stockBefore[zoom*8+angle]=spriteFrame(pGFXManager->getZoomedObjPic(ObjPic_Siegetank_Gun,house,zoom),angle,zoom);
             auto* tank=dynamic_cast<SuperTank*>(pLocalHouse->placeUnit(Unit_SuperTank,10,10,true));
             require(tank && tank->getMaxHealth()==300 && game->objectData.data[Unit_SuperTank][house].price==925,"unit identity/stats changed");
             auto gameSheet=sheet(),editorSheet=sheet(),turretSweepSheet=sheet();
@@ -70,6 +160,10 @@ struct SuperTankAlignmentFixture {
                     view.setNewScreenCenter(Coord(lround(tank->getRealX()),lround(tank->getRealY())));
                     CameraOverride camera(&view);
                     for(int angle=0;angle<8;++angle) {
+                        auto actualLayers=spriteFrame(pGFXManager->getZoomedObjPic(ObjPic_SuperTankGun,house,zoom),angle,zoom);
+                        auto expectedLayers=spriteFrame(expectedSuper.get(),angle,zoom,true);
+                        const int layerDifference=pixelDifferences(actualLayers.get(),expectedLayers.get());
+                        layerMismatches+=layerDifference;
                         tank->setAngle(angle);tank->setTurretAngle(angle);
                         clear();tank->blitToScreen();auto runtime=capture();
                         addFrame(gameSheet.get(),runtime.get(),angle,zoom);
@@ -105,7 +199,16 @@ struct SuperTankAlignmentFixture {
                             }
                             paletteMismatches+=iconDifference;
                         }
-                        csv<<mod<<','<<zoom+1<<','<<angle<<','<<difference<<','<<iconDifference<<'\n';csv.flush();
+                        auto ordinaryAfter=spriteFrame(pGFXManager->getZoomedObjPic(ObjPic_Siegetank_Gun,house,zoom),angle,zoom);
+                        const auto beforeHash=fingerprint(stockBefore[zoom*8+angle].get()),afterHash=fingerprint(ordinaryAfter.get());
+                        int stockDifference=pixelDifferences(stockBefore[zoom*8+angle].get(),ordinaryAfter.get());
+                        if(zoom==0) {
+                            auto original=spriteFrame(expectedStock.get(),angle,0,true);
+                            stockDifference+=pixelDifferences(ordinaryAfter.get(),original.get());
+                        }
+                        ordinarySiegeMismatches+=stockDifference;
+                        csv<<mod<<','<<zoom+1<<','<<angle<<','<<difference<<','<<iconDifference<<','<<layerDifference<<','
+                           <<layers.visibleOrange[angle]*(zoom+1)*(zoom+1)<<','<<stockDifference<<','<<beforeHash<<','<<afterHash<<'\n';csv.flush();
                         gameEditorMismatches+=difference;++frames;
                     }
                 }
@@ -118,6 +221,8 @@ struct SuperTankAlignmentFixture {
         currentZoomlevel=previousZoom;ModManager::instance().setActiveMod(previousMod);
         require(gameEditorMismatches==0,"game/editor pixels differ: "+std::to_string(gameEditorMismatches));
         require(paletteMismatches==0,"angle-zero palette/runtime pixels differ: "+std::to_string(paletteMismatches));
-        SDL_Log("SUPER TANK ALIGNMENT PASS: %d game/editor poses, 8 directions, 3 zooms, six custom modes; native palette matched; artwork/stats preserved",frames);
+        require(layerMismatches==0,"independent orange Siege/upper PNG composition differs: "+std::to_string(layerMismatches));
+        require(ordinarySiegeMismatches==0,"ordinary Siege pixels/colours changed: "+std::to_string(ordinarySiegeMismatches));
+        SDL_Log("SUPER TANK ALIGNMENT PASS: %d game/editor poses, 8 directions, 3 zooms, six custom modes; independent orange Siege underlay and upper PNG matched; ordinary Siege unchanged; native palette matched; artwork/stats preserved",frames);
     }
 };

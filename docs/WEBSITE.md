@@ -1,14 +1,20 @@
 # Publications — Dune Legacy Tornie
 
-## Correctif visuel 1.0.547 — 1er novembre 2026
+## Support orange du Super Tank — 2 novembre 2026
+
+Le rendu ajoute un support de tourelle de Siege Tank teinté en orange, sous le dessin original du Super Tank. La copie reste orange et pivote avec la tourelle supérieure autour du même axe. Les couches sont assemblées en mémoire sans modifier les PNG originaux. Les huit directions et les trois zooms sont concernés en partie, dans l’éditeur et dans ses aperçus. Retélécharger les paquets **1.0.547** existants pour recevoir ce rendu ; prix **925 crédits**, protocole **25**, sauvegardes **9840**. [Aperçus FR](../website/changes-547.html) · [English previews](../website/changes-547-en.html).
+
+Les rapports du remplacement du 1er novembre restent conservés dans [l’archive du correctif précédent](../release_notes/super-tank-alignment-1.0.547/). Les captures de ce premier recentrage restent visibles à titre historique.
+
+## Correctif visuel 1.0.547 — 1er novembre 2026 — historique
 
 La tourelle du Super Tank est recentrée sur le châssis dans les huit directions et aux trois zooms, en partie, dans l’éditeur et dans les aperçus de la palette. Les PNG originaux fournis par Tornie sont conservés. Retélécharger les paquets **1.0.547** existants pour recevoir ce correctif ; prix **925 crédits**, protocole **25**, sauvegardes **9840**.
 
 Source du correctif figée : `05912c4e8eee1919355c91e2d1bc38d6637d9a3b`. [Contrôles Windows](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41371611314) · [Contrôles Linux/Mint](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41371613772). [Aperçus FR](../website/changes-547.html) · [English previews](../website/changes-547-en.html).
 
-Les deux plateformes ont validé CTest et les 144 poses dans chaque langue ; l’audit conserve les 22 images originales, les 205 fichiers Vanilla et les 5 635 fichiers de mods. [Validation du correctif](../release_notes/Validation-1.0.547.json) · [Contrôle local du rendu](../release_notes/SuperTank-Alignment-1.0.547.json). La source précédente reste sous `archive/releases/v1.0.547-before-super-tank-alignment`.
+Les deux plateformes ont validé CTest et les 144 poses dans chaque langue ; l’audit conserve les 22 images originales, les 205 fichiers Vanilla et les 5 635 fichiers de mods. [Validation du correctif](../release_notes/super-tank-alignment-1.0.547/Validation-1.0.547.json) · [Contrôle local du rendu](https://github.com/Torneko/dunelegacy-tornie/blob/9360d8deaa950113025f104384f54970881d6364/release_notes/SuperTank-Alignment-1.0.547.json). La source précédente reste sous `archive/releases/v1.0.547-before-super-tank-alignment`.
 
-Remplacement public vérifié : même release et même date de publication, 18 téléchargements HTTP 200 et 17 empreintes, [Pages](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41373553244) depuis `9360d8deaa950113025f104384f54970881d6364`. Les 400 fichiers servis correspondent au site ; le ZIP hors ligne conserve ses 402 fichiers et 15 fichiers embarqués contrôlés. Les 8509 fichiers sources et 162 fichiers de guides correspondent à leurs révisions exactes. Les 168 parcours publics passent. [Reçu actuel](../release_notes/Publication-Receipt-1.0.547.json) · [Audit final](../release_notes/Final-Publication-Audit-1.0.547.json). La copie Windows locale est mise à jour et son ancien dossier est conservé.
+Remplacement public vérifié : même release et même date de publication, 18 téléchargements HTTP 200 et 17 empreintes, [Pages](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41373553244) depuis `9360d8deaa950113025f104384f54970881d6364`. Les 400 fichiers servis correspondent au site ; le ZIP hors ligne conserve ses 402 fichiers et 15 fichiers embarqués contrôlés. Les 8509 fichiers sources et 162 fichiers de guides correspondent à leurs révisions exactes. Les 168 parcours publics passent. [Reçu du 1er novembre](../release_notes/super-tank-alignment-1.0.547/Publication-Receipt-1.0.547.json) · [Audit final](../release_notes/super-tank-alignment-1.0.547/Final-Publication-Audit-1.0.547.json). La copie Windows locale est mise à jour et son ancien dossier est conservé.
 
 ## 1.0.547 initiale — Windows / Linux / Mint (historique)
 

@@ -2,7 +2,7 @@
 
 **[1.0.547 — Windows / Linux / Mint](https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.547)** : Super Tank de Kleshmersh à **925 crédits**, sélection d’armée et de toutes les moissonneuses, Windtraps préaméliorés dans l’éditeur pour toutes les factions hors Vanilla sans obligation de Chaos, avec étoile verte. Protocole **25**, sauvegardes **9840**. [FR](release_notes/1.0.547-FR.md) · [EN](release_notes/1.0.547-EN.md).
 
-**Correctif visuel du 1er novembre 2026 :** tourelle du Super Tank recentrée en partie et dans l’éditeur, dans les huit directions et aux trois zooms. Retélécharger les paquets **1.0.547** existants pour recevoir cette correction ; prix **925 crédits**, protocole **25**, sauvegardes **9840**. [Aperçus FR](website/changes-547.html) · [English previews](website/changes-547-en.html).
+**Correctif visuel du 2 novembre 2026 :** support de tourelle du Siege Tank teinté en orange, sous le dessin original du Super Tank. La copie reste orange et pivote avec la tourelle supérieure autour du même axe. Superposition ajustée dans les huit directions et aux trois zooms, en partie et dans l’éditeur ; PNG originaux intacts. Retélécharger les paquets **1.0.547** existants pour recevoir ce rendu ; prix **925 crédits**, protocole **25**, sauvegardes **9840**. [Aperçus FR](website/changes-547.html) · [English previews](website/changes-547-en.html).
 
 Guides 1.0.547 : [FR](HOWTOPLAY-FR.md) · [EN](HOWTOPLAY.md) · [Coop](docs/COOP-CAMPAIGN.md) · [Suivi](docs/SUIVI-1.0.547-FR.md).
 

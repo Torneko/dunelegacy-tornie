@@ -28,6 +28,15 @@ inline const std::array<Coord, NUM_ANGLES>& worldTurretOffsets() {
 }
 
 inline Coord editorOffset() {return nativeTurretOffsets()[0];}
+
+// The orange Siege Tank support sits behind the authored turret. These
+// native offsets are relative to its frame, keeping both layers on one atlas.
+inline const std::array<Coord, NUM_ANGLES>& nativeSiegeUnderlayOffsets() {
+    static const std::array<Coord, NUM_ANGLES> offsets{{
+        {-1,-1}, {0,-1}, {1,0}, {0,-1}, {1,-1}, {0,0}, {0,-2}, {0,0}
+    }};
+    return offsets;
+}
 }
 
 #endif

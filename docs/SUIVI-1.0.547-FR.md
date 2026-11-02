@@ -1,6 +1,10 @@
 # Suivi actuel — Dune Legacy Tornie 1.0.547
 
-## Correctif visuel du 1er novembre 2026
+## Support orange du Super Tank — 2 novembre 2026
+
+Le support de tourelle du Siege Tank est teinté en orange, sous le dessin original du Super Tank. La copie reste orange et pivote avec la tourelle supérieure autour du même axe. Les couches sont assemblées en mémoire et les PNG originaux restent intacts. Le rendu suit les huit directions et les trois zooms, en partie, dans l’éditeur et dans ses aperçus. Retélécharger les paquets existants **1.0.547** pour recevoir ce rendu. Prix : **925 crédits** ; protocole **25** ; sauvegardes **9840**.
+
+## Correctif visuel du 1er novembre 2026 — historique
 
 Recentrage de la tourelle du Super Tank dans les huit directions et aux trois zooms, en partie, dans l’éditeur et dans ses aperçus. Retélécharger les paquets existants **1.0.547** pour recevoir ce correctif. Prix : **925 crédits** ; protocole **25** ; sauvegardes **9840**. Les PNG originaux sont conservés.
 
@@ -10,7 +14,7 @@ Super Tank de Kleshmersh à 925 crédits, sélection d’armée et de toutes les
 
 [Notes détaillées](../release_notes/1.0.547-FR.md)
 
-Mis à jour le 1er novembre 2026. Version publiée : **1.0.547**, protocole **25**, sauvegardes **9840**, catalogue de **73 hauts faits**.
+Mis à jour le 2 novembre 2026. Version publiée : **1.0.547**, protocole **25**, sauvegardes **9840**, catalogue de **73 hauts faits**.
 
 ## Réalisé et publié
 

@@ -14,7 +14,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = '7c5149220fd0ee869205677127ae6c944e2f3113'
+BASE_VISUAL = '05912c4e8eee1919355c91e2d1bc38d6637d9a3b'
 INITIAL_DOCUMENTS = '80227a263afcafebaf5094f939d9c787eae23149'
+PREVIOUS_VISUAL_DOCUMENTS = '9360d8deaa950113025f104384f54970881d6364'
 VERSION = '1.0.547'
 SCOPE = 'super-tank-alignment-547'
 GRAPHICS = {
@@ -93,43 +95,78 @@ def mask_body(data, marker):
 
 
 def verify_super_tank_graphics(source):
-    """Remove the exact SDL-only compositor and its Super Tank call changes."""
+    """Allow only the reviewed private orange underlay compositor since N."""
     path = 'src/FileClasses/GFXManager.cpp'
-    old = without_render_include(blob(BASE, path)).replace(b'\r\n', b'\n')
-    new = without_render_include(blob(source, path)).replace(b'\r\n', b'\n')
-    helper = b'''// The authored Super Tank turret has its own palette. Compose in true colour
-// so thumbnail generation preserves the same colours and transparency as play.
-static sdl2::surface_ptr composeSuperTankEditorPicture(SDL_Surface* base, SDL_Surface* gun, int x, int y) {
-    if(!base || !gun) return nullptr;
-    auto picture=sdl2::surface_ptr(SDL_ConvertSurfaceFormat(base,SDL_PIXELFORMAT_RGBA32,0));
-    if(!picture) return nullptr;
-    SDL_SetSurfaceBlendMode(gun,SDL_BLENDMODE_BLEND);
-    SDL_Rect destination{x,y,gun->w,gun->h};
-    if(SDL_BlitSurface(gun,nullptr,picture.get(),&destination)!=0) return nullptr;
+    old = blob(BASE_VISUAL, path).replace(b'\r\n', b'\n')
+    new = blob(source, path).replace(b'\r\n', b'\n')
+    helper = b'''// Compose a private orange Siege Tank support beneath the original Super Tank
+// artwork. Stock turret surfaces and the supplied PNG stay untouched.
+static sdl2::surface_ptr composeSuperTankTurretSheet(SDL_Surface* original, SDL_Surface* siege) {
+    if(!original || !siege || original->w!=128 || original->h!=16 || siege->w!=128 || siege->h!=16)
+        throw std::runtime_error("Super Tank turret layers require eight native 16-pixel frames");
+    auto support=sdl2::surface_ptr(SDL_ConvertSurfaceFormat(siege,SDL_PIXELFORMAT_RGBA32,0));
+    auto picture=sdl2::surface_ptr(SDL_CreateRGBSurfaceWithFormat(0,128,16,32,SDL_PIXELFORMAT_RGBA32));
+    if(!support || !picture) throw std::runtime_error("Cannot compose Super Tank turret layers");
+    SDL_FillRect(picture.get(),nullptr,0);
+    static const std::array<SDL_Color,5> metal{{
+        {194,194,218,255},{157,157,186,255},{125,125,153,255},{93,93,121,255},{64,64,89,255}
+    }};
+    constexpr int orangeShades[]={0,1,2,3,5};
+    for(int y=0;y<support->h;++y)for(int x=0;x<support->w;++x) {
+        Uint8 r,g,b,a;SDL_GetRGBA(getPixel(support.get(),x,y),support->format,&r,&g,&b,&a);
+        if(!a) continue;
+        for(size_t shade=0;shade<metal.size();++shade) {
+            const auto source=metal[shade];
+            if(r==source.r && g==source.g && b==source.b) {
+                const auto orange=getHouseColorSDL(HOUSECOLOR_KLESH_ORANGE,orangeShades[shade]);
+                putPixel(support.get(),x,y,SDL_MapRGBA(support->format,orange.r,orange.g,orange.b,a));
+                break;
+            }
+        }
+    }
+    SDL_SetSurfaceBlendMode(support.get(),SDL_BLENDMODE_BLEND);
+    SDL_SetSurfaceBlendMode(original,SDL_BLENDMODE_BLEND);
+    for(int angle=0;angle<NUM_ANGLES;++angle) {
+        SDL_Rect frame{angle*16,0,16,16};
+        SDL_SetClipRect(picture.get(),&frame);
+        const auto offset=SuperTankRender::nativeSiegeUnderlayOffsets()[angle];
+        SDL_Rect supportDestination{angle*16+offset.x,offset.y,16,16};
+        SDL_Rect originalDestination=frame;
+        if(SDL_BlitSurface(support.get(),&frame,picture.get(),&supportDestination)!=0
+            || SDL_BlitSurface(original,&frame,picture.get(),&originalDestination)!=0)
+            throw std::runtime_error("Cannot blend Super Tank turret layers");
+    }
+    SDL_SetClipRect(picture.get(),nullptr);
     return picture;
 }
 
 '''
-    require(new.count(helper) == 1, 'Super Tank compositor differs from the reviewed SDL-only drawing helper')
+    require(new.count(helper) == 1, 'Super Tank underlay differs from the reviewed private SDL compositor')
     new = new.replace(helper, b'', 1)
-    guard = b'''        if(gunObjPicID==ObjPic_SuperTankGun)
-            return composeSuperTankEditorPicture(base.get(),gun.get(),gunOffsetX,gunOffsetY);
-'''
-    require(new.count(guard) == 2, 'Super Tank editor compositor guards differ')
-    new = new.replace(guard, b'')
-    for marker in (b'uiGraphic[UI_MapEditor_SuperTank][HOUSE_HARKONNEN] =',
-                   b'auto superTank = composeEditorVehicle(',
-                   b'auto superTank = composeRuntimeEditorVehicle('):
-        matches = [line for line in old.splitlines(keepends=True) if marker in line]
-        require(len(matches) == 1, 'Missing/ambiguous original Super Tank compositor call')
-        original = matches[0]
-        replacement = original.replace(b', 2, -4);', b', SuperTankRender::editorOffset().x, SuperTankRender::editorOffset().y);')
-        replacement = replacement.replace(b',2,-4);', b',SuperTankRender::editorOffset().x,SuperTankRender::editorOffset().y);')
-        if marker.startswith(b'uiGraphic'):
-            replacement = replacement.replace(b'= combinePictures(', b'= composeSuperTankEditorPicture(')
-        require(new.count(replacement) == 1, 'Super Tank compositor call differs from the reviewed placement change')
-        new = new.replace(replacement, original, 1)
+    call = b'            if(id==ObjPic_SuperTankGun) image=composeSuperTankTurretSheet(image.get(),reference);\n'
+    assignment = b'            objPic[id][slot][0]=std::move(image);\n'
+    require(new.count(call) == 1 and new.count(call + assignment) == 1,
+            'Super Tank underlay call must precede its sole native atlas assignment')
+    new = new.replace(call, b'', 1)
     require(old == new, 'Non-Super-Tank graphics or gameplay logic changed in ' + path)
+
+
+def verify_underlay_offsets(source):
+    path = 'include/units/SuperTankRender.h'
+    old = blob(BASE_VISUAL, path).replace(b'\r\n', b'\n')
+    new = blob(source, path).replace(b'\r\n', b'\n')
+    relative_offsets = b'''
+// The orange Siege Tank support sits behind the authored turret. These
+// native offsets are relative to its frame, keeping both layers on one atlas.
+inline const std::array<Coord, NUM_ANGLES>& nativeSiegeUnderlayOffsets() {
+    static const std::array<Coord, NUM_ANGLES> offsets{{
+        {-1,-1}, {0,-1}, {1,0}, {0,-1}, {1,-1}, {0,0}, {0,-2}, {0,0}
+    }};
+    return offsets;
+}
+'''
+    require(new.count(relative_offsets) == 1 and new.replace(relative_offsets, b'', 1) == old,
+            'Rendering header exceeds the reviewed pure relative underlay offsets')
 
 
 def visual_proof(source):
@@ -137,6 +174,11 @@ def visual_proof(source):
     protected = [p for p in changed if p.startswith(('config/', 'data/', 'mods/'))
                  or p in ('CMakeLists.txt', 'vcpkg.json', 'vcpkg-configuration.json')]
     require(not protected, 'Gameplay data/build version changed: ' + ', '.join(protected))
+    incremental = git('diff', '--no-renames', '--name-only', BASE_VISUAL, source).decode().splitlines()
+    runtime_incremental = [p for p in incremental if p.startswith(('src/', 'include/'))]
+    require(set(runtime_incremental) == {'src/FileClasses/GFXManager.cpp', 'include/units/SuperTankRender.h'},
+            'Runtime change since the published visual baseline exceeds the underlay compositor and offsets: '
+            + ', '.join(runtime_incremental))
     runtime = [p for p in changed if p.startswith(('src/', 'include/'))]
     qa_friends = []
     for path in runtime:
@@ -163,6 +205,7 @@ def visual_proof(source):
         new = mask_body(without_render_include(blob(source, path)), marker).replace(b'\r\n', b'\n')
         require(old == new, 'Non-drawing logic changed in ' + path)
     verify_super_tank_graphics(source)
+    verify_underlay_offsets(source)
     header = blob(source, 'include/units/SuperTankRender.h')
     require(not re.search(rb'\b(?:currentGame|currentGameMap|pLocalHouse|unitList|structureList|randomGen|objectData|setHealth|setPrice|bulletType|numWeapons|SAVEGAMEVERSION|NETWORK_PROTOCOL_VERSION)\b', header),
             'Rendering header references gameplay state')
@@ -190,11 +233,14 @@ def visual_proof(source):
         require(expected == item['sha256'] and hashlib.sha256(blob(source, path)).hexdigest() == expected,
                 'Original artwork changed: ' + path)
         originals.append({'path': path, 'sha256': expected})
-    return dict(baseSource=BASE, changedRuntimeFiles=runtime, graphicsAllowlist=sorted(GRAPHICS),
+    return dict(baseSource=BASE, previousVisualSource=BASE_VISUAL,
+                changedRuntimeFiles=runtime, changedRuntimeFilesSincePreviousVisual=runtime_incremental,
+                graphicsAllowlist=sorted(GRAPHICS),
                 qaEntryPoint='src/main.cpp', qaFriendDeclarations=qa_friends,
                 gameplayConfigurationDataAndModsByteIdentical=True,
                 otherGameplaySourcesByteIdentical=True,
                 superTankNonDrawingCodeUnchanged=True, editorNonDrawingCodeUnchanged=True,
+                privateOrangeSiegeUnderlayOnly=True, originalTurretOverlayAndAnchorsPreserved=True,
                 networkProtocol=protocol, saveFormat=save, price=925, hitPoints=300, itemID=88,
                 originalArtwork=originals)
 
@@ -207,7 +253,9 @@ def main():
     parser.add_argument('--linux-run', type=int, required=True)
     args = parser.parse_args()
     source = git('rev-parse', '--verify', args.source + '^{commit}').decode().strip()
-    require(source != BASE, 'Replacement source is still the original release')
+    require(source not in (BASE, BASE_VISUAL), 'Replacement source is still an earlier published release')
+    require(git('merge-base', BASE_VISUAL, source).decode().strip() == BASE_VISUAL,
+            'Replacement does not descend from the published visual baseline')
     proof = visual_proof(source)
     platforms = {}
     for platform, run in [('windows', args.windows_run), ('linux', args.linux_run)]:
@@ -264,26 +312,49 @@ def main():
     initial = json.loads(initial_raw.decode('utf-8-sig'))
     require(initial['version'] == VERSION and initial['source'] == BASE
             and initial['status'] == 'release-verified', 'Initial release validation is not the published baseline')
+    previous_path = ROOT / 'release_notes/super-tank-alignment-1.0.547/Validation-1.0.547.json'
+    if previous_path.exists():
+        previous_raw = previous_path.read_bytes()
+    else:
+        previous_raw = (ROOT / 'release_notes/Validation-1.0.547.json').read_bytes()
+        if json.loads(previous_raw.decode('utf-8-sig')).get('source') != BASE_VISUAL:
+            previous_raw = blob(PREVIOUS_VISUAL_DOCUMENTS, 'release_notes/Validation-1.0.547.json')
+    previous = json.loads(previous_raw.decode('utf-8-sig'))
+    require(previous['version'] == VERSION and previous['source'] == BASE_VISUAL
+            and previous['status'] == 'release-verified' and previous['validationScope'] == SCOPE
+            and previous['networkProtocol'] == 25 and previous['saveFormat'] == 9840,
+            'Previous visual validation is not the published alignment baseline')
     report = dict(version=VERSION, status='release-verified', validationScope=SCOPE,
-                  date='2026-11-01', verifiedAt=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                  date='2026-11-02', verifiedAt=datetime.datetime.now(datetime.timezone.utc).isoformat(),
                   source=source, networkProtocol=25, saveFormat=9840, platforms=platforms,
+                  visualChange='Private orange Siege Tank turret underlay beneath the preserved original Super Tank turret',
                   packageResources=audit, visualOnlyProof=proof,
                   inheritedGameplayValidation=dict(source=BASE,
                       document='release_notes/initial-1.0.547/Validation-1.0.547.json',
                       sha256=hashlib.sha256(initial_raw).hexdigest(),
                       description='Initial gameplay, campaign and memory checks remain historical; they are not claimed as rerun for this graphics-only correction.'),
+                  previousVisualValidation=dict(source=BASE_VISUAL,
+                      document='release_notes/super-tank-alignment-1.0.547/Validation-1.0.547.json',
+                      sha256=hashlib.sha256(previous_raw).hexdigest(),
+                      description='The preceding published alignment validation is archived unchanged; this report attributes only the new source and package checks to the orange underlay correction.'),
                   currentChecks=['engine/network CTest', 'FR/EN eight-direction three-zoom game/editor/preview alignment',
+                                 'independent orange Siege underlay and preserved upper PNG composition',
+                                 'ordinary Siege pixels/colours unchanged before and after Super Tank rendering',
                                  'FR/EN Windows menus/video', 'both Linux AppImages startup and software fallback',
                                  'unchanged original artwork and Vanilla/package resources'],
                   limits=initial.get('limits', []))
     initial_path.parent.mkdir(parents=True, exist_ok=True)
     if not initial_path.exists():
         initial_path.write_bytes(initial_raw)
+    previous_path.parent.mkdir(parents=True, exist_ok=True)
+    if not previous_path.exists():
+        previous_path.write_bytes(previous_raw)
     encoded = json.dumps(report, ensure_ascii=False, indent=2) + '\n'
     for path in [ROOT / 'release_notes/Validation-1.0.547.json', ROOT / 'website/documents/Validation-1.0.547.json']:
         path.write_text(encoded, encoding='utf-8', newline='\n')
     print('Verified graphics-only 547 replacement:', source)
     print('Initial rich gameplay validation preserved:', initial_path.relative_to(ROOT).as_posix())
+    print('Previous visual validation preserved:', previous_path.relative_to(ROOT).as_posix())
 
 
 if __name__ == '__main__':

@@ -60,6 +60,47 @@ static sdl2::surface_ptr composeSuperTankEditorPicture(SDL_Surface* base, SDL_Su
     return picture;
 }
 
+// Compose a private orange Siege Tank support beneath the original Super Tank
+// artwork. Stock turret surfaces and the supplied PNG stay untouched.
+static sdl2::surface_ptr composeSuperTankTurretSheet(SDL_Surface* original, SDL_Surface* siege) {
+    if(!original || !siege || original->w!=128 || original->h!=16 || siege->w!=128 || siege->h!=16)
+        throw std::runtime_error("Super Tank turret layers require eight native 16-pixel frames");
+    auto support=sdl2::surface_ptr(SDL_ConvertSurfaceFormat(siege,SDL_PIXELFORMAT_RGBA32,0));
+    auto picture=sdl2::surface_ptr(SDL_CreateRGBSurfaceWithFormat(0,128,16,32,SDL_PIXELFORMAT_RGBA32));
+    if(!support || !picture) throw std::runtime_error("Cannot compose Super Tank turret layers");
+    SDL_FillRect(picture.get(),nullptr,0);
+    static const std::array<SDL_Color,5> metal{{
+        {194,194,218,255},{157,157,186,255},{125,125,153,255},{93,93,121,255},{64,64,89,255}
+    }};
+    constexpr int orangeShades[]={0,1,2,3,5};
+    for(int y=0;y<support->h;++y)for(int x=0;x<support->w;++x) {
+        Uint8 r,g,b,a;SDL_GetRGBA(getPixel(support.get(),x,y),support->format,&r,&g,&b,&a);
+        if(!a) continue;
+        for(size_t shade=0;shade<metal.size();++shade) {
+            const auto source=metal[shade];
+            if(r==source.r && g==source.g && b==source.b) {
+                const auto orange=getHouseColorSDL(HOUSECOLOR_KLESH_ORANGE,orangeShades[shade]);
+                putPixel(support.get(),x,y,SDL_MapRGBA(support->format,orange.r,orange.g,orange.b,a));
+                break;
+            }
+        }
+    }
+    SDL_SetSurfaceBlendMode(support.get(),SDL_BLENDMODE_BLEND);
+    SDL_SetSurfaceBlendMode(original,SDL_BLENDMODE_BLEND);
+    for(int angle=0;angle<NUM_ANGLES;++angle) {
+        SDL_Rect frame{angle*16,0,16,16};
+        SDL_SetClipRect(picture.get(),&frame);
+        const auto offset=SuperTankRender::nativeSiegeUnderlayOffsets()[angle];
+        SDL_Rect supportDestination{angle*16+offset.x,offset.y,16,16};
+        SDL_Rect originalDestination=frame;
+        if(SDL_BlitSurface(support.get(),&frame,picture.get(),&supportDestination)!=0
+            || SDL_BlitSurface(original,&frame,picture.get(),&originalDestination)!=0)
+            throw std::runtime_error("Cannot blend Super Tank turret layers");
+    }
+    SDL_SetClipRect(picture.get(),nullptr);
+    return picture;
+}
+
 // Keep the user-provided PNG intact; fit its visible banner in the native UI.
 static sdl2::surface_ptr fitAttachedHerald(sdl2::surface_ptr source) {
     if(!source) return source;
@@ -4637,6 +4678,7 @@ void GFXManager::reloadModDependentObjectGraphics() {
                     }
                 }
             }
+            if(id==ObjPic_SuperTankGun) image=composeSuperTankTurretSheet(image.get(),reference);
             objPic[id][slot][0]=std::move(image);
             for(int zoom=1;zoom<NUM_ZOOMLEVEL;++zoom)objPic[id][slot][zoom]=scaleSurfaceNearest(objPic[id][slot][0].get(),zoom+1);
             for(int zoom=0;zoom<NUM_ZOOMLEVEL;++zoom){objPicTex[id][slot][zoom].reset();if(objPic[id][slot][zoom])SDL_SetSurfaceBlendMode(objPic[id][slot][zoom].get(),SDL_BLENDMODE_BLEND);}

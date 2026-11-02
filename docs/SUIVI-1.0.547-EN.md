@@ -1,6 +1,10 @@
 # Current follow-up — Dune Legacy Tornie 1.0.547
 
-## Visual correction dated 1 November 2026
+## Super Tank orange support — 2 November 2026
+
+The Siege Tank turret support is tinted orange, beneath the Super Tank’s original artwork. The copy stays orange and rotates with the upper turret around the same pivot. The layers are assembled in memory and the original PNG files remain intact. Rendering follows all eight directions and all three zoom levels, in game, in the editor and in its previews. Download the existing **1.0.547** packages again to receive this rendering. Price: **925 credits**; protocol **25**; save format **9840**.
+
+## Visual correction dated 1 November 2026 — historical
 
 The Super Tank turret is centred in all eight directions and at all three zoom levels, in game, in the editor and in its previews. Download the existing **1.0.547** packages again to receive this correction. Price: **925 credits**; protocol **25**; save format **9840**. Original PNG files are preserved.
 
@@ -10,7 +14,7 @@ Kleshmersh Super Tank at 925 credits, army and all-Harvester selection, pre-upgr
 
 [Detailed notes](../release_notes/1.0.547-EN.md)
 
-Updated 1 November 2026. Published version **1.0.547**, network protocol **25**, save format **9840**, **73 achievements**.
+Updated 2 November 2026. Published version **1.0.547**, network protocol **25**, save format **9840**, **73 achievements**.
 
 ## Completed and published
 
