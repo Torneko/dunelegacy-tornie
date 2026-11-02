@@ -6,6 +6,8 @@ Le rendu ajoute un support de tourelle de Siege Tank teinté en orange, sous le 
 
 Les rapports du remplacement du 1er novembre restent conservés dans [l’archive du correctif précédent](../release_notes/super-tank-alignment-1.0.547/). Les captures de ce premier recentrage restent visibles à titre historique.
 
+Source du rendu figée : `1de4f492aab0fcde95620ad150319cafb55c0a79`. [Windows validé](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41482950993) · [Linux/Mint validé](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41482956703) · [Audit des ressources](https://github.com/Torneko/dunelegacy-tornie/actions/runs/41485512043). CTest passe ; les 144 poses dans chaque langue correspondent à une composition indépendante du Siege Tank orange et du PNG original. Le Siege Tank ordinaire conserve exactement ses pixels et couleurs. Les 22 images originales, les 205 fichiers Vanilla et les 5 635 fichiers de mods sont conservés. [Validation](../release_notes/Validation-1.0.547.json) · [Contrôle local du rendu](../release_notes/SuperTank-Underlay-1.0.547.json). La source précédente reste sous `archive/releases/v1.0.547-before-super-tank-underlay`.
+
 ## Correctif visuel 1.0.547 — 1er novembre 2026 — historique
 
 La tourelle du Super Tank est recentrée sur le châssis dans les huit directions et aux trois zooms, en partie, dans l’éditeur et dans les aperçus de la palette. Les PNG originaux fournis par Tornie sont conservés. Retélécharger les paquets **1.0.547** existants pour recevoir ce correctif ; prix **925 crédits**, protocole **25**, sauvegardes **9840**.

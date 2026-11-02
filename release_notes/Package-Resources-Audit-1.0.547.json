@@ -1,25 +1,25 @@
 {
   "version": "1.0.547",
-  "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+  "source": "1de4f492aab0fcde95620ad150319cafb55c0a79",
   "modFiles": 5635,
   "originalArtworkFiles": 22,
   "vanillaFiles": 205,
   "packages": {
     "windows": {
       "passed": true,
-      "sha256": "90ce9386ec6657bf7aaed5b4c157e0f83a0c441ab28c7952c096e4efff452692"
+      "sha256": "dc06172accd0acc3a9cec45f827552830206e4dfffaa7462daf09e48dea46959"
     },
     "linuxTar": {
       "passed": true,
-      "sha256": "e357a1cc28a27b6ccd18335478d9aff0b5d9dea4d58fd6ce2d405dd3a14a0e6b"
+      "sha256": "a7faff26c65e8f0b86ac6e8591c6892a93b8c7a6a30f0734252fa201c134d074"
     },
     "DuneLegacyTornie-1.0.547-Linux-Mint-Compatible.AppImage": {
       "passed": true,
-      "sha256": "44c2aa52d4748f13704d79115bbfec00701765b2e59bc8f98bf2db974954c8ff"
+      "sha256": "18d331b400c1c0f85f16a57b1e8b05e472eded6aaa8965dec6caadc71bffa607"
     },
     "DuneLegacyTornie-1.0.547-Linux-x86_64.AppImage": {
       "passed": true,
-      "sha256": "9788322e6efc04bb9a4084494a3c7e82fcec5b0b3e970509c399806d4e0d561c"
+      "sha256": "8fbc5906e32eb207155ca30d8ece81d6e601f31ba73dc4f751692f265bcb5b61"
     }
   }
 }

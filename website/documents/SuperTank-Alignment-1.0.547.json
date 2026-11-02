@@ -1,19 +1,92 @@
 {
   "version": "1.0.547",
-  "date": "2026-11-01",
-  "scope": "super-tank-alignment-547",
-  "nativeFrames": 144,
-  "mods": 6,
-  "directions": 8,
-  "zooms": [
-    1,
-    2,
-    3
-  ],
-  "gameEditorPixelMismatches": 0,
-  "palettePixelMismatches": 0,
-  "fixedHullTurretSweepReviewed": true,
+  "date": "2026-11-02",
+  "scope": "super-tank-orange-underlay",
+  "languages": {
+    "fr": {
+      "poses": 144,
+      "gameEditorMismatches": 0,
+      "paletteMismatches": 0,
+      "layerMismatches": 0,
+      "ordinarySiegeMismatches": 0,
+      "minimumVisibleOrangePixels": 26
+    },
+    "en": {
+      "poses": 144,
+      "gameEditorMismatches": 0,
+      "paletteMismatches": 0,
+      "layerMismatches": 0,
+      "ordinarySiegeMismatches": 0,
+      "minimumVisibleOrangePixels": 26
+    }
+  },
+  "engineAndNetworkTests": {
+    "passed": true,
+    "tests": 2
+  },
   "originalPngsUnchanged": true,
+  "superTankPrice": 925,
+  "superTankHitPoints": 300,
+  "networkProtocol": 25,
+  "saveFormat": 9840,
+  "nativeUnderlayOffsets": [
+    [
+      -1,
+      -1
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      1,
+      -1
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      -2
+    ],
+    [
+      0,
+      0
+    ]
+  ],
+  "colour": "fixed campaign orange",
+  "originalUpperTurretPreserved": true,
+  "evidence": [
+    {
+      "path": "reports\\native-547\\fr\\verify-super-tank-alignment\\super-tank-alignment.csv",
+      "sha256": "9f1249ac0180f2f812766a3286bcda43947793b157298b902792fad971f7420a"
+    },
+    {
+      "path": "reports\\native-547\\en\\verify-super-tank-alignment\\super-tank-alignment.csv",
+      "sha256": "9f1249ac0180f2f812766a3286bcda43947793b157298b902792fad971f7420a"
+    }
+  ],
+  "source": "1de4f492aab0fcde95620ad150319cafb55c0a79",
+  "previousVisualSource": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+  "screenshots": [
+    {
+      "releaseNotes": "previews/SuperTank-underlay-547-game.png",
+      "website": "../assets/previews/SuperTank-underlay-547-game.png"
+    },
+    {
+      "releaseNotes": "previews/SuperTank-underlay-547-turret-sweep.png",
+      "website": "../assets/previews/SuperTank-underlay-547-turret-sweep.png"
+    }
+  ],
   "nativeTurretOffsets": [
     [
       2,
@@ -48,35 +121,5 @@
       1
     ]
   ],
-  "price": 925,
-  "health": 300,
-  "protocol": 25,
-  "saveFormat": 9840,
-  "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
-  "languages": [
-    "fr",
-    "en"
-  ],
-  "engineAndNetworkTests": {
-    "passed": true,
-    "tests": 2
-  },
-  "screenshots": [
-    "previews/SuperTank-alignment-547-game.png",
-    "previews/SuperTank-alignment-547-turret-sweep.png"
-  ],
-  "evidence": [
-    {
-      "path": "reports/ctest-super-tank-alignment-fixed.log",
-      "sha256": "137cd5fb4537c32abe57475de928471fd7b0617e422383dc7489e4b7ebac3fe1"
-    },
-    {
-      "path": "reports/native-547/fr/verify-super-tank-alignment/super-tank-alignment.csv",
-      "sha256": "1302771ca6b46a258927e44ecf2375a3d7e0e21cc25d98959d74026101c4cfaa"
-    },
-    {
-      "path": "reports/native-547/en/verify-super-tank-alignment/super-tank-alignment.csv",
-      "sha256": "1302771ca6b46a258927e44ecf2375a3d7e0e21cc25d98959d74026101c4cfaa"
-    }
-  ]
+  "supersedesLocalValidation": "release_notes/super-tank-alignment-1.0.547/SuperTank-Alignment-1.0.547.json"
 }

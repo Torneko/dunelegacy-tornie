@@ -2,50 +2,50 @@
   "version": "1.0.547",
   "status": "release-verified",
   "validationScope": "super-tank-alignment-547",
-  "date": "2026-11-01",
-  "verifiedAt": "2026-11-02T01:32:27.974442+00:00",
-  "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+  "date": "2026-11-02",
+  "verifiedAt": "2026-11-02T16:53:21.176786+00:00",
+  "source": "1de4f492aab0fcde95620ad150319cafb55c0a79",
   "networkProtocol": 25,
   "saveFormat": 9840,
   "platforms": {
     "windows": {
-      "networkProtocol": 25,
-      "release543Checks": [],
-      "workflowSource": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
-      "version": "1.0.547",
-      "installedRuntimeChecks": [
-        "fr",
-        "en"
-      ],
-      "package": "DuneLegacyTornie-1.0.547-Windows-x64.zip",
-      "engineAndNetworkTests": true,
-      "validationScope": "super-tank-alignment-547",
       "menuStartupChecks": [
         "fr",
         "en"
       ],
+      "installedRuntimeChecks": [
+        "fr",
+        "en"
+      ],
+      "run": 41482950993,
       "saveVersion": 9840,
+      "release543Checks": [],
       "videoOptionsChecks": [
         "fr",
         "en"
       ],
-      "run": 41371611314,
-      "nextReleaseChecks": [
-        "super-tank-alignment-eight-directions-three-zooms-fr-en",
-        "super-tank-game-editor-preview-placement-fr-en"
-      ],
+      "package": "DuneLegacyTornie-1.0.547-Windows-x64.zip",
+      "workflowSource": "1de4f492aab0fcde95620ad150319cafb55c0a79",
+      "engineAndNetworkTests": true,
+      "sha256": "dc06172accd0acc3a9cec45f827552830206e4dfffaa7462daf09e48dea46959",
       "alignmentChecks": [
         "fr",
         "en"
       ],
-      "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
-      "sha256": "90ce9386ec6657bf7aaed5b4c157e0f83a0c441ab28c7952c096e4efff452692"
+      "source": "1de4f492aab0fcde95620ad150319cafb55c0a79",
+      "validationScope": "super-tank-alignment-547",
+      "version": "1.0.547",
+      "nextReleaseChecks": [
+        "super-tank-alignment-eight-directions-three-zooms-fr-en",
+        "super-tank-game-editor-preview-placement-fr-en"
+      ],
+      "networkProtocol": 25
     },
     "linux": {
       "version": "1.0.547",
-      "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
-      "workflowSource": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
-      "run": 41371613772,
+      "source": "1de4f492aab0fcde95620ad150319cafb55c0a79",
+      "workflowSource": "1de4f492aab0fcde95620ad150319cafb55c0a79",
+      "run": 41482956703,
       "graphicalStartup": {
         "passed": true,
         "languages": [
@@ -84,59 +84,61 @@
       "packages": [
         {
           "package": "DuneLegacyTornie-1.0.547-Linux-Mint-Compatible.AppImage",
-          "size": 52677112,
-          "sha256": "44c2aa52d4748f13704d79115bbfec00701765b2e59bc8f98bf2db974954c8ff"
+          "size": 52673016,
+          "sha256": "18d331b400c1c0f85f16a57b1e8b05e472eded6aaa8965dec6caadc71bffa607"
         },
         {
           "package": "DuneLegacyTornie-1.0.547-Linux-x64.deb",
-          "size": 67138634,
-          "sha256": "ff9388b20a0b7eceba414aad1f1f0f97d4b381a121ab6e831f532e805e11a71d"
+          "size": 67146532,
+          "sha256": "888a6b96c89c74debc631110bc6080ae953208842d4962a72cc7b3a7ddcddc63"
         },
         {
           "package": "DuneLegacyTornie-1.0.547-Linux-x64.rpm",
-          "size": 67233450,
-          "sha256": "4979665690957a5cf1a28f4973bea93c92765373bc20288f12d6f94fae1e0984"
+          "size": 67226520,
+          "sha256": "2044918552e6522d98d3e64d00cefaae5378be8392f50969d4922f084744e83f"
         },
         {
           "package": "DuneLegacyTornie-1.0.547-Linux-x64.tar.gz",
-          "size": 67821032,
-          "sha256": "e357a1cc28a27b6ccd18335478d9aff0b5d9dea4d58fd6ce2d405dd3a14a0e6b"
+          "size": 67829914,
+          "sha256": "a7faff26c65e8f0b86ac6e8591c6892a93b8c7a6a30f0734252fa201c134d074"
         },
         {
           "package": "DuneLegacyTornie-1.0.547-Linux-x86_64.AppImage",
-          "size": 52677112,
-          "sha256": "9788322e6efc04bb9a4084494a3c7e82fcec5b0b3e970509c399806d4e0d561c"
+          "size": 52673016,
+          "sha256": "8fbc5906e32eb207155ca30d8ece81d6e601f31ba73dc4f751692f265bcb5b61"
         }
       ]
     }
   },
+  "visualChange": "Private orange Siege Tank turret underlay beneath the preserved original Super Tank turret",
   "packageResources": {
     "version": "1.0.547",
-    "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+    "source": "1de4f492aab0fcde95620ad150319cafb55c0a79",
     "modFiles": 5635,
     "originalArtworkFiles": 22,
     "vanillaFiles": 205,
     "packages": {
       "windows": {
         "passed": true,
-        "sha256": "90ce9386ec6657bf7aaed5b4c157e0f83a0c441ab28c7952c096e4efff452692"
+        "sha256": "dc06172accd0acc3a9cec45f827552830206e4dfffaa7462daf09e48dea46959"
       },
       "linuxTar": {
         "passed": true,
-        "sha256": "e357a1cc28a27b6ccd18335478d9aff0b5d9dea4d58fd6ce2d405dd3a14a0e6b"
+        "sha256": "a7faff26c65e8f0b86ac6e8591c6892a93b8c7a6a30f0734252fa201c134d074"
       },
       "DuneLegacyTornie-1.0.547-Linux-Mint-Compatible.AppImage": {
         "passed": true,
-        "sha256": "44c2aa52d4748f13704d79115bbfec00701765b2e59bc8f98bf2db974954c8ff"
+        "sha256": "18d331b400c1c0f85f16a57b1e8b05e472eded6aaa8965dec6caadc71bffa607"
       },
       "DuneLegacyTornie-1.0.547-Linux-x86_64.AppImage": {
         "passed": true,
-        "sha256": "9788322e6efc04bb9a4084494a3c7e82fcec5b0b3e970509c399806d4e0d561c"
+        "sha256": "8fbc5906e32eb207155ca30d8ece81d6e601f31ba73dc4f751692f265bcb5b61"
       }
     }
   },
   "visualOnlyProof": {
     "baseSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
+    "previousVisualSource": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
     "changedRuntimeFiles": [
       "include/MapEditor/MapEditor.h",
       "include/units/SuperTankRender.h",
@@ -144,6 +146,10 @@
       "src/MapEditor/MapEditor.cpp",
       "src/main.cpp",
       "src/units/SuperTank.cpp"
+    ],
+    "changedRuntimeFilesSincePreviousVisual": [
+      "include/units/SuperTankRender.h",
+      "src/FileClasses/GFXManager.cpp"
     ],
     "graphicsAllowlist": [
       "include/units/SuperTankRender.h",
@@ -159,6 +165,8 @@
     "otherGameplaySourcesByteIdentical": true,
     "superTankNonDrawingCodeUnchanged": true,
     "editorNonDrawingCodeUnchanged": true,
+    "privateOrangeSiegeUnderlayOnly": true,
+    "originalTurretOverlayAndAnchorsPreserved": true,
     "networkProtocol": 25,
     "saveFormat": 9840,
     "price": 925,
@@ -261,9 +269,17 @@
     "sha256": "47b813d4dc2eaeb1bca0bd3417384a1fc3af35774b8bdbdb2d24a2aad8b03717",
     "description": "Initial gameplay, campaign and memory checks remain historical; they are not claimed as rerun for this graphics-only correction."
   },
+  "previousVisualValidation": {
+    "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+    "document": "release_notes/super-tank-alignment-1.0.547/Validation-1.0.547.json",
+    "sha256": "04db16861062955b5ac90f0ad8eb030e22b0f8eba30507999b1ffb2864009335",
+    "description": "The preceding published alignment validation is archived unchanged; this report attributes only the new source and package checks to the orange underlay correction."
+  },
   "currentChecks": [
     "engine/network CTest",
     "FR/EN eight-direction three-zoom game/editor/preview alignment",
+    "independent orange Siege underlay and preserved upper PNG composition",
+    "ordinary Siege pixels/colours unchanged before and after Super Tank rendering",
     "FR/EN Windows menus/video",
     "both Linux AppImages startup and software fallback",
     "unchanged original artwork and Vanilla/package resources"

@@ -1,33 +1,33 @@
 {
-  "networkProtocol": 25,
-  "release543Checks": [],
-  "workflowSource": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
-  "version": "1.0.547",
-  "installedRuntimeChecks": [
-    "fr",
-    "en"
-  ],
-  "package": "DuneLegacyTornie-1.0.547-Windows-x64.zip",
-  "engineAndNetworkTests": true,
-  "validationScope": "super-tank-alignment-547",
   "menuStartupChecks": [
     "fr",
     "en"
   ],
+  "installedRuntimeChecks": [
+    "fr",
+    "en"
+  ],
+  "run": 41482950993,
   "saveVersion": 9840,
+  "release543Checks": [],
   "videoOptionsChecks": [
     "fr",
     "en"
   ],
-  "run": 41371611314,
-  "nextReleaseChecks": [
-    "super-tank-alignment-eight-directions-three-zooms-fr-en",
-    "super-tank-game-editor-preview-placement-fr-en"
-  ],
+  "package": "DuneLegacyTornie-1.0.547-Windows-x64.zip",
+  "workflowSource": "1de4f492aab0fcde95620ad150319cafb55c0a79",
+  "engineAndNetworkTests": true,
+  "sha256": "dc06172accd0acc3a9cec45f827552830206e4dfffaa7462daf09e48dea46959",
   "alignmentChecks": [
     "fr",
     "en"
   ],
-  "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
-  "sha256": "90ce9386ec6657bf7aaed5b4c157e0f83a0c441ab28c7952c096e4efff452692"
+  "source": "1de4f492aab0fcde95620ad150319cafb55c0a79",
+  "validationScope": "super-tank-alignment-547",
+  "version": "1.0.547",
+  "nextReleaseChecks": [
+    "super-tank-alignment-eight-directions-three-zooms-fr-en",
+    "super-tank-game-editor-preview-placement-fr-en"
+  ],
+  "networkProtocol": 25
 }
