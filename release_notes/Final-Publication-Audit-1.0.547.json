@@ -111,7 +111,14 @@
   "servedWebsiteFilesByteIdentical": 400,
   "publicBrowserContexts": 168,
   "liveVerificationSha256": "25424e612112e0907d9d42997d8f91cddee8d0a43156070f24f2c9eb9da18054",
-  "releaseIdentity": null,
+  "releaseIdentity": {
+    "id": 430280161,
+    "tag": "v1.0.547",
+    "title": "Dune Legacy Tornie 1.0.547",
+    "url": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.547",
+    "createdAt": "2026-11-02T01:16:05Z",
+    "publishedAt": "2026-11-01T03:00:18Z"
+  },
   "releaseCommitDates": {
     "after": {
       "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
@@ -125,5 +132,8 @@
       "createdAt": "2026-11-01T02:15:46Z",
       "match": true
     }
-  }
+  },
+  "originalReleaseIdentityAndPublicationDatePreserved": true,
+  "beforeCommitDateMatch": true,
+  "afterCommitDateMatch": true
 }
