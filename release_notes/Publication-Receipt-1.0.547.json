@@ -1,35 +1,36 @@
 {
   "version": "1.0.547",
   "status": "published-and-verified",
-  "replacement": "super-tank-alignment-547",
-  "date": "2026-11-01",
-  "verifiedAt": "2026-11-02T01:42:56.320272+00:00",
+  "replacement": "super-tank-orange-underlay-547",
+  "date": "2026-11-02",
+  "verifiedAt": "2026-11-02T17:06:57.358666+00:00",
   "publishedAt": "2026-11-01T03:00:18Z",
   "releaseId": 430280161,
   "release": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.547",
   "existingReleaseReused": true,
   "originalPublishedAtPreserved": true,
-  "gameSource": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
-  "websiteSource": "9360d8deaa950113025f104384f54970881d6364",
-  "previousGameSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
-  "previousSourceArchive": "archive/releases/v1.0.547-before-super-tank-alignment",
-  "previousReports": "release_notes/initial-1.0.547/",
+  "gameSource": "1de4f492aab0fcde95620ad150319cafb55c0a79",
+  "websiteSource": "ed3676009d903d603266a88c31a8401c635d830f",
+  "previousGameSource": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
+  "previousSourceArchive": "archive/releases/v1.0.547-before-super-tank-underlay",
+  "previousReports": "release_notes/super-tank-alignment-1.0.547/",
+  "initialGameplaySource": "7c5149220fd0ee869205677127ae6c944e2f3113",
   "networkProtocol": 25,
   "saveFormat": 9840,
   "runs": {
-    "windows": 41371611314,
-    "linux": 41371613772,
-    "packageResources": 41372832958,
-    "documents": 41373060036,
-    "pages": 41373553244
+    "windows": 41482950993,
+    "linux": 41482956703,
+    "packageResources": 41485512043,
+    "documents": 41486005313,
+    "pages": 41487353375
   },
   "assets": 18,
   "manifestEntries": 17,
-  "sourceZipFiles": 8509,
-  "guideFiles": 162,
-  "offlineWebsiteFiles": 402,
+  "sourceZipFiles": 8522,
+  "guideFiles": 164,
+  "offlineWebsiteFiles": 405,
   "embeddedFiles": 15,
-  "publicServedWebsiteFiles": 400,
+  "publicServedWebsiteFiles": 403,
   "publicBrowserContexts": 168,
   "originalArtworkFiles": 22,
   "vanillaFiles": 205,
@@ -45,29 +46,39 @@
       2,
       3
     ],
+    "orangeSiegeUnderlay": true,
+    "originalUpperPngPreserved": true,
+    "independentLayerCompositionVerified": true,
+    "ordinarySiegePixelsUnchanged": true,
     "gameplayUnchanged": true
   },
   "localWindowsZip": "DuneLegacyTornie-1.0.547-Windows-x64.zip",
   "localWindowsFolder": "DuneLegacyTornie-1.0.547-Windows-x64",
-  "localWindowsZipSha256": "90ce9386ec6657bf7aaed5b4c157e0f83a0c441ab28c7952c096e4efff452692",
+  "localWindowsZipSha256": "dc06172accd0acc3a9cec45f827552830206e4dfffaa7462daf09e48dea46959",
+  "localExecutableSha256": "c54d3fbdd49a798db9838b5a710d25a0b0e79598780fdfc8287a7eea5f67b8e6",
   "localExecutableMatchesVerifiedZip": true,
-  "previousLocalFolder": "C:\\Users\\canti\\OneDrive\\Documents\\Tests Codex\\Archive-1.0.547-avant-alignement-SuperTank\\DuneLegacyTornie-1.0.547-Windows-x64",
+  "localBackupDirectory": "C:\\Users\\canti\\OneDrive\\Documents\\Tests Codex\\Archive-1.0.547-avant-tourelle-orange",
+  "localChangedFiles": 21,
+  "localPreservedFiles": 6983,
+  "localBackupFiles": 23,
+  "localFilesDeleted": 0,
+  "localDirectoriesMoved": 0,
   "createdAtMetadata": {
     "after": {
+      "source": "1de4f492aab0fcde95620ad150319cafb55c0a79",
+      "gitCommitDate": "2026-11-02T11:34:50-05:00",
+      "createdAt": "2026-11-02T16:34:50Z",
+      "match": true
+    },
+    "before": {
       "source": "05912c4e8eee1919355c91e2d1bc38d6637d9a3b",
       "gitCommitDate": "2026-11-01T20:16:05-05:00",
       "createdAt": "2026-11-02T01:16:05Z",
       "match": true
-    },
-    "before": {
-      "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
-      "gitCommitDate": "2026-10-31T22:15:46-04:00",
-      "createdAt": "2026-11-01T02:15:46Z",
-      "match": true
     }
   },
   "limits": [
-    "Initial gameplay/campaign and memory validations are explicitly inherited, with byte-identical gameplay data and non-drawing runtime sources.",
-    "This correction reran CTest, installed FR/EN alignment, menus and startup checks on Windows/Linux; human multiplayer and physical Mint testing remain separate."
+    "Initial gameplay/campaign and memory validations remain explicitly inherited; gameplay data and non-drawing runtime sources are unchanged.",
+    "This correction reran CTest, installed FR/EN independent layer composition, menus and startup checks on Windows/Linux; human multiplayer and physical Mint tests remain separate."
   ]
 }
