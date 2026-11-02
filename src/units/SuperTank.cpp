@@ -16,6 +16,7 @@
  */
 
 #include <units/SuperTank.h>
+#include <units/SuperTankRender.h>
 
 #include <globals.h>
 
@@ -65,21 +66,13 @@ void SuperTank::blitToScreen() {
 
     SDL_RenderCopy(renderer, pUnitGraphic, &source1, &dest1);
 
-    const Coord siegeTankTurretOffset[] =   {   Coord(8, -12),
-                                                Coord(0, -20),
-                                                Coord(0, -20),
-                                                Coord(-4, -20),
-                                                Coord(-8, -12),
-                                                Coord(-8, -4),
-                                                Coord(-4, -12),
-                                                Coord(8, -4)
-                                            };
+    const auto& turretOffsets=SuperTankRender::worldTurretOffsets();
 
     SDL_Texture* pTurretGraphic = turretGraphic[currentZoomlevel];
     SDL_Rect source2 = calcSpriteSourceRect(pTurretGraphic, drawnTurretAngle, NUM_ANGLES);
     SDL_Rect dest2 = calcSpriteDrawingRect( pTurretGraphic,
-                                            screenborder->world2screenX(realX + siegeTankTurretOffset[drawnTurretAngle].x),
-                                            screenborder->world2screenY(realY + siegeTankTurretOffset[drawnTurretAngle].y),
+                                            screenborder->world2screenX(realX + turretOffsets[drawnTurretAngle].x),
+                                            screenborder->world2screenY(realY + turretOffsets[drawnTurretAngle].y),
                                             NUM_ANGLES, 1, HAlign::Center, VAlign::Center);
 
     SDL_RenderCopy(renderer, pTurretGraphic, &source2, &dest2);

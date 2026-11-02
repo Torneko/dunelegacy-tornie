@@ -1,0 +1,44 @@
+{
+  "version": "1.0.547",
+  "status": "published-and-verified",
+  "verifiedAt": "2026-11-01T03:07:27.854115+00:00",
+  "publishedAt": "2026-11-01T03:00:18Z",
+  "release": "https://github.com/Torneko/dunelegacy-tornie/releases/tag/v1.0.547",
+  "gameSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
+  "websiteSource": "80227a263afcafebaf5094f939d9c787eae23149",
+  "networkProtocol": 25,
+  "saveFormat": 9840,
+  "runs": {
+    "windows": 41264452598,
+    "linux": 41265028810,
+    "packageResources": 41266529079,
+    "documents": 41267003315,
+    "pages": 41267405420
+  },
+  "assets": 18,
+  "manifestEntries": 17,
+  "sourceZipFiles": 8490,
+  "guideFiles": 160,
+  "offlineWebsiteFiles": 399,
+  "embeddedFiles": 15,
+  "publicServedWebsiteFiles": 397,
+  "publicBrowserContexts": 164,
+  "originalArtworkFiles": 22,
+  "vanillaFiles": 205,
+  "modFiles": 5635,
+  "originalGraphicsPreserved": true,
+  "saveVersionReportCorrection": {
+    "originalValue": 9839,
+    "correctValue": 9840,
+    "originalReportHashesPreserved": true,
+    "packagesUnchanged": true,
+    "officialWindowsGeneratedSaves": 10
+  },
+  "localWindowsZip": "DuneLegacyTornie-1.0.547-Windows-x64.zip",
+  "localWindowsFolder": "DuneLegacyTornie-1.0.547-Windows-x64",
+  "limits": [
+    "Human two-PC/independent-Internet co-op remains separate from automated tests.",
+    "Physical Mint PC and full campaign balance playthroughs remain manual checks.",
+    "Jericho/ArcaKev campaign rewrites await their authors' opinions."
+  ]
+}

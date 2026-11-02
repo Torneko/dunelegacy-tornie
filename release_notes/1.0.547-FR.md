@@ -1,5 +1,11 @@
 # Dune Legacy Tornie 1.0.547
 
+## Correctif visuel du 1er novembre 2026
+
+Les paquets corrigés de la **1.0.547** recentrent la tourelle du Super Tank sur son châssis dans les **huit directions** et aux **trois zooms**, en partie, dans l’éditeur et dans ses aperçus. Les PNG originaux fournis par Tornie sont conservés.
+
+Retélécharger les paquets **1.0.547** existants pour recevoir ce correctif. Le Super Tank coûte **925 crédits** ; compatibilité réseau : **protocole 25**, sauvegardes : **9840**.
+
 ## Super Tank de Kleshmersh
 
 Le **Super Tank** est une nouvelle unité qui remplace l’Elite Siege Tank dans la production de Kleshmersh, dans Tornie, Jericho et ArcaKev. Il coûte **925 crédits**, possède **300 points de vie**, comme le Siege Tank standard, et tire une salve de deux projectiles incendiaires à la manière du Rocket Launcher. Sa destruction provoque une explosion dommageable sur le modèle du Devastator.

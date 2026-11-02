@@ -71,6 +71,7 @@
 #include "../tests/Release545Smoke.h"
 #include "../tests/Release546Smoke.h"
 #include "../tests/Release547Smoke.h"
+#include "../tests/SuperTankAlignmentSmoke.h"
 #include "../tests/HarvesterCrushSmoke.h"
 #endif
 
@@ -806,6 +807,7 @@ int main(int argc, char *argv[]) {
         bool bVerifyRadarResearch = false;
         bool bVerifyRelease545 = false;
         bool bVerifyRelease547 = false;
+        bool bVerifySuperTankAlignment = false;
         bool bVerifyRelease546 = false;
         bool bVerifyRelease546Checkpoints = false;
         bool bVerifyRelease546Frames = false;
@@ -836,6 +838,7 @@ int main(int argc, char *argv[]) {
             if(parameter == "--verify-campaign-cinema") { bVerifyMods=true;bVerifyCampaignCinema=true;continue; }
             if(parameter == "--verify-release545") {bVerifyMods=true;bVerifyRelease545=true;continue;}
             if(parameter == "--verify-release547") {bVerifyMods=true;bVerifyRelease547=true;continue;}
+            if(parameter == "--verify-super-tank-alignment") {bVerifyMods=true;bVerifySuperTankAlignment=true;continue;}
             if(parameter == "--verify-release546") {bVerifyMods=true;bVerifyRelease546=true;continue;}
             if(parameter == "--verify-release546-checkpoints") {bVerifyMods=true;bVerifyRelease546=true;bVerifyRelease546Checkpoints=true;continue;}
             if(parameter == "--verify-release546-frames") {bVerifyMods=true;bVerifyRelease546Frames=true;continue;}
@@ -1454,6 +1457,7 @@ int main(int argc, char *argv[]) {
                         }
                         ModManager::instance().setActiveMod(previousMod);
                     }
+                    else if(bVerifySuperTankAlignment) SuperTankAlignmentFixture::run(std::getenv("DUNELEGACY_SMOKE_DIR"));
                     else if(bVerifyRelease547) Release547Fixture::run(std::getenv("DUNELEGACY_SMOKE_DIR"));
                     else if(bVerifyRelease546Frames) Release546Fixture::frames(std::getenv("DUNELEGACY_SMOKE_DIR"));
                     else if(bVerifyRelease546) Release546Fixture::run(std::getenv("DUNELEGACY_SMOKE_DIR"),!bVerifyRelease546Checkpoints);

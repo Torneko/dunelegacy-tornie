@@ -1,12 +1,16 @@
 # Suivi actuel — Dune Legacy Tornie 1.0.547
 
+## Correctif visuel du 1er novembre 2026
+
+Recentrage de la tourelle du Super Tank dans les huit directions et aux trois zooms, en partie, dans l’éditeur et dans ses aperçus. Ce correctif utilise les paquets existants **1.0.547**, à retélécharger une fois leur remplacement effectué. Prix : **925 crédits** ; protocole **25** ; sauvegardes **9840**. Les PNG originaux sont conservés.
+
 ## Ajouts de la 1.0.547
 
 Super Tank de Kleshmersh à 925 crédits, sélection d’armée et de toutes les moissonneuses, Windtraps améliorés dans l’éditeur pour toutes les factions hors Vanilla, même sans Chaos, avec étoile verte. Protocole 25 ; sauvegardes 9840.
 
 [Notes détaillées](../release_notes/1.0.547-FR.md)
 
-Mis à jour le 31 octobre 2026. Version publiée : **1.0.547**, protocole **25**, sauvegardes **9840**, catalogue de **73 hauts faits**.
+Mis à jour le 1er novembre 2026. Version publiée : **1.0.547**, protocole **25**, sauvegardes **9840**, catalogue de **73 hauts faits**.
 
 ## Réalisé et publié
 

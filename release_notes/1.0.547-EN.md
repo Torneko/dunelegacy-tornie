@@ -1,5 +1,11 @@
 # Dune Legacy Tornie 1.0.547
 
+## Visual correction dated 1 November 2026
+
+The corrected **1.0.547** packages centre the Super Tank turret on its chassis in **all eight directions** and at **all three zoom levels**, in game, in the editor and in its previews. Tornie’s original PNG files are preserved.
+
+Download the existing **1.0.547** packages again to receive this correction. The Super Tank costs **925 credits**; network compatibility uses **protocol 25**, and saves use **9840**.
+
 ## Kleshmersh Super Tank
 
 The **Super Tank** is a new unit replacing Kleshmersh’s Elite Siege Tank production in Tornie, Jericho and ArcaKev. It costs **925 credits**, has **300 hit points**, matching the standard Siege Tank, and fires a two-projectile incendiary salvo in the style of the Rocket Launcher. Its destruction causes a damaging Devastator-style explosion.
@@ -18,7 +24,7 @@ Across all six non-Vanilla mods, every faction can use the standard 2×2 Windtra
 
 ## Mission stability
 
-Fixed a crash when closing or reloading a mission while an army remains selected.Co-op checkpoint loading now preserves the save bytes throughout settings restoration.
+Fixed a crash when closing or reloading a mission while an army remains selected. Co-op checkpoint loading now preserves the save bytes throughout settings restoration.
 
 ## Compatibility
 

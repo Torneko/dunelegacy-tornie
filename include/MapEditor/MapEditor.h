@@ -148,6 +148,7 @@ public:
     friend struct EditorOwnershipFixture;
     friend struct Release543EditorFixture;
     friend struct EditorWindtrapFixture;
+    friend struct SuperTankAlignmentFixture;
 #endif
 
     void RunEditor();

@@ -28,6 +28,14 @@ on:
         description: Publish staged Linux and Windows artifacts from the two verified runs
         type: boolean
         default: false
+      stage_assets_only:
+        description: Prepare audited platform or complete release artifacts without changing the public release or tag
+        type: boolean
+        default: false
+      verified_staging_run:
+        description: Successful staged-platform run ID to use instead of public release downloads for documentation_only
+        type: string
+        default: ''
       verified_linux_run:
         description: Successful Linux package run ID (required for documentation_only)
         type: string
@@ -42,6 +50,10 @@ on:
         default: false
       ui_only:
         description: UI-only replacement (CTest, startup and packaged FR/EN frames, menus and radar)
+        type: boolean
+        default: false
+      super_tank_visual_only:
+        description: Visual-only 547 turret correction (CTest, both AppImages, alignment and menus FR/EN)
         type: boolean
         default: false
 
@@ -234,7 +246,7 @@ jobs:
           grep 'STARTUP CHECK PASSED.*renderer=software' "$PROFILE/fallback.log"
 
       - name: Verify packaged co-op construction, editor ownership and Rebels mentat
-        if: ${{ !(inputs.ui_only || inputs.followup_545) }}
+        if: ${{ !(inputs.ui_only || inputs.followup_545 || inputs.super_tank_visual_only) }}
         run: |
           set -euo pipefail
           PROFILE=$(mktemp -d)
@@ -276,10 +288,15 @@ jobs:
           for LANGUAGE in en fr; do
             mkdir -p "$PROFILE/$LANGUAGE/profile/DuneLegacyTornie" "$PROFILE/$LANGUAGE/results"
             printf '[General]\nLanguage=%s\nPlay Intro=false\n[Video]\nFullscreen=false\n[Audio]\nMusic Type=adl\nPlay Music=false\n' "$LANGUAGE" > "$PROFILE/$LANGUAGE/profile/DuneLegacyTornie/Dune Legacy.ini"
-            CHECKS=(--verify-radar-research --verify-release545)
-            if [[ "${{ inputs.ui_only || inputs.followup_545 }}" != true ]]; then CHECKS+=(--verify-editor-followup --verify-campaign-cinema); fi
-            if [[ -f config/TornieCampaign546.json ]]; then CHECKS+=(--verify-release546 --verify-release546-frames); fi
-            if [[ -f config/Release547.json ]]; then CHECKS+=(--verify-release547); fi
+            if [[ "${{ inputs.super_tank_visual_only }}" == true ]]; then
+              test -f config/Release547.json
+              CHECKS=(--verify-super-tank-alignment)
+            else
+              CHECKS=(--verify-radar-research --verify-release545)
+              if [[ "${{ inputs.ui_only || inputs.followup_545 }}" != true ]]; then CHECKS+=(--verify-editor-followup --verify-campaign-cinema); fi
+              if [[ -f config/TornieCampaign546.json ]]; then CHECKS+=(--verify-release546 --verify-release546-frames); fi
+              if [[ -f config/Release547.json ]]; then CHECKS+=(--verify-release547); fi
+            fi
             for CHECK in "${CHECKS[@]}"; do
               LOG="$PROFILE/$LANGUAGE/$CHECK.log"
               SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy SDL_RENDER_DRIVER=software \
@@ -288,6 +305,10 @@ jobs:
                 "$IMAGE" "$CHECK" --showlog --window > "$LOG" 2>&1 || { tail -n 120 "$LOG"; exit 1; }
               grep 'PASS:' "$LOG"
             done
+            if [[ "${{ inputs.super_tank_visual_only }}" == true ]]; then
+              test "$(grep -c '^SUPER TANK ALIGNMENT PASS:' "$PROFILE/$LANGUAGE/--verify-super-tank-alignment.log")" -eq 1
+              continue
+            fi
             test "$(grep -c 'RADAR RESEARCH PASS:' "$PROFILE/$LANGUAGE/--verify-radar-research.log")" -eq 7
             if [[ "${{ inputs.ui_only || inputs.followup_545 }}" != true ]]; then
             test "$(grep -c 'EDITOR WINDTRAP PASS:' "$PROFILE/$LANGUAGE/--verify-editor-followup.log")" -eq 7
@@ -317,7 +338,7 @@ jobs:
           name: Post544-Linux-Runtime-Evidence
           path: |
             ${{ env.POST544_RUNTIME_ROOT }}/**/*.log
-            ${{ env.POST544_RUNTIME_ROOT }}/**/results/*.png
+            ${{ env.POST544_RUNTIME_ROOT }}/**/results/**/*.png
             ${{ env.POST544_RUNTIME_ROOT }}/**/results/*.tsv
             ${{ env.POST544_RUNTIME_ROOT }}/**/results/*.csv
             reports/campaign-scope-r2.json
@@ -347,6 +368,16 @@ jobs:
                   report['nextReleaseChecks'] = list(report['packagedRuntimeChecks'])
           import re
           report['saveVersion'] = int(re.search(rb'#define SAVEGAMEVERSION\s+(\d+)', pathlib.Path('include/Definitions.h').read_bytes()).group(1))
+          if '${{ inputs.super_tank_visual_only }}' == 'true':
+              import hashlib
+              assert report['version'] == '1.0.547' and report['networkProtocol'] == 25 and report['saveVersion'] == 9840, 'Visual correction changed version/protocol/save compatibility'
+              report['validationScope'] = 'super-tank-alignment-547'
+              report['packagedRuntimeChecks'] = ['super-tank-alignment-eight-directions-three-zooms-fr-en', 'super-tank-game-editor-preview-placement-fr-en']
+              report['nextReleaseChecks'] = list(report['packagedRuntimeChecks'])
+              report['alignmentChecks'] = ['fr', 'en']
+              payloads = sorted(path for pattern in ['*.AppImage', '*.deb', '*.rpm', '*.tar.gz'] for path in pathlib.Path('build').glob(pattern))
+              assert len(payloads) == 5, 'Unexpected Linux package inventory'
+              report['packages'] = [{'package':path.name, 'size':path.stat().st_size, 'sha256':hashlib.sha256(path.read_bytes()).hexdigest()} for path in payloads]
           pathlib.Path('build/Linux-Build-'+report['version']+'.json').write_text(json.dumps(report,indent=2)+'\n')
           PYTHON
 
@@ -362,7 +393,7 @@ jobs:
             build/Linux-Build-*.json
 
       - name: Attach all five Linux packages to the existing release
-        if: inputs.publish_packages
+        if: ${{ inputs.publish_packages && !inputs.stage_assets_only }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ inputs.release_tag || 'v1.0.544' }}
@@ -445,6 +476,10 @@ jobs:
           # Keep the release tag immutable; audit tooling follows this dispatch.
           git show FETCH_HEAD:scripts/audit-staged-release.py > "$RUNNER_TEMP/audit-staged-release.py"
           python3 "$RUNNER_TEMP/audit-staged-release.py" --staged staged --version "${RELEASE_TAG#v}" --output "staged/Package-Resources-Audit-${RELEASE_TAG#v}.json"
+          if [[ "${{ inputs.stage_assets_only }}" == true ]]; then
+            echo "Both verified platforms and their resource audit are staged; the public release and tag were not changed." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
           SOURCE_COMMIT=$(git rev-parse HEAD)
           NEW_RELEASE=false
           if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
@@ -465,6 +500,17 @@ jobs:
           if [[ "$NEW_RELEASE" == true && "${{ inputs.publish_packages }}" == true ]]; then
             gh release edit "$RELEASE_TAG" --draft=false --latest --repo "$GITHUB_REPOSITORY"
           fi
+
+      - name: Preserve audited platforms for release preparation
+        if: ${{ inputs.stage_assets_only }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: DuneLegacyTornie-Staged-Platforms-${{ inputs.release_tag }}
+          if-no-files-found: error
+          path: |
+            staged/linux/
+            staged/windows/
+            staged/Package-Resources-Audit-*.json
 
       - name: Preserve publication failure details
         if: failure()
@@ -492,6 +538,7 @@ jobs:
           RELEASE_TAG: ${{ inputs.release_tag || 'v1.0.544' }}
           VERIFIED_LINUX_RUN: ${{ inputs.verified_linux_run }}
           VERIFIED_WINDOWS_RUN: ${{ inputs.verified_windows_run }}
+          VERIFIED_STAGING_RUN: ${{ inputs.verified_staging_run }}
           WEBSITE_REF: ${{ inputs.website_ref || 'dunelegacy-tornie' }}
         run: |
           set -euo pipefail
@@ -499,12 +546,28 @@ jobs:
           [[ "$VERIFIED_LINUX_RUN" =~ ^[0-9]+$ ]]
           bash scripts/bump-version.sh --check
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$VERIFIED_LINUX_RUN" > linux-run.json
-          gh release download "$RELEASE_TAG" --pattern "Linux-Build-${RELEASE_TAG#v}.json" --dir .
+          if [[ -n "$VERIFIED_STAGING_RUN" ]]; then
+            [[ "$VERIFIED_STAGING_RUN" =~ ^[0-9]+$ && "$VERIFIED_WINDOWS_RUN" =~ ^[0-9]+$ ]]
+            gh api "repos/$GITHUB_REPOSITORY/actions/runs/$VERIFIED_STAGING_RUN" > staging-run.json
+            python3 - <<'PYTHON'
+          import json, os
+          run = json.load(open('staging-run.json'))
+          assert run['id'] == int(os.environ['VERIFIED_STAGING_RUN'])
+          assert run['conclusion'] == 'success', 'Platform staging run has not succeeded'
+          assert run['path'] == '.github/workflows/linux-release.yml', 'Unexpected platform staging workflow'
+          PYTHON
+            gh run download "$VERIFIED_STAGING_RUN" --repo "$GITHUB_REPOSITORY" --name "DuneLegacyTornie-Staged-Platforms-$RELEASE_TAG" --dir staged-platforms
+            cp "staged-platforms/linux/Linux-Build-${RELEASE_TAG#v}.json" .
+            cp "staged-platforms/windows/Windows-Build-${RELEASE_TAG#v}.json" .
+          else
+            gh release download "$RELEASE_TAG" --pattern "Linux-Build-${RELEASE_TAG#v}.json" --dir .
+          fi
           python3 - <<'PYTHON'
           import json, subprocess, os
           run = json.load(open('linux-run.json'))
           build = json.load(open('Linux-Build-'+os.environ['RELEASE_TAG'][1:]+'.json'))
           assert run['conclusion'] == 'success', 'Linux package run has not succeeded'
+          assert build['version'] == os.environ['RELEASE_TAG'][1:], 'Linux packages use another version'
           assert build['source'] == subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(), 'Linux packages use another source'
           assert build['run'] == run['id'] and build['workflowSource'] == run['head_sha'], 'Build provenance differs from the verified run'
           assert run['path'] == '.github/workflows/linux-release.yml', 'Unexpected package workflow'
@@ -512,15 +575,57 @@ jobs:
           if [[ -n "$VERIFIED_WINDOWS_RUN" ]]; then
             [[ "$VERIFIED_WINDOWS_RUN" =~ ^[0-9]+$ ]]
             gh api "repos/$GITHUB_REPOSITORY/actions/runs/$VERIFIED_WINDOWS_RUN" > windows-run.json
-            gh release download "$RELEASE_TAG" --pattern "Windows-Build-${RELEASE_TAG#v}.json" --dir .
+            if [[ -z "$VERIFIED_STAGING_RUN" ]]; then
+              gh release download "$RELEASE_TAG" --pattern "Windows-Build-${RELEASE_TAG#v}.json" --dir .
+            fi
             python3 - <<'PYTHON'
           import json, subprocess, os
           run = json.load(open('windows-run.json'))
           build = json.load(open('Windows-Build-'+os.environ['RELEASE_TAG'][1:]+'.json', encoding='utf-8-sig'))
           assert run['conclusion'] == 'success', 'Windows package run has not succeeded'
+          assert build['version'] == os.environ['RELEASE_TAG'][1:], 'Windows packages use another version'
           assert build['source'] == subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(), 'Windows packages use another source'
           assert build['run'] == run['id'] and build['workflowSource'] == run['head_sha'], 'Windows provenance differs from the verified run'
           assert run['path'] == '.github/workflows/build.yml', 'Unexpected Windows workflow'
+          PYTHON
+          fi
+          if [[ -n "$VERIFIED_STAGING_RUN" ]]; then
+            python3 - <<'PYTHON'
+          import hashlib, json, os, pathlib, subprocess
+          root = pathlib.Path('staged-platforms')
+          version = os.environ['RELEASE_TAG'][1:]
+          source = subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip()
+          audit = json.loads((root/('Package-Resources-Audit-'+version+'.json')).read_text())
+          assert audit['source'] == source and audit['version'] == version, 'Resource audit uses another source or version'
+          windows = json.loads((root/'windows'/('Windows-Build-'+version+'.json')).read_text(encoding='utf-8-sig'))
+          linux = json.loads((root/'linux'/('Linux-Build-'+version+'.json')).read_text())
+          assert windows['engineAndNetworkTests'] and linux['engineAndNetworkTests']
+          assert windows['installedRuntimeChecks'] == ['fr','en'] and windows['menuStartupChecks'] == ['fr','en']
+          assert linux['graphicalStartup']['passed'] and linux['softwareFallback']
+          windows_package = root/'windows'/windows['package']
+          assert windows_package.name == 'DuneLegacyTornie-'+version+'-Windows-x64.zip'
+          assert hashlib.sha256(windows_package.read_bytes()).hexdigest() == windows['sha256']
+          assert len(list((root/'windows').iterdir())) == 2
+          payloads = [path for path in (root/'linux').iterdir() if path.suffix != '.json']
+          assert len(payloads) == 5 and len(list((root/'linux').iterdir())) == 6
+          images = sorted((root/'linux').glob('*.AppImage'))
+          assert len(images) == 2
+          for extension in ['*.deb','*.rpm','*.tar.gz']:
+              assert len(list((root/'linux').glob(extension))) == 1
+          if linux.get('packages'):
+              by_name = {entry['package']:entry for entry in linux['packages']}
+              assert set(by_name) == {path.name for path in payloads}
+              for path in payloads:
+                  assert by_name[path.name]['size'] == path.stat().st_size
+                  assert by_name[path.name]['sha256'] == hashlib.sha256(path.read_bytes()).hexdigest()
+          audited = {'windows':windows_package, 'linuxTar':next((root/'linux').glob('*.tar.gz'))}
+          audited.update({path.name:path for path in images})
+          assert set(audit['packages']) == set(audited), 'Unexpected resource audit inventory'
+          for name, path in audited.items():
+              assert audit['packages'][name]['passed'] is True
+              assert audit['packages'][name]['sha256'] == hashlib.sha256(path.read_bytes()).hexdigest(), 'Staged payload differs from the audited package: '+name
+          if version == '1.0.547':
+              assert audit['originalArtworkFiles'] == 22 and audit['vanillaFiles'] == 205
           PYTHON
           fi
           git fetch --depth=1 origin "$WEBSITE_REF"
@@ -553,6 +658,7 @@ jobs:
           RELEASE_TAG: ${{ inputs.release_tag || 'v1.0.544' }}
           VERIFIED_LINUX_RUN: ${{ inputs.verified_linux_run }}
           VERIFIED_WINDOWS_RUN: ${{ inputs.verified_windows_run }}
+          VERIFIED_STAGING_RUN: ${{ inputs.verified_staging_run }}
         run: |
           set -euo pipefail
           VERSION="${RELEASE_TAG#v}"
@@ -563,16 +669,29 @@ jobs:
           if [[ -f config/Release547.json ]]; then
             python3 /tmp/package-guides.py --root "$GITHUB_WORKSPACE" --documentation-ref "$(cat "$RUNNER_TEMP/website-source.txt")" --output "supporting/DuneLegacyTornie-$VERSION-Guides-FR-EN.zip"
           fi
-          if [[ "$VERSION" == "1.0.545" || "$VERSION" == "1.0.546" || "$VERSION" == "1.0.547" ]]; then
-            gh release download "$RELEASE_TAG" --pattern "Package-Resources-Audit-$VERSION.json" --dir supporting
+          if [[ -n "$VERIFIED_STAGING_RUN" ]]; then
+            cp staged-platforms/linux/* staged-platforms/windows/* "staged-platforms/Package-Resources-Audit-$VERSION.json" supporting/
+            python3 - <<'PYTHON'
+          import json, os, pathlib, subprocess
+          root = pathlib.Path('supporting')
+          version = os.environ['RELEASE_TAG'][1:]
+          validation = json.loads((root/('Validation-'+version+'.json')).read_text())
+          assert validation['version'] == version and validation['source'] == subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(), 'Website validation describes another game source'
+          PYTHON
+          else
+            if [[ "$VERSION" == "1.0.545" || "$VERSION" == "1.0.546" || "$VERSION" == "1.0.547" ]]; then
+              gh release download "$RELEASE_TAG" --pattern "Package-Resources-Audit-$VERSION.json" --dir supporting
+            fi
+            gh release download "$RELEASE_TAG" --pattern '*Linux*' --dir supporting
           fi
-          gh release download "$RELEASE_TAG" --pattern '*Linux*' --dir supporting
           test "$(find supporting -maxdepth 1 -name '*.AppImage' | wc -l)" -ge 1
           test "$(find supporting -maxdepth 1 -name '*.deb' | wc -l)" -eq 1
           test "$(find supporting -maxdepth 1 -name '*.rpm' | wc -l)" -eq 1
           test "$(find supporting -maxdepth 1 -name '*.tar.gz' | wc -l)" -eq 1
           if [[ -n "$VERIFIED_WINDOWS_RUN" ]]; then
-            gh release download "$RELEASE_TAG" --pattern "DuneLegacyTornie-$VERSION-Windows-x64.zip" --pattern "Windows-Build-$VERSION.json" --dir supporting
+            if [[ -z "$VERIFIED_STAGING_RUN" ]]; then
+              gh release download "$RELEASE_TAG" --pattern "DuneLegacyTornie-$VERSION-Windows-x64.zip" --pattern "Windows-Build-$VERSION.json" --dir supporting
+            fi
             python3 - <<'PYTHON'
           import json, hashlib, pathlib, os
           root = pathlib.Path('supporting')
@@ -592,6 +711,7 @@ jobs:
           website_source = (pathlib.Path(os.environ['RUNNER_TEMP'])/'website-source.txt').read_text().strip()
           report = {'version': os.environ['RELEASE_TAG'][1:], 'source': subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(), 'website': website_source, 'linuxRun': int(os.environ['VERIFIED_LINUX_RUN']), 'assets': []}
           if os.environ.get('VERIFIED_WINDOWS_RUN'): report['windowsRun'] = int(os.environ['VERIFIED_WINDOWS_RUN'])
+          if os.environ.get('VERIFIED_STAGING_RUN'): report['stagingRun'] = int(os.environ['VERIFIED_STAGING_RUN'])
           for path in sorted(root.iterdir()):
               report['assets'].append({'name':path.name,'size':path.stat().st_size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest()})
           (root / ('Publication-Validation-'+report['version']+'.json')).write_text(json.dumps(report,indent=2)+'\n')
@@ -606,7 +726,7 @@ jobs:
                   if path.is_file(): archive.write(path,path.relative_to('offline'))
           PYTHON
           SITE_URLS=("file://$GITHUB_WORKSPACE/offline/DuneLegacyTornie-Site-Local/dist/")
-          if [[ "${{ inputs.publish_packages }}" == true ]]; then SITE_URLS+=("https://torneko.github.io/dunelegacy-tornie/"); fi
+          if [[ "${{ inputs.publish_packages }}" == true && "${{ inputs.stage_assets_only }}" != true ]]; then SITE_URLS+=("https://torneko.github.io/dunelegacy-tornie/"); fi
           SITE_BROWSER="$(command -v google-chrome || command -v chromium)" \
           NODE_PATH="$RUNNER_TEMP/site-checks/node_modules" \
           RELEASE_VERSION="$VERSION" \
@@ -615,5 +735,20 @@ jobs:
           SITE_VALIDATION_OUTPUT="supporting/Website-Validation-$VERSION.json" \
             node /tmp/check-documentation-site.cjs "${SITE_URLS[@]}"
           (cd supporting && sha256sum * > "SHA256SUMS-$VERSION.txt")
-          gh release upload "$RELEASE_TAG" supporting/* --clobber
-          echo "Bilingual offline site, tagged sources, notes and SHA-256 checksums attached to $RELEASE_TAG." >> "$GITHUB_STEP_SUMMARY"
+          if [[ "${{ inputs.stage_assets_only }}" == true ]]; then
+            if [[ -n "$VERIFIED_STAGING_RUN" && "$VERSION" == "1.0.547" ]]; then
+              test "$(find supporting -maxdepth 1 -type f | wc -l)" -eq 18
+            fi
+            echo "Complete bilingual release assets and SHA-256 checksums are staged for $RELEASE_TAG; the public release and tag were not changed." >> "$GITHUB_STEP_SUMMARY"
+          else
+            gh release upload "$RELEASE_TAG" supporting/* --clobber
+            echo "Bilingual offline site, tagged sources, notes and SHA-256 checksums attached to $RELEASE_TAG." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Preserve the complete release assets for final review
+        if: ${{ inputs.stage_assets_only }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: DuneLegacyTornie-Staged-Release-${{ inputs.release_tag }}
+          if-no-files-found: error
+          path: supporting/

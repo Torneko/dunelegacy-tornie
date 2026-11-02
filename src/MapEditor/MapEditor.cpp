@@ -26,6 +26,7 @@
 #include <FileClasses/LoadSavePNG.h>
 
 #include <structures/Wall.h>
+#include <units/SuperTankRender.h>
 
 #include <misc/FileSystem.h>
 #include <misc/draw_util.h>
@@ -1948,7 +1949,7 @@ void MapEditor::drawMap(ScreenBorder* pScreenborder, bool bCompleteMap) {
             case Unit_FlameTank:        objectPicBase = ObjPic_Tank_Base;       objectPicGun = tornieActive ? ObjPic_FlameTankGunTornie : ObjPic_Launcher_Gun; objectPicGunHouse = tornieActive ? HOUSE_HARKONNEN : unit.house; gunOffset = launcherTurretOffset; break;
             case Unit_EliteLauncher:    objectPicBase = ObjPic_Tank_Base;       objectPicGun = tornieActive ? ObjPic_EliteLauncherGunTornie : ObjPic_Launcher_Gun; objectPicGunHouse = tornieActive ? HOUSE_HARKONNEN : unit.house; gunOffset = launcherTurretOffset; break;
             case Unit_EliteSiegeTank:   objectPicBase = ObjPic_Siegetank_Base;  objectPicGun = ObjPic_EliteSiegeTankGunTornie; gunOffset = siegeTankTurretOffset; break;
-            case Unit_SuperTank: objectPicBase=ObjPic_Siegetank_Base;objectPicGun=ObjPic_SuperTankGun;gunOffset=siegeTankTurretOffset;break;
+            case Unit_SuperTank: objectPicBase=ObjPic_Siegetank_Base;objectPicGun=ObjPic_SuperTankGun;gunOffset=SuperTankRender::worldTurretOffsets().data();break;
             case Unit_ChemicalSiegeTank: objectPicBase = ObjPic_Siegetank_Base; objectPicGun = ObjPic_ChemicalSiegeTankGunTornie; gunOffset = siegeTankTurretOffset; break;
         }
 

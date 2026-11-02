@@ -1,0 +1,25 @@
+{
+  "version": "1.0.547",
+  "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+  "modFiles": 5635,
+  "originalArtworkFiles": 22,
+  "vanillaFiles": 205,
+  "packages": {
+    "windows": {
+      "passed": true,
+      "sha256": "2288e7c6843be76b237572d83c8828ec12d03cadcbe72c76b2ae4ec04a957fa0"
+    },
+    "linuxTar": {
+      "passed": true,
+      "sha256": "c6570dedf6f61ff197dc648610d1413ac236d35460c228baa026349a4cbbc18f"
+    },
+    "DuneLegacyTornie-1.0.547-Linux-Mint-Compatible.AppImage": {
+      "passed": true,
+      "sha256": "0373696e4badfe06c86338ad88fa97f36e4b57674a4a884c80d7c64812a7c86d"
+    },
+    "DuneLegacyTornie-1.0.547-Linux-x86_64.AppImage": {
+      "passed": true,
+      "sha256": "82e12b9bc5e48d4a82285463875cf855e87e4cb7a287071d98460212513cdd16"
+    }
+  }
+}

@@ -37,6 +37,10 @@ on:
         description: UI-only replacement (CTest and installed FR/EN frames, menus and radar)
         type: boolean
         default: false
+      super_tank_visual_only:
+        description: Visual-only 547 turret correction (CTest, alignment and menus FR/EN)
+        type: boolean
+        default: false
 
 concurrency:
   group: build-${{ github.ref }}
@@ -189,7 +193,7 @@ jobs:
           ctest --test-dir build -C Release --output-on-failure
           if ($LASTEXITCODE -ne 0) { throw "Engine/network CTest failed." }
           # Targeted replacements use the installed FR/EN regression checks below.
-          if ((Test-Path config/TornieCampaign546.json) -or "${{ inputs.ui_only || inputs.followup_545 }}" -eq "true") { exit 0 }
+          if ((Test-Path config/TornieCampaign546.json) -or "${{ inputs.ui_only || inputs.followup_545 || inputs.super_tank_visual_only }}" -eq "true") { exit 0 }
           $env:DUNELEGACY_USER_DIR = Join-Path $env:RUNNER_TEMP "dunelegacy-smoke-profile"
           New-Item -ItemType Directory -Force -Path $env:DUNELEGACY_USER_DIR | Out-Null
           $env:DUNELEGACY_SMOKE_DIR = $env:DUNELEGACY_USER_DIR
@@ -219,7 +223,9 @@ jobs:
           $env:SDL_AUDIODRIVER = "dummy"
           $env:SDL_RENDER_DRIVER = "software"
           $release546 = Test-Path ../config/TornieCampaign546.json
-          $uiOnly = $release546 -or "${{ inputs.ui_only || inputs.followup_545 }}" -eq "true"
+          $visualOnly = "${{ inputs.super_tank_visual_only }}" -eq "true"
+          if ($visualOnly -and -not (Test-Path ../config/Release547.json)) { throw "Super Tank alignment checks require the 547 source." }
+          $uiOnly = $release546 -or $visualOnly -or "${{ inputs.ui_only || inputs.followup_545 }}" -eq "true"
           foreach ($language in @("fr", "en")) {
             $env:DUNELEGACY_USER_DIR = Join-Path $env:RUNNER_TEMP "dunelegacy-installed-$language"
             New-Item -ItemType Directory -Force -Path $env:DUNELEGACY_USER_DIR | Out-Null
@@ -236,15 +242,18 @@ jobs:
               if ((Select-String -LiteralPath $log -Pattern $check[0]).Count -ne $check[1]) { throw "Installed $language 543 checks failed: $($check[0])" }
             }
             }
-            $checks = if ($uiOnly) {
-              @(@("--verify-radar-research", "RADAR RESEARCH PASS:", 7), @("--verify-release545", "RELEASE 545 PRESENTATION PASS:", 7))
+            if ($visualOnly) {
+              $checks = @()
+              $checks += ,@("--verify-super-tank-alignment", "SUPER TANK ALIGNMENT PASS:", 1)
+            } elseif ($uiOnly) {
+              $checks = @(@("--verify-radar-research", "RADAR RESEARCH PASS:", 7), @("--verify-release545", "RELEASE 545 PRESENTATION PASS:", 7))
             } else {
-              @(@("--verify-radar-research", "RADAR RESEARCH PASS:", 7), @("--verify-campaign-cinema", "CAMPAIGN CINEMA PASS:", 7))
+              $checks = @(@("--verify-radar-research", "RADAR RESEARCH PASS:", 7), @("--verify-campaign-cinema", "CAMPAIGN CINEMA PASS:", 7))
             }
-            if ($release546) {
+            if (-not $visualOnly -and $release546) {
               $checks += @(@("--verify-release546", "RELEASE 546 R2 PASS:", 1), @("--verify-release546-frames", "RELEASE 546 FRAMES PASS:", 1))
             }
-            if (Test-Path ../config/Release547.json) {
+            if (-not $visualOnly -and (Test-Path ../config/Release547.json)) {
               $checks += ,@("--verify-release547", "RELEASE 547 PASS:", 1)
             }
             foreach ($check in $checks) {
@@ -303,7 +312,7 @@ jobs:
             ${{ runner.temp }}/dunelegacy-installed-*/original-credits-*.png
             ${{ runner.temp }}/dunelegacy-installed-*/westwood-blue-original.png
             ${{ runner.temp }}/dunelegacy-installed-*/*.csv
-            ${{ runner.temp }}/dunelegacy-installed-*/*.png
+            ${{ runner.temp }}/dunelegacy-installed-*/**/*.png
             reports/campaign-scope-r2.json
 
       - name: Record Windows package provenance
@@ -346,6 +355,13 @@ jobs:
           if ("${{ inputs.followup_545 }}" -eq "true") {
             $report.validationScope = "targeted-545-corrections"
             $report.nextReleaseChecks += @("tharpique-healing-cadence", "aircraft-shortcuts-parenthesized-counts-no-selection", "aircraft-shortcut-faction-colours", "radar-level-visibility", "westwood-louder-synchronized-signature")
+          }
+          if ("${{ inputs.super_tank_visual_only }}" -eq "true") {
+            if ($version -ne "1.0.547" -or $report.networkProtocol -ne 25 -or $report.saveVersion -ne 9840) { throw "Visual correction changed version/protocol/save compatibility." }
+            $report.validationScope = "super-tank-alignment-547"
+            $report.release543Checks = @()
+            $report.nextReleaseChecks = @("super-tank-alignment-eight-directions-three-zooms-fr-en", "super-tank-game-editor-preview-placement-fr-en")
+            $report.alignmentChecks = @("fr", "en")
           }
           $report | ConvertTo-Json -Depth 5 | Set-Content "build/Windows-Build-$version.json" -Encoding utf8
 

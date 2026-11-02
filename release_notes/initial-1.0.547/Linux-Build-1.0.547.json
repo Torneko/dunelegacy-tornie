@@ -1,0 +1,66 @@
+{
+  "version": "1.0.547",
+  "source": "7c5149220fd0ee869205677127ae6c944e2f3113",
+  "workflowSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
+  "run": 41265028810,
+  "graphicalStartup": {
+    "passed": true,
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "images": [
+      "standard",
+      "Mint-compatible"
+    ],
+    "audio": "PulseAudio",
+    "videoCases": [
+      "window",
+      "fullscreen",
+      "stale-combined-desktop"
+    ],
+    "xrandr": true
+  },
+  "softwareFallback": true,
+  "engineAndNetworkTests": true,
+  "packagedRuntimeChecks": [
+    "radar-fr-en",
+    "release-545-regressions-fr-en",
+    "5265-editor-loads-fr-en",
+    "252-solo-starts-fr-en",
+    "224-coop-starts-fr-en",
+    "76-late-coop-restores-fr-en",
+    "persistent-support-and-four-opponents-fr-en",
+    "28-frame-compositions-fr-en",
+    "super-tank-production-fire-blast-save-fr-en",
+    "army-harvester-selection-and-allied-control-fr-en",
+    "all-faction-editor-windtraps-with-and-without-chaos-fr-en",
+    "choam-editor-32-items-fr-en"
+  ],
+  "nextReleaseChecks": [
+    "radar-fr-en",
+    "release-545-regressions-fr-en",
+    "5265-editor-loads-fr-en",
+    "252-solo-starts-fr-en",
+    "224-coop-starts-fr-en",
+    "76-late-coop-restores-fr-en",
+    "persistent-support-and-four-opponents-fr-en",
+    "28-frame-compositions-fr-en",
+    "super-tank-production-fire-blast-save-fr-en",
+    "army-harvester-selection-and-allied-control-fr-en",
+    "all-faction-editor-windtraps-with-and-without-chaos-fr-en",
+    "choam-editor-32-items-fr-en"
+  ],
+  "networkProtocol": 25,
+  "saveVersion": 9840,
+  "validationScope": "release-547",
+  "metadataCorrection": {
+    "field": "saveVersion",
+    "originalValue": 9839,
+    "correctValue": 9840,
+    "originalReportSha256": "26a4a7bdd20725d07d91288b332b9d0a9ce5ec8f65795da72260058657ccef69",
+    "verifiedSource": "7c5149220fd0ee869205677127ae6c944e2f3113",
+    "sourceHeader": "include/Definitions.h",
+    "reason": "The workflow report retained the previous save version; the tested source defines 9840. Package bytes are unchanged."
+  }
+}

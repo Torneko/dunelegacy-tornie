@@ -34,6 +34,7 @@
 #include <FileClasses/Palfile.h>
 
 #include <Colors.h>
+#include <units/SuperTankRender.h>
 
 #include <misc/FileSystem.h>
 
@@ -46,6 +47,18 @@
 #include <cmath>
 #include <cstdlib>
 #include <filesystem>
+
+// The authored Super Tank turret has its own palette. Compose in true colour
+// so thumbnail generation preserves the same colours and transparency as play.
+static sdl2::surface_ptr composeSuperTankEditorPicture(SDL_Surface* base, SDL_Surface* gun, int x, int y) {
+    if(!base || !gun) return nullptr;
+    auto picture=sdl2::surface_ptr(SDL_ConvertSurfaceFormat(base,SDL_PIXELFORMAT_RGBA32,0));
+    if(!picture) return nullptr;
+    SDL_SetSurfaceBlendMode(gun,SDL_BLENDMODE_BLEND);
+    SDL_Rect destination{x,y,gun->w,gun->h};
+    if(SDL_BlitSurface(gun,nullptr,picture.get(),&destination)!=0) return nullptr;
+    return picture;
+}
 
 // Keep the user-provided PNG intact; fit its visible banner in the native UI.
 static sdl2::surface_ptr fitAttachedHerald(sdl2::surface_ptr source) {
@@ -2341,7 +2354,7 @@ GFXManager::GFXManager() {
     addMapEditorStar(UI_MapEditor_EliteLauncher, true);
     uiGraphic[UI_MapEditor_EliteSiegeTank][HOUSE_HARKONNEN] = combinePictures(getSubFrame(objPic[ObjPic_Siegetank_Base][HOUSE_HARKONNEN][0].get(),0,0,8,1).get(), getSubFrame(objPic[eliteSiegeTankEditorGun][HOUSE_HARKONNEN][0].get(),0,0,8,1).get(), 2, -4);
     addMapEditorStar(UI_MapEditor_EliteSiegeTank, true);
-    uiGraphic[UI_MapEditor_SuperTank][HOUSE_HARKONNEN] = combinePictures(getSubFrame(objPic[ObjPic_Siegetank_Base][HOUSE_HARKONNEN][0].get(),0,0,8,1).get(), getSubFrame(objPic[ObjPic_SuperTankGun][HOUSE_HARKONNEN][0].get(),0,0,8,1).get(), 2, -4);
+    uiGraphic[UI_MapEditor_SuperTank][HOUSE_HARKONNEN] = composeSuperTankEditorPicture(getSubFrame(objPic[ObjPic_Siegetank_Base][HOUSE_HARKONNEN][0].get(),0,0,8,1).get(), getSubFrame(objPic[ObjPic_SuperTankGun][HOUSE_HARKONNEN][0].get(),0,0,8,1).get(), SuperTankRender::editorOffset().x, SuperTankRender::editorOffset().y);
     addMapEditorStar(UI_MapEditor_SuperTank, true);
     uiGraphic[UI_MapEditor_ChemicalSiegeTank][HOUSE_HARKONNEN] = combinePictures(getSubFrame(objPic[ObjPic_Siegetank_Base][HOUSE_HARKONNEN][0].get(),0,0,8,1).get(), getSubFrame(objPic[chemicalSiegeTankEditorGun][HOUSE_HARKONNEN][0].get(),0,0,8,1).get(), 2, -4);
     addMapEditorStar(UI_MapEditor_ChemicalSiegeTank, true);
@@ -2399,6 +2412,8 @@ GFXManager::GFXManager() {
         if(!gun) {
             return base;
         }
+        if(gunObjPicID==ObjPic_SuperTankGun)
+            return composeSuperTankEditorPicture(base.get(),gun.get(),gunOffsetX,gunOffsetY);
         return combinePictures(base.get(), gun.get(), gunOffsetX, gunOffsetY);
     };
 
@@ -2499,7 +2514,7 @@ GFXManager::GFXManager() {
             uiGraphic[UI_MapEditor_EliteSiegeTank][colorSlot] =
                 decorateEditorVehicle(std::move(eliteSiegeTank), true);
         }
-        auto superTank = composeEditorVehicle(ObjPic_Siegetank_Base,colorSlot,static_cast<int>(ObjPic_SuperTankGun),colorSlot,2,-4);
+        auto superTank = composeEditorVehicle(ObjPic_Siegetank_Base,colorSlot,static_cast<int>(ObjPic_SuperTankGun),colorSlot,SuperTankRender::editorOffset().x,SuperTankRender::editorOffset().y);
         if(superTank) uiGraphic[UI_MapEditor_SuperTank][colorSlot]=decorateEditorVehicle(std::move(superTank),true);
         auto chemicalSiegeTank = composeEditorVehicle(
             ObjPic_Siegetank_Base, colorSlot,
@@ -4861,6 +4876,8 @@ void GFXManager::rebuildModDependentEditorGraphics() {
         if(!gun) {
             return base;
         }
+        if(gunObjPicID==ObjPic_SuperTankGun)
+            return composeSuperTankEditorPicture(base.get(),gun.get(),gunOffsetX,gunOffsetY);
         return combinePictures(base.get(), gun.get(), gunOffsetX, gunOffsetY);
     };
 
@@ -5000,7 +5017,7 @@ void GFXManager::rebuildModDependentEditorGraphics() {
                 decorateRuntimeEditorVehicle(std::move(eliteSiegeTank), true);
         }
 
-        auto superTank = composeRuntimeEditorVehicle(ObjPic_Siegetank_Base,colorSlot,static_cast<int>(ObjPic_SuperTankGun),colorSlot,2,-4);
+        auto superTank = composeRuntimeEditorVehicle(ObjPic_Siegetank_Base,colorSlot,static_cast<int>(ObjPic_SuperTankGun),colorSlot,SuperTankRender::editorOffset().x,SuperTankRender::editorOffset().y);
         if(superTank) uiGraphic[UI_MapEditor_SuperTank][colorSlot]=decorateRuntimeEditorVehicle(std::move(superTank),true);
         auto chemicalSiegeTank = composeRuntimeEditorVehicle(
             ObjPic_Siegetank_Base, colorSlot,
